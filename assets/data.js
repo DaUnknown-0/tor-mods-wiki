@@ -1,0 +1,718 @@
+/* ============================================================================
+ * TOR Mods Wiki — content data (bilingual EN/DE)
+ * Each entry: { id, title:{en,de}, summary:{en,de}, body:{en,de}, badges:[{en,de}] }
+ * ==========================================================================*/
+
+const UI = {
+  en: {
+    langName: "English",
+    nav_home: "Home",
+    nav_chance: "Chance Modifier",
+    nav_useful: "Useful TOR Stuff",
+    search_placeholder: "Search features…",
+    search_none: "No entries match your search.",
+    on_this_page: "On this page",
+    expand_all: "Expand all",
+    collapse_all: "Collapse all",
+    version: "Version",
+    all_clients: "All clients",
+    host_auth: "Host-authoritative",
+    repo: "Source on GitHub",
+    download: "Download latest",
+    back_top: "Back to top",
+    home_hero_kicker: "Companion mods for The Other Roles",
+    home_hero_title: "Two mods. One wiki.",
+    home_hero_sub: "Randomized chaos and a pile of quality-of-life fixes for The Other Roles 4.8.0. Click any feature to read what it does.",
+    home_explore: "Explore the mods",
+    home_combined: "Combined feature highlights",
+    open_mod: "Open wiki page",
+    footer_note: "Not affiliated with Among Us or Innersloth LLC. A derivative work of The Other Roles, licensed under GPL-3.0.",
+    disclaimer: "This mod is not affiliated with Among Us or Innersloth LLC, and the content contained therein is not endorsed or otherwise sponsored by Innersloth LLC. Portions of the materials contained herein are property of Innersloth LLC. © Innersloth LLC.",
+    install_title: "Download & install",
+    deps_title: "Requirements",
+    toc_intro: "Jump to a section, or use the search box to filter every feature on the page.",
+  },
+  de: {
+    langName: "Deutsch",
+    nav_home: "Start",
+    nav_chance: "Chance Modifier",
+    nav_useful: "Useful TOR Stuff",
+    search_placeholder: "Features durchsuchen…",
+    search_none: "Keine Einträge passen zu deiner Suche.",
+    on_this_page: "Auf dieser Seite",
+    expand_all: "Alle aufklappen",
+    collapse_all: "Alle zuklappen",
+    version: "Version",
+    all_clients: "Alle Clients",
+    host_auth: "Host-autoritativ",
+    repo: "Quellcode auf GitHub",
+    download: "Neueste Version laden",
+    back_top: "Nach oben",
+    home_hero_kicker: "Begleit-Mods für The Other Roles",
+    home_hero_title: "Zwei Mods. Ein Wiki.",
+    home_hero_sub: "Zufalls-Chaos und ein Haufen Komfort-Fixes für The Other Roles 4.8.0. Klick auf ein Feature, um zu lesen, was es macht.",
+    home_explore: "Mods erkunden",
+    home_combined: "Kombinierte Feature-Highlights",
+    open_mod: "Wiki-Seite öffnen",
+    footer_note: "Nicht mit Among Us oder Innersloth LLC verbunden. Eine abgeleitete Arbeit von The Other Roles, lizenziert unter GPL-3.0.",
+    disclaimer: "Dieser Mod ist nicht mit Among Us oder Innersloth LLC verbunden, und die enthaltenen Inhalte werden von Innersloth LLC weder unterstützt noch gesponsert. Teile der hierin enthaltenen Materialien sind Eigentum von Innersloth LLC. © Innersloth LLC.",
+    install_title: "Download & Installation",
+    deps_title: "Voraussetzungen",
+    toc_intro: "Springe zu einem Abschnitt oder filtere mit der Suche alle Features der Seite.",
+  }
+};
+
+/* ----- shared helpers for table rendering inside body html ----- */
+function tbl(headers, rows) {
+  const h = headers.map(c => `<th>${c}</th>`).join("");
+  const r = rows.map(row => "<tr>" + row.map(c => `<td>${c}</td>`).join("") + "</tr>").join("");
+  return `<div class="table-wrap"><table><thead><tr>${h}</tr></thead><tbody>${r}</tbody></table></div>`;
+}
+
+/* ============================================================================
+ * CHANCE MODIFIER
+ * ==========================================================================*/
+const CHANCE = {
+  key: "chance",
+  name: "Chance Modifier",
+  fullName: { en: "TOR — Unknown Chaos (Chance Modifier)", de: "TOR — Unknown Chaos (Chance Modifier)" },
+  version: "1.2.0",
+  allClients: true,
+  repo: "https://github.com/DaUnknown-0/TOR-Chance",
+  download: "https://github.com/DaUnknown-0/TOR-Chance/releases/latest",
+  tagline: {
+    en: "Affected players get randomized speed, cooldown, vision, tasks, votes — and a per-kill success chance. Everything about them is random.",
+    de: "Betroffene Spieler bekommen zufällige Geschwindigkeit, Cooldown, Sicht, Aufgaben, Stimmen — und eine Kill-Erfolgschance. Alles an ihnen ist Zufall."
+  },
+  intro: {
+    en: "ChanceMod adds two independent features, both configured under the <strong>Modifier</strong> settings tab: the <strong>Chance modifier</strong> (random stats for marked players) and <strong>Chaos Mode</strong> (roles re-rolled after every meeting).",
+    de: "ChanceMod fügt zwei unabhängige Features hinzu, beide im <strong>Modifier</strong>-Tab konfigurierbar: den <strong>Chance-Modifier</strong> (zufällige Stats für markierte Spieler) und den <strong>Chaos Mode</strong> (Rollen werden nach jedem Meeting neu ausgelost)."
+  },
+  install: {
+    en: "<ol><li>Install <a href='https://github.com/TheOtherRolesAU/TheOtherRoles'>The Other Roles</a> into your Among Us BepInEx setup.</li><li>Download the latest <code>TOR-ChanceModifier.dll</code> from the releases page.</li><li>Copy it into <code>&lt;Among Us&gt;/BepInEx/plugins/</code>.</li><li>Start the game — the host enables it under the <strong>Modifier</strong> tab (look for <code>Chance</code>).</li></ol><p>After the first install, the in-game auto-updater checks GitHub on the main menu and offers an update button — manual downloads are only needed for the initial setup.</p>",
+    de: "<ol><li>Installiere <a href='https://github.com/TheOtherRolesAU/TheOtherRoles'>The Other Roles</a> in dein Among-Us-BepInEx-Setup.</li><li>Lade die neueste <code>TOR-ChanceModifier.dll</code> von der Releases-Seite.</li><li>Kopiere sie nach <code>&lt;Among Us&gt;/BepInEx/plugins/</code>.</li><li>Starte das Spiel — der Host aktiviert sie im <strong>Modifier</strong>-Tab (suche nach <code>Chance</code>).</li></ol><p>Nach der ersten Installation prüft der In-Game-Auto-Updater GitHub im Hauptmenü und bietet einen Update-Button an — manuelle Downloads sind nur für die Erstinstallation nötig.</p>"
+  },
+  deps: {
+    en: "<ul><li><strong>The Other Roles 4.8.0</strong> (hard dependency)</li></ul>",
+    de: "<ul><li><strong>The Other Roles 4.8.0</strong> (harte Abhängigkeit)</li></ul>"
+  },
+  sections: [
+    {
+      id: "chance-modifier",
+      title: { en: "The Chance modifier", de: "Der Chance-Modifier" },
+      intro: {
+        en: "A modifier assigned to random players at role-assignment time. Each carrier gets their own randomized set of stats.",
+        de: "Ein Modifier, der bei der Rollenzuweisung an zufällige Spieler vergeben wird. Jeder Träger erhält einen eigenen zufälligen Satz von Stats."
+      },
+      entries: [
+        {
+          id: "assignment",
+          title: { en: "Assignment", de: "Zuweisung" },
+          summary: {
+            en: "Given to random players at role assignment — quantity and chance are configurable.",
+            de: "Wird bei der Rollenzuweisung an zufällige Spieler vergeben — Anzahl und Wahrscheinlichkeit konfigurierbar."
+          },
+          body: {
+            en: "<p>The modifier is handed out during role assignment to a configurable number of random players, each with a configurable chance. A carrier can be active from the start of the game, or only after a configured delay.</p>",
+            de: "<p>Der Modifier wird während der Rollenzuweisung an eine konfigurierbare Anzahl zufälliger Spieler vergeben, jeweils mit einer konfigurierbaren Wahrscheinlichkeit. Ein Träger kann ab Spielstart aktiv sein oder erst nach einer konfigurierten Verzögerung.</p>"
+          }
+        },
+        {
+          id: "activation-delay",
+          title: { en: "Activation delay", de: "Aktivierungs-Verzögerung" },
+          summary: {
+            en: "Effects can kick in immediately, or after N meetings / N seconds.",
+            de: "Effekte können sofort wirken oder erst nach N Meetings / N Sekunden."
+          },
+          body: {
+            en: tbl(["Option", "Values", "What it does"], [
+              ["Activation Delay Mode", "Immediate / Delayed", "<em>Immediate</em>: works from game start. <em>Delayed</em>: only after X meetings or X seconds."],
+              ["Activation Delay Unit", "Meetings / Seconds", "Which unit the delay is measured in."],
+              ["Activate After Meetings", "0–10", "Meetings until activation."],
+              ["Activate After Seconds", "0–600", "Seconds until activation."]
+            ]) + "<p class='note'>Task reduction is only available with <strong>Immediate</strong>, since tasks are assigned at game start.</p>",
+            de: tbl(["Option", "Werte", "Funktion"], [
+              ["Activation Delay Mode", "Immediate / Delayed", "<em>Immediate</em>: wirkt ab Spielstart. <em>Delayed</em>: erst nach X Meetings oder X Sekunden."],
+              ["Activation Delay Unit", "Meetings / Seconds", "Gibt an, in welcher Einheit die Verzögerung gemessen wird."],
+              ["Activate After Meetings", "0–10", "Meetings bis zur Aktivierung."],
+              ["Activate After Seconds", "0–600", "Sekunden bis zur Aktivierung."]
+            ]) + "<p class='note'>Task-Reduzierung ist nur bei <strong>Immediate</strong> verfügbar, da Tasks bei Spielstart zugewiesen werden.</p>"
+          }
+        },
+        {
+          id: "toggles",
+          title: { en: "Per-effect toggles", de: "Per-Effekt-Toggles" },
+          summary: {
+            en: "Every effect has its own enable switch. Default: off → that stat stays vanilla.",
+            de: "Jeder Effekt hat einen eigenen Enable-Toggle. Standard: aus → der Stat bleibt vanilla."
+          },
+          body: {
+            en: "<p>Each randomization can be turned on independently. Anything left off behaves exactly like vanilla TOR.</p>" + tbl(["Toggle", "Affected options"], [
+              ["Enable Speed Randomization", "Min/Max Speed"],
+              ["Enable Kill Cooldown Randomization", "Min/Max Kill Cooldown"],
+              ["Enable Task Reduction", "Min/Max Tasks (Immediate only)"],
+              ["Enable Kill Success Chance", "Kill Success Chance %"],
+              ["Enable Auto-Report", "Auto-Report Chance % (per second)"],
+              ["Enable Vision Randomization", "Min/Max Vision"],
+              ["Enable Vent Access", "Vent Access Chance %"],
+              ["Enable Vote Multiplier", "Min/Max Vote Multiplier"],
+              ["Enable Kill Distance", "Min/Max Kill Distance"],
+              ["Enable Sabotage Cooldown", "Min/Max Sabotage Cooldown (impostors)"]
+            ]),
+            de: "<p>Jede Randomisierung lässt sich einzeln aktivieren. Was aus bleibt, verhält sich exakt wie Vanilla-TOR.</p>" + tbl(["Toggle", "Betroffene Optionen"], [
+              ["Enable Speed Randomization", "Min/Max Speed"],
+              ["Enable Kill Cooldown Randomization", "Min/Max Kill Cooldown"],
+              ["Enable Task Reduction", "Min/Max Tasks (nur Immediate)"],
+              ["Enable Kill Success Chance", "Kill Success Chance %"],
+              ["Enable Auto-Report", "Auto-Report Chance % (pro Sekunde)"],
+              ["Enable Vision Randomization", "Min/Max Vision"],
+              ["Enable Vent Access", "Vent Access Chance %"],
+              ["Enable Vote Multiplier", "Min/Max Vote Multiplier"],
+              ["Enable Kill Distance", "Min/Max Kill Distance"],
+              ["Enable Sabotage Cooldown", "Min/Max Sabotage Cooldown (Impostoren)"]
+            ])
+          }
+        },
+        {
+          id: "effects",
+          title: { en: "Effects in detail", de: "Effekte im Detail" },
+          summary: {
+            en: "Speed, cooldown, tasks, kill success, auto-report, vision, vents, votes, kill distance, sabotage CD.",
+            de: "Geschwindigkeit, Cooldown, Aufgaben, Kill-Erfolg, Auto-Report, Sicht, Vents, Stimmen, Kill-Reichweite, Sabo-CD."
+          },
+          body: {
+            en: tbl(["Effect", "Range", "Description"], [
+              ["Speed", "0.25–3×", "Player movement speed."],
+              ["Kill cooldown", "2.5–60 s", "Cooldown after a kill."],
+              ["Tasks", "1–10", "Number of tasks (Immediate only)."],
+              ["Kill success", "0–100 %", "Probability that a kill does <em>not</em> go through (a BlankKill)."],
+              ["Auto-report", "0–100 %", "Each second: chance to auto-report the nearest body."],
+              ["Vision", "0.25–5×", "Vision radius."],
+              ["Vent access", "0–100 %", "Chance to be able to use vents, independent of role."],
+              ["Vote multiplier", "0–3×", "Vote weight during voting."],
+              ["Kill distance", "0.5–2.5", "Kill radius."],
+              ["Sabotage CD", "0–60 s", "Sabotage cooldown (impostors only)."]
+            ]) + "<p class='note'>Min/Max pairs are auto-sorted (Min ≤ Max enforced by the UI sync).</p>",
+            de: tbl(["Effekt", "Bereich", "Beschreibung"], [
+              ["Geschwindigkeit", "0,25–3×", "Bewegungsgeschwindigkeit des Spielers."],
+              ["Kill-Cooldown", "2,5–60 s", "Abkühlzeit nach einem Kill."],
+              ["Aufgaben", "1–10", "Anzahl Aufgaben (nur Immediate)."],
+              ["Kill-Erfolg", "0–100 %", "Wahrscheinlichkeit, dass ein Kill <em>nicht</em> ausgeführt wird (BlankKill)."],
+              ["Auto-Report", "0–100 %", "Jede Sekunde: Chance, die nächste Leiche automatisch zu melden."],
+              ["Sichtweite", "0,25–5×", "Sichtradius."],
+              ["Vent-Zugang", "0–100 %", "Chance auf Vent-Zugang, unabhängig von der Rolle."],
+              ["Vote-Multiplikator", "0–3×", "Stimmgewicht bei der Abstimmung."],
+              ["Kill-Reichweite", "0,5–2,5", "Kill-Radius."],
+              ["Sabo-CD", "0–60 s", "Sabotage-Cooldown (nur Impostoren)."]
+            ]) + "<p class='note'>Min/Max-Paare werden automatisch sortiert (Min ≤ Max durch UI-Sync erzwungen).</p>"
+          }
+        },
+        {
+          id: "rerandom",
+          title: { en: "Re-randomization & player display", de: "Neu-Auslosung & Spieleranzeige" },
+          summary: {
+            en: "Speed/cooldown/vision re-roll after every meeting; tasks stay fixed. You see your own stats.",
+            de: "Speed/Cooldown/Sicht werden nach jedem Meeting neu ausgelost; Tasks bleiben fix. Du siehst deine eigenen Werte."
+          },
+          body: {
+            en: "<p>Speed, kill cooldown and vision are re-randomized after every meeting (on the exile wrap-up, the same hook Chaos Mode uses), so the exiled player is already dead when stats re-roll. Task counts stay fixed for the whole game.</p><p>Chance players see their own randomized values in the role intro. Other players just see <em>“You are CHAOS!”</em>. In-game the modifier shows up as <code>Chance</code> in the role list.</p>",
+            de: "<p>Geschwindigkeit, Kill-Cooldown und Sicht werden nach jedem Meeting neu ausgelost (beim Exile-WrapUp, demselben Hook wie Chaos Mode), sodass der herausgewählte Spieler bereits tot ist, wenn neu gewürfelt wird. Die Aufgabenzahl bleibt das ganze Spiel über fix.</p><p>Chance-Spieler sehen ihre eigenen zufälligen Werte im Rollen-Intro. Andere Spieler sehen nur <em>„You are CHAOS!“</em>. Im Spiel erscheint der Modifier als <code>Chance</code> in der Rollenliste.</p>"
+          }
+        }
+      ]
+    },
+    {
+      id: "chaos-mode",
+      title: { en: "Chaos Mode", de: "Chaos Mode" },
+      intro: {
+        en: "Independent of the Chance modifier. After every meeting, the roles of all living players are re-rolled.",
+        de: "Unabhängig vom Chance-Modifier. Nach jedem Meeting werden die Rollen aller lebenden Spieler neu ausgelost."
+      },
+      entries: [
+        {
+          id: "chaos-options",
+          title: { en: "Options", de: "Optionen" },
+          summary: {
+            en: "Toggle the reroll, choose the role pool, and choose who is affected.",
+            de: "Reroll aktivieren, Rollen-Pool wählen und festlegen, wer betroffen ist."
+          },
+          body: {
+            en: tbl(["Option", "Values", "What it does"], [
+              ["Chaos Mode", "Off / On", "Re-rolls roles after every meeting."],
+              ["Chaos: Role Pool", "All enabled roles / Only roles already in play", "“All”: new roles can appear. “In play”: only existing roles are re-distributed (multi-shifter)."],
+              ["Chaos: Affected Players", "All players / Only Chance players", "Reroll everyone, or only carriers of the Chance modifier."]
+            ]),
+            de: tbl(["Option", "Werte", "Funktion"], [
+              ["Chaos Mode", "Off / On", "Lost die Rollen nach jedem Meeting neu aus."],
+              ["Chaos: Role Pool", "All enabled roles / Only roles already in play", "„All“: Neue Rollen können auftauchen. „In play“: Nur bestehende Rollen werden neu verteilt (Multi-Shifter)."],
+              ["Chaos: Affected Players", "All players / Only Chance players", "Reroll für alle oder nur für Träger des Chance-Modifiers."]
+            ])
+          }
+        },
+        {
+          id: "chaos-exclusions",
+          title: { en: "Exclusions (always protected)", de: "Ausschlüsse (immer geschützt)" },
+          summary: {
+            en: "Some roles are never re-rolled to avoid breaking their mechanics.",
+            de: "Einige Rollen werden nie neu ausgelost, um ihre Mechaniken nicht zu zerstören."
+          },
+          body: {
+            en: "<p>These roles / players are never pulled into the reroll:</p><ul><li>Godfather, Mafioso, Janitor (the Mafia trio)</li><li>Deputy (while a Sheriff is alive and the Deputy could still promote)</li><li>Guesser (Nice / Evil)</li><li>Spy, Snitch</li></ul><p>This keeps Mafia from silently breaking, the Sheriff↔Deputy pair intact as a unit, and avoids reroll races.</p>",
+            de: "<p>Diese Rollen / Spieler werden nie in den Reroll gezogen:</p><ul><li>Godfather, Mafioso, Janitor (das Mafia-Trio)</li><li>Deputy (solange ein Sheriff lebt und der Deputy noch promoten könnte)</li><li>Guesser (Nice / Evil)</li><li>Spy, Snitch</li></ul><p>So bricht die Mafia nicht still, das Sheriff↔Deputy-Paar bleibt als Einheit intakt, und Reroll-Races werden vermieden.</p>"
+          }
+        },
+        {
+          id: "chaos-endscreen",
+          title: { en: "End-screen role history", de: "End-Screen-Rollenverlauf" },
+          summary: {
+            en: "The summary shows each player's full role path, e.g. Sheriff → Medic → Mayor.",
+            de: "Die Zusammenfassung zeigt den vollen Rollenverlauf, z. B. Sheriff → Medic → Mayor."
+          },
+          body: {
+            en: "<p>At game end, the role summary shows the complete role path: <code>Sheriff → Medic → Mayor</code>. Overly long paths are trimmed from the left to fit the screen width (<code>… → Mayor</code>).</p>",
+            de: "<p>Am Spielende zeigt der Rollen-Summary den vollständigen Verlauf: <code>Sheriff → Medic → Mayor</code>. Zu lange Verläufe werden linksseitig auf die Bildschirmbreite gekürzt (<code>… → Mayor</code>).</p>"
+          }
+        }
+      ]
+    },
+    {
+      id: "security",
+      title: { en: "Security & internals", de: "Sicherheit & Interna" },
+      entries: [
+        {
+          id: "rpc-validation",
+          title: { en: "Host-authoritative RPC validation", de: "Host-autoritative RPC-Validierung" },
+          badges: [{ en: "Host-authoritative", de: "Host-autoritativ" }],
+          summary: {
+            en: "Gameplay RPCs are accepted only from the host; a modified client can't set stats or roles for others.",
+            de: "Gameplay-RPCs werden nur vom Host akzeptiert; ein modifizierter Client kann keine Stats oder Rollen für andere setzen."
+          },
+          body: {
+            en: "<p>The RPCs that re-roll stats, reassign roles, and activate the modifier — <strong>SetValues (200)</strong>, <strong>ChaosReassign (201)</strong> and <strong>Activation (250)</strong> — are accepted only when the sender is the lobby host (<code>OwnerId == HostId</code>). Non-host senders are logged and the RPC is consumed. The version handshake (RPC 251) stays open to all clients by design.</p>",
+            de: "<p>Die RPCs, die Stats neu auslosen, Rollen neu zuweisen und den Modifier aktivieren — <strong>SetValues (200)</strong>, <strong>ChaosReassign (201)</strong> und <strong>Activation (250)</strong> — werden nur akzeptiert, wenn der Sender der Lobby-Host ist (<code>OwnerId == HostId</code>). Nicht-Host-Sender werden geloggt und der RPC verworfen. Der Version-Handshake (RPC 251) bleibt bewusst für alle Clients offen.</p>"
+          }
+        }
+      ]
+    }
+  ]
+};
+
+/* ============================================================================
+ * USEFUL TOR STUFF
+ * ==========================================================================*/
+const USEFUL = {
+  key: "useful",
+  name: "Useful TOR Stuff",
+  fullName: { en: "Useful TOR Stuff", de: "Useful TOR Stuff" },
+  version: "1.1.0",
+  allClients: true,
+  repo: "https://github.com/DaUnknown-0/Useful-TOR-stuff",
+  download: "https://github.com/DaUnknown-0/Useful-TOR-stuff/releases/latest",
+  tagline: {
+    en: "A bundle of quality-of-life fixes and new role options for TOR 4.8.0, plus a cross-mod Mod Manager.",
+    de: "Ein Bündel aus Komfort-Fixes und neuen Rollen-Optionen für TOR 4.8.0, plus ein Mod-übergreifender Mod Manager."
+  },
+  intro: {
+    en: "Useful TOR Stuff adds new options to TOR 4.8.0 and fixes bugs without touching TOR's source. It resolves TOR types via reflection, so every patch degrades to a no-op (with a log warning) rather than crashing if TOR's internals change. Most win-checks and meeting overrides are host-authoritative — they apply regardless of who has the mod.",
+    de: "Useful TOR Stuff fügt TOR 4.8.0 neue Optionen hinzu und behebt Bugs ohne Änderung an TORs Quellcode. Es löst TOR-Typen per Reflection auf, sodass jeder Patch zu einem No-Op (mit Log-Warnung) degradiert, statt abzustürzen, wenn sich TORs Interna ändern. Die meisten Win-Checks und Meeting-Overrides sind host-autoritativ — sie wirken unabhängig davon, wer den Mod hat."
+  },
+  install: {
+    en: "<ol><li>Install <a href='https://github.com/TheOtherRolesAU/TheOtherRoles'>The Other Roles</a> into your Among Us BepInEx setup.</li><li>Download the latest <code>UsefulTORStuff.dll</code> from the releases page.</li><li>Copy it into <code>&lt;Among Us&gt;/BepInEx/plugins/</code>.</li><li>Start the game.</li></ol><p>An in-game auto-updater checks GitHub on the main menu and offers an update button.</p>",
+    de: "<ol><li>Installiere <a href='https://github.com/TheOtherRolesAU/TheOtherRoles'>The Other Roles</a> in dein Among-Us-BepInEx-Setup.</li><li>Lade die neueste <code>UsefulTORStuff.dll</code> von der Releases-Seite.</li><li>Kopiere sie nach <code>&lt;Among Us&gt;/BepInEx/plugins/</code>.</li><li>Starte das Spiel.</li></ol><p>Ein In-Game-Auto-Updater prüft GitHub im Hauptmenü und bietet einen Update-Button an.</p>"
+  },
+  deps: {
+    en: "<ul><li><strong>The Other Roles 4.8.0</strong> (hard dependency)</li><li><strong>BepInEx IL2CPP</strong> 6.0.0-be.697</li><li><strong>HostFix</strong> (optional, for Snitch coordination)</li></ul>",
+    de: "<ul><li><strong>The Other Roles 4.8.0</strong> (harte Abhängigkeit)</li><li><strong>BepInEx IL2CPP</strong> 6.0.0-be.697</li><li><strong>HostFix</strong> (optional, für Snitch-Koordination)</li></ul>"
+  },
+  sections: [
+    {
+      id: "bugfixes",
+      title: { en: "Bugfixes (automatic — no option needed)", de: "Bugfixes (automatisch — keine Option nötig)" },
+      intro: {
+        en: "These apply on their own as soon as the mod is loaded.",
+        de: "Diese greifen von selbst, sobald der Mod geladen ist."
+      },
+      entries: [
+        {
+          id: "bloody-throttle",
+          title: { en: "Bloody lag throttle", de: "Bloody Lag-Drosselung" },
+          summary: {
+            en: "Cuts the object count (and lag) on long Bloody trails by spacing out blood drops.",
+            de: "Senkt die Objektzahl (und den Lag) langer Bloody-Spuren, indem Blutstropfen weiter auseinander liegen."
+          },
+          body: {
+            en: "<p><strong>Problem:</strong> TOR spawns a new <code>Bloodytrail</code> GameObject on every FixedUpdate (~50/s) — up to ~500 at once per bloody player.</p><p><strong>Fix:</strong> a new drop only spawns once the player has moved at least <code>MinDropDistance</code> (default 0.35 units) since the last drop. Configurable in the BepInEx config under <code>[Bloody] MinDropDistance</code> (<code>0</code> disables throttling). The per-player last-drop map is cleared each round.</p>",
+            de: "<p><strong>Problem:</strong> TOR spawnt bei jedem FixedUpdate (~50/s) ein neues <code>Bloodytrail</code>-GameObject — bis zu ~500 gleichzeitig pro blutigem Spieler.</p><p><strong>Fix:</strong> Ein neuer Tropfen erscheint erst, wenn der Spieler seit dem letzten Tropfen mindestens <code>MinDropDistance</code> (Standard 0,35 Einheiten) zurückgelegt hat. Einstellbar in der BepInEx-Config unter <code>[Bloody] MinDropDistance</code> (<code>0</code> deaktiviert die Drosselung). Die Per-Spieler-Map des letzten Tropfens wird jede Runde geleert.</p>"
+          }
+        },
+        {
+          id: "bloody-killer-map",
+          title: { en: "Bloody killer-map fix", de: "Bloody Killer-Map-Fix" },
+          summary: {
+            en: "A Bloody trail now tracks the latest victim instead of pinning to the first one.",
+            de: "Eine Bloody-Spur folgt jetzt dem neuesten Opfer statt am ersten zu kleben."
+          },
+          body: {
+            en: "<p><strong>Problem:</strong> <code>Bloody.bloodyKillerMap[killer]</code> stayed permanently pinned to the first victim — trails after the second kill had the wrong color.</p><p><strong>Fix:</strong> <code>RPCProcedure.bloody</code> is overridden so the map entry is set via indexer (overwrite) instead of <code>Add</code>.</p>",
+            de: "<p><strong>Problem:</strong> <code>Bloody.bloodyKillerMap[killer]</code> blieb dauerhaft beim ersten Opfer — Blutspuren nach dem zweiten Kill hatten die falsche Farbe.</p><p><strong>Fix:</strong> <code>RPCProcedure.bloody</code> wird überschrieben, sodass der Map-Eintrag per Indexer (Überschreiben) statt per <code>Add</code> gesetzt wird.</p>"
+          }
+        },
+        {
+          id: "snitch-logic",
+          title: { en: "Snitch reveal reimplementation", de: "Snitch-Reveal-Reimplementierung" },
+          badges: [{ en: "All players need the mod", de: "Alle brauchen den Mod" }],
+          summary: {
+            en: "A client-side Snitch reveal that survives the host's room-map reset.",
+            de: "Ein client-seitiger Snitch-Reveal, der den Room-Map-Reset des Hosts übersteht."
+          },
+          body: {
+            en: "<p><strong>Problem:</strong> TOR's Snitch reveal reads <code>playerRoomMap</code>, which gets wiped on the host by a reset.</p><p><strong>Fix:</strong> a persistent own <code>roomMap</code> records every <code>ShareRoom</code> RPC. The Snitch chat, map, and HUD are reimplemented over this own map. It only takes effect when all players have Useful TOR Stuff (<code>SnitchClientFixActive</code>); otherwise TOR's original behavior (plus HostFix Fix 4) applies.</p>",
+            de: "<p><strong>Problem:</strong> TORs Snitch-Reveal liest <code>playerRoomMap</code>, die beim Host durch einen Reset verloren geht.</p><p><strong>Fix:</strong> Eine persistente eigene <code>roomMap</code> zeichnet jeden <code>ShareRoom</code>-RPC auf. Snitch-Chat, -Karte und -HUD werden über diese eigene Map reimplementiert. Wirkt nur, wenn alle Spieler Useful TOR Stuff haben (<code>SnitchClientFixActive</code>); sonst greift TORs Original (plus HostFix Fix 4).</p>"
+          }
+        }
+      ]
+    },
+    {
+      id: "crewmate",
+      title: { en: "New options — Crewmate", de: "Neue Optionen — Crewmate" },
+      entries: [
+        {
+          id: "sheriff-parity",
+          title: { en: "Sheriff prevents killer parity win", de: "Sheriff verhindert Killer-Parity-Win" },
+          badges: [{ en: "Crewmate → Sheriff", de: "Crewmate → Sheriff" }, { en: "Host-authoritative", de: "Host-autoritativ" }],
+          summary: {
+            en: "Stops impostors/Jackal from winning on parity while a Sheriff is alive.",
+            de: "Verhindert, dass Impostoren/Jackal bei Gleichstand gewinnen, solange ein Sheriff lebt."
+          },
+          body: {
+            en: tbl(["Option", "Values", "What it does"], [
+              ["Sheriff Prevents Killer Parity Win", "Off / On", "Suppresses the impostor/Jackal parity win while the Sheriff is alive."],
+              ["Parity Win Block Mode", "At Exact Parity Only / Always While Sheriff Alive", "“Exact”: only suppress at a tie. “Always”: suppress for as long as the Sheriff lives."]
+            ]) + "<p class='note'>Host-authoritative — applies to everyone when on; the host is warned in the lobby if not everyone has the mod.</p>",
+            de: tbl(["Option", "Werte", "Funktion"], [
+              ["Sheriff Prevents Killer Parity Win", "Off / On", "Unterdrückt den Impostor/Jackal-Parity-Win, solange der Sheriff lebt."],
+              ["Parity Win Block Mode", "At Exact Parity Only / Always While Sheriff Alive", "„Exact“: nur bei Gleichstand unterdrücken. „Always“: immer, solange der Sheriff lebt."]
+            ]) + "<p class='note'>Host-autoritativ — wirkt für alle, wenn aktiv; der Host wird in der Lobby gewarnt, falls nicht alle den Mod haben.</p>"
+          }
+        },
+        {
+          id: "swapper-fix",
+          title: { en: "Swapper can fix Lights / Comms", de: "Swapper kann Licht / Komms reparieren" },
+          badges: [{ en: "Crewmate → Swapper", de: "Crewmate → Swapper" }],
+          summary: {
+            en: "Lets the Swapper use the Lights and/or Comms panels, which TOR normally blocks.",
+            de: "Erlaubt dem Swapper, das Licht- und/oder Komms-Panel zu nutzen, was TOR normalerweise sperrt."
+          },
+          body: {
+            en: tbl(["Option", "Values", "What it does"], [
+              ["Swapper Can Fix Lights", "Off / On", "Allows the Swapper to use the lights panel."],
+              ["Swapper Can Fix Comms", "Off / On", "Allows the Swapper to use the comms panel."]
+            ]) + "<p class='note'>TOR explicitly blocks both; these options lift that locally.</p>",
+            de: tbl(["Option", "Werte", "Funktion"], [
+              ["Swapper Can Fix Lights", "Off / On", "Erlaubt dem Swapper, das Licht-Panel zu benutzen."],
+              ["Swapper Can Fix Comms", "Off / On", "Erlaubt dem Swapper, das Komms-Panel zu benutzen."]
+            ]) + "<p class='note'>TOR sperrt beides explizit; diese Optionen heben das lokal auf.</p>"
+          }
+        },
+        {
+          id: "medic-reshield",
+          title: { en: "Medic can reshield", de: "Medic kann neu schilden" },
+          badges: [{ en: "Crewmate → Medic", de: "Crewmate → Medic" }],
+          summary: {
+            en: "Gives the Medic a once-per-meeting unshield button to remove and re-assign the shield.",
+            de: "Gibt dem Medic einen Unshield-Button (einmal pro Meeting), um das Schild abzunehmen und neu zu vergeben."
+          },
+          body: {
+            en: tbl(["Option", "Values", "What it does"], [
+              ["Medic Can Reshield", "Off / On", "Medic gets an Unshield button (G) once per meeting to remove the shield and re-assign it."]
+            ]) + "<p class='note'>The shield-reset RPC (ID 249) is sent to all clients, so kill suppression stays consistent everywhere.</p>",
+            de: tbl(["Option", "Werte", "Funktion"], [
+              ["Medic Can Reshield", "Off / On", "Medic erhält einmal pro Meeting einen Unshield-Button (G), um das Schild abzunehmen und neu zu vergeben."]
+            ]) + "<p class='note'>Das Schild-Reset-RPC (ID 249) wird an alle Clients gesendet, sodass die Kill-Unterdrückung überall konsistent bleibt.</p>"
+          }
+        },
+        {
+          id: "timemaster",
+          title: { en: "Time Master unguessable after shield saved a kill", de: "Time Master unratbar, nachdem das Schild einen Kill verhinderte" },
+          badges: [{ en: "Crewmate → Time Master", de: "Crewmate → Time Master" }],
+          summary: {
+            en: "Once the Time Master's shield blocks a kill, he can no longer be guessed.",
+            de: "Sobald das Schild des Time Master einen Kill verhindert, kann er nicht mehr erraten werden."
+          },
+          body: {
+            en: tbl(["Option", "Values", "What it does"], [
+              ["Time Master Unguessable After Shield Saved A Kill", "Off / On", "Time Master can't be guessed in Guesser mode once his shield has prevented a kill."]
+            ]) + "<p class='note'>He disappears from the guess list and a correct guess is blocked (no death, no shot consumed).</p>",
+            de: tbl(["Option", "Werte", "Funktion"], [
+              ["Time Master Unguessable After Shield Saved A Kill", "Off / On", "Time Master ist im Guesser-Modus nicht ratbar, sobald sein Schild einen Kill verhindert hat."]
+            ]) + "<p class='note'>Er verschwindet aus der Guess-Liste, und ein korrekter Guess wird blockiert (kein Tod, kein Schuss-Verbrauch).</p>"
+          }
+        },
+        {
+          id: "trapper-limp",
+          title: { en: "Trapped players limp / Trapper self-limp", de: "Gefangene Spieler hinken / Trapper-Selbst-Hinken" },
+          badges: [{ en: "Crewmate → Trapper", de: "Crewmate → Trapper" }],
+          summary: {
+            en: "Players who step in a trap keep limping after the freeze; the Trapper can also slow himself.",
+            de: "Spieler, die in eine Falle treten, hinken nach dem Freeze weiter; der Trapper kann sich auch selbst verlangsamen."
+          },
+          body: {
+            en: tbl(["Option", "Values", "What it does"], [
+              ["Trapped Players Limp", "Off / On", "Players who stepped in a trap limp for <code>Limp Duration</code> seconds after the freeze."],
+              ["Trapper Can Self-Limp", "Off / On", "Trapper gets a toggle button (H) to slow himself down."],
+              ["Limp Speed Multiplier", "0.25–0.9×", "Speed while limping."],
+              ["Limp Duration After Freeze", "1–20 s", "How long the limp lasts after the freeze ends."]
+            ]),
+            de: tbl(["Option", "Werte", "Funktion"], [
+              ["Trapped Players Limp", "Off / On", "Spieler, die in eine Falle getreten sind, hinken nach dem Freeze noch <code>Limp Duration</code> Sekunden."],
+              ["Trapper Can Self-Limp", "Off / On", "Trapper erhält einen Toggle-Button (H), um sich selbst zu verlangsamen."],
+              ["Limp Speed Multiplier", "0,25–0,9×", "Geschwindigkeit während des Hinkens."],
+              ["Limp Duration After Freeze", "1–20 s", "Wie lange das Hinken nach dem Freeze anhält."]
+            ])
+          }
+        },
+        {
+          id: "spy-vent",
+          title: { en: "Spy can fully vent", de: "Spy kann voll venten" },
+          badges: [{ en: "Crewmate → Spy", de: "Crewmate → Spy" }],
+          summary: {
+            en: "Lets the Spy travel through vents like an Engineer, not just enter/exit.",
+            de: "Erlaubt dem Spy, wie ein Ingenieur durch Vents zu reisen, nicht nur betreten/verlassen."
+          },
+          body: {
+            en: tbl(["Option", "Values", "What it does"], [
+              ["Spy Can Fully Vent", "Off / On", "Spy can not only enter/exit vents but travel inside them like an Engineer."]
+            ]) + "<p class='note'>TOR only allows enter/exit; this option unlocks the directional arrows.</p>",
+            de: tbl(["Option", "Werte", "Funktion"], [
+              ["Spy Can Fully Vent", "Off / On", "Spy kann Vents nicht nur betreten/verlassen, sondern wie ein Ingenieur darin reisen."]
+            ]) + "<p class='note'>TOR erlaubt nur Betreten/Verlassen; diese Option schaltet die Richtungspfeile frei.</p>"
+          }
+        }
+      ]
+    },
+    {
+      id: "neutral",
+      title: { en: "New options — Neutral", de: "Neue Optionen — Neutral" },
+      entries: [
+        {
+          id: "vulture-eat",
+          title: { en: "Vulture counts guessed players as eaten", de: "Vulture zählt erratene Spieler als gefressen" },
+          badges: [{ en: "Neutral → Vulture", de: "Neutral → Vulture" }, { en: "Host-authoritative", de: "Host-autoritativ" }],
+          summary: {
+            en: "A Vulture in Guesser mode gets +1 body when he correctly guesses a player.",
+            de: "Ein Vulture im Guesser-Modus erhält +1 Körper, wenn er einen Spieler korrekt errät."
+          },
+          body: {
+            en: tbl(["Option", "Values", "What it does"], [
+              ["Vulture Counts Guessed Players As Eaten", "Off / On", "Vulture gets +1 body when he guesses a player in Guesser mode."],
+              ["Play Eat Sound On Counted Guess", "Off / On", "Plays the eat sound on a counted guess (audible to everyone)."]
+            ]) + "<p class='note'>Only the directly guessed player counts; a lover partner who dies alongside does not.</p>",
+            de: tbl(["Option", "Werte", "Funktion"], [
+              ["Vulture Counts Guessed Players As Eaten", "Off / On", "Vulture erhält +1 Körper, wenn er im Guesser-Modus einen Spieler errät."],
+              ["Play Eat Sound On Counted Guess", "Off / On", "Spielt den Fress-Sound bei einem gewerteten Guess ab (hörbar für alle)."]
+            ]) + "<p class='note'>Nur der direkt erratene Spieler zählt; ein mitsterbender Liebhaber-Partner nicht.</p>"
+          }
+        },
+        {
+          id: "sidekick-kill",
+          title: { en: "Sidekick can kill Jackal", de: "Sidekick kann Jackal töten" },
+          badges: [{ en: "Neutral → Jackal → Sidekick", de: "Neutral → Jackal → Sidekick" }],
+          summary: {
+            en: "Lets the Sidekick target the Jackal for a kill (betrayal).",
+            de: "Erlaubt dem Sidekick, den Jackal als Kill-Ziel zu wählen (Verrat)."
+          },
+          body: {
+            en: tbl(["Option", "Values", "What it does"], [
+              ["Sidekick Can Kill Jackal", "Off / On", "Sidekick can select the Jackal as a kill target."]
+            ]) + "<p class='note'>Whether the Sidekick is then promoted to Jackal is governed by TOR's own option.</p>",
+            de: tbl(["Option", "Werte", "Funktion"], [
+              ["Sidekick Can Kill Jackal", "Off / On", "Sidekick kann den Jackal als Kill-Ziel auswählen."]
+            ]) + "<p class='note'>Ob der Sidekick danach zum Jackal befördert wird, steuert TORs eigene Option.</p>"
+          }
+        },
+        {
+          id: "lawyer-lover-tracking",
+          title: { en: "Lawyer / Lover position tracking", de: "Anwalt- / Liebhaber-Positionsanzeige" },
+          badges: [{ en: "Neutral → Lawyer · Modifier → Lover", de: "Neutral → Lawyer · Modifier → Lover" }],
+          summary: {
+            en: "Lets the Lawyer see their target, and a Lover see their partner, on the map.",
+            de: "Lässt den Anwalt sein Ziel und einen Liebhaber seinen Partner auf der Karte sehen."
+          },
+          body: {
+            en: tbl(["Option", "Values", "What it does"], [
+              ["Lawyer Knows Target Position", "Off / On", "Lawyer sees their target on the map."],
+              ["…Last Position Visible In Meeting", "Off / On", "Marker stays at the last known position during meetings."],
+              ["Lover Knows Partner Position", "Off / On", "Lover sees their partner on the map."],
+              ["…Last Position Visible In Meeting", "Off / On", "Marker stays at the last known position during meetings."]
+            ]),
+            de: tbl(["Option", "Werte", "Funktion"], [
+              ["Lawyer Knows Target Position", "Off / On", "Anwalt sieht sein Ziel auf der Karte."],
+              ["…Last Position Visible In Meeting", "Off / On", "Marker bleibt im Meeting auf der letzten bekannten Position."],
+              ["Lover Knows Partner Position", "Off / On", "Liebhaber sieht seinen Partner auf der Karte."],
+              ["…Last Position Visible In Meeting", "Off / On", "Marker bleibt im Meeting auf der letzten bekannten Position."]
+            ])
+          }
+        }
+      ]
+    },
+    {
+      id: "impostor",
+      title: { en: "New options — Impostor", de: "Neue Optionen — Impostor" },
+      entries: [
+        {
+          id: "bomber-cancel",
+          title: { en: "Bomber can cancel bomb", de: "Bomber kann Bombe abbrechen" },
+          badges: [{ en: "Impostor → Bomber", de: "Impostor → Bomber" }],
+          summary: {
+            en: "Gives the Bomber a cancel button to remove a placed bomb at any time.",
+            de: "Gibt dem Bomber einen Abbrechen-Button, um eine gelegte Bombe jederzeit zu entfernen."
+          },
+          body: {
+            en: tbl(["Option", "Values", "What it does"], [
+              ["Bomber Can Cancel Bomb", "Off / On", "Bomber gets a cancel button (G) that removes the bomb at any time."]
+            ]) + "<p class='note'>Broadcast via RPC 252 to all clients.</p>",
+            de: tbl(["Option", "Werte", "Funktion"], [
+              ["Bomber Can Cancel Bomb", "Off / On", "Bomber erhält einen Abbrechen-Button (G), der die Bombe jederzeit entfernt."]
+            ]) + "<p class='note'>Broadcast via RPC 252 an alle Clients.</p>"
+          }
+        },
+        {
+          id: "trickster-mixup",
+          title: { en: "Trickster avatar mixup sabotage", de: "Trickster Avatar-Verwechslungs-Sabotage" },
+          badges: [{ en: "Impostor → Trickster", de: "Impostor → Trickster" }],
+          summary: {
+            en: "A new button swaps every living player's skin for a configured duration.",
+            de: "Ein neuer Button tauscht die Skins aller lebenden Spieler für eine konfigurierte Zeit."
+          },
+          body: {
+            en: tbl(["Option", "Values", "What it does"], [
+              ["Trickster Avatar Mixup Sabotage", "Off / On", "New button (C): all living players swap skins for a configured time."],
+              ["Avatar Mixup Sabotage Cooldown", "10–60 s", "Cooldown of the button."],
+              ["Avatar Mixup Sabotage Duration", "3–30 s", "How long the mixup lasts."]
+            ]) + "<p class='note'>Shares its cooldown with Lights-Out. Works on all maps (no Fungle dependency).</p>",
+            de: tbl(["Option", "Werte", "Funktion"], [
+              ["Trickster Avatar Mixup Sabotage", "Off / On", "Neuer Button (C): Alle lebenden Spieler tauschen ihre Skins für eine konfigurierte Zeit."],
+              ["Avatar Mixup Sabotage Cooldown", "10–60 s", "Cooldown des Buttons."],
+              ["Avatar Mixup Sabotage Duration", "3–30 s", "Wie lange die Verwechslung dauert."]
+            ]) + "<p class='note'>Teilt sich den Cooldown mit Lights-Out. Funktioniert auf allen Maps (keine Fungle-Abhängigkeit).</p>"
+          }
+        }
+      ]
+    },
+    {
+      id: "settings",
+      title: { en: "New options — TOR Settings & Modifier", de: "Neue Optionen — TOR Settings & Modifier" },
+      entries: [
+        {
+          id: "meeting-duration",
+          title: { en: "Override meeting duration", de: "Meeting-Dauer überschreiben" },
+          badges: [{ en: "TOR Settings", de: "TOR Settings" }, { en: "Host-authoritative", de: "Host-autoritativ" }],
+          summary: {
+            en: "Dynamically scales discussion and voting time from the alive/dead counts at meeting start.",
+            de: "Skaliert Diskussions- und Abstimmungszeit dynamisch aus den Lebend/Tot-Zahlen bei Meeting-Start."
+          },
+          body: {
+            en: tbl(["Option", "Range", "What it does"], [
+              ["Override Meeting Duration", "Off / On", "Master toggle for dynamic discussion/voting time."],
+              ["Discussion Base Time", "0–120 s", "Base time for discussion."],
+              ["Discussion Per Alive Player", "0–30 s", "+X seconds per living player."],
+              ["Discussion Reduction Per Dead Player", "0–30 s", "−X seconds per dead player."],
+              ["Voting Base Time", "0–120 s", "Base time for voting."],
+              ["Voting Per Alive Player", "0–30 s", "+X seconds per living player."],
+              ["Voting Reduction Per Dead Player", "0–30 s", "−X seconds per dead player."]
+            ]) + "<p class='note'>Host-authoritative (SyncOptions to all). Formula: <code>Base + (alive × PerAlive) − (dead × PerDead)</code>, min 0. The host's configured times are restored when the game ends.</p>",
+            de: tbl(["Option", "Bereich", "Funktion"], [
+              ["Override Meeting Duration", "Off / On", "Master-Toggle für dynamische Diskussions-/Abstimmungszeit."],
+              ["Discussion Base Time", "0–120 s", "Basiszeit für die Diskussion."],
+              ["Discussion Per Alive Player", "0–30 s", "+X Sekunden pro lebendem Spieler."],
+              ["Discussion Reduction Per Dead Player", "0–30 s", "−X Sekunden pro totem Spieler."],
+              ["Voting Base Time", "0–120 s", "Basiszeit für die Abstimmung."],
+              ["Voting Per Alive Player", "0–30 s", "+X Sekunden pro lebendem Spieler."],
+              ["Voting Reduction Per Dead Player", "0–30 s", "−X Sekunden pro totem Spieler."]
+            ]) + "<p class='note'>Host-autoritativ (SyncOptions an alle). Formel: <code>Base + (alive × PerAlive) − (dead × PerDead)</code>, min. 0. Die konfigurierten Zeiten des Hosts werden am Spielende wiederhergestellt.</p>"
+          }
+        },
+        {
+          id: "inverted-vision",
+          title: { en: "Inverted vision", de: "Invertierte Sicht" },
+          badges: [{ en: "Modifier → Invert", de: "Modifier → Invert" }],
+          summary: {
+            en: "Inverts the screen colors (a true negative) while the Invert modifier is active.",
+            de: "Invertiert die Bildschirmfarben (echtes Negativ), solange der Invert-Modifier aktiv ist."
+          },
+          body: {
+            en: tbl(["Option", "Values", "What it does"], [
+              ["Inverted Vision", "Off / On", "Inverts screen colors (a true color negative) during the Invert modifier."]
+            ]) + "<p class='note'>No external shader file needed — uses Unity's built-in <code>Hidden/Internal-Colored</code> shader.</p>",
+            de: tbl(["Option", "Werte", "Funktion"], [
+              ["Inverted Vision", "Off / On", "Invertiert die Bildschirmfarben (echtes Farb-Negativ) während des Invert-Modifiers."]
+            ]) + "<p class='note'>Kein externes Shader-File nötig — nutzt Unitys eingebauten <code>Hidden/Internal-Colored</code>-Shader.</p>"
+          }
+        },
+        {
+          id: "tiebreaker",
+          title: { en: "Tiebreaker quantity", de: "Tiebreaker-Anzahl" },
+          badges: [{ en: "Modifier → Tiebreaker", de: "Modifier → Tiebreaker" }],
+          summary: {
+            en: "Allows up to 3 Tiebreakers at once.",
+            de: "Erlaubt bis zu 3 Tiebreaker gleichzeitig."
+          },
+          body: {
+            en: tbl(["Option", "Values", "What it does"], [
+              ["Tiebreaker Quantity (max 3)", "1 / 2 / 3", "Allows up to 3 Tiebreakers at once."]
+            ]) + "<p class='note'>On a tie, the candidate with the most Tiebreaker votes wins. If those Tiebreakers are also tied, it stays a tie.</p>",
+            de: tbl(["Option", "Werte", "Funktion"], [
+              ["Tiebreaker Quantity (max 3)", "1 / 2 / 3", "Erlaubt bis zu 3 Tiebreaker gleichzeitig."]
+            ]) + "<p class='note'>Bei einem Unentschieden gewinnt der Kandidat mit den meisten Tiebreaker-Stimmen. Sind auch diese Tiebreaker im Gleichstand, bleibt es ein Tie.</p>"
+          }
+        }
+      ]
+    },
+    {
+      id: "manager",
+      title: { en: "Mod Manager & version handshake", de: "Mod Manager & Versions-Handshake" },
+      entries: [
+        {
+          id: "mod-manager",
+          title: { en: "Mod Manager", de: "Mod Manager" },
+          badges: [{ en: "F2", de: "F2" }],
+          summary: {
+            en: "An in-game UI listing companion mods, versions, update status and per-mod toggles.",
+            de: "Eine In-Game-UI mit Begleit-Mods, Versionen, Update-Status und Per-Mod-Toggles."
+          },
+          body: {
+            en: "<p>An in-game UI listing the installed companion mods, their versions, update status, and per-mod enable/disable toggles. Asset-cached, so repeatedly opening it or toggling no longer leaks textures, sprites, or materials.</p><p>Since 1.1.0 it also has an <strong>Update All</strong> header button (sequential, with a summary line) and shows each updatable mod's <strong>release notes</strong> in its entry — both from the already-fetched GitHub JSON (no extra API calls), and both degrade gracefully for older installed updaters that lack the new hooks.</p>",
+            de: "<p>Eine In-Game-UI, die die installierten Begleit-Mods, ihre Versionen, den Update-Status und Per-Mod-Enable/Disable-Toggles auflistet. Asset-gecacht, sodass wiederholtes Öffnen oder Umschalten keine Texturen, Sprites oder Materialien mehr leakt.</p><p>Seit 1.1.0 gibt es zudem einen <strong>Update-All</strong>-Header-Button (sequentiell, mit Zusammenfassungs-Zeile) und die Anzeige der <strong>Release Notes</strong> jedes aktualisierbaren Mods in seinem Eintrag — beides aus dem bereits geladenen GitHub-JSON (keine zusätzlichen API-Calls) und beides degradiert sauber für ältere installierte Updater ohne die neuen Hooks.</p>"
+          }
+        },
+        {
+          id: "mod-check",
+          title: { en: "Combined lobby Mod-Check", de: "Kombinierter Lobby-Mod-Check" },
+          badges: [{ en: "F1", de: "F1" }],
+          summary: {
+            en: "One combined per-player version overview when both mods are installed.",
+            de: "Eine kombinierte Per-Spieler-Versionsübersicht, wenn beide Mods installiert sind."
+          },
+          body: {
+            en: "<p>When the Chance mod is also installed, the lobby shows a single per-player version overview (green ok / red mismatch / gray missing) that Useful TOR Stuff renders, instead of two separate warning lists. Each mod publishes its snapshot over the documented <code>TORMods.Handshake.*</code> AppDomain keys; Chance suppresses its own block while Useful is present. HostFix is excluded by design (host-only). Host-side by default; the RPC wire format is unchanged.</p>",
+            de: "<p>Wenn der Chance-Mod ebenfalls installiert ist, zeigt die Lobby eine einzige Per-Spieler-Versionsübersicht (grün ok / rot Abweichung / grau fehlt), die Useful TOR Stuff rendert, statt zweier getrennter Warnlisten. Jeder Mod veröffentlicht seinen Snapshot über die dokumentierten <code>TORMods.Handshake.*</code>-AppDomain-Keys; Chance unterdrückt seinen eigenen Block, solange Useful präsent ist. HostFix ist bewusst ausgeschlossen (host-only). Standardmäßig host-seitig; das RPC-Wire-Format ist unverändert.</p>"
+          }
+        },
+        {
+          id: "handshake",
+          title: { en: "Mod version handshake (RPC 253)", de: "Mod-Versions-Handshake (RPC 253)" },
+          summary: {
+            en: "Each client broadcasts its version + GUID at lobby time so everyone knows if builds match.",
+            de: "Jeder Client sendet bei Lobby-Eintritt Version + GUID, damit alle wissen, ob die Builds zusammenpassen."
+          },
+          body: {
+            en: "<p>Each client broadcasts its version and assembly GUID at lobby time so every client can tell whether all players share the same build (the precondition for the client-side Snitch fix). The handshake cache is cleared on joining a lobby so it only reflects the current lobby. The wire format is unchanged across 1.0.x, so mixed lobbies keep working.</p>",
+            de: "<p>Jeder Client sendet bei Lobby-Eintritt seine Version und Assembly-GUID, damit jeder Client erkennt, ob alle Spieler denselben Build haben (die Voraussetzung für den client-seitigen Snitch-Fix). Der Handshake-Cache wird beim Beitritt zu einer Lobby geleert, sodass er nur die aktuelle Lobby widerspiegelt. Das Wire-Format ist über 1.0.x hinweg unverändert, sodass gemischte Lobbys weiter funktionieren.</p>"
+          }
+        }
+      ]
+    }
+  ]
+};
+
+const MODS = { chance: CHANCE, useful: USEFUL };
