@@ -8,7 +8,7 @@ const UI = {
     langName: "English",
     nav_home: "Home",
     nav_chance: "Chance Modifier",
-    nav_useful: "Useful TOR Stuff",
+    nav_useful: "Forgotten Fixes",
     search_placeholder: "Search features…",
     search_none: "No entries match your search.",
     on_this_page: "On this page",
@@ -36,7 +36,7 @@ const UI = {
     langName: "Deutsch",
     nav_home: "Start",
     nav_chance: "Chance Modifier",
-    nav_useful: "Useful TOR Stuff",
+    nav_useful: "Forgotten Fixes",
     search_placeholder: "Features durchsuchen…",
     search_none: "Keine Einträge passen zu deiner Suche.",
     on_this_page: "Auf dieser Seite",
@@ -302,9 +302,9 @@ const CHANCE = {
  * ==========================================================================*/
 const USEFUL = {
   key: "useful",
-  name: "Useful TOR Stuff",
-  fullName: { en: "Useful TOR Stuff", de: "Useful TOR Stuff" },
-  version: "1.1.0",
+  name: "Forgotten Fixes",
+  fullName: { en: "TOR - Forgotten Fixes", de: "TOR - Forgotten Fixes" },
+  version: "1.1.13",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/Useful-TOR-stuff",
   download: "https://github.com/DaUnknown-0/Useful-TOR-stuff/releases/latest",
@@ -313,8 +313,8 @@ const USEFUL = {
     de: "Ein Bündel aus Komfort-Fixes und neuen Rollen-Optionen für TOR 4.8.0, plus ein Mod-übergreifender Mod Manager."
   },
   intro: {
-    en: "Useful TOR Stuff adds new options to TOR 4.8.0 and fixes bugs without touching TOR's source. It resolves TOR types via reflection, so every patch degrades to a no-op (with a log warning) rather than crashing if TOR's internals change. Most win-checks and meeting overrides are host-authoritative — they apply regardless of who has the mod.",
-    de: "Useful TOR Stuff fügt TOR 4.8.0 neue Optionen hinzu und behebt Bugs ohne Änderung an TORs Quellcode. Es löst TOR-Typen per Reflection auf, sodass jeder Patch zu einem No-Op (mit Log-Warnung) degradiert, statt abzustürzen, wenn sich TORs Interna ändern. Die meisten Win-Checks und Meeting-Overrides sind host-autoritativ — sie wirken unabhängig davon, wer den Mod hat."
+    en: "TOR - Forgotten Fixes (formerly Useful TOR Stuff) adds new options to TOR 4.8.0 and fixes bugs without touching TOR's source. It resolves TOR types via reflection, so every patch degrades to a no-op (with a log warning) rather than crashing if TOR's internals change. Most win-checks and meeting overrides are host-authoritative — they apply regardless of who has the mod.",
+    de: "TOR - Forgotten Fixes (früher Useful TOR Stuff) fügt TOR 4.8.0 neue Optionen hinzu und behebt Bugs ohne Änderung an TORs Quellcode. Es löst TOR-Typen per Reflection auf, sodass jeder Patch zu einem No-Op (mit Log-Warnung) degradiert, statt abzustürzen, wenn sich TORs Interna ändern. Die meisten Win-Checks und Meeting-Overrides sind host-autoritativ — sie wirken unabhängig davon, wer den Mod hat."
   },
   install: {
     en: "<ol><li>Install <a href='https://github.com/TheOtherRolesAU/TheOtherRoles'>The Other Roles</a> into your Among Us BepInEx setup.</li><li>Download the latest <code>UsefulTORStuff.dll</code> from the releases page.</li><li>Copy it into <code>&lt;Among Us&gt;/BepInEx/plugins/</code>.</li><li>Start the game.</li></ol><p>An in-game auto-updater checks GitHub on the main menu and offers an update button.</p>",
@@ -366,8 +366,8 @@ const USEFUL = {
             de: "Ein client-seitiger Snitch-Reveal, der den Room-Map-Reset des Hosts übersteht."
           },
           body: {
-            en: "<p><strong>Problem:</strong> TOR's Snitch reveal reads <code>playerRoomMap</code>, which gets wiped on the host by a reset.</p><p><strong>Fix:</strong> a persistent own <code>roomMap</code> records every <code>ShareRoom</code> RPC. The Snitch chat, map, and HUD are reimplemented over this own map. It only takes effect when all players have Useful TOR Stuff (<code>SnitchClientFixActive</code>); otherwise TOR's original behavior (plus HostFix Fix 4) applies.</p>",
-            de: "<p><strong>Problem:</strong> TORs Snitch-Reveal liest <code>playerRoomMap</code>, die beim Host durch einen Reset verloren geht.</p><p><strong>Fix:</strong> Eine persistente eigene <code>roomMap</code> zeichnet jeden <code>ShareRoom</code>-RPC auf. Snitch-Chat, -Karte und -HUD werden über diese eigene Map reimplementiert. Wirkt nur, wenn alle Spieler Useful TOR Stuff haben (<code>SnitchClientFixActive</code>); sonst greift TORs Original (plus HostFix Fix 4).</p>"
+            en: "<p><strong>Problem:</strong> TOR's Snitch reveal reads <code>playerRoomMap</code>, which gets wiped on the host by a reset.</p><p><strong>Fix:</strong> a persistent own <code>roomMap</code> records every <code>ShareRoom</code> RPC. The Snitch chat, map, and HUD are reimplemented over this own map. It only takes effect when all players have Forgotten Fixes (<code>SnitchClientFixActive</code>); otherwise TOR's original behavior (plus TOR - Hostfix Fix 4) applies.</p>",
+            de: "<p><strong>Problem:</strong> TORs Snitch-Reveal liest <code>playerRoomMap</code>, die beim Host durch einen Reset verloren geht.</p><p><strong>Fix:</strong> Eine persistente eigene <code>roomMap</code> zeichnet jeden <code>ShareRoom</code>-RPC auf. Snitch-Chat, -Karte und -HUD werden über diese eigene Map reimplementiert. Wirkt nur, wenn alle Spieler Forgotten Fixes haben (<code>SnitchClientFixActive</code>); sonst greift TORs Original (plus TOR - Hostfix Fix 4).</p>"
           }
         }
       ]
@@ -419,15 +419,17 @@ const USEFUL = {
           title: { en: "Medic can reshield", de: "Medic kann neu schilden" },
           badges: [{ en: "Crewmate → Medic", de: "Crewmate → Medic" }],
           summary: {
-            en: "Gives the Medic a once-per-meeting unshield button to remove and re-assign the shield.",
-            de: "Gibt dem Medic einen Unshield-Button (einmal pro Meeting), um das Schild abzunehmen und neu zu vergeben."
+            en: "Once-per-meeting unshield button to remove and re-assign the shield, plus a limited pool of shield charges.",
+            de: "Unshield-Button (einmal pro Meeting) zum Abnehmen und Neuvergeben des Schilds, plus ein begrenzter Vorrat an Schild-Ladungen."
           },
           body: {
             en: tbl(["Option", "Values", "What it does"], [
-              ["Medic Can Reshield", "Off / On", "Medic gets an Unshield button (G) once per meeting to remove the shield and re-assign it."]
+              ["Medic Can Reshield", "Off / On", "Medic gets an Unshield button (G) once per meeting to remove the shield and re-assign it."],
+              ["Shield Charges", "∞ / 1–10", "Total shield placements per game, shown as <code>X/Y</code>. A charge is spent only on placement (∞ = unlimited)."]
             ]) + "<p class='note'>The shield-reset RPC (ID 249) is sent to all clients, so kill suppression stays consistent everywhere.</p>",
             de: tbl(["Option", "Werte", "Funktion"], [
-              ["Medic Can Reshield", "Off / On", "Medic erhält einmal pro Meeting einen Unshield-Button (G), um das Schild abzunehmen und neu zu vergeben."]
+              ["Medic Can Reshield", "Off / On", "Medic erhält einmal pro Meeting einen Unshield-Button (G), um das Schild abzunehmen und neu zu vergeben."],
+              ["Shield Charges", "∞ / 1–10", "Schild-Platzierungen pro Spiel insgesamt, angezeigt als <code>X/Y</code>. Eine Ladung wird nur beim Platzieren verbraucht (∞ = unbegrenzt)."]
             ]) + "<p class='note'>Das Schild-Reset-RPC (ID 249) wird an alle Clients gesendet, sodass die Kill-Unterdrückung überall konsistent bleibt.</p>"
           }
         },
@@ -486,6 +488,44 @@ const USEFUL = {
             de: tbl(["Option", "Werte", "Funktion"], [
               ["Spy Can Fully Vent", "Off / On", "Spy kann Vents nicht nur betreten/verlassen, sondern wie ein Ingenieur darin reisen."]
             ]) + "<p class='note'>TOR erlaubt nur Betreten/Verlassen; diese Option schaltet die Richtungspfeile frei.</p>"
+          }
+        },
+        {
+          id: "spy-evil-flash",
+          title: { en: "Spy evil flash on death", de: "Spy Evil-Flash beim Tod" },
+          badges: [{ en: "Crewmate → Spy", de: "Crewmate → Spy" }],
+          summary: {
+            en: "When a Spy who also has the VIP modifier dies, everyone sees a red impostor-coloured flash — except, optionally, the Seer.",
+            de: "Stirbt ein Spy, der auch den VIP-Modifier hat, sehen alle einen roten Impostor-Flash — außer optional dem Seher."
+          },
+          body: {
+            en: tbl(["Option", "Values", "What it does"], [
+              ["Evil Flash on Death", "Off / On", "When a Spy who also has the VIP modifier is killed, all living players see a red (impostor-coloured) flash."],
+              ["Seer Sees True Flash", "Off / On", "The Seer instead sees the true crewmate-white flash, revealing the Spy's real alignment."]
+            ]) + "<p class='note'>Only applies when the Spy also has VIP. \"Seer Sees True Flash\" only differs while VIP colours are on; otherwise the Seer sees the same red flash as everyone.</p>",
+            de: tbl(["Option", "Werte", "Funktion"], [
+              ["Evil Flash on Death", "Off / On", "Wird ein Spy mit VIP-Modifier getötet, sehen alle lebenden Spieler einen roten (Impostor-farbigen) Flash."],
+              ["Seer Sees True Flash", "Off / On", "Der Seher sieht stattdessen den echten crewmate-weißen Flash und erkennt so die wahre Gesinnung des Spy."]
+            ]) + "<p class='note'>Greift nur, wenn der Spy auch VIP ist. „Seer Sees True Flash\" unterscheidet sich nur bei aktiven VIP-Farben; sonst sieht der Seher denselben roten Flash wie alle.</p>"
+          }
+        },
+        {
+          id: "spy-shifter",
+          title: { en: "Shifter interaction with the Spy", de: "Shifter-Interaktion mit dem Spy" },
+          badges: [{ en: "Crewmate → Spy", de: "Crewmate → Spy" }],
+          summary: {
+            en: "Controls what happens when the Shifter targets the Spy.",
+            de: "Steuert, was passiert, wenn der Shifter den Spy als Ziel wählt."
+          },
+          body: {
+            en: tbl(["Option", "Values", "What it does"], [
+              ["Shifter Interaction", "Shift Succeeds / Shifter Dies / Shift Cancelled", "<em>Shift Succeeds</em>: vanilla. <em>Shifter Dies</em>: the Shifter is exiled and the shift is cancelled. <em>Shift Cancelled</em>: the shift silently fails, nobody dies."],
+              ["Shifter Gets Shift Back", "Off / On", "In <em>Shift Cancelled</em> mode: keep the player as the Shifter and return the shift button instead of consuming the shift."]
+            ]),
+            de: tbl(["Option", "Werte", "Funktion"], [
+              ["Shifter Interaction", "Shift Succeeds / Shifter Dies / Shift Cancelled", "<em>Shift Succeeds</em>: Vanilla. <em>Shifter Dies</em>: Der Shifter wird exiliert, der Shift abgebrochen. <em>Shift Cancelled</em>: Der Shift schlägt still fehl, niemand stirbt."],
+              ["Shifter Gets Shift Back", "Off / On", "Im Modus <em>Shift Cancelled</em>: Spieler bleibt Shifter und bekommt den Shift-Button zurück, statt den Shift zu verbrauchen."]
+            ])
           }
         }
       ]
@@ -650,6 +690,23 @@ const USEFUL = {
           }
         },
         {
+          id: "drunk-rename",
+          title: { en: "Rename Invert to \"Drunk\"", de: "Invert in „Drunk\" umbenennen" },
+          badges: [{ en: "Modifier → Invert", de: "Modifier → Invert" }],
+          summary: {
+            en: "Renames the Invert modifier (and its intro / end-screen text) to \"Drunk\", live and without a restart.",
+            de: "Benennt den Invert-Modifier (samt Intro-/End-Screen-Text) live und ohne Neustart in „Drunk\" um."
+          },
+          body: {
+            en: tbl(["Option", "Values", "What it does"], [
+              ["Rename to Drunk", "Off / On", "Renames the Invert modifier and its description to \"Drunk\"."]
+            ]) + "<p class='note'>Pure cosmetic re-theme — only changes the modifier's name and text strings, not its behaviour. Toggling it in the lobby applies instantly.</p>",
+            de: tbl(["Option", "Werte", "Funktion"], [
+              ["Rename to Drunk", "Off / On", "Benennt den Invert-Modifier und seine Beschreibung in „Drunk\" um."]
+            ]) + "<p class='note'>Rein kosmetisches Re-Theme — ändert nur Name und Texte des Modifiers, nicht sein Verhalten. Das Umschalten in der Lobby greift sofort.</p>"
+          }
+        },
+        {
           id: "tiebreaker",
           title: { en: "Tiebreaker quantity", de: "Tiebreaker-Anzahl" },
           badges: [{ en: "Modifier → Tiebreaker", de: "Modifier → Tiebreaker" }],
@@ -694,8 +751,8 @@ const USEFUL = {
             de: "Eine kombinierte Per-Spieler-Versionsübersicht, wenn beide Mods installiert sind."
           },
           body: {
-            en: "<p>When the Chance mod is also installed, the lobby shows a single per-player version overview (green ok / red mismatch / gray missing) that Useful TOR Stuff renders, instead of two separate warning lists. Each mod publishes its snapshot over the documented <code>TORMods.Handshake.*</code> AppDomain keys; Chance suppresses its own block while Useful is present. HostFix is excluded by design (host-only). Host-side by default; the RPC wire format is unchanged.</p>",
-            de: "<p>Wenn der Chance-Mod ebenfalls installiert ist, zeigt die Lobby eine einzige Per-Spieler-Versionsübersicht (grün ok / rot Abweichung / grau fehlt), die Useful TOR Stuff rendert, statt zweier getrennter Warnlisten. Jeder Mod veröffentlicht seinen Snapshot über die dokumentierten <code>TORMods.Handshake.*</code>-AppDomain-Keys; Chance unterdrückt seinen eigenen Block, solange Useful präsent ist. HostFix ist bewusst ausgeschlossen (host-only). Standardmäßig host-seitig; das RPC-Wire-Format ist unverändert.</p>"
+            en: "<p>When the Chance mod is also installed, the lobby shows a single per-player version overview (green ok / red mismatch / gray missing) that Forgotten Fixes renders, instead of two separate warning lists. Each mod publishes its snapshot over the documented <code>TORMods.Handshake.*</code> AppDomain keys; Chance suppresses its own block while Forgotten Fixes is present. TOR - Hostfix is excluded by design (host-only). Host-side by default; the RPC wire format is unchanged.</p>",
+            de: "<p>Wenn der Chance-Mod ebenfalls installiert ist, zeigt die Lobby eine einzige Per-Spieler-Versionsübersicht (grün ok / rot Abweichung / grau fehlt), die Forgotten Fixes rendert, statt zweier getrennter Warnlisten. Jeder Mod veröffentlicht seinen Snapshot über die dokumentierten <code>TORMods.Handshake.*</code>-AppDomain-Keys; Chance unterdrückt seinen eigenen Block, solange Forgotten Fixes präsent ist. TOR - Hostfix ist bewusst ausgeschlossen (host-only). Standardmäßig host-seitig; das RPC-Wire-Format ist unverändert.</p>"
           }
         },
         {
