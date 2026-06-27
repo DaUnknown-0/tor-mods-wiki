@@ -9,6 +9,7 @@ const UI = {
     nav_home: "Home",
     nav_chance: "Chance Modifier",
     nav_useful: "Forgotten Fixes",
+    nav_unknowns: "Unknown's Collection",
     search_placeholder: "Search features…",
     search_none: "No entries match your search.",
     on_this_page: "On this page",
@@ -21,8 +22,8 @@ const UI = {
     download: "Download latest",
     back_top: "Back to top",
     home_hero_kicker: "Companion mods for The Other Roles",
-    home_hero_title: "Two mods. One wiki.",
-    home_hero_sub: "Randomized chaos and a pile of quality-of-life fixes for The Other Roles 4.8.0. Click any feature to read what it does.",
+    home_hero_title: "Three mods. One wiki.",
+    home_hero_sub: "Randomized chaos, a pile of quality-of-life fixes, and brand-new custom roles for The Other Roles 4.8.0. Click any feature to read what it does.",
     home_explore: "Explore the mods",
     home_combined: "Combined feature highlights",
     open_mod: "Open wiki page",
@@ -37,6 +38,7 @@ const UI = {
     nav_home: "Start",
     nav_chance: "Chance Modifier",
     nav_useful: "Forgotten Fixes",
+    nav_unknowns: "Unknown's Collection",
     search_placeholder: "Features durchsuchen…",
     search_none: "Keine Einträge passen zu deiner Suche.",
     on_this_page: "Auf dieser Seite",
@@ -49,8 +51,8 @@ const UI = {
     download: "Neueste Version laden",
     back_top: "Nach oben",
     home_hero_kicker: "Begleit-Mods für The Other Roles",
-    home_hero_title: "Zwei Mods. Ein Wiki.",
-    home_hero_sub: "Zufalls-Chaos und ein Haufen Komfort-Fixes für The Other Roles 4.8.0. Klick auf ein Feature, um zu lesen, was es macht.",
+    home_hero_title: "Drei Mods. Ein Wiki.",
+    home_hero_sub: "Zufalls-Chaos, ein Haufen Komfort-Fixes und brandneue eigene Rollen für The Other Roles 4.8.0. Klick auf ein Feature, um zu lesen, was es macht.",
     home_explore: "Mods erkunden",
     home_combined: "Kombinierte Feature-Highlights",
     open_mod: "Wiki-Seite öffnen",
@@ -811,4 +813,140 @@ const USEFUL = {
   ]
 };
 
-const MODS = { chance: CHANCE, useful: USEFUL };
+/* ============================================================================
+ * UNKNOWN'S COLLECTION
+ * ==========================================================================*/
+const UNKNOWNS = {
+  key: "unknowns",
+  name: "Unknown's Collection",
+  fullName: { en: "Unknown's Collection — custom roles for TOR", de: "Unknown's Collection — eigene Rollen für TOR" },
+  version: "1.0.1",
+  allClients: true,
+  repo: "https://github.com/DaUnknown-0/UnknownsCollection",
+  download: "https://github.com/DaUnknown-0/UnknownsCollection/releases/latest",
+  tagline: {
+    en: "Brand-new custom roles for The Other Roles, layered on without touching TOR's source. First role: The Tesla.",
+    de: "Brandneue eigene Rollen für The Other Roles, aufgesetzt ohne Änderung an TORs Quellcode. Erste Rolle: The Tesla."
+  },
+  intro: {
+    en: "Unknown's Collection is a separate plugin that adds <strong>new roles</strong> to TOR 4.8.0 purely through Harmony patches — TOR's source is never modified, and the only hard dependency is The Other Roles. The roles are client-side, so the lobby can only be started when every player runs the same Unknown's Collection version. The first role is <strong>The Tesla</strong> (Impostor).",
+    de: "Unknown's Collection ist ein eigenständiges Plugin, das TOR 4.8.0 <strong>neue Rollen</strong> rein über Harmony-Patches hinzufügt — TORs Quellcode wird nie verändert, einzige harte Abhängigkeit ist The Other Roles. Die Rollen sind client-seitig, daher kann die Lobby nur gestartet werden, wenn alle Spieler dieselbe Unknown's-Collection-Version haben. Die erste Rolle ist <strong>The Tesla</strong> (Impostor)."
+  },
+  install: {
+    en: "<ol><li>Install <a href='https://github.com/TheOtherRolesAU/TheOtherRoles'>The Other Roles</a> into your Among Us BepInEx setup.</li><li>Download the latest <code>UnknownsCollection.dll</code> from the releases page.</li><li>Copy it into <code>&lt;Among Us&gt;/BepInEx/plugins/</code> (next to <code>TheOtherRoles.dll</code>).</li><li>Start the game. Every player who should see the role needs the mod — same version.</li></ol><p>A channel-aware in-game auto-updater checks GitHub and integrates with the Mod Manager (from Forgotten Fixes).</p>",
+    de: "<ol><li>Installiere <a href='https://github.com/TheOtherRolesAU/TheOtherRoles'>The Other Roles</a> in dein Among-Us-BepInEx-Setup.</li><li>Lade die neueste <code>UnknownsCollection.dll</code> von der Releases-Seite.</li><li>Kopiere sie nach <code>&lt;Among Us&gt;/BepInEx/plugins/</code> (neben <code>TheOtherRoles.dll</code>).</li><li>Starte das Spiel. Jeder Spieler, der die Rolle sehen soll, braucht den Mod — gleiche Version.</li></ol><p>Ein kanal-bewusster In-Game-Auto-Updater prüft GitHub und integriert sich in den Mod Manager (aus Forgotten Fixes).</p>"
+  },
+  deps: {
+    en: "<ul><li><strong>The Other Roles 4.8.0</strong> (hard dependency)</li><li><strong>BepInEx IL2CPP</strong></li><li><strong>Forgotten Fixes</strong> (optional — provides the Mod Manager the updater plugs into)</li></ul>",
+    de: "<ul><li><strong>The Other Roles 4.8.0</strong> (harte Abhängigkeit)</li><li><strong>BepInEx IL2CPP</strong></li><li><strong>Forgotten Fixes</strong> (optional — stellt den Mod Manager bereit, in den sich der Updater einklinkt)</li></ul>"
+  },
+  sections: [
+    {
+      id: "tesla",
+      title: { en: "The Tesla (Impostor)", de: "The Tesla (Impostor)" },
+      intro: {
+        en: "A normal Impostor is secretly promoted to The Tesla at game start. Instead of (or alongside) sneaking kills, the Tesla charges two players and lethally pulls them together.",
+        de: "Ein normaler Impostor wird beim Spielstart heimlich zur Tesla befördert. Statt (oder zusätzlich zu) heimlichen Kills lädt die Tesla zwei Spieler und zieht sie tödlich zusammen."
+      },
+      entries: [
+        {
+          id: "tesla-charging",
+          title: { en: "Charging the pair", de: "Das Paar laden" },
+          summary: {
+            en: "In a meeting, charge exactly two players: one +, one −. Never the same person twice, never more than two at once.",
+            de: "Im Meeting genau zwei Spieler laden: einen +, einen −. Nie dieselbe Person zweimal, nie mehr als zwei gleichzeitig."
+          },
+          body: {
+            en: "<p>During a <strong>meeting</strong>, the Tesla opens a Swapper-style selection and charges exactly two players: one <strong>positive (+)</strong> and one <strong>negative (−)</strong>. The two poles must be different players, and at most two players are charged at any time.</p>",
+            de: "<p>Während eines <strong>Meetings</strong> öffnet die Tesla eine Swapper-artige Auswahl und lädt genau zwei Spieler: einen <strong>positiven (+)</strong> und einen <strong>negativen (−)</strong>. Die beiden Pole müssen verschiedene Spieler sein, und es sind nie mehr als zwei Spieler gleichzeitig geladen.</p>"
+          }
+        },
+        {
+          id: "tesla-countdown",
+          title: { en: "Proximity countdown", de: "Nähe-Countdown" },
+          summary: {
+            en: "Too close → a hidden countdown drains. Apart pauses it (no refill). Resets only in meetings. At zero, both die.",
+            de: "Zu nah → ein versteckter Countdown läuft runter. Abstand pausiert ihn (kein Auffüllen). Reset nur im Meeting. Bei null sterben beide."
+          },
+          body: {
+            en: "<p>While the charged pair stays <strong>too close together</strong>, a hidden <strong>countdown</strong> drains. Moving apart <strong>pauses</strong> it — it does not refill — and it only resets to full <strong>in a meeting</strong>. If the countdown reaches <strong>zero</strong>, <strong>both charged players die</strong>.</p>",
+            de: "<p>Solange das geladene Paar <strong>zu nah beieinander</strong> bleibt, läuft ein versteckter <strong>Countdown</strong> runter. Abstand <strong>pausiert</strong> ihn — er füllt sich nicht auf — und er setzt sich nur <strong>im Meeting</strong> wieder auf voll zurück. Erreicht der Countdown <strong>null</strong>, <strong>sterben beide geladenen Spieler</strong>.</p>"
+          }
+        },
+        {
+          id: "tesla-warning",
+          title: { en: "What the victims see", de: "Was die Opfer sehen" },
+          summary: {
+            en: "A persistent ⚡ charged indicator; near the partner a pulsing red ⚡ danger warning + spark particles + sound — but no exact timer.",
+            de: "Ein dauerhafter ⚡-Lade-Hinweis; nahe am Partner ein pulsierender roter ⚡-Gefahr-Warner + Funken-Partikel + Sound — aber keine genaue Restzeit."
+          },
+          body: {
+            en: "<p>Charged players see a persistent <strong>⚡ charged</strong> indicator. When they get within trigger distance of their partner, it switches to a pulsing red <strong>⚡ danger</strong> warning with electric spark particles and a warning sound — but the exact remaining seconds are never shown.</p>",
+            de: "<p>Geladene Spieler sehen einen dauerhaften <strong>⚡-geladen</strong>-Hinweis. Kommen sie in Auslöse-Reichweite ihres Partners, wechselt er zu einer pulsierend roten <strong>⚡-Gefahr</strong>-Warnung mit elektrischen Funken-Partikeln und einem Warn-Sound — die genaue Restzeit wird aber nie angezeigt.</p>"
+          }
+        },
+        {
+          id: "tesla-options",
+          title: { en: "Options (Impostor tab)", de: "Optionen (Impostor-Tab)" },
+          summary: {
+            en: "Spawn rate, min players, trigger distance, countdown, min alive, self-charge.",
+            de: "Spawnrate, Min-Spieler, Auslöse-Distanz, Countdown, Min-Lebende, Selbst-Laden."
+          },
+          body: {
+            en: tbl(["Option", "Default", "What it does"], [
+              ["Tesla", "Off", "Spawn chance for the role."],
+              ["Tesla Minimum Players To Spawn", "6", "The role isn't assigned below this lobby size."],
+              ["Tesla Charge Trigger Distance", "1.5", "How close (world units) the pair must be to drain the countdown."],
+              ["Tesla Charge Countdown (sec)", "5", "Time the pair can stay close before they die."],
+              ["Tesla Minimum Alive Players For Charges", "4", "Below this many alive players, charges become harmless."],
+              ["Tesla Can Charge Itself", "Off", "Allow the Tesla to pick its own row as one pole."],
+              ["Self-Charge Also Kills The Tesla", "On", "If self-charged and triggered, whether the Tesla dies too."]
+            ]),
+            de: tbl(["Option", "Standard", "Funktion"], [
+              ["Tesla", "Off", "Spawn-Chance der Rolle."],
+              ["Tesla Minimum Players To Spawn", "6", "Die Rolle wird unter dieser Lobby-Größe nicht vergeben."],
+              ["Tesla Charge Trigger Distance", "1,5", "Wie nah (Welteinheiten) das Paar sein muss, damit der Countdown läuft."],
+              ["Tesla Charge Countdown (sec)", "5", "Wie lange das Paar nah sein darf, bevor es stirbt."],
+              ["Tesla Minimum Alive Players For Charges", "4", "Unter so vielen Lebenden werden Ladungen harmlos."],
+              ["Tesla Can Charge Itself", "Off", "Erlaubt der Tesla, die eigene Zeile als einen Pol zu wählen."],
+              ["Self-Charge Also Kills The Tesla", "On", "Ob die Tesla bei Selbst-Ladung und Auslösung mitstirbt."]
+            ])
+          }
+        },
+        {
+          id: "tesla-gating",
+          title: { en: "Client-side gating", de: "Client-seitiges Gating" },
+          badges: [{ en: "All players need the mod", de: "Alle brauchen den Mod" }],
+          summary: {
+            en: "The lobby can only be started when all players run the same Unknown's Collection version.",
+            de: "Die Lobby kann nur gestartet werden, wenn alle Spieler dieselbe Unknown's-Collection-Version haben."
+          },
+          body: {
+            en: "<p>The Tesla is a client-side role (meeting UI, charge indicators, warnings). A version handshake gates it: the lobby start is <strong>blocked</strong> until every connected player runs the same Unknown's Collection version, and the host gets a lobby warning otherwise.</p>",
+            de: "<p>Die Tesla ist eine client-seitige Rolle (Meeting-UI, Lade-Hinweise, Warnungen). Ein Versions-Handshake gated sie: Der Lobby-Start ist <strong>blockiert</strong>, bis jeder verbundene Spieler dieselbe Unknown's-Collection-Version hat; sonst bekommt der Host eine Lobby-Warnung.</p>"
+          }
+        }
+      ]
+    },
+    {
+      id: "uc-versioning",
+      title: { en: "Versioning & updater", de: "Versionierung & Updater" },
+      entries: [
+        {
+          id: "uc-channels",
+          title: { en: "Stable & test channels", de: "Stable- & Test-Kanäle" },
+          summary: {
+            en: "vX.Y.Z = stable, vX.Y.Z.W = test build. A channel-aware updater follows the shared Test Versions toggle.",
+            de: "vX.Y.Z = stable, vX.Y.Z.W = Test-Build. Ein kanal-bewusster Updater folgt dem geteilten Test-Versionen-Schalter."
+          },
+          body: {
+            en: "<p>Releases use <code>vX.Y.Z</code> for stable and <code>vX.Y.Z.W</code> for test builds (the 4th part is the test number, published as a GitHub pre-release). The shared <strong>Test Versions</strong> toggle in the Mod Manager (off by default) controls whether the <code>.W</code> suffix is shown and which channel the updater follows: off → newest stable, on → newest test build, but only when it is genuinely ahead of the latest stable. A stable <code>vX.Y.Z</code> always supersedes its own test builds.</p>",
+            de: "<p>Releases nutzen <code>vX.Y.Z</code> für Stable und <code>vX.Y.Z.W</code> für Test-Builds (die 4. Stelle ist die Testnummer, als GitHub-Prerelease veröffentlicht). Der geteilte <strong>Test-Versionen</strong>-Schalter im Mod Manager (standardmäßig aus) steuert, ob das <code>.W</code>-Suffix angezeigt wird und welchem Kanal der Updater folgt: aus → neuster Stable, an → neuster Test-Build, aber nur wenn er dem neusten Stable wirklich vorausgeht. Ein Stable <code>vX.Y.Z</code> überholt immer seine eigenen Test-Builds.</p>"
+          }
+        }
+      ]
+    }
+  ]
+};
+
+const MODS = { chance: CHANCE, useful: USEFUL, unknowns: UNKNOWNS };

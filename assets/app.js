@@ -28,6 +28,7 @@
           ${link("index.html", "nav_home")}
           ${link("chance.html", "nav_chance")}
           ${link("useful.html", "nav_useful")}
+          ${link("unknowns.html", "nav_unknowns")}
         </nav>
         <div class="lang-switch" role="group" aria-label="Language">
           <button data-lang="en" class="${lang === "en" ? "on" : ""}">EN</button>
@@ -42,7 +43,10 @@
     if (mt) mt.addEventListener("click", () => document.body.classList.toggle("sidebar-open"));
   }
   function navKey(p) {
-    return p.indexOf("chance") >= 0 ? "chance" : p.indexOf("useful") >= 0 ? "useful" : "home";
+    return p.indexOf("chance") >= 0 ? "chance"
+      : p.indexOf("useful") >= 0 ? "useful"
+      : p.indexOf("unknowns") >= 0 ? "unknowns"
+      : "home";
   }
 
   function setLang(next) {
@@ -176,6 +180,8 @@
       { mod: "useful", de: "Dynamische Meeting-Dauer nach Spielerzahl", en: "Dynamic meeting duration by player count" },
       { mod: "useful", de: "Bloody Lag-Drosselung & Killer-Map-Fix", en: "Bloody lag throttle & killer-map fix" },
       { mod: "useful", de: "In-Game Mod Manager mit Update-All", en: "In-game Mod Manager with Update-All" },
+      { mod: "unknowns", de: "The Tesla — lade ein +/−-Paar, das bei Nähe stirbt", en: "The Tesla — charge a +/− pair that dies when too close" },
+      { mod: "unknowns", de: "Eigene Rollen ohne Änderung an TORs Quellcode", en: "Custom roles without touching TOR's source" },
     ];
     const hl = highlights
       .map(
@@ -195,6 +201,7 @@
       <div class="mod-cards">
         ${card(CHANCE)}
         ${card(USEFUL)}
+        ${card(UNKNOWNS)}
       </div>
 
       <h2 class="center">${t("home_combined")}</h2>
@@ -318,6 +325,7 @@
     if (page === "home") renderHome();
     else if (page === "chance") renderModPage(CHANCE);
     else if (page === "useful") renderModPage(USEFUL);
+    else if (page === "unknowns") renderModPage(UNKNOWNS);
     wireBackTop();
     // keep scroll position stable on language switch
   }

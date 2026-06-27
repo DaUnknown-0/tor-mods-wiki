@@ -24,6 +24,7 @@
   /* per-mod accents (used sparingly: rules, dots, badges) */
   --chance: #ff8c42;        /* warm amber */
   --useful: #34d1bf;        /* cool teal */
+  --unknowns: #1fb8ff;      /* electric cyan */
 
   --radius: 16px;
   --radius-sm: 10px;
@@ -152,6 +153,7 @@ body[data-page="home"] #sidebar { display: none; }
   background: var(--chance);
 }
 .mod-hero.useful::before { background: var(--useful); }
+.mod-hero.unknowns::before { background: var(--unknowns); }
 .mod-hero-inner { padding: 0; }
 .mod-hero .kicker { margin: 0 0 14px; }
 .mod-hero h1 {
@@ -303,6 +305,7 @@ tbody tr:hover { background: rgba(255,255,255,.018); }
 }
 .mod-card::before { content: ""; position: absolute; top: 0; left: 0; width: 44px; height: 3px; background: var(--chance); }
 .mod-card.useful::before { background: var(--useful); }
+.mod-card.unknowns::before { background: var(--unknowns); }
 .mod-card:hover { border-color: var(--hair-strong); background: var(--panel-2); transform: translateY(-2px); text-decoration: none; }
 .mod-card-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
 .mod-card-top h3 { margin: 0; font-size: 1.4rem; letter-spacing: -0.02em; font-weight: 600; }
@@ -324,6 +327,7 @@ tbody tr:hover { background: rgba(255,255,255,.018); }
 }
 .hl-tag::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--chance); }
 .hl.useful .hl-tag::before { background: var(--useful); }
+.hl.unknowns .hl-tag::before { background: var(--unknowns); }
 
 /* ---------- footer & back-to-top ---------- */
 #footer { border-top: 1px solid var(--hair); margin-top: 48px; }
