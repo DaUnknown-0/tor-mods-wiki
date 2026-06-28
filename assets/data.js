@@ -1025,19 +1025,6 @@ const UNKNOWNS = {
           }
         },
         {
-          id: "saboteur-draft",
-          title: { en: "Role Draft support", de: "Role-Draft-Unterstützung" },
-          badges: [{ en: "Draftable", de: "Draftbar" }],
-          summary: {
-            en: "Tesla and Saboteur can be picked in TOR's Role Draft — integrated entirely from Unknown's Collection without touching TOR's source.",
-            de: "Tesla und Saboteur sind in TORs Role Draft wählbar — komplett aus Unknown's Collection integriert, ohne TORs Quellcode anzufassen."
-          },
-          body: {
-            en: "<p>When <strong>Role Draft</strong> is enabled, the Tesla and Saboteur appear as draftable impostor picks instead of being assigned by the usual random promotion. (In the draft list their buttons use the impostor red so the faction filter shows them; their own colours return in-game.)</p>",
-            de: "<p>Ist der <strong>Role Draft</strong> aktiv, erscheinen Tesla und Saboteur als wählbare Impostor-Picks, statt über die übliche Zufalls-Beförderung vergeben zu werden. (In der Draft-Liste sind ihre Buttons impostor-rot, damit der Fraktionsfilter sie zeigt; im Spiel kehren ihre Eigenfarben zurück.)</p>"
-          }
-        },
-        {
           id: "saboteur-gating",
           title: { en: "Client-side gating", de: "Client-seitiges Gating" },
           badges: [{ en: "All players need the mod", de: "Alle brauchen den Mod" }],
@@ -1048,6 +1035,29 @@ const UNKNOWNS = {
           body: {
             en: "<p>The Saboteur's kill effect, invisible traps and the search/defuse minigames are all client-side, so the same version handshake applies: the lobby start is <strong>blocked</strong> until every connected player runs the same Unknown's Collection version.</p>",
             de: "<p>Der Kill-Effekt, die unsichtbaren Fallen und die Such-/Entschärf-Minispiele des Saboteurs sind alle client-seitig, daher greift derselbe Versions-Handshake: Der Lobby-Start ist <strong>blockiert</strong>, bis jeder verbundene Spieler dieselbe Unknown's-Collection-Version hat.</p>"
+          }
+        }
+      ]
+    },
+    {
+      id: "uc-roledraft",
+      title: { en: "Role Draft support", de: "Role-Draft-Unterstützung" },
+      intro: {
+        en: "Both Unknown's Collection roles are pickable in TOR's Role Draft — integrated entirely from the plugin without touching TOR's source.",
+        de: "Beide Unknown's-Collection-Rollen sind in TORs Role Draft wählbar — komplett aus dem Plugin integriert, ohne TORs Quellcode anzufassen."
+      },
+      entries: [
+        {
+          id: "uc-roledraft-pick",
+          title: { en: "Draftable Tesla & Saboteur", de: "Tesla & Saboteur draftbar" },
+          badges: [{ en: "Draftable", de: "Draftbar" }],
+          summary: {
+            en: "With Role Draft on, the Tesla and Saboteur appear as impostor picks instead of being assigned by the usual random promotion.",
+            de: "Mit aktivem Role Draft erscheinen Tesla und Saboteur als Impostor-Picks, statt über die übliche Zufalls-Beförderung vergeben zu werden."
+          },
+          body: {
+            en: "<p>When TOR's <strong>Role Draft</strong> is enabled, the enabled Unknown's Collection roles become regular impostor picks (max one each per game), and the random promotion is suppressed so the draft decides. The integration lives entirely in the plugin via Harmony patches — TOR's source is untouched. (In the draft list the buttons use the impostor red so the faction filter shows them; each role's own colour returns in-game.)</p>",
+            de: "<p>Ist TORs <strong>Role Draft</strong> aktiv, werden die aktivierten Unknown's-Collection-Rollen zu normalen Impostor-Picks (max. je einer pro Spiel), und die Zufalls-Beförderung wird unterdrückt, damit der Draft entscheidet. Die Integration liegt komplett im Plugin via Harmony-Patches — TORs Quellcode bleibt unangetastet. (In der Draft-Liste sind die Buttons impostor-rot, damit der Fraktionsfilter sie zeigt; im Spiel kehrt die jeweilige Eigenfarbe zurück.)</p>"
           }
         }
       ]
