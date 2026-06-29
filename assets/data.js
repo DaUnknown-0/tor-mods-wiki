@@ -78,7 +78,7 @@ const CHANCE = {
   key: "chance",
   name: "Chance Modifier",
   fullName: { en: "TOR — Unknown Chaos (Chance Modifier)", de: "TOR — Unknown Chaos (Chance Modifier)" },
-  version: "1.2.0",
+  version: "1.2.18",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/TOR-Chance",
   download: "https://github.com/DaUnknown-0/TOR-Chance/releases/latest",
@@ -242,12 +242,16 @@ const CHANCE = {
             en: tbl(["Option", "Values", "What it does"], [
               ["Chaos Mode", "Off / On", "Re-rolls roles after every meeting."],
               ["Chaos: Role Pool", "All enabled roles / Only roles already in play", "“All”: new roles can appear. “In play”: only existing roles are re-distributed (multi-shifter)."],
-              ["Chaos: Affected Players", "All players / Only Chance players", "Reroll everyone, or only carriers of the Chance modifier."]
+              ["Chaos: Affected Players", "All players / Only Chance players", "Reroll everyone, or only carriers of the Chance modifier."],
+              ["Chaos: Reroll Modifiers Too", "Off / On", "Also re-rolls modifiers (Invert, Tiebreaker, etc.) for affected players."],
+              ["Chaos: Modifier Reroll Affects", "All players / Only Chance players", "Which players get their modifiers re-rolled — all or only Chance carriers."]
             ]),
             de: tbl(["Option", "Werte", "Funktion"], [
               ["Chaos Mode", "Off / On", "Lost die Rollen nach jedem Meeting neu aus."],
               ["Chaos: Role Pool", "All enabled roles / Only roles already in play", "„All“: Neue Rollen können auftauchen. „In play“: Nur bestehende Rollen werden neu verteilt (Multi-Shifter)."],
-              ["Chaos: Affected Players", "All players / Only Chance players", "Reroll für alle oder nur für Träger des Chance-Modifiers."]
+              ["Chaos: Affected Players", "All players / Only Chance players", "Reroll für alle oder nur für Träger des Chance-Modifiers."],
+              ["Chaos: Reroll Modifiers Too", "Off / On", "Würfelt auch Modifier (Invert, Tiebreaker, usw.) für betroffene Spieler neu."],
+              ["Chaos: Modifier Reroll Affects", "All players / Only Chance players", "Welche Spieler ihre Modifier neu zugelost bekommen — alle oder nur Chance-Träger."]
             ])
           }
         },
@@ -306,7 +310,7 @@ const USEFUL = {
   key: "useful",
   name: "Forgotten Fixes",
   fullName: { en: "TOR - Forgotten Fixes", de: "TOR - Forgotten Fixes" },
-  version: "1.2.0",
+  version: "1.2.25",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/Useful-TOR-stuff",
   download: "https://github.com/DaUnknown-0/Useful-TOR-stuff/releases/latest",
@@ -598,6 +602,120 @@ const USEFUL = {
       ]
     },
     {
+      id: "lover-revenger",
+      title: { en: "Lover Revenger", de: "Lover Revenger" },
+      intro: {
+        en: "A new path for the surviving Lover: instead of dying instantly when the partner is killed, the Lover can be spared and become a Revenger — a vengeful role with a mission to avenge the fallen partner.",
+        de: "Ein neuer Pfad für den überlebenden Lover: Statt sofort zu sterben, wenn der Partner getötet wird, kann der Lover verschont und zum Revenger werden — einer rächenden Rolle mit der Mission, den gefallenen Partner zu rächen."
+      },
+      entries: [
+        {
+          id: "delay-lover-death",
+          title: { en: "Delay Lover Death", de: "Verzögerter Lover-Tod" },
+          badges: [{ en: "Modifier → Lover", de: "Modifier → Lover" }],
+          summary: {
+            en: "Suppresses the instant Lover suicide when the partner is killed, deferring the decision to the end of the next meeting.",
+            de: "Unterdrückt den sofortigen Lover-Selbstmord, wenn der Partner getötet wird, und verschiebt die Entscheidung ans Ende des nächsten Meetings."
+          },
+          body: {
+            en: "<p>When <strong>Delay Lover Death</strong> is ON and the first Lover was <em>killed</em> (not exiled) while \"Both Lovers Die\" is ON, the surviving Lover's instant suicide is suppressed. The decision is deferred to the end of the next meeting, where a configurable %-roll decides the outcome.</p>"
+            + "<p>If the first Lover was <strong>voted out</strong> (exiled), no Revenger path is possible — the surviving Lover dies at the end of the next meeting as a delayed suicide.</p>"
+            + "<p>A Lover shot by a <strong>Guesser</strong> also arms the Revenger, with the Guesser becoming the target.</p>"
+            + tbl(["Option", "Values", "What it does"], [
+              ["Delay Lover Death", "Off / On", "Suppresses instant suicide; defers the decision to the next meeting end."],
+              ["Chance Surviving Lover Becomes Revenger", "0–100%", "%-roll for the surviving Lover to become a Revenger (otherwise they die as a delayed suicide)."]
+            ]),
+            de: "<p>Wenn <strong>Delay Lover Death</strong> AN ist und der erste Lover <em>getötet</em> (nicht exiliert) wurde, während \"Both Lovers Die\" AN ist, wird der sofortige Selbstmord des überlebenden Lovers unterdrückt. Die Entscheidung wird ans Ende des nächsten Meetings verschoben, wo ein konfigurierbarer %-Wurf den Ausgang bestimmt.</p>"
+            + "<p>Wurde der erste Lover <strong>herausgestimmt</strong> (exiliert), gibt es keinen Revenger-Pfad — der überlebende Lover stirbt am Ende des nächsten Meetings als verzögerter Selbstmord.</p>"
+            + "<p>Ein durch einen <strong>Guesser</strong> erschossener Lover aktiviert ebenfalls den Revenger, wobei der Guesser zum Ziel wird.</p>"
+            + tbl(["Option", "Werte", "Funktion"], [
+              ["Delay Lover Death", "Off / On", "Unterdrückt den Sofort-Suizid; verschiebt die Entscheidung ans Meeting-Ende."],
+              ["Chance Surviving Lover Becomes Revenger", "0–100%", "%-Chance, dass der überlebende Lover zum Revenger wird (sonst stirbt er als verzögerter Suizid)."]
+            ])
+          }
+        },
+        {
+          id: "revenger-role",
+          title: { en: "The Revenger role", de: "Die Revenger-Rolle" },
+          badges: [{ en: "Modifier → Lover", de: "Modifier → Lover" }],
+          summary: {
+            en: "Shows as \"Revenger\" in name tags and the role tab, but the win counts as a Lovers win.",
+            de: "Zeigt sich als \"Revenger\" in Namensschildern und dem Rollen-Tab, aber der Sieg zählt als Lovers-Sieg."
+          },
+          body: {
+            en: "<p>The Revenger shows its own <strong>RoleInfo</strong> (keeping the Lovers color) in name tags, the role tab and the end-game summary. The <strong>win</strong> counts as a Lovers win for exactly the two Lovers (the fallen one + the Revenger) — the end screen reads \"Lovers Win\".</p>"
+            + "<p>A <strong>non-killer</strong> Revenger (crew) gets a Sheriff-like kill button. A Revenger that already has its own kill button (Impostor, Jackal/Sidekick/Thief, Sheriff) gets no second button — their normal kill on the Lover's killer triggers the win.</p>",
+            de: "<p>Der Revenger zeigt eine eigene <strong>RoleInfo</strong> (mit der Lovers-Farbe) in Namensschildern, dem Rollen-Tab und der Endzusammenfassung. Der <strong>Sieg</strong> zählt als Lovers-Sieg für genau die zwei Lover (der gefallene + der Revenger) — der Endscreen zeigt \"Lovers Win\".</p>"
+            + "<p>Ein <strong>Nicht-Killer</strong>-Revenger (Crew) bekommt einen Sheriff-ähnlichen Kill-Button. Ein Revenger, der bereits einen eigenen Kill-Button hat (Impostor, Jackal/Sidekick/Thief, Sheriff), bekommt keinen zweiten Button — ihr normaler Kill am Lover-Killer löst den Sieg aus.</p>"
+          }
+        },
+        {
+          id: "revenger-modes",
+          title: { en: "Revenger modes: Targeted Justice vs Blind Rage", de: "Revenger-Modi: Targeted Justice vs Blind Rage" },
+          badges: [{ en: "Modifier → Lover", de: "Modifier → Lover" }],
+          summary: {
+            en: "Targeted Justice: may only kill the Lover's killer. Blind Rage: may kill anyone.",
+            de: "Targeted Justice: darf nur den Lover-Killer töten. Blind Rage: darf jeden töten."
+          },
+          body: {
+            en: "<p>A host option picks the behaviour for crew Revengers:</p>"
+            + tbl(["Mode", "Behaviour"], [
+              ["Targeted Justice", "May only kill the Lover's killer. A correct kill ends the game instantly as a Lovers win. A wrong target is a fatal misfire — the Revenger dies."],
+              ["Blind Rage", "May kill anyone. Hitting the real killer wins as above. Otherwise the Revenger dies at the end of the next meeting with a random rage chat message."]
+            ])
+            + "<p class='note'>Killer Revengers (Impostor, neutral killers, Sheriff) always act in Targeted Justice mode — only their correct kill triggers the win.</p>",
+            de: "<p>Eine Host-Option bestimmt das Verhalten für Crew-Revenger:</p>"
+            + tbl(["Modus", "Verhalten"], [
+              ["Targeted Justice", "Darf nur den Lover-Killer töten. Ein korrekter Kill beendet das Spiel sofort als Lovers-Sieg. Ein falsches Ziel ist ein tödlicher Fehlschuss — der Revenger stirbt."],
+              ["Blind Rage", "Darf jeden töten. Trifft er den echten Killer, gewinnt er wie oben. Sonst stirbt der Revenger am Ende des nächsten Meetings mit einer zufälligen Zorn-Chat-Nachricht."]
+            ])
+            + "<p class='note'>Killer-Revenger (Impostor, neutrale Killer, Sheriff) handeln immer im Targeted-Justice-Modus — nur ihr korrekter Kill löst den Sieg aus.</p>"
+          }
+        },
+        {
+          id: "revenger-options",
+          title: { en: "Options (Modifier → Lover)", de: "Optionen (Modifier → Lover)" },
+          summary: {
+            en: "Master toggle, Revenger chance, mode selection and kill cooldown.",
+            de: "Master-Toggle, Revenger-Chance, Modus-Auswahl und Kill-Cooldown."
+          },
+          body: {
+            en: tbl(["Option", "Default", "What it does"], [
+              ["Delay Lover Death", "Off", "Master toggle for the delayed death + Revenger path."],
+              ["Chance Surviving Lover Becomes Revenger", "50%", "%-chance to become a Revenger instead of dying."],
+              ["Revenger Mode", "Targeted Justice / Blind Rage", "Behaviour mode for crew Revengers."],
+              ["Revenger Kill Cooldown", "10 s", "Kill cooldown for the Revenger's button."]
+            ]),
+            de: tbl(["Option", "Standard", "Funktion"], [
+              ["Delay Lover Death", "Off", "Master-Toggle für den verzögerten Tod + Revenger-Pfad."],
+              ["Chance Surviving Lover Becomes Revenger", "50%", "%-Chance, Revenger zu werden statt zu sterben."],
+              ["Revenger Mode", "Targeted Justice / Blind Rage", "Verhaltensmodus für Crew-Revenger."],
+              ["Revenger Kill Cooldown", "10 s", "Kill-Cooldown für den Revenger-Button."]
+            ])
+          }
+        },
+        {
+          id: "revenger-win",
+          title: { en: "Win condition & parity blocking", de: "Sieg-Bedingung & Parity-Block" },
+          badges: [{ en: "Modifier → Lover", de: "Modifier → Lover" }, { en: "Host-authoritative", de: "Host-autoritativ" }],
+          summary: {
+            en: "Revenger wins count as Lovers win. While a Revenger is alive, Impostors/Jackal cannot claim a parity win.",
+            de: "Revenger-Siege zählen als Lovers-Sieg. Solange ein Revenger lebt, können Impostoren/Jackal keinen Parity-Win beanspruchen."
+          },
+          body: {
+            en: "<p>The Revenger win uses a <strong>separate CustomGameOverReason (17)</strong> with a dedicated end screen. The win is flagged <em>before</em> the killing blow so a kill that removes the last evil player can't race a Crew \"No Evil Killers Left\" end.</p>"
+            + "<p>If the <strong>target dies first</strong> (voted out or killed by someone else), the revenge is denied and the Revenger dies at the next meeting end with a flavour line. The Revenger is <strong>guessable</strong> in Guesser mode — its RoleInfo is listed in all role infos.</p>"
+            + "<p>While a Revenger is <strong>alive</strong>, the Impostors/Jackal cannot claim a numerical parity win — they must deal with the Revenger first.</p>"
+            + "<p class='note'>Gated: all players need the mod. State syncs over a small custom RPC (247). Kills reuse TOR's UncheckedMurderPlayer.</p>",
+            de: "<p>Der Revenger-Sieg nutzt einen <strong>separaten CustomGameOverReason (17)</strong> mit einem eigenen Endscreen. Der Sieg wird <em>vor</em> dem tödlichen Schlag gesetzt, sodass ein Kill, der den letzten bösen Spieler entfernt, nicht mit einem Crew-\"No Evil Killers Left\"-Ende konkurrieren kann.</p>"
+            + "<p>Wenn das <strong>Ziel zuerst stirbt</strong> (herausgestimmt oder von jemand anderem getötet), wird die Rache verweigert und der Revenger stirbt am Ende des nächsten Meetings mit einer Textzeile. Der Revenger ist im Guesser-Modus <strong>ratbar</strong> — seine RoleInfo ist in allen Rollen-Infos gelistet.</p>"
+            + "<p>Solange ein Revenger <strong>lebt</strong>, können die Impostoren/Jackal keinen numerischen Parity-Win beanspruchen — sie müssen sich zuerst um den Revenger kümmern.</p>"
+            + "<p class='note'>Gated: alle Spieler brauchen den Mod. State-Sync über ein kleines Custom-RPC (247). Kills nutzen TORs UncheckedMurderPlayer.</p>"
+          }
+        }
+      ]
+    },
+    {
       id: "impostor",
       title: { en: "New options — Impostor", de: "Neue Optionen — Impostor" },
       entries: [
@@ -820,17 +938,17 @@ const UNKNOWNS = {
   key: "unknowns",
   name: "Unknown's Collection",
   fullName: { en: "Unknown's Collection — custom roles for TOR", de: "Unknown's Collection — eigene Rollen für TOR" },
-  version: "1.0.1",
+  version: "1.0.1.16",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/UnknownsCollection",
   download: "https://github.com/DaUnknown-0/UnknownsCollection/releases/latest",
   tagline: {
-    en: "Brand-new custom roles for The Other Roles, layered on without touching TOR's source. Roles: The Tesla & The Saboteur.",
-    de: "Brandneue eigene Rollen für The Other Roles, aufgesetzt ohne Änderung an TORs Quellcode. Rollen: The Tesla & The Saboteur."
+    en: "Brand-new custom roles for The Other Roles, layered on without touching TOR's source. Roles: The Tesla, The Saboteur, The Silencer, The Siphoner, The Witness, The Corrupter & The Illusionist.",
+    de: "Brandneue eigene Rollen für The Other Roles, aufgesetzt ohne Änderung an TORs Quellcode. Rollen: The Tesla, The Saboteur, The Silencer, The Siphoner, The Witness, The Corrupter & The Illusionist."
   },
   intro: {
-    en: "Unknown's Collection is a separate plugin that adds <strong>new roles</strong> to TOR 4.8.0 purely through Harmony patches — TOR's source is never modified, and the only hard dependency is The Other Roles. The roles are client-side, so the lobby can only be started when every player runs the same Unknown's Collection version. Current roles: <strong>The Tesla</strong> and <strong>The Saboteur</strong> (both Impostor), and both are pickable in TOR's Role Draft.",
-    de: "Unknown's Collection ist ein eigenständiges Plugin, das TOR 4.8.0 <strong>neue Rollen</strong> rein über Harmony-Patches hinzufügt — TORs Quellcode wird nie verändert, einzige harte Abhängigkeit ist The Other Roles. Die Rollen sind client-seitig, daher kann die Lobby nur gestartet werden, wenn alle Spieler dieselbe Unknown's-Collection-Version haben. Aktuelle Rollen: <strong>The Tesla</strong> und <strong>The Saboteur</strong> (beide Impostor), beide auch im Role Draft von TOR wählbar."
+    en: "Unknown's Collection is a separate plugin that adds <strong>new roles</strong> to TOR 4.8.0 purely through Harmony patches — TOR's source is never modified, and the only hard dependency is The Other Roles. The roles are client-side, so the lobby can only be started when every player runs the same Unknown's Collection version. Current roles: <strong>The Tesla</strong>, <strong>The Saboteur</strong>, <strong>The Silencer</strong>, <strong>The Siphoner</strong>, <strong>The Witness</strong>, <strong>The Corrupter</strong> and <strong>The Illusionist</strong>. All impostor roles are pickable in TOR's Role Draft.",
+    de: "Unknown's Collection ist ein eigenständiges Plugin, das TOR 4.8.0 <strong>neue Rollen</strong> rein über Harmony-Patches hinzufügt — TORs Quellcode wird nie verändert, einzige harte Abhängigkeit ist The Other Roles. Die Rollen sind client-seitig, daher kann die Lobby nur gestartet werden, wenn alle Spieler dieselbe Unknown's-Collection-Version haben. Aktuelle Rollen: <strong>The Tesla</strong>, <strong>The Saboteur</strong>, <strong>The Silencer</strong>, <strong>The Siphoner</strong>, <strong>The Witness</strong>, <strong>The Corrupter</strong> und <strong>The Illusionist</strong>. Alle Impostor-Rollen sind im Role Draft von TOR wählbar."
   },
   install: {
     en: "<ol><li>Install <a href='https://github.com/TheOtherRolesAU/TheOtherRoles'>The Other Roles</a> into your Among Us BepInEx setup.</li><li>Download the latest <code>UnknownsCollection.dll</code> from the releases page.</li><li>Copy it into <code>&lt;Among Us&gt;/BepInEx/plugins/</code> (next to <code>TheOtherRoles.dll</code>).</li><li>Start the game. Every player who should see the role needs the mod — same version.</li></ol><p>A channel-aware in-game auto-updater checks GitHub and integrates with the Mod Manager (from Forgotten Fixes).</p>",
@@ -1040,11 +1158,279 @@ const UNKNOWNS = {
       ]
     },
     {
+      id: "silencer",
+      title: { en: "The Silencer (Impostor)", de: "The Silencer (Impostor)" },
+      intro: {
+        en: "A normal Impostor is secretly promoted to The Silencer at game start. During a round the Silencer marks a victim; a marked player is muted in the next meeting — they cannot vote and cannot chat, with a red [MUTED] marker visible to everyone.",
+        de: "Ein normaler Impostor wird beim Spielstart heimlich zum Silencer befördert. Während einer Runde markiert der Silencer ein Opfer; ein markierter Spieler wird im nächsten Meeting stummgeschaltet — er kann nicht abstimmen und nicht chatten, mit einem roten [MUTED]-Marker, der für alle sichtbar ist."
+      },
+      entries: [
+        {
+          id: "silencer-mark",
+          title: { en: "Marking a victim", de: "Ein Opfer markieren" },
+          summary: {
+            en: "Press the SILENCE button to mark a player. They will be muted in the next meeting — vote and chat blocked.",
+            de: "Drücke den SILENCE-Button, um einen Spieler zu markieren. Er wird im nächsten Meeting stummgeschaltet — Vote und Chat blockiert."
+          },
+          body: {
+            en: "<p>The Silencer presses <strong>SILENCE</strong> (a CustomButton with a cooldown) to mark a nearby player. A marked player has their vote area click + skip blocked and <strong>SendChat</strong> blocked in the <strong>next meeting</strong>. A red <strong>[MUTED]</strong> marker is shown next to their name both in-game and on their meeting vote area — obvious to everyone so the victim knows to mute their voice client too. The mute lasts exactly one meeting and is cleared when it ends.</p>",
+            de: "<p>Der Silencer drückt <strong>SILENCE</strong> (ein CustomButton mit Cooldown), um einen nahen Spieler zu markieren. Ein markierter Spieler hat im <strong>nächsten Meeting</strong> seinen Vote-Bereich + Skip blockiert und <strong>SendChat</strong> blockiert. Ein roter <strong>[MUTED]</strong>-Marker wird neben seinem Namen angezeigt, sowohl im Spiel als auch im Vote-Bereich — offensichtlich für alle, damit das Opfer weiß, auch seinen Voice-Client stummzuschalten. Das Mute dauert genau ein Meeting und wird danach aufgehoben.</p>"
+          }
+        },
+        {
+          id: "silencer-options",
+          title: { en: "Options (Impostor tab)", de: "Optionen (Impostor-Tab)" },
+          summary: {
+            en: "Spawn rate, mark cooldown, targets per round, skip allowance, in-game marker.",
+            de: "Spawnrate, Mark-Cooldown, Ziele pro Runde, Skip-Erlaubnis, In-Game-Marker."
+          },
+          body: {
+            en: tbl(["Option", "Default", "What it does"], [
+              ["Silencer", "Off", "Spawn chance for the role."],
+              ["Silencer Minimum Players To Spawn", "6", "The role isn't assigned below this lobby size."],
+              ["Silencer Mark Cooldown", "20 s", "Cooldown of the SILENCE button."],
+              ["Silencer Targets Per Round", "1", "How many players can be silenced per round."],
+              ["Silencer Can Still Skip", "On", "A muted player may still press Skip during voting."],
+              ["Silencer Show In-Game Marker", "On", "Also show the red [MUTED] marker next to the player's in-game name."]
+            ]),
+            de: tbl(["Option", "Standard", "Funktion"], [
+              ["Silencer", "Off", "Spawn-Chance der Rolle."],
+              ["Silencer Minimum Players To Spawn", "6", "Die Rolle wird unter dieser Lobby-Größe nicht vergeben."],
+              ["Silencer Mark Cooldown", "20 s", "Cooldown des SILENCE-Buttons."],
+              ["Silencer Targets Per Round", "1", "Wie viele Spieler pro Runde stummgeschaltet werden können."],
+              ["Silencer Can Still Skip", "On", "Ein stummgeschalteter Spieler darf während der Abstimmung noch Skip drücken."],
+              ["Silencer Show In-Game Marker", "On", "Zeigt den roten [MUTED]-Marker auch neben dem In-Game-Namen des Spielers an."]
+            ])
+          }
+        }
+      ]
+    },
+    {
+      id: "siphoner",
+      title: { en: "The Siphoner (Crewmate)", de: "The Siphoner (Crewmate)" },
+      intro: {
+        en: "A normal Crewmate is secretly promoted to The Siphoner at game start. While the Siphoner stands close to an Impostor, it passively drains the Impostor's kill cooldown — pushing it back every tick. Host-authoritative: the host runs the proximity check and broadcasts drain pulses.",
+        de: "Ein normaler Crewmate wird beim Spielstart heimlich zum Siphoner befördert. Während der Siphoner in der Nähe eines Impostors steht, zieht er passiv dessen Kill-Cooldown — er wird bei jedem Tick zurückgesetzt. Host-autoritativ: Der Host führt den Nähe-Check durch und sendet Drain-Impulse."
+      },
+      entries: [
+        {
+          id: "siphoner-drain",
+          title: { en: "Passive drain mechanic", de: "Passive Drain-Mechanik" },
+          summary: {
+            en: "Staying close to an Impostor pushes their kill cooldown back every tick. Closer = stronger drain.",
+            de: "In der Nähe eines Impostors wird dessen Kill-Cooldown bei jedem Tick zurückgesetzt. Näher = stärkerer Drain."
+          },
+          body: {
+            en: "<p>While the Siphoner is within range of an Impostor, every tick (configurable interval) the Impostor's kill cooldown is pushed back by a configurable penalty. The drain can optionally scale with distance — closer means more cooldown added. The affected Impostor can optionally see a warning flash.</p>"
+            + "<p>This is <strong>host-authoritative</strong>: a Crewmate client doesn't know who the Impostors are, so the host runs the proximity detection and broadcasts a drain pulse via RPC 196. The targeted Impostor's own client applies <code>SetKillTimer</code> to itself.</p>"
+            + "<p>Additionally, the Siphoner can also drain the sabotage cooldown, holding it while in range.</p>",
+            de: "<p>Solange der Siphoner in Reichweite eines Impostors ist, wird bei jedem Tick (konfigurierbares Intervall) der Kill-Cooldown des Impostors um eine konfigurierbare Strafe erhöht. Der Drain kann optional mit der Distanz skalieren — näher bedeutet mehr Cooldown. Der betroffene Impostor kann optional einen Warnblitz sehen.</p>"
+            + "<p>Dies ist <strong>host-autoritativ</strong>: Ein Crewmate-Client weiß nicht, wer die Impostoren sind, daher führt der Host die Nähe-Erkennung durch und sendet einen Drain-Impuls via RPC 196. Der betroffene Impostor-Client wendet <code>SetKillTimer</code> auf sich selbst an.</p>"
+            + "<p>Zusätzlich kann der Siphoner auch den Sabotage-Cooldown ziehen und ihn in Reichweite halten.</p>"
+          }
+        },
+        {
+          id: "siphoner-options",
+          title: { en: "Options (Crewmate tab)", de: "Optionen (Crewmate-Tab)" },
+          summary: {
+            en: "Spawn rate, drain range, penalty per tick, interval, distance scaling, warnings.",
+            de: "Spawnrate, Drain-Reichweite, Strafe pro Tick, Intervall, Distanz-Skalierung, Warnungen."
+          },
+          body: {
+            en: tbl(["Option", "Default", "What it does"], [
+              ["Siphoner", "Off", "Spawn chance for the role."],
+              ["Siphoner Minimum Players To Spawn", "6", "The role isn't assigned below this lobby size."],
+              ["Siphoner Drain Range", "3.0", "Proximity range in world units."],
+              ["Siphoner Penalty Per Tick", "2 s", "Kill cooldown seconds added per tick."],
+              ["Siphoner Tick Interval", "1.5 s", "Seconds between drain ticks."],
+              ["Siphoner Scale With Distance", "On", "Closer = stronger drain."],
+              ["Siphoner Warn Impostor", "On", "Drained Impostor sees a warning flash."],
+              ["Siphoner Affect Sabotage", "Off", "Also drain the Impostor's sabotage cooldown."]
+            ]),
+            de: tbl(["Option", "Standard", "Funktion"], [
+              ["Siphoner", "Off", "Spawn-Chance der Rolle."],
+              ["Siphoner Minimum Players To Spawn", "6", "Die Rolle wird unter dieser Lobby-Größe nicht vergeben."],
+              ["Siphoner Drain Range", "3,0", "Nähe-Reichweite in Welteinheiten."],
+              ["Siphoner Penalty Per Tick", "2 s", "Kill-Cooldown-Sekunden, die pro Tick hinzugefügt werden."],
+              ["Siphoner Tick Interval", "1,5 s", "Sekunden zwischen Drain-Ticks."],
+              ["Siphoner Scale With Distance", "On", "Näher = stärkerer Drain."],
+              ["Siphoner Warn Impostor", "On", "Gedrainter Impostor sieht einen Warnblitz."],
+              ["Siphoner Affect Sabotage", "Off", "Zieht auch den Sabotage-Cooldown des Impostors."]
+            ])
+          }
+        }
+      ]
+    },
+    {
+      id: "witness",
+      title: { en: "The Witness (Crewmate)", de: "The Witness (Crewmate)" },
+      intro: {
+        en: "A normal Crewmate is secretly promoted to The Witness at game start. If the Witness is the sole living crewmate who sees a kill happen, the killer's identity is noted — revealed either publicly or anonymously depending on circumstances.",
+        de: "Ein normaler Crewmate wird beim Spielstart heimlich zum Witness befördert. Wenn der Witness der einzige lebende Crewmate ist, der einen Kill sieht, wird die Identität des Killers notiert — je nach Umständen öffentlich oder anonym enthüllt."
+      },
+      entries: [
+        {
+          id: "witness-sighting",
+          title: { en: "Sole-witness sighting", de: "Allein-Zeugen-Sichtung" },
+          summary: {
+            en: "If the Witness is the only crewmate who saw the kill, the killer's name glows red for the Witness.",
+            de: "Wenn der Witness der einzige Crewmate ist, der den Kill gesehen hat, leuchtet der Name des Killers rot für den Witness."
+          },
+          body: {
+            en: "<p>If the Witness is the <strong>sole living crewmate</strong> who <strong>sees</strong> a kill happen (within sight range AND with a clear line of sight — no wall between), the killer's identity is \"noted on a piece of paper\":</p><ul><li>The killer's name glows <strong>red</strong> for the Witness (permanently, or until the next meeting ends).</li></ul>"
+            + "<p>This is <strong>host-authoritative</strong>: deciding \"sole crewmate to see it\" needs every player's position + role + line of sight, which only the host has.</p>",
+            de: "<p>Wenn der Witness der <strong>einzige lebende Crewmate</strong> ist, der einen Kill <strong>sieht</strong> (in Sichtweite UND mit freier Sichtlinie — keine Wand dazwischen), wird die Identität des Killers \"auf einem Stück Papier notiert\":</p><ul><li>Der Name des Killers leuchtet <strong>rot</strong> für den Witness (dauerhaft oder bis zum Ende des nächsten Meetings).</li></ul>"
+            + "<p>Dies ist <strong>host-autoritativ</strong>: Die Entscheidung \"einziger Crewmate, der es sieht\" benötigt die Position + Rolle + Sichtlinie jedes Spielers, was nur der Host hat.</p>"
+          }
+        },
+        {
+          id: "witness-reveal",
+          title: { en: "Public reveal & anonymous notes", de: "Öffentliche Enthüllung & anonyme Notizen" },
+          summary: {
+            en: "If the killer later dies and their body is reported, everyone sees a public note. If the killer survives, anonymous notes are slipped to random players.",
+            de: "Stirbt der Killer später und seine Leiche wird gemeldet, sehen alle eine öffentliche Notiz. Überlebt der Killer, werden anonyme Notizen an zufällige Spieler verteilt."
+          },
+          body: {
+            en: "<p>Two outcomes after a sighting:</p><ul><li>If the killer later <strong>dies</strong> and their body is <strong>reported</strong>, everyone sees a public note in the meeting: <em>\"I saw {killer} killing {victim}. I need to report this.\"</em></li><li>If the killer <strong>survives</strong> (still alive at first meeting after sighting), the Witness slips an <strong>anonymous note</strong> to a few random players: <em>\"I saw {killer} killing {victim}. Please do something.\"</em> The recipients do <strong>not</strong> learn who the Witness is.</li></ul>",
+            de: "<p>Zwei Ergebnisse nach einer Sichtung:</p><ul><li>Stirbt der Killer später und seine <strong>Leiche wird gemeldet</strong>, sehen alle eine öffentliche Notiz im Meeting: <em>\"Ich sah {killer}, wie er {victim} tötete. Ich muss das melden.\"</em></li><li>Überlebt der Killer (noch am Leben beim ersten Meeting nach der Sichtung), schiebt der Witness ein paar zufälligen Spielern eine <strong>anonyme Notiz</strong> zu: <em>\"Ich sah {killer}, wie er {victim} tötete. Bitte tut etwas.\"</em> Die Empfänger erfahren <strong>nicht</strong>, wer der Witness ist.</li></ul>"
+          }
+        },
+        {
+          id: "witness-options",
+          title: { en: "Options (Crewmate tab)", de: "Optionen (Crewmate-Tab)" },
+          summary: {
+            en: "Spawn rate, sight range, red name persistence, note recipients.",
+            de: "Spawnrate, Sichtweite, Rot-Name-Persistenz, Notiz-Empfänger."
+          },
+          body: {
+            en: tbl(["Option", "Default", "What it does"], [
+              ["Witness", "Off", "Spawn chance for the role."],
+              ["Witness Minimum Players To Spawn", "6", "The role isn't assigned below this lobby size."],
+              ["Witness Sight Factor", "1.0", "Sight range factor (× base 5 world units)."],
+              ["Witness Red Name Permanent", "Off", "Red name stays after the first meeting."],
+              ["Witness Note Recipients", "2", "How many random players get the survive-note."]
+            ]),
+            de: tbl(["Option", "Standard", "Funktion"], [
+              ["Witness", "Off", "Spawn-Chance der Rolle."],
+              ["Witness Minimum Players To Spawn", "6", "Die Rolle wird unter dieser Lobby-Größe nicht vergeben."],
+              ["Witness Sight Factor", "1,0", "Sichtweiten-Faktor (× Basis 5 Welteinheiten)."],
+              ["Witness Red Name Permanent", "Off", "Roter Name bleibt nach dem ersten Meeting bestehen."],
+              ["Witness Note Recipients", "2", "Wie viele zufällige Spieler die Überlebens-Notiz erhalten."]
+            ])
+          }
+        }
+      ]
+    },
+    {
+      id: "corrupter",
+      title: { en: "The Corrupter (Impostor)", de: "The Corrupter (Impostor)" },
+      intro: {
+        en: "A normal Impostor is secretly promoted to The Corrupter at game start. Whenever the Corrupter kills, a corruption zone is laid at the body — living crew who walk into it see drifting, flickering copies of real players, confusing witnesses.",
+        de: "Ein normaler Impostor wird beim Spielstart heimlich zum Corrupter befördert. Immer wenn der Corrupter tötet, wird eine Korruptionszone an der Leiche hinterlegt — lebende Crewmitglieder, die hineinlaufen, sehen driftende, flackernde Kopien echter Spieler, die Zeugen verwirren."
+      },
+      entries: [
+        {
+          id: "corrupter-zone",
+          title: { en: "Corruption zone", de: "Korruptionszone" },
+          summary: {
+            en: "A kill leaves a visible zone. Crew who enter see fake player figures — pure hallucinations.",
+            de: "Ein Kill hinterlässt eine sichtbare Zone. Crewmitglieder, die eintreten, sehen gefälschte Spielerfiguren — reine Halluzinationen."
+          },
+          body: {
+            en: "<p>Whenever the Corrupter kills, a <strong>corruption zone</strong> (a visual disc) is laid at the body. Living crew who walk <strong>into</strong> that zone see drifting, flickering copies of real players — pure local hallucinations meant to confuse witnesses. Zones expire after a configured time and are cleared at every meeting.</p>"
+            + "<p>All options are client-side FX, gated by the mod-wide handshake (everyone needs the mod).</p>",
+            de: "<p>Immer wenn der Corrupter tötet, wird eine <strong>Korruptionszone</strong> (eine sichtbare Scheibe) an der Leiche hinterlegt. Lebende Crewmitglieder, die in diese Zone <strong>eintreten</strong>, sehen driftende, flackernde Kopien echter Spieler — reine lokale Halluzinationen, die Zeugen verwirren sollen. Zonen laufen nach einer konfigurierten Zeit ab und werden bei jedem Meeting gelöscht.</p>"
+            + "<p>Alle Optionen sind client-seitige FX, geschützt durch den Mod-weiten Handshake (alle brauchen den Mod).</p>"
+          }
+        },
+        {
+          id: "corrupter-options",
+          title: { en: "Options (Impostor tab)", de: "Optionen (Impostor-Tab)" },
+          summary: {
+            en: "Spawn rate, zone radius, duration, max zones, figures per zone, drift speed.",
+            de: "Spawnrate, Zonen-Radius, Dauer, max. Zonen, Figuren pro Zone, Drift-Geschwindigkeit."
+          },
+          body: {
+            en: tbl(["Option", "Default", "What it does"], [
+              ["Corrupter", "Off", "Spawn chance for the role."],
+              ["Corrupter Minimum Players To Spawn", "6", "The role isn't assigned below this lobby size."],
+              ["Corrupter Zone Radius", "3.0", "Zone disc radius in world units."],
+              ["Corrupter Zone Duration", "30 s", "Zone lifetime in seconds."],
+              ["Corrupter Max Active Zones", "3", "Max simultaneously active zones."],
+              ["Corrupter Figures Per Zone", "3", "Fake player figures per zone."],
+              ["Corrupter Drift Speed", "1.0", "Figure drift / flicker speed."],
+              ["Corrupter Impostors See Zones", "Off", "Other Impostors also see the figures."]
+            ]),
+            de: tbl(["Option", "Standard", "Funktion"], [
+              ["Corrupter", "Off", "Spawn-Chance der Rolle."],
+              ["Corrupter Minimum Players To Spawn", "6", "Die Rolle wird unter dieser Lobby-Größe nicht vergeben."],
+              ["Corrupter Zone Radius", "3,0", "Zonen-Radius in Welteinheiten."],
+              ["Corrupter Zone Duration", "30 s", "Zonen-Lebensdauer in Sekunden."],
+              ["Corrupter Max Active Zones", "3", "Maximal gleichzeitig aktive Zonen."],
+              ["Corrupter Figures Per Zone", "3", "Gefälschte Spielerfiguren pro Zone."],
+              ["Corrupter Drift Speed", "1,0", "Figuren-Drift-/Flacker-Geschwindigkeit."],
+              ["Corrupter Impostors See Zones", "Off", "Andere Impostoren sehen die Figuren auch."]
+            ])
+          }
+        }
+      ]
+    },
+    {
+      id: "illusionist",
+      title: { en: "The Illusionist (Impostor)", de: "The Illusionist (Impostor)" },
+      intro: {
+        en: "A normal Impostor is secretly promoted to The Illusionist at game start. The Illusionist records its walking path, then plays it back as a shielded clone that looks exactly like the Illusionist — any kill attempt on the clone is blocked.",
+        de: "Ein normaler Impostor wird beim Spielstart heimlich zum Illusionist befördert. Der Illusionist zeichnet seinen Laufpfad auf und spielt ihn als beschützten Clone ab, der genau wie der Illusionist aussieht — jeder Kill-Versuch am Clone wird blockiert."
+      },
+      entries: [
+        {
+          id: "illusionist-record",
+          title: { en: "Record & playback", de: "Aufzeichnung & Wiedergabe" },
+          summary: {
+            en: "RECORD your path for a configurable length, then PLAY it back as a shielded clone.",
+            de: "Zeichne deinen Pfad für eine konfigurierbare Länge auf und spiele ihn als beschützten Clone ab."
+          },
+          body: {
+            en: "<p>The Illusionist <strong>RECORDS</strong> its own walking path (for a configurable max length). At any time (with a cooldown), it <strong>PLAYS</strong> it back: a clone that looks exactly like the Illusionist walks the recorded path. The clone wears a Medic-shield glow and is effectively a protected player — any kill attempt on it is blocked with a shield flash (it never dies).</p>"
+            + "<p>The recorded path is broadcast on playback; every client builds + replays its own clone locally. A blocked kill costs the attacker a full cooldown penalty.</p>",
+            de: "<p>Der Illusionist <strong>ZEICHNET</strong> seinen eigenen Laufpfad auf (für eine konfigurierbare maximale Länge). Jederzeit (mit einem Cooldown) <strong>SPIELT</strong> er ihn ab: Ein Clone, der genau wie der Illusionist aussieht, läuft den aufgezeichneten Pfad ab. Der Clone trägt einen Medic-Schild-Glow und ist praktisch ein geschützter Spieler — jeder Kill-Versuch wird mit einem Schild-Blitz blockiert (er stirbt nie).</p>"
+            + "<p>Der aufgezeichnete Pfad wird bei der Wiedergabe gesendet; jeder Client baut seinen eigenen Clone lokal auf und spielt ihn ab. Ein blockierter Kill kostet dem Angreifer eine volle Cooldown-Strafe.</p>"
+          }
+        },
+        {
+          id: "illusionist-options",
+          title: { en: "Options (Impostor tab)", de: "Optionen (Impostor-Tab)" },
+          summary: {
+            en: "Spawn rate, record length, playback cooldown, block penalty, shield visibility.",
+            de: "Spawnrate, Aufzeichnungslänge, Wiedergabe-Cooldown, Block-Strafe, Schild-Sichtbarkeit."
+          },
+          body: {
+            en: tbl(["Option", "Default", "What it does"], [
+              ["Illusionist", "Off", "Spawn chance for the role."],
+              ["Illusionist Minimum Players To Spawn", "6", "The role isn't assigned below this lobby size."],
+              ["Illusionist Record Length", "5 s", "Max recording length in seconds."],
+              ["Illusionist Playback Cooldown", "20 s", "Cooldown between playbacks."],
+              ["Illusionist Block Penalty", "Full Cooldown", "A blocked kill costs the attacker a full cooldown."],
+              ["Illusionist Shield Visible To All", "Off", "The shield glow is visible to everyone."]
+            ]),
+            de: tbl(["Option", "Standard", "Funktion"], [
+              ["Illusionist", "Off", "Spawn-Chance der Rolle."],
+              ["Illusionist Minimum Players To Spawn", "6", "Die Rolle wird unter dieser Lobby-Größe nicht vergeben."],
+              ["Illusionist Record Length", "5 s", "Maximale Aufzeichnungslänge in Sekunden."],
+              ["Illusionist Playback Cooldown", "20 s", "Cooldown zwischen Wiedergaben."],
+              ["Illusionist Block Penalty", "Full Cooldown", "Ein blockierter Kill kostet dem Angreifer einen vollen Cooldown."],
+              ["Illusionist Shield Visible To All", "Off", "Der Schild-Glow ist für alle sichtbar."]
+            ])
+          }
+        }
+      ]
+    },
+    {
       id: "uc-roledraft",
       title: { en: "Role Draft support", de: "Role-Draft-Unterstützung" },
       intro: {
-        en: "Both Unknown's Collection roles are pickable in TOR's Role Draft — integrated entirely from the plugin without touching TOR's source.",
-        de: "Beide Unknown's-Collection-Rollen sind in TORs Role Draft wählbar — komplett aus dem Plugin integriert, ohne TORs Quellcode anzufassen."
+        en: "All Unknown's Collection roles are pickable in TOR's Role Draft — integrated entirely from the plugin without touching TOR's source.",
+        de: "Alle Unknown's-Collection-Rollen sind in TORs Role Draft wählbar — komplett aus dem Plugin integriert, ohne TORs Quellcode anzufassen."
       },
       entries: [
         {

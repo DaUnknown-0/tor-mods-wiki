@@ -181,7 +181,14 @@
       { mod: "useful", de: "Bloody Lag-Drosselung & Killer-Map-Fix", en: "Bloody lag throttle & killer-map fix" },
       { mod: "useful", de: "In-Game Mod Manager mit Update-All", en: "In-game Mod Manager with Update-All" },
       { mod: "unknowns", de: "The Tesla — lade ein +/−-Paar, das bei Nähe stirbt", en: "The Tesla — charge a +/− pair that dies when too close" },
+      { mod: "unknowns", de: "The Saboteur — Task-Sabotage & unsichtbare Fallen", en: "The Saboteur — task sabotage & invisible traps" },
+      { mod: "unknowns", de: "The Silencer — markiert Opfer zum Stummschalten im Meeting", en: "The Silencer — marks victims to be muted in meetings" },
+      { mod: "unknowns", de: "The Siphoner — zieht passiv Kill-Cooldown von Impostoren", en: "The Siphoner — passively drains Impostor kill cooldown" },
+      { mod: "unknowns", de: "The Witness — alleiniger Zeuge, öffentliche/anonyme Enthüllung", en: "The Witness — sole witness, public/anonymous reveal" },
+      { mod: "unknowns", de: "The Corrupter — Halluzinations-Zonen nach Kills", en: "The Corrupter — hallucination zones after kills" },
+      { mod: "unknowns", de: "The Illusionist — Pfad-Clone mit Kill-Block", en: "The Illusionist — path clone with kill block" },
       { mod: "unknowns", de: "Eigene Rollen ohne Änderung an TORs Quellcode", en: "Custom roles without touching TOR's source" },
+      { mod: "useful", de: "Lover Revenger — Überlebender wird zum Rächer", en: "Lover Revenger — survivor becomes the avenger" },
     ];
     const hl = highlights
       .map(
