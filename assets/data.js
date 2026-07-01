@@ -938,17 +938,17 @@ const UNKNOWNS = {
   key: "unknowns",
   name: "Unknown's Collection",
   fullName: { en: "Unknown's Collection — custom roles for TOR", de: "Unknown's Collection — eigene Rollen für TOR" },
-  version: "1.0.1.16",
+  version: "1.0.1.49",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/UnknownsCollection",
   download: "https://github.com/DaUnknown-0/UnknownsCollection/releases/latest",
   tagline: {
-    en: "Brand-new custom roles for The Other Roles, layered on without touching TOR's source. Roles: The Tesla, The Saboteur, The Silencer, The Siphoner, The Witness, The Corrupter & The Illusionist.",
-    de: "Brandneue eigene Rollen für The Other Roles, aufgesetzt ohne Änderung an TORs Quellcode. Rollen: The Tesla, The Saboteur, The Silencer, The Siphoner, The Witness, The Corrupter & The Illusionist."
+    en: "Brand-new custom roles for The Other Roles, layered on without touching TOR's source. Impostor: The Tesla, The Saboteur, The Silencer, The Poisoner, The Illusionist, The Maniac & The Shade. Crewmate: The Siphoner, The Witness, The Scout & The Beacon. Neutral: The Bug, The Follower & The Copycat.",
+    de: "Brandneue eigene Rollen für The Other Roles, aufgesetzt ohne Änderung an TORs Quellcode. Impostor: The Tesla, The Saboteur, The Silencer, The Poisoner, The Illusionist, The Maniac & The Shade. Crewmate: The Siphoner, The Witness, The Scout & The Beacon. Neutral: The Bug, The Follower & The Copycat."
   },
   intro: {
-    en: "Unknown's Collection is a separate plugin that adds <strong>new roles</strong> to TOR 4.8.0 purely through Harmony patches — TOR's source is never modified, and the only hard dependency is The Other Roles. The roles are client-side, so the lobby can only be started when every player runs the same Unknown's Collection version. Current roles: <strong>The Tesla</strong>, <strong>The Saboteur</strong>, <strong>The Silencer</strong>, <strong>The Siphoner</strong>, <strong>The Witness</strong>, <strong>The Corrupter</strong> and <strong>The Illusionist</strong>. All impostor roles are pickable in TOR's Role Draft.",
-    de: "Unknown's Collection ist ein eigenständiges Plugin, das TOR 4.8.0 <strong>neue Rollen</strong> rein über Harmony-Patches hinzufügt — TORs Quellcode wird nie verändert, einzige harte Abhängigkeit ist The Other Roles. Die Rollen sind client-seitig, daher kann die Lobby nur gestartet werden, wenn alle Spieler dieselbe Unknown's-Collection-Version haben. Aktuelle Rollen: <strong>The Tesla</strong>, <strong>The Saboteur</strong>, <strong>The Silencer</strong>, <strong>The Siphoner</strong>, <strong>The Witness</strong>, <strong>The Corrupter</strong> und <strong>The Illusionist</strong>. Alle Impostor-Rollen sind im Role Draft von TOR wählbar."
+    en: "Unknown's Collection is a separate plugin that adds <strong>new roles</strong> to TOR 4.8.0 purely through Harmony patches — TOR's source is never modified, and the only hard dependency is The Other Roles. The roles are client-side, so the lobby can only be started when every player runs the same Unknown's Collection version. Current roles — Impostor: <strong>The Tesla</strong>, <strong>The Saboteur</strong>, <strong>The Silencer</strong>, <strong>The Poisoner</strong>, <strong>The Illusionist</strong>, <strong>The Maniac</strong> and <strong>The Shade</strong>; Crewmate: <strong>The Siphoner</strong>, <strong>The Witness</strong>, <strong>The Scout</strong> and <strong>The Beacon</strong>; Neutral: <strong>The Bug</strong>, <strong>The Follower</strong> and <strong>The Copycat</strong>. All Impostor roles are pickable in TOR's Role Draft.",
+    de: "Unknown's Collection ist ein eigenständiges Plugin, das TOR 4.8.0 <strong>neue Rollen</strong> rein über Harmony-Patches hinzufügt — TORs Quellcode wird nie verändert, einzige harte Abhängigkeit ist The Other Roles. Die Rollen sind client-seitig, daher kann die Lobby nur gestartet werden, wenn alle Spieler dieselbe Unknown's-Collection-Version haben. Aktuelle Rollen — Impostor: <strong>The Tesla</strong>, <strong>The Saboteur</strong>, <strong>The Silencer</strong>, <strong>The Poisoner</strong>, <strong>The Illusionist</strong>, <strong>The Maniac</strong> und <strong>The Shade</strong>; Crewmate: <strong>The Siphoner</strong>, <strong>The Witness</strong>, <strong>The Scout</strong> und <strong>The Beacon</strong>; Neutral: <strong>The Bug</strong>, <strong>The Follower</strong> und <strong>The Copycat</strong>. Alle Impostor-Rollen sind im Role Draft von TOR wählbar."
   },
   install: {
     en: "<ol><li>Install <a href='https://github.com/TheOtherRolesAU/TheOtherRoles'>The Other Roles</a> into your Among Us BepInEx setup.</li><li>Download the latest <code>UnknownsCollection.dll</code> from the releases page.</li><li>Copy it into <code>&lt;Among Us&gt;/BepInEx/plugins/</code> (next to <code>TheOtherRoles.dll</code>).</li><li>Start the game. Every player who should see the role needs the mod — same version.</li></ol><p>A channel-aware in-game auto-updater checks GitHub and integrates with the Mod Manager (from Forgotten Fixes).</p>",
@@ -1173,8 +1173,8 @@ const UNKNOWNS = {
             de: "Drücke den SILENCE-Button, um einen Spieler zu markieren. Er wird im nächsten Meeting stummgeschaltet — Vote und Chat blockiert."
           },
           body: {
-            en: "<p>The Silencer presses <strong>SILENCE</strong> (a CustomButton with a cooldown) to mark a nearby player. A marked player has their vote area click + skip blocked and <strong>SendChat</strong> blocked in the <strong>next meeting</strong>. A red <strong>[MUTED]</strong> marker is shown next to their name both in-game and on their meeting vote area — obvious to everyone so the victim knows to mute their voice client too. The mute lasts exactly one meeting and is cleared when it ends.</p>",
-            de: "<p>Der Silencer drückt <strong>SILENCE</strong> (ein CustomButton mit Cooldown), um einen nahen Spieler zu markieren. Ein markierter Spieler hat im <strong>nächsten Meeting</strong> seinen Vote-Bereich + Skip blockiert und <strong>SendChat</strong> blockiert. Ein roter <strong>[MUTED]</strong>-Marker wird neben seinem Namen angezeigt, sowohl im Spiel als auch im Vote-Bereich — offensichtlich für alle, damit das Opfer weiß, auch seinen Voice-Client stummzuschalten. Das Mute dauert genau ein Meeting und wird danach aufgehoben.</p>"
+            en: "<p>The Silencer presses <strong>SILENCE</strong> (a CustomButton with a cooldown) to mark a nearby player. A marked player has their vote area click and <strong>SendChat</strong> blocked in the <strong>next meeting</strong>; their Skip vote is additionally blocked unless <strong>Silencer Can Still Skip</strong> is enabled. They are excluded from the meeting entirely rather than having a vote cast on their behalf, so voting can still end early without waiting on them. A red <strong>[MUTED]</strong> marker is shown next to their name both in-game and on their meeting vote area — obvious to everyone so the victim knows to mute their voice client too. The mute lasts exactly one meeting and is cleared when it ends.</p>",
+            de: "<p>Der Silencer drückt <strong>SILENCE</strong> (ein CustomButton mit Cooldown), um einen nahen Spieler zu markieren. Ein markierter Spieler hat im <strong>nächsten Meeting</strong> seinen Vote-Bereich und <strong>SendChat</strong> blockiert; sein Skip-Vote ist zusätzlich blockiert, außer <strong>Silencer Can Still Skip</strong> ist aktiviert. Er wird komplett von der Abstimmung ausgeschlossen, statt dass eine Stimme für ihn abgegeben wird — die Abstimmung kann also trotzdem vorzeitig enden, ohne auf ihn zu warten. Ein roter <strong>[MUTED]</strong>-Marker wird neben seinem Namen angezeigt, sowohl im Spiel als auch im Vote-Bereich — offensichtlich für alle, damit das Opfer weiß, auch seinen Voice-Client stummzuschalten. Das Mute dauert genau ein Meeting und wird danach aufgehoben.</p>"
           }
         },
         {
@@ -1188,17 +1188,17 @@ const UNKNOWNS = {
             en: tbl(["Option", "Default", "What it does"], [
               ["Silencer", "Off", "Spawn chance for the role."],
               ["Silencer Minimum Players To Spawn", "6", "The role isn't assigned below this lobby size."],
-              ["Silencer Mark Cooldown", "20 s", "Cooldown of the SILENCE button."],
+              ["Silencer Mark Cooldown", "25 s", "Cooldown of the SILENCE button."],
               ["Silencer Targets Per Round", "1", "How many players can be silenced per round."],
-              ["Silencer Can Still Skip", "On", "A muted player may still press Skip during voting."],
+              ["Silencer Can Still Skip", "Off", "A muted player may still press Skip during voting."],
               ["Silencer Show In-Game Marker", "On", "Also show the red [MUTED] marker next to the player's in-game name."]
             ]),
             de: tbl(["Option", "Standard", "Funktion"], [
               ["Silencer", "Off", "Spawn-Chance der Rolle."],
               ["Silencer Minimum Players To Spawn", "6", "Die Rolle wird unter dieser Lobby-Größe nicht vergeben."],
-              ["Silencer Mark Cooldown", "20 s", "Cooldown des SILENCE-Buttons."],
+              ["Silencer Mark Cooldown", "25 s", "Cooldown des SILENCE-Buttons."],
               ["Silencer Targets Per Round", "1", "Wie viele Spieler pro Runde stummgeschaltet werden können."],
-              ["Silencer Can Still Skip", "On", "Ein stummgeschalteter Spieler darf während der Abstimmung noch Skip drücken."],
+              ["Silencer Can Still Skip", "Off", "Ein stummgeschalteter Spieler darf während der Abstimmung noch Skip drücken."],
               ["Silencer Show In-Game Marker", "On", "Zeigt den roten [MUTED]-Marker auch neben dem In-Game-Namen des Spielers an."]
             ])
           }
@@ -1322,54 +1322,82 @@ const UNKNOWNS = {
       ]
     },
     {
-      id: "corrupter",
-      title: { en: "The Corrupter (Impostor)", de: "The Corrupter (Impostor)" },
+      id: "poisoner",
+      title: { en: "The Poisoner (Impostor)", de: "The Poisoner (Impostor)" },
       intro: {
-        en: "A normal Impostor is secretly promoted to The Corrupter at game start. Whenever the Corrupter kills, a corruption zone is laid at the body — living crew who walk into it see drifting, flickering copies of real players, confusing witnesses.",
-        de: "Ein normaler Impostor wird beim Spielstart heimlich zum Corrupter befördert. Immer wenn der Corrupter tötet, wird eine Korruptionszone an der Leiche hinterlegt — lebende Crewmitglieder, die hineinlaufen, sehen driftende, flackernde Kopien echter Spieler, die Zeugen verwirren."
+        en: "A normal Impostor is secretly promoted to The Poisoner at game start. Every kill leaves the victim's body poisoned; the first player who reports that body catches the poison too and dies after a set number of meetings — unless the Medic heals them with their antidote ability.",
+        de: "Ein normaler Impostor wird beim Spielstart heimlich zum Poisoner befördert. Jeder Kill hinterlässt eine vergiftete Leiche des Opfers; der erste Spieler, der diese Leiche meldet, fängt sich die Vergiftung ebenfalls ein und stirbt nach einer festgelegten Anzahl an Meetings — es sei denn, der Medic heilt ihn mit seiner Antidot-Fähigkeit."
       },
       entries: [
         {
-          id: "corrupter-zone",
-          title: { en: "Corruption zone", de: "Korruptionszone" },
+          id: "poisoner-poison",
+          title: { en: "Poisoned bodies", de: "Vergiftete Leichen" },
           summary: {
-            en: "A kill leaves a visible zone. Crew who enter see fake player figures — pure hallucinations.",
-            de: "Ein Kill hinterlässt eine sichtbare Zone. Crewmitglieder, die eintreten, sehen gefälschte Spielerfiguren — reine Halluzinationen."
+            en: "A Poisoner kill leaves the body poisoned rather than just dead — the poison itself does nothing until someone reports it.",
+            de: "Ein Poisoner-Kill hinterlässt statt eines normalen Toten eine vergiftete Leiche — das Gift selbst wirkt erst, wenn jemand sie meldet."
           },
           body: {
-            en: "<p>Whenever the Corrupter kills, a <strong>corruption zone</strong> (a visual disc) is laid at the body. Living crew who walk <strong>into</strong> that zone see drifting, flickering copies of real players — pure local hallucinations meant to confuse witnesses. Zones expire after a configured time and are cleared at every meeting.</p>"
-            + "<p>All options are client-side FX, gated by the mod-wide handshake (everyone needs the mod).</p>",
-            de: "<p>Immer wenn der Corrupter tötet, wird eine <strong>Korruptionszone</strong> (eine sichtbare Scheibe) an der Leiche hinterlegt. Lebende Crewmitglieder, die in diese Zone <strong>eintreten</strong>, sehen driftende, flackernde Kopien echter Spieler — reine lokale Halluzinationen, die Zeugen verwirren sollen. Zonen laufen nach einer konfigurierten Zeit ab und werden bei jedem Meeting gelöscht.</p>"
-            + "<p>Alle Optionen sind client-seitige FX, geschützt durch den Mod-weiten Handshake (alle brauchen den Mod).</p>"
+            en: "<p>Whenever the Poisoner kills, the victim's body is marked as <strong>poisoned</strong> instead of a normal corpse. The poison itself is inert until the body gets reported — up to <strong>Max Poisoned Bodies Per Round</strong> bodies can carry this mark at once.</p>",
+            de: "<p>Immer wenn der Poisoner tötet, wird die Leiche des Opfers als <strong>vergiftet</strong> markiert statt als normaler Toter. Das Gift selbst ist wirkungslos, bis die Leiche gemeldet wird — bis zu <strong>Max Poisoned Bodies Per Round</strong> Leichen können diese Markierung gleichzeitig tragen.</p>"
           }
         },
         {
-          id: "corrupter-options",
+          id: "poisoner-report",
+          title: { en: "Reporting the body spreads the poison", de: "Melden verbreitet das Gift" },
+          summary: {
+            en: "The first player to report a poisoned body is infected themselves and will die after a set number of meetings.",
+            de: "Der erste Spieler, der eine vergiftete Leiche meldet, infiziert sich selbst und stirbt nach einer festgelegten Anzahl an Meetings."
+          },
+          body: {
+            en: "<p>The first player who <strong>reports</strong> a poisoned body is themselves infected. Unless cured, they die after <strong>Poison Death After Meetings</strong> meetings have ended — a slow-burning ticking clock rather than an instant kill, so the poisoned player has time to be found out or saved.</p>",
+            de: "<p>Der erste Spieler, der eine vergiftete Leiche <strong>meldet</strong>, infiziert sich selbst. Ohne Heilung stirbt er, nachdem <strong>Poison Death After Meetings</strong> Meetings beendet wurden — eine langsam tickende Uhr statt eines sofortigen Kills, sodass genug Zeit bleibt, den Vergifteten zu entdecken oder zu retten.</p>"
+          }
+        },
+        {
+          id: "poisoner-warning",
+          title: { en: "\"You don't feel so good\"", de: "\"Dir ist nicht gut\"" },
+          summary: {
+            en: "The poisoned player gets a private warning message in the meeting where they were infected.",
+            de: "Der vergiftete Spieler bekommt im Meeting, in dem er infiziert wurde, eine private Warn-Nachricht."
+          },
+          body: {
+            en: "<p>In the meeting where the infection happens, the poisoned player privately sees a warning message — <em>\"you don't feel so good\"</em> — so they know something is wrong even though no one else is told.</p>",
+            de: "<p>Im Meeting, in dem die Infektion passiert, sieht der vergiftete Spieler privat eine Warn-Nachricht — <em>\"Dir ist nicht gut\"</em> —, damit er weiß, dass etwas nicht stimmt, auch wenn niemand sonst davon erfährt.</p>"
+          }
+        },
+        {
+          id: "poisoner-antidote",
+          title: { en: "The Medic's antidote", de: "Das Antidot des Medic" },
+          summary: {
+            en: "The Medic can spend a limited number of antidote uses per round to cure a poisoned player before the countdown runs out.",
+            de: "Der Medic kann eine begrenzte Anzahl Antidot-Anwendungen pro Runde einsetzen, um einen Vergifteten zu heilen, bevor der Countdown abläuft."
+          },
+          body: {
+            en: "<p>The Medic can cure a poisoned player with their <strong>antidote</strong> ability, clearing the infection before the poison countdown reaches zero. Antidote uses are limited per round via <strong>Medic Antidote Uses Per Round</strong>, so the Medic must choose carefully who to save.</p>",
+            de: "<p>Der Medic kann einen vergifteten Spieler mit seiner <strong>Antidot</strong>-Fähigkeit heilen und die Infektion beseitigen, bevor der Gift-Countdown null erreicht. Antidot-Anwendungen sind pro Runde über <strong>Medic Antidote Uses Per Round</strong> begrenzt, der Medic muss also sorgfältig wählen, wen er rettet.</p>"
+          }
+        },
+        {
+          id: "poisoner-options",
           title: { en: "Options (Impostor tab)", de: "Optionen (Impostor-Tab)" },
           summary: {
-            en: "Spawn rate, zone radius, duration, max zones, figures per zone, drift speed.",
-            de: "Spawnrate, Zonen-Radius, Dauer, max. Zonen, Figuren pro Zone, Drift-Geschwindigkeit."
+            en: "Spawn rate, min players, death delay, Medic antidote uses, max poisoned bodies.",
+            de: "Spawnrate, Min-Spieler, Todes-Verzögerung, Medic-Antidot-Anwendungen, max. vergiftete Leichen."
           },
           body: {
             en: tbl(["Option", "Default", "What it does"], [
-              ["Corrupter", "Off", "Spawn chance for the role."],
-              ["Corrupter Minimum Players To Spawn", "6", "The role isn't assigned below this lobby size."],
-              ["Corrupter Zone Radius", "3.0", "Zone disc radius in world units."],
-              ["Corrupter Zone Duration", "30 s", "Zone lifetime in seconds."],
-              ["Corrupter Max Active Zones", "3", "Max simultaneously active zones."],
-              ["Corrupter Figures Per Zone", "3", "Fake player figures per zone."],
-              ["Corrupter Drift Speed", "1.0", "Figure drift / flicker speed."],
-              ["Corrupter Impostors See Zones", "Off", "Other Impostors also see the figures."]
+              ["Poisoner", "Off", "Spawn chance for the role."],
+              ["Poisoner Minimum Players To Spawn", "6", "The role isn't assigned below this lobby size."],
+              ["Poison Death After Meetings", "3", "Meetings after infection before the poisoned player dies (range 2–5)."],
+              ["Medic Antidote Uses Per Round", "1", "How many times the Medic can cure a poisoned player per round."],
+              ["Max Poisoned Bodies Per Round", "2", "How many bodies can carry the poison mark at once per round."]
             ]),
             de: tbl(["Option", "Standard", "Funktion"], [
-              ["Corrupter", "Off", "Spawn-Chance der Rolle."],
-              ["Corrupter Minimum Players To Spawn", "6", "Die Rolle wird unter dieser Lobby-Größe nicht vergeben."],
-              ["Corrupter Zone Radius", "3,0", "Zonen-Radius in Welteinheiten."],
-              ["Corrupter Zone Duration", "30 s", "Zonen-Lebensdauer in Sekunden."],
-              ["Corrupter Max Active Zones", "3", "Maximal gleichzeitig aktive Zonen."],
-              ["Corrupter Figures Per Zone", "3", "Gefälschte Spielerfiguren pro Zone."],
-              ["Corrupter Drift Speed", "1,0", "Figuren-Drift-/Flacker-Geschwindigkeit."],
-              ["Corrupter Impostors See Zones", "Off", "Andere Impostoren sehen die Figuren auch."]
+              ["Poisoner", "Off", "Spawn-Chance der Rolle."],
+              ["Poisoner Minimum Players To Spawn", "6", "Die Rolle wird unter dieser Lobby-Größe nicht vergeben."],
+              ["Poison Death After Meetings", "3", "Meetings nach der Infektion, bevor der Vergiftete stirbt (Bereich 2–5)."],
+              ["Medic Antidote Uses Per Round", "1", "Wie oft der Medic pro Runde einen Vergifteten heilen kann."],
+              ["Max Poisoned Bodies Per Round", "2", "Wie viele Leichen pro Runde gleichzeitig die Gift-Markierung tragen können."]
             ])
           }
         }
@@ -1426,24 +1454,416 @@ const UNKNOWNS = {
       ]
     },
     {
+      id: "maniac",
+      title: { en: "The Maniac (Impostor)", de: "The Maniac (Impostor)" },
+      intro: {
+        en: "A normal Impostor is secretly promoted to The Maniac at game start. Instead of a normal kill, the Maniac plants a bomb on a player; the bomb can be passed to a nearby player before it detonates, and whoever is carrying it when time runs out dies.",
+        de: "Ein normaler Impostor wird beim Spielstart heimlich zum Maniac befördert. Statt eines normalen Kills pflanzt der Maniac eine Bombe auf einen Spieler; die Bombe kann vor der Detonation an einen nahen Spieler weitergegeben werden, und wer sie beim Ablaufen trägt, stirbt."
+      },
+      entries: [
+        {
+          id: "maniac-plant",
+          title: { en: "Planting the bomb", de: "Die Bombe pflanzen" },
+          summary: {
+            en: "The Maniac plants an invisible bomb on a nearby player. The victim doesn't notice at first.",
+            de: "Der Maniac pflanzt eine unsichtbare Bombe auf einen nahen Spieler. Das Opfer merkt zunächst nichts."
+          },
+          body: {
+            en: "<p>The Maniac plants a bomb on a nearby player, subject to a cooldown. For an <strong>Unaware Delay</strong>, the carrier has no idea they are carrying it — no warning, no indicator.</p>",
+            de: "<p>Der Maniac pflanzt eine Bombe auf einen nahen Spieler, mit Cooldown. Für eine als <strong>Unaware Delay</strong> eingestellte Zeitspanne merkt der Träger nichts davon — keine Warnung, kein Hinweis.</p>"
+          }
+        },
+        {
+          id: "maniac-pass",
+          title: { en: "Passing the bomb on", de: "Die Bombe weitergeben" },
+          summary: {
+            en: "Once aware, the carrier has a window to pass the bomb to a nearby player before it goes off.",
+            de: "Sobald er es merkt, hat der Träger ein Zeitfenster, die Bombe an einen nahen Spieler weiterzugeben, bevor sie hochgeht."
+          },
+          body: {
+            en: "<p>Once the <strong>Unaware Delay</strong> ends, the carrier is warned and gets a <strong>Pass Window</strong> during which they can hand the bomb to another nearby player — passing it on and on before it detonates. Whoever is holding the bomb when the timer expires dies, along with anyone else within the <strong>Explosion Range</strong>.</p>",
+            de: "<p>Nach Ablauf der <strong>Unaware Delay</strong> wird der Träger gewarnt und bekommt ein <strong>Pass Window</strong>, in dem er die Bombe an einen anderen nahen Spieler weiterreichen kann — so kann sie mehrfach wandern, bevor sie detoniert. Wer die Bombe hält, wenn der Timer abläuft, stirbt, ebenso jeder andere innerhalb der <strong>Explosion Range</strong>.</p>"
+          }
+        },
+        {
+          id: "maniac-options",
+          title: { en: "Options (Impostor tab)", de: "Optionen (Impostor-Tab)" },
+          summary: {
+            en: "Spawn rate, min players, bomb cooldown, unaware delay, pass window, explosion range.",
+            de: "Spawnrate, Min-Spieler, Bomben-Cooldown, Unaware-Delay, Pass-Fenster, Explosionsreichweite."
+          },
+          body: {
+            en: tbl(["Option", "Default", "What it does"], [
+              ["Maniac", "Off", "Spawn chance for the role."],
+              ["Maniac Minimum Players To Spawn", "6", "The role isn't assigned below this lobby size."],
+              ["Maniac Bomb Cooldown", "25 s", "Cooldown between planting bombs."],
+              ["Maniac Unaware Delay", "5 s", "How long the carrier stays unaware after being planted on."],
+              ["Maniac Pass Window", "4 s", "Time the aware carrier has to pass the bomb on."],
+              ["Maniac Explosion Range", "2.0", "Range in world units within which the explosion kills."]
+            ]),
+            de: tbl(["Option", "Standard", "Funktion"], [
+              ["Maniac", "Off", "Spawn-Chance der Rolle."],
+              ["Maniac Minimum Players To Spawn", "6", "Die Rolle wird unter dieser Lobby-Größe nicht vergeben."],
+              ["Maniac Bomb Cooldown", "25 s", "Cooldown zwischen dem Pflanzen von Bomben."],
+              ["Maniac Unaware Delay", "5 s", "Wie lange der Träger nichts von der Bombe merkt."],
+              ["Maniac Pass Window", "4 s", "Zeit, die der informierte Träger hat, um die Bombe weiterzugeben."],
+              ["Maniac Explosion Range", "2,0", "Reichweite in Welteinheiten, innerhalb derer die Explosion tötet."]
+            ])
+          }
+        }
+      ]
+    },
+    {
+      id: "shade",
+      title: { en: "The Shade (Impostor)", de: "The Shade (Impostor)" },
+      intro: {
+        en: "A normal Impostor is secretly promoted to The Shade at game start. Kills made by the Shade make the victim's body vanish; other players only find it by walking close enough, which then reports it automatically. Bait victims stay visible so their usual self-report still works.",
+        de: "Ein normaler Impostor wird beim Spielstart heimlich zum Shade befördert. Kills des Shade lassen die Leiche des Opfers verschwinden; andere Spieler finden sie nur, indem sie nah genug herangehen, was die Leiche dann automatisch meldet. Bait-Opfer bleiben sichtbar, damit ihr üblicher Selbst-Report weiterhin funktioniert."
+      },
+      entries: [
+        {
+          id: "shade-vanish",
+          title: { en: "Vanishing bodies", de: "Verschwindende Leichen" },
+          summary: {
+            en: "A Shade kill removes the body from sight entirely — nobody can spot it from a distance.",
+            de: "Ein Shade-Kill entfernt die Leiche vollständig aus dem Sichtfeld — niemand kann sie aus der Ferne entdecken."
+          },
+          body: {
+            en: "<p>When the Shade kills, the victim's body <strong>vanishes</strong> instead of lying visibly on the ground. It cannot be spotted from a distance and does not show up until a player is close enough to it.</p>",
+            de: "<p>Tötet der Shade, <strong>verschwindet</strong> die Leiche des Opfers, statt sichtbar am Boden zu liegen. Sie kann aus der Ferne nicht entdeckt werden und taucht erst auf, wenn ein Spieler nah genug herankommt.</p>"
+          }
+        },
+        {
+          id: "shade-find",
+          title: { en: "Finding & auto-reporting", de: "Finden & Auto-Melden" },
+          summary: {
+            en: "Get within Find Distance of a hidden body and it is automatically reported for you.",
+            de: "Kommt man in Find Distance an eine versteckte Leiche heran, wird sie automatisch für einen gemeldet."
+          },
+          body: {
+            en: "<p>Any player who gets within <strong>Find Distance</strong> of a hidden body automatically triggers a report — there's no separate button to press, walking close enough is enough to find it and call the meeting.</p>",
+            de: "<p>Jeder Spieler, der in <strong>Find Distance</strong> an eine versteckte Leiche herankommt, löst automatisch eine Meldung aus — es gibt keinen separaten Button dafür, nah genug herankommen reicht, um sie zu finden und das Meeting einzuberufen.</p>"
+          }
+        },
+        {
+          id: "shade-bait",
+          title: { en: "Bait bodies stay visible", de: "Bait-Leichen bleiben sichtbar" },
+          summary: {
+            en: "Bait victims are excluded from the vanish effect so their usual self-report still works as intended.",
+            de: "Bait-Opfer sind vom Verschwinden-Effekt ausgenommen, damit ihr üblicher Selbst-Report wie vorgesehen funktioniert."
+          },
+          body: {
+            en: "<p>Bodies belonging to a <strong>Bait</strong> victim are excluded from the vanish effect and stay normally visible, so the Bait's own self-report mechanic keeps working exactly as it does against other kill roles.</p>",
+            de: "<p>Leichen eines <strong>Bait</strong>-Opfers sind vom Verschwinden-Effekt ausgenommen und bleiben normal sichtbar, damit der Selbst-Report-Mechanismus des Bait genauso funktioniert wie gegen andere Kill-Rollen.</p>"
+          }
+        },
+        {
+          id: "shade-options",
+          title: { en: "Options (Impostor tab)", de: "Optionen (Impostor-Tab)" },
+          summary: {
+            en: "Spawn rate, min players, find distance.",
+            de: "Spawnrate, Min-Spieler, Find-Distanz."
+          },
+          body: {
+            en: tbl(["Option", "Default", "What it does"], [
+              ["Shade", "Off", "Spawn chance for the role."],
+              ["Shade Minimum Players To Spawn", "6", "The role isn't assigned below this lobby size."],
+              ["Shade Find Distance", "1.5", "How close a player must get to a hidden body to find and auto-report it."]
+            ]),
+            de: tbl(["Option", "Standard", "Funktion"], [
+              ["Shade", "Off", "Spawn-Chance der Rolle."],
+              ["Shade Minimum Players To Spawn", "6", "Die Rolle wird unter dieser Lobby-Größe nicht vergeben."],
+              ["Shade Find Distance", "1,5", "Wie nah ein Spieler einer versteckten Leiche kommen muss, um sie zu finden und automatisch zu melden."]
+            ])
+          }
+        }
+      ]
+    },
+    {
+      id: "scout",
+      title: { en: "The Scout (Crewmate)", de: "The Scout (Crewmate)" },
+      intro: {
+        en: "A normal Crewmate is secretly promoted to The Scout at game start. On demand, the Scout can activate a short ability that makes them transparent and fast — and while it's active, lights or sabotage never cut their vision.",
+        de: "Ein normaler Crewmate wird beim Spielstart heimlich zum Scout befördert. Auf Abruf kann der Scout eine kurze Fähigkeit aktivieren, die ihn transparent und schnell macht — und solange sie aktiv ist, schneiden Lichter oder Sabotage seine Sicht nie."
+      },
+      entries: [
+        {
+          id: "scout-ability",
+          title: { en: "Activatable ability", de: "Aktivierbare Fähigkeit" },
+          summary: {
+            en: "Press the ability button to turn transparent and gain a speed boost for a limited time.",
+            de: "Den Fähigkeits-Button drücken, um für begrenzte Zeit transparent zu werden und einen Geschwindigkeitsschub zu erhalten."
+          },
+          body: {
+            en: "<p>The Scout presses an ability button, subject to a cooldown, to become <strong>transparent</strong> and gain a <strong>speed multiplier</strong> for <strong>Ability Duration</strong> seconds, then the effect ends and the cooldown starts again.</p>",
+            de: "<p>Der Scout drückt einen Fähigkeits-Button (mit Cooldown), um für <strong>Ability Duration</strong> Sekunden <strong>transparent</strong> zu werden und einen <strong>Geschwindigkeits-Multiplikator</strong> zu erhalten; danach endet der Effekt und der Cooldown beginnt erneut.</p>"
+          }
+        },
+        {
+          id: "scout-vision",
+          title: { en: "Vision immune to lights & sabotage", de: "Sicht immun gegen Lichter & Sabotage" },
+          summary: {
+            en: "While the ability is active, the usual vision penalty from a lights sabotage simply doesn't apply.",
+            de: "Solange die Fähigkeit aktiv ist, greift die übliche Sichteinschränkung durch eine Licht-Sabotage einfach nicht."
+          },
+          body: {
+            en: "<p>While the ability is active, the normal vision reduction from a lights sabotage (or any other darkness effect) is bypassed — the Scout keeps their full <strong>Transparency</strong>-adjusted vision regardless.</p>",
+            de: "<p>Solange die Fähigkeit aktiv ist, wird die normale Sichtreduzierung durch eine Licht-Sabotage (oder jeden anderen Dunkelheits-Effekt) umgangen — der Scout behält trotzdem seine volle, per <strong>Transparency</strong> angepasste Sicht.</p>"
+          }
+        },
+        {
+          id: "scout-options",
+          title: { en: "Options (Crewmate tab)", de: "Optionen (Crewmate-Tab)" },
+          summary: {
+            en: "Spawn rate, min players, ability duration, cooldown, speed multiplier, transparency.",
+            de: "Spawnrate, Min-Spieler, Fähigkeitsdauer, Cooldown, Geschwindigkeits-Multiplikator, Transparenz."
+          },
+          body: {
+            en: tbl(["Option", "Default", "What it does"], [
+              ["Scout", "Off", "Spawn chance for the role."],
+              ["Scout Minimum Players To Spawn", "6", "The role isn't assigned below this lobby size."],
+              ["Scout Ability Duration", "5 s", "How long the transparent + fast state lasts."],
+              ["Scout Ability Cooldown", "30 s", "Cooldown between activations."],
+              ["Scout Speed Multiplier", "1.5", "Speed multiplier while the ability is active."],
+              ["Scout Transparency", "0.5", "Transparency level while the ability is active."]
+            ]),
+            de: tbl(["Option", "Standard", "Funktion"], [
+              ["Scout", "Off", "Spawn-Chance der Rolle."],
+              ["Scout Minimum Players To Spawn", "6", "Die Rolle wird unter dieser Lobby-Größe nicht vergeben."],
+              ["Scout Ability Duration", "5 s", "Wie lange der transparent-schnelle Zustand anhält."],
+              ["Scout Ability Cooldown", "30 s", "Cooldown zwischen Aktivierungen."],
+              ["Scout Speed Multiplier", "1,5", "Geschwindigkeits-Multiplikator, während die Fähigkeit aktiv ist."],
+              ["Scout Transparency", "0,5", "Transparenzgrad, während die Fähigkeit aktiv ist."]
+            ])
+          }
+        }
+      ]
+    },
+    {
+      id: "beacon",
+      title: { en: "The Beacon (Crewmate)", de: "The Beacon (Crewmate)" },
+      intro: {
+        en: "A normal Crewmate is secretly promoted to The Beacon at game start. A lights sabotage never reduces the Beacon's own vision, and nearby crewmates share the Beacon's full vision too.",
+        de: "Ein normaler Crewmate wird beim Spielstart heimlich zum Beacon befördert. Eine Licht-Sabotage verringert die Sicht des Beacon selbst nie, und nahe Crewmitglieder teilen sich die volle Sicht des Beacon."
+      },
+      entries: [
+        {
+          id: "beacon-vision",
+          title: { en: "Immune to lights", de: "Immun gegen Lichter" },
+          summary: {
+            en: "The Beacon's own vision is never reduced by a lights sabotage.",
+            de: "Die eigene Sicht des Beacon wird durch eine Licht-Sabotage nie verringert."
+          },
+          body: {
+            en: "<p>Whenever lights are sabotaged, the Beacon is simply unaffected — their vision radius always stays at its normal, non-sabotaged value.</p>",
+            de: "<p>Wird das Licht sabotiert, ist der Beacon davon einfach nicht betroffen — sein Sichtradius bleibt immer auf dem normalen, nicht sabotierten Wert.</p>"
+          }
+        },
+        {
+          id: "beacon-share",
+          title: { en: "Sharing vision with nearby crew", de: "Sicht mit naher Crew teilen" },
+          summary: {
+            en: "Crewmates within Share Radius of the Beacon see with the Beacon's full, unreduced vision too.",
+            de: "Crewmitglieder innerhalb der Share Radius um den Beacon sehen ebenfalls mit dessen voller, ungekürzter Sicht."
+          },
+          body: {
+            en: "<p>Any crewmate within the <strong>Share Radius</strong> of the Beacon has their own vision boosted to match the Beacon's — including during a lights sabotage, since the Beacon itself is unaffected.</p>",
+            de: "<p>Jedes Crewmitglied innerhalb der <strong>Share Radius</strong> um den Beacon bekommt seine eigene Sicht auf das Niveau des Beacon angehoben — auch während einer Licht-Sabotage, da der Beacon selbst davon nicht betroffen ist.</p>"
+          }
+        },
+        {
+          id: "beacon-options",
+          title: { en: "Options (Crewmate tab)", de: "Optionen (Crewmate-Tab)" },
+          summary: {
+            en: "Spawn rate, min players, share radius, guesser exemption.",
+            de: "Spawnrate, Min-Spieler, Teil-Radius, Rate-Ausnahme."
+          },
+          body: {
+            en: tbl(["Option", "Default", "What it does"], [
+              ["Beacon", "Off", "Spawn chance for the role."],
+              ["Beacon Minimum Players To Spawn", "6", "The role isn't assigned below this lobby size."],
+              ["Beacon Share Radius", "5.0", "Range in world units within which nearby crew share the Beacon's vision."],
+              ["Beacon Not Guessable", "Off", "Excludes the Beacon from Sheriff-style guessing (if that role is enabled)."]
+            ]),
+            de: tbl(["Option", "Standard", "Funktion"], [
+              ["Beacon", "Off", "Spawn-Chance der Rolle."],
+              ["Beacon Minimum Players To Spawn", "6", "Die Rolle wird unter dieser Lobby-Größe nicht vergeben."],
+              ["Beacon Share Radius", "5,0", "Reichweite in Welteinheiten, innerhalb derer nahe Crew die Sicht des Beacon teilt."],
+              ["Beacon Not Guessable", "Off", "Schließt den Beacon vom Sheriff-artigen Raten aus (falls diese Rolle aktiviert ist)."]
+            ])
+          }
+        }
+      ]
+    },
+    {
+      id: "bug",
+      title: { en: "The Bug (Neutral)", de: "The Bug (Neutral)" },
+      intro: {
+        en: "A normal player is secretly turned into The Bug at game start. The Bug's only goal is to survive to the end of the game and win alone. The moment any team would normally win while the Bug is still alive, the Bug steals the victory for itself instead.",
+        de: "Ein normaler Spieler wird beim Spielstart heimlich zum Bug. Das einzige Ziel des Bug ist es, bis zum Spielende zu überleben und ALLEIN zu gewinnen. Sobald irgendein Team eigentlich gewinnen würde und der Bug noch lebt, stiehlt der Bug stattdessen den Sieg für sich selbst."
+      },
+      entries: [
+        {
+          id: "bug-win",
+          title: { en: "Stealing the win", de: "Den Sieg stehlen" },
+          summary: {
+            en: "Whichever team would otherwise win, a still-living Bug hijacks the outcome into a solo win.",
+            de: "Egal welches Team eigentlich gewinnen würde — ein noch lebender Bug kappert das Ergebnis zu einem Solo-Sieg."
+          },
+          body: {
+            en: "<p>The Bug has no faction of its own. It simply needs to be <strong>alive</strong> at the moment a game-ending condition triggers — Crewmate tasks, an Impostor majority, or any other role's win condition. Whichever team would have won, the win screen is rewritten so the <strong>Bug wins alone</strong> instead.</p>",
+            de: "<p>Der Bug gehört keiner Fraktion an. Er muss lediglich in dem Moment, in dem eine Spielend-Bedingung eintritt, noch <strong>am Leben</strong> sein — egal ob Crew-Tasks, Impostor-Mehrheit oder die Siegbedingung einer anderen Rolle. Welches Team auch immer gewonnen hätte, der Sieg-Bildschirm wird umgeschrieben, sodass stattdessen <strong>der Bug allein gewinnt</strong>.</p>"
+          }
+        },
+        {
+          id: "bug-glitch",
+          title: { en: "Glitchy victory screen", de: "Glitchiger Sieg-Bildschirm" },
+          summary: {
+            en: "Optional visual glitch effects sell the \"error in the system\" theme on the Bug's win screen.",
+            de: "Optionale visuelle Glitch-Effekte unterstreichen das „Fehler im System\"-Thema auf dem Sieg-Bildschirm des Bug."
+          },
+          body: {
+            en: "<p>When the Bug steals the win, an optional glitch effect (screen tearing, static, corrupted text) can be layered onto the victory screen to sell the idea that the Bug is a glitch in the game itself rather than a proper role.</p>",
+            de: "<p>Stiehlt der Bug den Sieg, kann optional ein Glitch-Effekt (Bildstörung, Rauschen, verzerrter Text) über den Sieg-Bildschirm gelegt werden, um die Idee zu unterstreichen, dass der Bug ein Fehler im Spiel selbst ist statt einer richtigen Rolle.</p>"
+          }
+        },
+        {
+          id: "bug-options",
+          title: { en: "Options (Neutral tab)", de: "Optionen (Neutral-Tab)" },
+          summary: {
+            en: "Spawn rate, min players.",
+            de: "Spawnrate, Min-Spieler."
+          },
+          body: {
+            en: tbl(["Option", "Default", "What it does"], [
+              ["Bug", "Off", "Spawn chance for the role."],
+              ["Bug Minimum Players To Spawn", "6", "The role isn't assigned below this lobby size."]
+            ]),
+            de: tbl(["Option", "Standard", "Funktion"], [
+              ["Bug", "Off", "Spawn-Chance der Rolle."],
+              ["Bug Minimum Players To Spawn", "6", "Die Rolle wird unter dieser Lobby-Größe nicht vergeben."]
+            ])
+          }
+        }
+      ]
+    },
+    {
+      id: "follower",
+      title: { en: "The Follower (Neutral)", de: "The Follower (Neutral)" },
+      intro: {
+        en: "A normal player is secretly turned into The Follower at game start. The moment the first other player dies, the Follower fully inherits that player's role — team, ability and win condition included, whether that role was Impostor, Crewmate or Neutral.",
+        de: "Ein normaler Spieler wird beim Spielstart heimlich zum Follower. Sobald der erste andere Spieler stirbt, übernimmt der Follower dessen Rolle vollständig — inklusive Team, Fähigkeit und Siegbedingung, egal ob diese Rolle Impostor, Crewmate oder Neutral war."
+      },
+      entries: [
+        {
+          id: "follower-inherit",
+          title: { en: "Inheriting the first death's role", de: "Die Rolle des ersten Toten übernehmen" },
+          summary: {
+            en: "Whoever dies first in the game, the Follower becomes them — same team, same ability, same win condition.",
+            de: "Wer im Spiel auch zuerst stirbt — der Follower wird zu ihm: gleiches Team, gleiche Fähigkeit, gleiche Siegbedingung."
+          },
+          body: {
+            en: "<p>The Follower waits for the <strong>first player to die</strong>, by any cause. At that moment, the Follower fully <strong>becomes</strong> that role: same faction, same abilities and buttons, same win condition — including becoming an Impostor with kill access, or another Neutral role with its own goal. Only the very first death counts; later deaths change nothing.</p>",
+            de: "<p>Der Follower wartet auf den <strong>ersten sterbenden Spieler</strong>, gleich aus welchem Grund. In diesem Moment <strong>wird</strong> der Follower vollständig zu dieser Rolle: gleiche Fraktion, gleiche Fähigkeiten und Buttons, gleiche Siegbedingung — bis hin dazu, selbst Impostor mit Kill-Zugriff zu werden, oder eine andere Neutrale Rolle mit eigenem Ziel. Nur der allererste Tod zählt; spätere Tode ändern nichts mehr.</p>"
+          }
+        },
+        {
+          id: "follower-options",
+          title: { en: "Options (Neutral tab)", de: "Optionen (Neutral-Tab)" },
+          summary: {
+            en: "Spawn rate, min players.",
+            de: "Spawnrate, Min-Spieler."
+          },
+          body: {
+            en: tbl(["Option", "Default", "What it does"], [
+              ["Follower", "Off", "Spawn chance for the role."],
+              ["Follower Minimum Players To Spawn", "6", "The role isn't assigned below this lobby size."]
+            ]),
+            de: tbl(["Option", "Standard", "Funktion"], [
+              ["Follower", "Off", "Spawn-Chance der Rolle."],
+              ["Follower Minimum Players To Spawn", "6", "Die Rolle wird unter dieser Lobby-Größe nicht vergeben."]
+            ])
+          }
+        }
+      ]
+    },
+    {
+      id: "copycat",
+      title: { en: "The Copycat (Neutral)", de: "The Copycat (Neutral)" },
+      intro: {
+        en: "A normal player is secretly turned into The Copycat at game start. The Copycat learns abilities by witnessing them in use — Camouflage, Morph, Shield, Shoot and Vent — and each learned ability becomes its own button. It wins together with whichever side wins the game, as long as it's alive and has used enough of its learned abilities.",
+        de: "Ein normaler Spieler wird beim Spielstart heimlich zum Copycat. Der Copycat lernt Fähigkeiten, indem er sie mitbekommt — Camouflage, Morph, Shield, Shoot und Vent —, und jede gelernte Fähigkeit wird zu einem eigenen Button. Er gewinnt mit der siegreichen Seite, solange er am Leben ist und genug seiner gelernten Fähigkeiten benutzt hat."
+      },
+      entries: [
+        {
+          id: "copycat-learn",
+          title: { en: "Learning by witnessing", de: "Lernen durch Mitbekommen" },
+          summary: {
+            en: "See another player use Camouflage, Morph, Shield, Shoot or Vent, and the Copycat learns it — up to a stored maximum.",
+            de: "Sieht der Copycat, wie ein anderer Spieler Camouflage, Morph, Shield, Shoot oder Vent benutzt, lernt er es — bis zu einem gespeicherten Maximum."
+          },
+          body: {
+            en: "<p>Whenever the Copycat witnesses another player use one of the tracked abilities — <strong>Camouflage</strong>, <strong>Morph</strong>, <strong>Shield</strong> (unkillable), <strong>Shoot</strong> (Sheriff-style, with the usual backfire against Crewmates) or <strong>Vent</strong> (vent access) — the Copycat learns it and gains a button for it, up to <strong>Max Stored Abilities</strong> at once.</p>",
+            de: "<p>Immer wenn der Copycat mitbekommt, dass ein anderer Spieler eine der beobachteten Fähigkeiten benutzt — <strong>Camouflage</strong>, <strong>Morph</strong>, <strong>Shield</strong> (unkillbar), <strong>Shoot</strong> (Sheriff-artig, mit dem üblichen Backfire gegen Crewmates) oder <strong>Vent</strong> (Lüftungszugriff) —, lernt der Copycat sie und erhält dafür einen Button, bis zu <strong>Max Stored Abilities</strong> gleichzeitig.</p>"
+          }
+        },
+        {
+          id: "copycat-win",
+          title: { en: "Winning with the winning team", de: "Gewinnen mit dem siegreichen Team" },
+          summary: {
+            en: "The Copycat has no team of its own — it wins alongside whoever wins, provided it's alive and has used enough learned abilities.",
+            de: "Der Copycat hat kein eigenes Team — er gewinnt zusammen mit den Siegern, sofern er lebt und genug gelernte Fähigkeiten benutzt hat."
+          },
+          body: {
+            en: "<p>The Copycat doesn't belong to the Impostors, the Crewmates or any other Neutral faction. At game end, if the Copycat is still <strong>alive</strong> and has actually <strong>used</strong> at least <strong>Abilities Needed To Win</strong> of its learned abilities during the game, it wins together with whichever side the game declares victorious.</p>",
+            de: "<p>Der Copycat gehört weder den Impostoren noch der Crew noch einer anderen Neutralen Fraktion an. Ist der Copycat am Spielende noch <strong>am Leben</strong> und hat im Spielverlauf tatsächlich mindestens <strong>Abilities Needed To Win</strong> seiner gelernten Fähigkeiten <strong>benutzt</strong>, gewinnt er zusammen mit der Seite, die das Spiel für sich entscheidet.</p>"
+          }
+        },
+        {
+          id: "copycat-options",
+          title: { en: "Options (Neutral tab)", de: "Optionen (Neutral-Tab)" },
+          summary: {
+            en: "Spawn rate, min players, max stored abilities, tasks, abilities needed to win.",
+            de: "Spawnrate, Min-Spieler, max. gespeicherte Fähigkeiten, Tasks, benötigte Fähigkeiten zum Sieg."
+          },
+          body: {
+            en: tbl(["Option", "Default", "What it does"], [
+              ["Copycat", "Off", "Spawn chance for the role."],
+              ["Copycat Minimum Players To Spawn", "6", "The role isn't assigned below this lobby size."],
+              ["Copycat Max Stored Abilities", "3", "How many learned abilities the Copycat can hold at once."],
+              ["Copycat Has Tasks", "On", "Whether the Copycat is given tasks like a Crewmate."],
+              ["Copycat Abilities Needed To Win", "1", "How many learned abilities must be used before the Copycat can win with the winning team."]
+            ]),
+            de: tbl(["Option", "Standard", "Funktion"], [
+              ["Copycat", "Off", "Spawn-Chance der Rolle."],
+              ["Copycat Minimum Players To Spawn", "6", "Die Rolle wird unter dieser Lobby-Größe nicht vergeben."],
+              ["Copycat Max Stored Abilities", "3", "Wie viele gelernte Fähigkeiten der Copycat gleichzeitig speichern kann."],
+              ["Copycat Has Tasks", "On", "Ob der Copycat wie ein Crewmate Tasks bekommt."],
+              ["Copycat Abilities Needed To Win", "1", "Wie viele gelernte Fähigkeiten benutzt sein müssen, damit der Copycat mit dem siegreichen Team gewinnen kann."]
+            ])
+          }
+        }
+      ]
+    },
+    {
       id: "uc-roledraft",
       title: { en: "Role Draft support", de: "Role-Draft-Unterstützung" },
       intro: {
-        en: "All Unknown's Collection roles are pickable in TOR's Role Draft — integrated entirely from the plugin without touching TOR's source.",
-        de: "Alle Unknown's-Collection-Rollen sind in TORs Role Draft wählbar — komplett aus dem Plugin integriert, ohne TORs Quellcode anzufassen."
+        en: "All Unknown's Collection impostor roles are pickable in TOR's Role Draft — integrated entirely from the plugin without touching TOR's source.",
+        de: "Alle Unknown's-Collection-Impostor-Rollen sind in TORs Role Draft wählbar — komplett aus dem Plugin integriert, ohne TORs Quellcode anzufassen."
       },
       entries: [
         {
           id: "uc-roledraft-pick",
-          title: { en: "Draftable Tesla & Saboteur", de: "Tesla & Saboteur draftbar" },
+          title: { en: "All impostor roles draftable", de: "Alle Impostor-Rollen draftbar" },
           badges: [{ en: "Draftable", de: "Draftbar" }],
           summary: {
-            en: "With Role Draft on, the Tesla and Saboteur appear as impostor picks instead of being assigned by the usual random promotion.",
-            de: "Mit aktivem Role Draft erscheinen Tesla und Saboteur als Impostor-Picks, statt über die übliche Zufalls-Beförderung vergeben zu werden."
+            en: "With Role Draft on, all seven Unknown's Collection impostor roles — Tesla, Saboteur, Silencer, Poisoner, Illusionist, Maniac and Shade — appear as picks instead of being assigned by the usual random promotion.",
+            de: "Mit aktivem Role Draft erscheinen alle sieben Unknown's-Collection-Impostor-Rollen — Tesla, Saboteur, Silencer, Poisoner, Illusionist, Maniac und Shade — als Picks, statt über die übliche Zufalls-Beförderung vergeben zu werden."
           },
           body: {
-            en: "<p>When TOR's <strong>Role Draft</strong> is enabled, the enabled Unknown's Collection roles become regular impostor picks (max one each per game), and the random promotion is suppressed so the draft decides. The integration lives entirely in the plugin via Harmony patches — TOR's source is untouched. (In the draft list the buttons use the impostor red so the faction filter shows them; each role's own colour returns in-game.)</p>",
-            de: "<p>Ist TORs <strong>Role Draft</strong> aktiv, werden die aktivierten Unknown's-Collection-Rollen zu normalen Impostor-Picks (max. je einer pro Spiel), und die Zufalls-Beförderung wird unterdrückt, damit der Draft entscheidet. Die Integration liegt komplett im Plugin via Harmony-Patches — TORs Quellcode bleibt unangetastet. (In der Draft-Liste sind die Buttons impostor-rot, damit der Fraktionsfilter sie zeigt; im Spiel kehrt die jeweilige Eigenfarbe zurück.)</p>"
+            en: "<p>When TOR's <strong>Role Draft</strong> is enabled, all enabled Unknown's Collection impostor roles — <strong>The Tesla</strong>, <strong>The Saboteur</strong>, <strong>The Silencer</strong>, <strong>The Poisoner</strong>, <strong>The Illusionist</strong>, <strong>The Maniac</strong> and <strong>The Shade</strong> — become regular impostor picks (max one each per game), and the random promotion is suppressed so the draft decides. The integration lives entirely in the plugin via Harmony patches — TOR's source is untouched. (In the draft list the buttons use the impostor red so the faction filter shows them; each role's own colour returns in-game.)</p>",
+            de: "<p>Ist TORs <strong>Role Draft</strong> aktiv, werden alle aktivierten Unknown's-Collection-Impostor-Rollen — <strong>The Tesla</strong>, <strong>The Saboteur</strong>, <strong>The Silencer</strong>, <strong>The Poisoner</strong>, <strong>The Illusionist</strong>, <strong>The Maniac</strong> und <strong>The Shade</strong> — zu normalen Impostor-Picks (max. je einer pro Spiel), und die Zufalls-Beförderung wird unterdrückt, damit der Draft entscheidet. Die Integration liegt komplett im Plugin via Harmony-Patches — TORs Quellcode bleibt unangetastet. (In der Draft-Liste sind die Buttons impostor-rot, damit der Fraktionsfilter sie zeigt; im Spiel kehrt die jeweilige Eigenfarbe zurück.)</p>"
           }
         }
       ]
