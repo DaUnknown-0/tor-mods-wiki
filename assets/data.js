@@ -1683,13 +1683,13 @@ const UNKNOWNS = {
               ["Beacon", "Off", "Spawn chance for the role."],
               ["Beacon Minimum Players To Spawn", "6", "The role isn't assigned below this lobby size."],
               ["Beacon Share Radius", "5.0", "Range in world units within which nearby crew share the Beacon's vision."],
-              ["Beacon Not Guessable", "Off", "Excludes the Beacon from Sheriff-style guessing (if that role is enabled)."]
+              ["Beacon Not Guessable", "Off", "Excludes the Beacon from guessing (if the Guesser role is enabled)."]
             ]),
             de: tbl(["Option", "Standard", "Funktion"], [
               ["Beacon", "Off", "Spawn-Chance der Rolle."],
               ["Beacon Minimum Players To Spawn", "6", "Die Rolle wird unter dieser Lobby-Größe nicht vergeben."],
               ["Beacon Share Radius", "5,0", "Reichweite in Welteinheiten, innerhalb derer nahe Crew die Sicht des Beacon teilt."],
-              ["Beacon Not Guessable", "Off", "Schließt den Beacon vom Sheriff-artigen Raten aus (falls diese Rolle aktiviert ist)."]
+              ["Beacon Not Guessable", "Off", "Schließt den Beacon vom Raten aus (falls die Guesser-Rolle aktiviert ist)."]
             ])
           }
         }
@@ -1699,8 +1699,8 @@ const UNKNOWNS = {
       id: "bug",
       title: { en: "The Bug (Neutral)", de: "The Bug (Neutral)" },
       intro: {
-        en: "A normal player is secretly turned into The Bug at game start. The Bug's only goal is to survive to the end of the game and win alone. The moment any team would normally win while the Bug is still alive, the Bug steals the victory for itself instead.",
-        de: "Ein normaler Spieler wird beim Spielstart heimlich zum Bug. Das einzige Ziel des Bug ist es, bis zum Spielende zu überleben und ALLEIN zu gewinnen. Sobald irgendein Team eigentlich gewinnen würde und der Bug noch lebt, stiehlt der Bug stattdessen den Sieg für sich selbst."
+        en: "A normal player is secretly turned into The Bug at game start. The Bug's only goal is to survive to the end of the game and win alone. The moment a team (Crewmate, Impostor or Jackal) would normally win while the Bug is still alive, the Bug steals the victory for itself instead.",
+        de: "Ein normaler Spieler wird beim Spielstart heimlich zum Bug. Das einzige Ziel des Bug ist es, bis zum Spielende zu überleben und ALLEIN zu gewinnen. Sobald ein Team (Crewmate, Impostor oder Jackal) eigentlich gewinnen würde und der Bug noch lebt, stiehlt der Bug stattdessen den Sieg für sich selbst."
       },
       entries: [
         {
@@ -1711,8 +1711,8 @@ const UNKNOWNS = {
             de: "Egal welches Team eigentlich gewinnen würde — ein noch lebender Bug kappert das Ergebnis zu einem Solo-Sieg."
           },
           body: {
-            en: "<p>The Bug has no faction of its own. It simply needs to be <strong>alive</strong> at the moment a game-ending condition triggers — Crewmate tasks, an Impostor majority, or any other role's win condition. Whichever team would have won, the win screen is rewritten so the <strong>Bug wins alone</strong> instead.</p>",
-            de: "<p>Der Bug gehört keiner Fraktion an. Er muss lediglich in dem Moment, in dem eine Spielend-Bedingung eintritt, noch <strong>am Leben</strong> sein — egal ob Crew-Tasks, Impostor-Mehrheit oder die Siegbedingung einer anderen Rolle. Welches Team auch immer gewonnen hätte, der Sieg-Bildschirm wird umgeschrieben, sodass stattdessen <strong>der Bug allein gewinnt</strong>.</p>"
+            en: "<p>The Bug has no faction of its own. It simply needs to be <strong>alive</strong> at the moment a <strong>team win</strong> triggers — Crewmate (tasks/votes), Impostor (kills/sabotage) or the Jackal team. That win is rewritten so the <strong>Bug wins alone</strong> instead. Neutral solo wins (Jester, Arsonist, Vulture, Lovers, Prosecutor, …) are <strong>not</strong> stolen — they resolve normally.</p>",
+            de: "<p>Der Bug gehört keiner Fraktion an. Er muss lediglich in dem Moment, in dem ein <strong>Team-Sieg</strong> eintritt, noch <strong>am Leben</strong> sein — Crewmate (Tasks/Votes), Impostor (Kills/Sabotage) oder das Jackal-Team. Dieser Sieg wird umgeschrieben, sodass stattdessen <strong>der Bug allein gewinnt</strong>. Neutrale Solo-Siege (Jester, Arsonist, Vulture, Lovers, Prosecutor, …) werden <strong>nicht</strong> gestohlen — sie werden normal gewertet.</p>"
           }
         },
         {
