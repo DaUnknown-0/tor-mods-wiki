@@ -938,17 +938,17 @@ const UNKNOWNS = {
   key: "unknowns",
   name: "Unknown's Collection",
   fullName: { en: "Unknown's Collection — custom roles for TOR", de: "Unknown's Collection — eigene Rollen für TOR" },
-  version: "1.0.1.49",
+  version: "1.0.1.60",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/UnknownsCollection",
   download: "https://github.com/DaUnknown-0/UnknownsCollection/releases/latest",
   tagline: {
-    en: "Brand-new custom roles for The Other Roles, layered on without touching TOR's source. Impostor: The Tesla, The Saboteur, The Silencer, The Poisoner, The Illusionist, The Maniac & The Shade. Crewmate: The Siphoner, The Witness, The Scout & The Beacon. Neutral: The Bug, The Follower & The Copycat.",
-    de: "Brandneue eigene Rollen für The Other Roles, aufgesetzt ohne Änderung an TORs Quellcode. Impostor: The Tesla, The Saboteur, The Silencer, The Poisoner, The Illusionist, The Maniac & The Shade. Crewmate: The Siphoner, The Witness, The Scout & The Beacon. Neutral: The Bug, The Follower & The Copycat."
+    en: "Brand-new custom roles for The Other Roles, layered on without touching TOR's source. Impostor: The Tesla, The Saboteur, The Silencer, The Poisoner, The Illusionist, The Maniac, The Shade & The Manipulator. Crewmate: The Siphoner, The Witness, The Scout & The Beacon. Neutral: The Bug, The Follower, The Copycat & The Collector. Ghost: The Poltergeist.",
+    de: "Brandneue eigene Rollen für The Other Roles, aufgesetzt ohne Änderung an TORs Quellcode. Impostor: The Tesla, The Saboteur, The Silencer, The Poisoner, The Illusionist, The Maniac, The Shade & The Manipulator. Crewmate: The Siphoner, The Witness, The Scout & The Beacon. Neutral: The Bug, The Follower, The Copycat & The Collector. Geist: The Poltergeist."
   },
   intro: {
-    en: "Unknown's Collection is a separate plugin that adds <strong>new roles</strong> to TOR 4.8.0 purely through Harmony patches — TOR's source is never modified, and the only hard dependency is The Other Roles. The roles are client-side, so the lobby can only be started when every player runs the same Unknown's Collection version. Current roles — Impostor: <strong>The Tesla</strong>, <strong>The Saboteur</strong>, <strong>The Silencer</strong>, <strong>The Poisoner</strong>, <strong>The Illusionist</strong>, <strong>The Maniac</strong> and <strong>The Shade</strong>; Crewmate: <strong>The Siphoner</strong>, <strong>The Witness</strong>, <strong>The Scout</strong> and <strong>The Beacon</strong>; Neutral: <strong>The Bug</strong>, <strong>The Follower</strong> and <strong>The Copycat</strong>. All Impostor roles are pickable in TOR's Role Draft.",
-    de: "Unknown's Collection ist ein eigenständiges Plugin, das TOR 4.8.0 <strong>neue Rollen</strong> rein über Harmony-Patches hinzufügt — TORs Quellcode wird nie verändert, einzige harte Abhängigkeit ist The Other Roles. Die Rollen sind client-seitig, daher kann die Lobby nur gestartet werden, wenn alle Spieler dieselbe Unknown's-Collection-Version haben. Aktuelle Rollen — Impostor: <strong>The Tesla</strong>, <strong>The Saboteur</strong>, <strong>The Silencer</strong>, <strong>The Poisoner</strong>, <strong>The Illusionist</strong>, <strong>The Maniac</strong> und <strong>The Shade</strong>; Crewmate: <strong>The Siphoner</strong>, <strong>The Witness</strong>, <strong>The Scout</strong> und <strong>The Beacon</strong>; Neutral: <strong>The Bug</strong>, <strong>The Follower</strong> und <strong>The Copycat</strong>. Alle Impostor-Rollen sind im Role Draft von TOR wählbar."
+    en: "Unknown's Collection is a separate plugin that adds <strong>new roles</strong> to TOR 4.8.0 purely through Harmony patches — TOR's source is never modified, and the only hard dependency is The Other Roles. The roles are client-side, so the lobby can only be started when every player runs the same Unknown's Collection version. Current roles — Impostor: <strong>The Tesla</strong>, <strong>The Saboteur</strong>, <strong>The Silencer</strong>, <strong>The Poisoner</strong>, <strong>The Illusionist</strong>, <strong>The Maniac</strong>, <strong>The Shade</strong> and <strong>The Manipulator</strong>; Crewmate: <strong>The Siphoner</strong>, <strong>The Witness</strong>, <strong>The Scout</strong> and <strong>The Beacon</strong>; Neutral: <strong>The Bug</strong>, <strong>The Follower</strong>, <strong>The Copycat</strong> and <strong>The Collector</strong>; plus <strong>The Poltergeist</strong> — a ghost role the first dead player rises into. All Impostor roles and the Collector are pickable in TOR's Role Draft. Since 1.0.1.60 every ability comes with dedicated particle effects and positional stereo sound.",
+    de: "Unknown's Collection ist ein eigenständiges Plugin, das TOR 4.8.0 <strong>neue Rollen</strong> rein über Harmony-Patches hinzufügt — TORs Quellcode wird nie verändert, einzige harte Abhängigkeit ist The Other Roles. Die Rollen sind client-seitig, daher kann die Lobby nur gestartet werden, wenn alle Spieler dieselbe Unknown's-Collection-Version haben. Aktuelle Rollen — Impostor: <strong>The Tesla</strong>, <strong>The Saboteur</strong>, <strong>The Silencer</strong>, <strong>The Poisoner</strong>, <strong>The Illusionist</strong>, <strong>The Maniac</strong>, <strong>The Shade</strong> und <strong>The Manipulator</strong>; Crewmate: <strong>The Siphoner</strong>, <strong>The Witness</strong>, <strong>The Scout</strong> und <strong>The Beacon</strong>; Neutral: <strong>The Bug</strong>, <strong>The Follower</strong>, <strong>The Copycat</strong> und <strong>The Collector</strong>; dazu <strong>The Poltergeist</strong> — eine Geist-Rolle, in die der erste Tote aufsteigt. Alle Impostor-Rollen und der Collector sind im Role Draft von TOR wählbar. Seit 1.0.1.60 hat jede Fähigkeit eigene Partikeleffekte und positionalen Stereo-Sound."
   },
   install: {
     en: "<ol><li>Install <a href='https://github.com/TheOtherRolesAU/TheOtherRoles'>The Other Roles</a> into your Among Us BepInEx setup.</li><li>Download the latest <code>UnknownsCollection.dll</code> from the releases page.</li><li>Copy it into <code>&lt;Among Us&gt;/BepInEx/plugins/</code> (next to <code>TheOtherRoles.dll</code>).</li><li>Start the game. Every player who should see the role needs the mod — same version.</li></ol><p>A channel-aware in-game auto-updater checks GitHub and integrates with the Mod Manager (from Forgotten Fixes).</p>",
@@ -1580,6 +1580,78 @@ const UNKNOWNS = {
       ]
     },
     {
+      id: "manipulator",
+      title: { en: "The Manipulator (Impostor)", de: "The Manipulator (Impostor)" },
+      intro: {
+        en: "A normal Impostor is secretly promoted to The Manipulator at game start. On demand, the ship's security devices lie to everyone: the Admin table shows fake positions and Vitals shows dead players as alive.",
+        de: "Ein normaler Impostor wird beim Spielstart heimlich zum Manipulator befördert. Auf Abruf lügen die Sicherheitsgeräte des Schiffs für alle: Der Admin-Tisch zeigt gefälschte Positionen und Vitals zeigt Tote als lebendig."
+      },
+      entries: [
+        {
+          id: "manipulator-fake",
+          title: { en: "Faking Admin & Vitals", de: "Admin & Vitals fälschen" },
+          summary: {
+            en: "One button (cooldown + duration): while active, Admin shows a believable lie and Vitals hides deaths — identically on every client.",
+            de: "Ein Button (Cooldown + Dauer): solange aktiv, zeigt Admin eine glaubwürdige Lüge und Vitals verbirgt Tode — auf jedem Client identisch."
+          },
+          body: {
+            en: "<p>The Manipulator's button starts a timed manipulation window. While it runs, the <strong>Admin table</strong> distributes the <em>real</em> number of living players pseudo-randomly across rooms — every client sees the <strong>same</strong> lie, and it re-rolls every few seconds so it looks alive. <strong>Vitals</strong> keeps showing dead players as alive (disconnects stay marked). A comms sabotage overrides the fake with the vanilla \"signal lost\" screen, so the lie never gives itself away there.</p>",
+            de: "<p>Der Button des Manipulators startet ein zeitlich begrenztes Manipulations-Fenster. Solange es läuft, verteilt der <strong>Admin-Tisch</strong> die <em>echte</em> Anzahl lebender Spieler pseudozufällig auf die Räume — jeder Client sieht die <strong>gleiche</strong> Lüge, und sie würfelt sich alle paar Sekunden neu, damit sie lebendig wirkt. <strong>Vitals</strong> zeigt Tote weiterhin als lebendig (Disconnects bleiben markiert). Eine Komms-Sabotage übersteuert den Fake mit dem Vanilla-„signal lost\"-Bildschirm, sodass die Lüge sich dort nie selbst verrät.</p>"
+          }
+        },
+        {
+          id: "manipulator-maps",
+          title: { en: "Map coverage", de: "Map-Abdeckung" },
+          summary: {
+            en: "Skeld/Mira: Admin only. Fungle: Vitals only. Polus/Airship: both. Cameras are deliberately not faked.",
+            de: "Skeld/Mira: nur Admin. Fungle: nur Vitals. Polus/Airship: beides. Kameras werden bewusst nicht gefälscht."
+          },
+          body: {
+            en: "<p>What the manipulation covers depends on what the map has: <strong>Skeld and Mira HQ</strong> only have Admin, <strong>Fungle</strong> only has Vitals, <strong>Polus and Airship</strong> have both. Security cameras are <strong>deliberately not faked</strong> — a camera showing an empty hallway where someone visibly stands would instantly expose the role.</p>",
+            de: "<p>Was die Manipulation abdeckt, hängt von der Map ab: <strong>Skeld und Mira HQ</strong> haben nur Admin, <strong>Fungle</strong> nur Vitals, <strong>Polus und Airship</strong> beides. Überwachungskameras werden <strong>bewusst nicht gefälscht</strong> — eine Kamera, die einen leeren Flur zeigt, in dem sichtbar jemand steht, würde die Rolle sofort entlarven.</p>"
+          }
+        },
+        {
+          id: "manipulator-feedback",
+          title: { en: "What the Manipulator sees", de: "Was der Manipulator sieht" },
+          summary: {
+            en: "A private glitch swirl + warp sound on activation and a closing cue when the window ends — invisible and silent to everyone else.",
+            de: "Ein privater Glitch-Wirbel + Warp-Sound bei Aktivierung und ein Abschluss-Cue am Fenster-Ende — für alle anderen unsichtbar und lautlos."
+          },
+          body: {
+            en: "<p>On activation the Manipulator gets a short red/violet <strong>glitch swirl</strong> around themselves plus a warp sound, and a distinct closing cue when the fake window runs out. Both are strictly <strong>self-only</strong> — the whole point of the role is that nobody can tell the devices are lying.</p>",
+            de: "<p>Bei Aktivierung bekommt der Manipulator einen kurzen rot-violetten <strong>Glitch-Wirbel</strong> um sich selbst plus einen Warp-Sound, und einen eigenen Abschluss-Cue, wenn das Fake-Fenster ausläuft. Beides ist strikt <strong>self-only</strong> — der Kern der Rolle ist ja gerade, dass niemand merkt, dass die Geräte lügen.</p>"
+          }
+        },
+        {
+          id: "manipulator-options",
+          title: { en: "Options (Impostor tab)", de: "Optionen (Impostor-Tab)" },
+          summary: {
+            en: "Spawn rate, min players, cooldown, duration, per-device toggles.",
+            de: "Spawnrate, Min-Spieler, Cooldown, Dauer, Per-Gerät-Toggles."
+          },
+          body: {
+            en: tbl(["Option", "Default", "What it does"], [
+              ["Manipulator", "Off", "Spawn chance for the role."],
+              ["Manipulator Minimum Players To Spawn", "6", "The role isn't assigned below this lobby size."],
+              ["Manipulation Cooldown", "30", "Seconds between manipulation windows."],
+              ["Manipulation Duration", "12", "How long the devices lie per activation."],
+              ["Admin Table Shows Fake Positions", "On", "Whether the Admin table is faked."],
+              ["Vitals Shows Dead Players As Alive", "On", "Whether Vitals is faked."]
+            ]),
+            de: tbl(["Option", "Standard", "Funktion"], [
+              ["Manipulator", "Off", "Spawn-Chance der Rolle."],
+              ["Manipulator Minimum Players To Spawn", "6", "Die Rolle wird unter dieser Lobby-Größe nicht vergeben."],
+              ["Manipulation Cooldown", "30", "Sekunden zwischen zwei Manipulations-Fenstern."],
+              ["Manipulation Duration", "12", "Wie lange die Geräte pro Aktivierung lügen."],
+              ["Admin Table Shows Fake Positions", "On", "Ob der Admin-Tisch gefälscht wird."],
+              ["Vitals Shows Dead Players As Alive", "On", "Ob Vitals gefälscht wird."]
+            ])
+          }
+        }
+      ]
+    },
+    {
       id: "scout",
       title: { en: "The Scout (Crewmate)", de: "The Scout (Crewmate)" },
       intro: {
@@ -1846,24 +1918,272 @@ const UNKNOWNS = {
       ]
     },
     {
+      id: "collector",
+      title: { en: "The Collector (Neutral)", de: "The Collector (Neutral)" },
+      intro: {
+        en: "A neutral relic hunter. Hidden relics are scattered across the map — only the Collector can see them clearly. Collect enough and the Collector wins alone.",
+        de: "Ein neutraler Relikt-Jäger. Versteckte Relikte sind über die Map verteilt — nur der Collector sieht sie klar. Wer genug sammelt, gewinnt allein."
+      },
+      entries: [
+        {
+          id: "collector-relics",
+          title: { en: "Relics on the map", de: "Relikte auf der Map" },
+          summary: {
+            en: "The host scatters relics at task-console anchors (map-agnostic, never at critical consoles). Collector sees them fully, the dead almost fully, Impostors optionally sense a faint shimmer — plain crew sees nothing.",
+            de: "Der Host streut Relikte an Task-Konsolen-Ankern (map-agnostisch, nie an kritischen Konsolen). Der Collector sieht sie voll, Tote fast voll, Impostoren spüren optional einen schwachen Schimmer — normale Crew sieht nichts."
+          },
+          body: {
+            en: "<p>At round start the host scatters golden crystal relics anchored to task consoles — works on every map (Skeld, Mira HQ, Polus, Airship, Fungle, Submerged), always excluding critical sabotage consoles and the emergency button, with a relaxing minimum spread so they don't clump. Visibility follows the role: the <strong>Collector</strong> sees relics fully, <strong>dead players</strong> see them slightly dimmed, and <strong>Impostors</strong> can optionally sense a faint shimmer within a radius. Regular crew never sees them. Extra relics can spawn as the crew finishes tasks (option), optionally raising the needed count with each one.</p>",
+            de: "<p>Beim Rundenstart streut der Host goldene Kristall-Relikte an Task-Konsolen-Ankern — funktioniert auf jeder Map (Skeld, Mira HQ, Polus, Airship, Fungle, Submerged), immer unter Ausschluss kritischer Sabotage-Konsolen und des Notfallknopfs, mit sich lockerndem Mindestabstand gegen Klumpenbildung. Die Sichtbarkeit folgt der Rolle: Der <strong>Collector</strong> sieht Relikte voll, <strong>Tote</strong> leicht gedimmt, und <strong>Impostoren</strong> können optional einen schwachen Schimmer im Radius spüren. Normale Crew sieht sie nie. Zusätzliche Relikte können spawnen, während die Crew Tasks erledigt (Option), wobei optional jedes das Sammelziel erhöht.</p>"
+          }
+        },
+        {
+          id: "collector-collecting",
+          title: { en: "Collecting is a channel", de: "Sammeln ist eine Kanalisierung" },
+          summary: {
+            en: "Standing at a relic and channeling for a few seconds collects it — moving breaks the channel. The pickup sparkle + sound is visible to everyone nearby, on purpose.",
+            de: "Am Relikt stehen und ein paar Sekunden kanalisieren sammelt es ein — Bewegung bricht ab. Das Einsammel-Glitzern + der Sound sind für alle in der Nähe wahrnehmbar, mit Absicht."
+          },
+          body: {
+            en: "<p>Collecting takes a <strong>channel</strong> (configurable duration) during which the crystal pulses — moving away breaks it, and a cooldown gates back-to-back grabs. The moment a relic is collected, a golden <strong>pickup burst</strong> and a distance-attenuated chime play for everyone near that spot: that tell is deliberate counterplay, because plain crew otherwise has no way to interact with the relic hunt.</p>",
+            de: "<p>Das Einsammeln braucht eine <strong>Kanalisierung</strong> (konfigurierbare Dauer), während der der Kristall pulsiert — Weggehen bricht ab, und ein Cooldown verhindert Kette-Sammeln. Im Moment des Einsammelns spielen ein goldener <strong>Pickup-Burst</strong> und ein distanzbasierter Chime für alle in der Nähe: Dieser Tell ist bewusstes Counterplay, weil normale Crew sonst keinerlei Berührungspunkt mit der Relikt-Jagd hätte.</p>"
+          }
+        },
+        {
+          id: "collector-win",
+          title: { en: "Winning", de: "Gewinnen" },
+          summary: {
+            en: "Instant win on the last relic, or Survive-To-End mode where the Collector hijacks the end screen if still alive — with its own \"Collector Wins\" banner and gold fanfare.",
+            de: "Sofort-Sieg beim letzten Relikt, oder Survive-To-End-Modus, in dem der Collector das Spielende kapert, wenn er noch lebt — mit eigenem „Collector Wins\"-Banner und Gold-Fanfare."
+          },
+          body: {
+            en: "<p>Two win modes: <strong>Instantly</strong> ends the game the moment the last needed relic is collected. <strong>Survive To The End</strong> arms the Collector instead — if they are still alive when any team would win, the Collector steals that win (the same hijack mechanic the Bug uses). Either way the end screen shows a dedicated <strong>Collector Wins</strong> banner with a gold fanfare. In Survive mode the Collector gets a private golden aura as a reminder that they are now a live win condition.</p>",
+            de: "<p>Zwei Sieg-Modi: <strong>Instantly</strong> beendet das Spiel im Moment des letzten benötigten Relikts. <strong>Survive To The End</strong> schärft den Collector stattdessen scharf — lebt er noch, wenn ein Team gewinnen würde, stiehlt der Collector diesen Sieg (dieselbe Hijack-Mechanik wie beim Bug). In beiden Fällen zeigt der Endscreen ein eigenes <strong>Collector Wins</strong>-Banner mit Gold-Fanfare. Im Survive-Modus bekommt der Collector eine private goldene Aura als Erinnerung, dass er jetzt eine scharfe Sieg-Bedingung ist.</p>"
+          }
+        },
+        {
+          id: "collector-options",
+          title: { en: "Options (Neutral tab)", de: "Optionen (Neutral-Tab)" },
+          summary: {
+            en: "Spawn rate, relic counts, channel duration, win mode, impostor sense, tasks, cooldown, extra relics.",
+            de: "Spawnrate, Relikt-Zahlen, Kanalisierungs-Dauer, Sieg-Modus, Impostor-Gespür, Tasks, Cooldown, Extra-Relikte."
+          },
+          body: {
+            en: tbl(["Option", "Default", "What it does"], [
+              ["Collector", "Off", "Spawn chance for the role."],
+              ["Collector Minimum Players To Spawn", "6", "The role isn't assigned below this lobby size."],
+              ["Relics Spawned On The Map", "6", "How many relics are scattered at round start."],
+              ["Relics Needed To Win", "4", "How many the Collector must collect."],
+              ["Collecting Duration", "3", "Channel time per relic (seconds)."],
+              ["Collector Win", "Instantly", "Instantly / Survive To The End."],
+              ["Impostors Sense Nearby Relics", "Off", "Whether Impostors see a faint shimmer near relics."],
+              ["Relic Sense Radius", "5", "Radius of the Impostor shimmer."],
+              ["Collector Has Tasks", "Off", "Whether the Collector is given (non-counting) tasks as cover."],
+              ["Collect Cooldown", "15", "Seconds between two collects."],
+              ["New Relic Every X Crew Tasks (0 = Off)", "0", "Spawns an extra relic per X completed crew tasks."],
+              ["Extra Relics Raise The Needed Count", "On", "Each extra relic also raises the win requirement by one."]
+            ]),
+            de: tbl(["Option", "Standard", "Funktion"], [
+              ["Collector", "Off", "Spawn-Chance der Rolle."],
+              ["Collector Minimum Players To Spawn", "6", "Die Rolle wird unter dieser Lobby-Größe nicht vergeben."],
+              ["Relics Spawned On The Map", "6", "Wie viele Relikte beim Rundenstart verteilt werden."],
+              ["Relics Needed To Win", "4", "Wie viele der Collector sammeln muss."],
+              ["Collecting Duration", "3", "Kanalisierungs-Zeit pro Relikt (Sekunden)."],
+              ["Collector Win", "Instantly", "Instantly / Survive To The End."],
+              ["Impostors Sense Nearby Relics", "Off", "Ob Impostoren nahe Relikte als schwachen Schimmer sehen."],
+              ["Relic Sense Radius", "5", "Radius des Impostor-Schimmers."],
+              ["Collector Has Tasks", "Off", "Ob der Collector (nicht zählende) Tasks als Tarnung bekommt."],
+              ["Collect Cooldown", "15", "Sekunden zwischen zwei Sammel-Vorgängen."],
+              ["New Relic Every X Crew Tasks (0 = Off)", "0", "Spawnt ein Extra-Relikt je X erledigter Crew-Tasks."],
+              ["Extra Relics Raise The Needed Count", "On", "Jedes Extra-Relikt erhöht auch das Sammelziel um eins."]
+            ])
+          }
+        }
+      ]
+    },
+    {
+      id: "poltergeist",
+      title: { en: "The Poltergeist (Ghost)", de: "The Poltergeist (Geist)" },
+      intro: {
+        en: "Not a starting role: the first player to die rises as The Poltergeist and keeps haunting for their original team. Abilities run on an energy pool instead of cooldowns.",
+        de: "Keine Startrolle: Der erste Tote steigt als Poltergeist auf und spukt für sein ursprüngliches Team weiter. Die Fähigkeiten laufen über einen Energie-Pool statt über Cooldowns."
+      },
+      entries: [
+        {
+          id: "poltergeist-rise",
+          title: { en: "Rising as the Poltergeist", de: "Als Poltergeist aufsteigen" },
+          summary: {
+            en: "The first death (kills; exile optional) becomes the Poltergeist, keeps their team and win condition, and gets a private rise flash + ghost aura.",
+            de: "Der erste Tod (Kills; Exil optional) wird zum Poltergeist, behält Team und Sieg-Bedingung und bekommt einen privaten Aufstiegs-Flash + Geist-Aura."
+          },
+          body: {
+            en: "<p>The first player to die rises as the Poltergeist — a dead crewmate haunts for the crew, a dead Impostor for the Impostors; the original win condition stays. Whether an exile counts as the first death is an option, as is whether a crew-side Poltergeist keeps its tasks. Only the Poltergeist sees its own faint violet ghost aura; nobody else learns the role exists until it acts. Energy regenerates over time (never in meetings) and every ability costs energy instead of running on a cooldown.</p>",
+            de: "<p>Der erste Tote steigt als Poltergeist auf — ein toter Crewmate spukt für die Crew, ein toter Impostor für die Impostoren; die ursprüngliche Sieg-Bedingung bleibt. Ob Exil als erster Tod zählt, ist eine Option, ebenso ob ein Crew-Poltergeist seine Tasks behält. Nur der Poltergeist sieht seine eigene schwach-violette Geist-Aura; niemand sonst erfährt von der Rolle, bis sie handelt. Energie regeneriert über Zeit (nie in Meetings), und jede Fähigkeit kostet Energie statt über einen Cooldown zu laufen.</p>"
+          }
+        },
+        {
+          id: "poltergeist-manifest",
+          title: { en: "Manifestation", de: "Manifestation" },
+          summary: {
+            en: "Appear as a copy of a living player (template pickable via K) — a framing tool. Killing the manifest just pops it: a reveal burst, no body.",
+            de: "Als Kopie eines lebenden Spielers erscheinen (Vorlage per K wählbar) — ein Framing-Werkzeug. Ein Kill auf den Manifest lässt ihn nur zerplatzen: Reveal-Burst, keine Leiche."
+          },
+          body: {
+            en: "<p>The expensive ability: the Poltergeist materializes as a <strong>copy of a living player</strong> (nearest by default, template selectable with <strong>K</strong>) — walking around as someone else is a pure framing tool. The manifest cannot kill, report or call meetings; venting is an option. If an Impostor \"kills\" the manifest, it bursts in a sharp reveal effect with <strong>no body</strong> — and the killer's cooldown refund (none / half / full) is an option. A meeting ends the manifestation instantly and silently.</p>",
+            de: "<p>Die teure Fähigkeit: Der Poltergeist materialisiert sich als <strong>Kopie eines lebenden Spielers</strong> (standardmäßig der nächste, Vorlage per <strong>K</strong> wählbar) — als jemand anderes herumzulaufen ist ein reines Framing-Werkzeug. Der Manifest kann nicht killen, melden oder Meetings einberufen; Venten ist eine Option. „Killt\" ein Impostor den Manifest, zerplatzt er in einem scharfen Reveal-Effekt <strong>ohne Leiche</strong> — die Cooldown-Erstattung des Killers (keine / halb / voll) ist eine Option. Ein Meeting beendet die Manifestation sofort und lautlos.</p>"
+          }
+        },
+        {
+          id: "poltergeist-door",
+          title: { en: "Door Haunt", de: "Tür-Spuk" },
+          summary: {
+            en: "Cheaply slams the nearest single door shut for a few seconds — with an audible, position-based slam. Mira HQ has no doors, so the button grays out there.",
+            de: "Schließt günstig die nächste einzelne Tür für ein paar Sekunden — mit hörbarem, positionsbasiertem Zuschlagen. Mira HQ hat keine Türen, dort ist der Button ausgegraut."
+          },
+          body: {
+            en: "<p>The cheap bread-and-butter ability: the nearest <strong>single door</strong> slams shut for a configurable duration, with an in-rushing wisp burst and a distance-attenuated slam everyone nearby can hear — spooky, but locally verifiable. On Mira HQ (no doors) the button is grayed out.</p>",
+            de: "<p>Die günstige Brot-und-Butter-Fähigkeit: Die nächste <strong>einzelne Tür</strong> knallt für eine konfigurierbare Dauer zu, mit einem einwärts strömenden Wisp-Burst und einem distanzbasierten Zuschlagen, das jeder in der Nähe hört — gruselig, aber lokal nachprüfbar. Auf Mira HQ (keine Türen) ist der Button ausgegraut.</p>"
+          }
+        },
+        {
+          id: "poltergeist-hand",
+          title: { en: "Ghost Hand", de: "Geisterhand" },
+          summary: {
+            en: "Channel at reactor/seismic to count as one hand — draining energy per second, with a visible channel ring as counterplay.",
+            de: "An Reaktor/Seismic kanalisieren und als eine Hand zählen — kostet Energie pro Sekunde, mit sichtbarem Channel-Ring als Counterplay."
+          },
+          body: {
+            en: "<p>During a reactor/seismic sabotage the Poltergeist can hold a console and count as <strong>one</strong> of the two required hands (never both). It drains energy per second, and a pulsing cyan <strong>channel ring</strong> is visible at the spot for everyone nearby — the crew can see that \"something\" is helping (or, for an Impostor-side Poltergeist, blocking a slot).</p>",
+            de: "<p>Während einer Reaktor-/Seismic-Sabotage kann der Poltergeist eine Konsole halten und als <strong>eine</strong> der zwei benötigten Hände zählen (nie beide). Das kostet Energie pro Sekunde, und ein pulsierender cyaner <strong>Channel-Ring</strong> ist an der Stelle für alle in der Nähe sichtbar — die Crew sieht, dass „etwas\" mithilft (bzw. bei einem Impostor-Poltergeist einen Slot blockiert).</p>"
+          }
+        },
+        {
+          id: "poltergeist-hex",
+          title: { en: "Hex", de: "Hex" },
+          summary: {
+            en: "Curses the nearest living player with a cyclable effect: speed boost, blindness or night vision — with a cast burst, a vignette for the victim and a quiet expiry chime.",
+            de: "Verflucht den nächsten Lebenden mit einem durchschaltbaren Effekt: Speed-Boost, Blindheit oder Nachtsicht — mit Cast-Burst, Vignette für das Opfer und leisem Auslauf-Chime."
+          },
+          body: {
+            en: "<p>The Hex curses the nearest living player with one of three cyclable effects (each individually allowed via options): <strong>speed boost</strong>, <strong>blindness</strong> or <strong>night vision</strong>. The cast shows a sparkle burst at the target with a position-based sound. A blinded/night-vision victim gets a subtle violet screen vignette so the curse is distinguishable from a lights sabotage; while the hex runs, a quiet orbiting halo marks the target — visible only to the victim, the Poltergeist and the dead. It dissolves with a small burst and chime when the hex expires.</p>",
+            de: "<p>Der Hex verflucht den nächsten Lebenden mit einem von drei durchschaltbaren Effekten (jeder einzeln per Option erlaubt): <strong>Speed-Boost</strong>, <strong>Blindheit</strong> oder <strong>Nachtsicht</strong>. Der Cast zeigt einen Funkel-Burst am Ziel mit positionsbasiertem Sound. Ein geblendetes/nachtsichtiges Opfer bekommt eine dezente violette Bildschirm-Vignette, damit der Fluch von einer Licht-Sabotage unterscheidbar ist; solange der Hex läuft, markiert ein leiser orbitierender Halo das Ziel — sichtbar nur für das Opfer, den Poltergeist und Tote. Beim Auslaufen löst er sich mit kleinem Burst und Chime auf.</p>"
+          }
+        },
+        {
+          id: "poltergeist-options",
+          title: { en: "Options (Neutral tab)", de: "Optionen (Neutral-Tab)" },
+          summary: {
+            en: "Spawn rate, energy pool, per-ability costs and durations, hex toggles, tasks.",
+            de: "Spawnrate, Energie-Pool, Kosten und Dauern pro Fähigkeit, Hex-Toggles, Tasks."
+          },
+          body: {
+            en: tbl(["Option", "Default", "What it does"], [
+              ["Poltergeist", "Off", "Spawn chance for the role."],
+              ["Poltergeist Minimum Players To Spawn", "6", "The role isn't assigned below this lobby size."],
+              ["Exile Counts As First Death", "Off", "Whether a voted-out player can rise as the Poltergeist."],
+              ["Poltergeist Energy Maximum", "100", "Size of the energy pool."],
+              ["Energy Regeneration Per Second", "3", "Regen rate (never regenerates during meetings)."],
+              ["Starting Energy (%)", "50", "Energy on rising."],
+              ["Manifest Energy Cost", "60", "Cost of a manifestation."],
+              ["Manifest Duration", "12", "Seconds the manifest lasts."],
+              ["Manifested Poltergeist Can Vent", "On", "Whether the manifest can use vents."],
+              ["Killing A Manifest Refunds Kill Cooldown", "No Refund", "No / Half / Full refund for the fooled killer."],
+              ["Door Haunt Energy Cost", "20", "Cost per door slam."],
+              ["Door Haunt Duration", "8", "Seconds the door stays shut."],
+              ["Ghost Hand Energy Drain Per Second", "5", "Channel cost at reactor/seismic."],
+              ["Hex Energy Cost", "35", "Cost per hex."],
+              ["Hex Duration", "10", "Seconds a hex lasts."],
+              ["Hex: Speed Boost / Blindness / Night Vision Allowed", "On / On / On", "Which hex effects are in the rotation."],
+              ["Poltergeist Keeps Its Tasks", "Off", "Whether a crew-side Poltergeist still counts for taskwin."]
+            ]),
+            de: tbl(["Option", "Standard", "Funktion"], [
+              ["Poltergeist", "Off", "Spawn-Chance der Rolle."],
+              ["Poltergeist Minimum Players To Spawn", "6", "Die Rolle wird unter dieser Lobby-Größe nicht vergeben."],
+              ["Exile Counts As First Death", "Off", "Ob ein rausgewählter Spieler als Poltergeist aufsteigen kann."],
+              ["Poltergeist Energy Maximum", "100", "Größe des Energie-Pools."],
+              ["Energy Regeneration Per Second", "3", "Regenerationsrate (nie während Meetings)."],
+              ["Starting Energy (%)", "50", "Energie beim Aufstieg."],
+              ["Manifest Energy Cost", "60", "Kosten einer Manifestation."],
+              ["Manifest Duration", "12", "Sekunden, die der Manifest hält."],
+              ["Manifested Poltergeist Can Vent", "On", "Ob der Manifest Vents nutzen kann."],
+              ["Killing A Manifest Refunds Kill Cooldown", "No Refund", "Keine / halbe / volle Erstattung für den getäuschten Killer."],
+              ["Door Haunt Energy Cost", "20", "Kosten pro Tür-Spuk."],
+              ["Door Haunt Duration", "8", "Sekunden, die die Tür zu bleibt."],
+              ["Ghost Hand Energy Drain Per Second", "5", "Kanalisierungs-Kosten an Reaktor/Seismic."],
+              ["Hex Energy Cost", "35", "Kosten pro Hex."],
+              ["Hex Duration", "10", "Sekunden, die ein Hex wirkt."],
+              ["Hex: Speed Boost / Blindness / Night Vision Allowed", "On / On / On", "Welche Hex-Effekte in der Rotation sind."],
+              ["Poltergeist Keeps Its Tasks", "Off", "Ob ein Crew-Poltergeist weiter für den Taskwin zählt."]
+            ])
+          }
+        }
+      ]
+    },
+    {
+      id: "uc-fx",
+      title: { en: "Visuals & audio (1.0.1.60)", de: "Visuals & Audio (1.0.1.60)" },
+      intro: {
+        en: "1.0.1.60 is a full audiovisual overhaul: every ability now has dedicated particle effects and sound, world-anchored cues play in positional stereo, and all sounds and icons were rebuilt against a hard quality gate.",
+        de: "1.0.1.60 ist eine komplette audiovisuelle Überarbeitung: Jede Fähigkeit hat jetzt eigene Partikeleffekte und Sound, weltverankerte Cues spielen in positionalem Stereo, und alle Sounds und Icons wurden gegen ein hartes Qualitäts-Gate neu gebaut."
+      },
+      entries: [
+        {
+          id: "uc-fx-audio",
+          title: { en: "Positional stereo audio", de: "Positionaler Stereo-Sound" },
+          summary: {
+            en: "World-anchored sounds pan left/right by where they happen and fade smoothly with distance — a door slam to your left sounds like it.",
+            de: "Weltverankerte Sounds pannen nach links/rechts, je nachdem wo sie passieren, und blenden weich mit der Distanz aus — ein Türknall links klingt auch links."
+          },
+          body: {
+            en: "<p>Every world-anchored cue (door slams, kill bursts, relic pickups, explosions …) now pans in the stereo field based on where it happens relative to you and follows a smooth distance falloff instead of a linear ramp. Purely private cues stay centered and local. 31 new sounds were added — from the Tesla's geiger-style countdown to the Saboteur's complete search-&-defuse minigame sound set — and every single sound passes an automated quality gate (no clicks, consistent loudness, real stereo width, seamless fuse loop).</p>",
+            de: "<p>Jeder weltverankerte Cue (Türknallen, Kill-Bursts, Relikt-Pickups, Explosionen …) pannt jetzt im Stereobild danach, wo er relativ zu dir passiert, und folgt einem weichen Distanz-Falloff statt einer linearen Rampe. Rein private Cues bleiben zentriert und lokal. 31 neue Sounds kamen dazu — vom Geigerzähler-Countdown der Tesla bis zum kompletten Sound-Set des Such-&-Entschärf-Minispiels des Saboteurs — und jeder einzelne Sound besteht ein automatisiertes Qualitäts-Gate (keine Klicks, konsistente Lautheit, echte Stereo-Breite, nahtloser Zündschnur-Loop).</p>"
+          }
+        },
+        {
+          id: "uc-fx-feedback",
+          title: { en: "Feedback for every ability", de: "Feedback für jede Fähigkeit" },
+          summary: {
+            en: "Previously silent moments now land: Tesla's double-kill lightning chain, Maniac's explosion burst, clone materialize/dissolve, manifest kill-reveal, shield auras, promotion reveals and more.",
+            de: "Vorher stumme Momente sitzen jetzt: Teslas Doppel-Kill-Blitzkette, Maniacs Explosions-Burst, Klon-Materialisierung/-Auflösung, Manifest-Kill-Reveal, Schild-Auren, Beförderungs-Reveals und mehr."
+          },
+          body: {
+            en: "<p>Highlights: the Tesla's double kill fires spark bursts at both victims joined by a crackling lightning chain; the Maniac's bomb gets a real explosion burst and a fuse that audibly escalates toward zero; the Illusionist's clone materializes and dissolves with a shimmer instead of popping in and out; killing a Poltergeist manifest triggers a distinct reveal instead of a quiet poof; and mid-game role promotions get a golden reveal flash. Private information stays private: shield auras, range rings, markers and confirmation cues are rendered strictly for the player they belong to.</p>",
+            de: "<p>Highlights: Teslas Doppel-Kill zündet Funken-Bursts an beiden Opfern, verbunden durch eine knisternde Blitzkette; die Bombe des Maniac bekommt einen echten Explosions-Burst und eine Zündschnur, die hörbar Richtung null eskaliert; der Klon des Illusionist materialisiert und löst sich mit einem Schimmer auf, statt ein- und auszuploppen; ein Kill auf den Poltergeist-Manifest löst ein eigenes Reveal aus statt eines leisen Poofs; und Beförderungen im laufenden Spiel bekommen einen goldenen Reveal-Flash. Private Information bleibt privat: Schild-Auren, Reichweiten-Ringe, Marker und Bestätigungs-Cues werden strikt nur für den Spieler gerendert, dem sie gehören.</p>"
+          }
+        },
+        {
+          id: "uc-fx-icons",
+          title: { en: "Sharper button icons", de: "Schärfere Button-Icons" },
+          summary: {
+            en: "Nine icons were redrawn for legibility at real button size — trap teeth, playback, record, mask, hex and more read cleanly at 50 px now.",
+            de: "Neun Icons wurden für Lesbarkeit in echter Button-Größe neu gezeichnet — Fallen-Zähne, Playback, Record, Maske, Hex und mehr sind bei 50 px jetzt sauber erkennbar."
+          },
+          body: {
+            en: "<p>All button icons follow the TOR comic-burst style with each role's identity color. Nine were redrawn specifically for legibility at actual in-game button size (~50 px): fewer, bolder trap teeth; a larger play glyph and a tinted echo crewmate on the Illusionist icons; a clearer REC lamp; a magenta mask that separates from the red burst; a bolder hex spiral; and cleaner pass, hand, drain and collect icons.</p>",
+            de: "<p>Alle Button-Icons folgen dem TOR-Comic-Burst-Stil mit der Identitätsfarbe der jeweiligen Rolle. Neun wurden gezielt für die Lesbarkeit in echter In-Game-Button-Größe (~50 px) neu gezeichnet: weniger, dafür kräftigere Fallen-Zähne; ein größeres Play-Symbol und ein getöntes Echo-Crewmate auf den Illusionist-Icons; eine klarere REC-Lampe; eine Magenta-Maske, die sich vom roten Burst abhebt; eine kräftigere Hex-Spirale; und sauberere Pass-, Hand-, Drain- und Collect-Icons.</p>"
+          }
+        }
+      ]
+    },
+    {
       id: "uc-roledraft",
       title: { en: "Role Draft support", de: "Role-Draft-Unterstützung" },
       intro: {
-        en: "All Unknown's Collection impostor roles are pickable in TOR's Role Draft — integrated entirely from the plugin without touching TOR's source.",
-        de: "Alle Unknown's-Collection-Impostor-Rollen sind in TORs Role Draft wählbar — komplett aus dem Plugin integriert, ohne TORs Quellcode anzufassen."
+        en: "All Unknown's Collection impostor roles plus the Collector are pickable in TOR's Role Draft — integrated entirely from the plugin without touching TOR's source.",
+        de: "Alle Unknown's-Collection-Impostor-Rollen plus der Collector sind in TORs Role Draft wählbar — komplett aus dem Plugin integriert, ohne TORs Quellcode anzufassen."
       },
       entries: [
         {
           id: "uc-roledraft-pick",
-          title: { en: "All impostor roles draftable", de: "Alle Impostor-Rollen draftbar" },
+          title: { en: "All impostor roles + the Collector draftable", de: "Alle Impostor-Rollen + der Collector draftbar" },
           badges: [{ en: "Draftable", de: "Draftbar" }],
           summary: {
-            en: "With Role Draft on, all seven Unknown's Collection impostor roles — Tesla, Saboteur, Silencer, Poisoner, Illusionist, Maniac and Shade — appear as picks instead of being assigned by the usual random promotion.",
-            de: "Mit aktivem Role Draft erscheinen alle sieben Unknown's-Collection-Impostor-Rollen — Tesla, Saboteur, Silencer, Poisoner, Illusionist, Maniac und Shade — als Picks, statt über die übliche Zufalls-Beförderung vergeben zu werden."
+            en: "With Role Draft on, all eight Unknown's Collection impostor roles — Tesla, Saboteur, Silencer, Poisoner, Illusionist, Maniac, Shade and Manipulator — plus the neutral Collector appear as picks instead of being assigned by the usual random promotion.",
+            de: "Mit aktivem Role Draft erscheinen alle acht Unknown's-Collection-Impostor-Rollen — Tesla, Saboteur, Silencer, Poisoner, Illusionist, Maniac, Shade und Manipulator — plus der neutrale Collector als Picks, statt über die übliche Zufalls-Beförderung vergeben zu werden."
           },
           body: {
-            en: "<p>When TOR's <strong>Role Draft</strong> is enabled, all enabled Unknown's Collection impostor roles — <strong>The Tesla</strong>, <strong>The Saboteur</strong>, <strong>The Silencer</strong>, <strong>The Poisoner</strong>, <strong>The Illusionist</strong>, <strong>The Maniac</strong> and <strong>The Shade</strong> — become regular impostor picks (max one each per game), and the random promotion is suppressed so the draft decides. The integration lives entirely in the plugin via Harmony patches — TOR's source is untouched. (In the draft list the buttons use the impostor red so the faction filter shows them; each role's own colour returns in-game.)</p>",
-            de: "<p>Ist TORs <strong>Role Draft</strong> aktiv, werden alle aktivierten Unknown's-Collection-Impostor-Rollen — <strong>The Tesla</strong>, <strong>The Saboteur</strong>, <strong>The Silencer</strong>, <strong>The Poisoner</strong>, <strong>The Illusionist</strong>, <strong>The Maniac</strong> und <strong>The Shade</strong> — zu normalen Impostor-Picks (max. je einer pro Spiel), und die Zufalls-Beförderung wird unterdrückt, damit der Draft entscheidet. Die Integration liegt komplett im Plugin via Harmony-Patches — TORs Quellcode bleibt unangetastet. (In der Draft-Liste sind die Buttons impostor-rot, damit der Fraktionsfilter sie zeigt; im Spiel kehrt die jeweilige Eigenfarbe zurück.)</p>"
+            en: "<p>When TOR's <strong>Role Draft</strong> is enabled, all enabled Unknown's Collection impostor roles — <strong>The Tesla</strong>, <strong>The Saboteur</strong>, <strong>The Silencer</strong>, <strong>The Poisoner</strong>, <strong>The Illusionist</strong>, <strong>The Maniac</strong>, <strong>The Shade</strong> and <strong>The Manipulator</strong> — plus the neutral <strong>Collector</strong> become regular picks (max one each per game), and the random promotion is suppressed so the draft decides. The Poltergeist is deliberately not draftable — it is not a starting role. The integration lives entirely in the plugin via Harmony patches — TOR's source is untouched. (In the draft list the impostor buttons use the impostor red so the faction filter shows them; each role's own colour returns in-game.)</p>",
+            de: "<p>Ist TORs <strong>Role Draft</strong> aktiv, werden alle aktivierten Unknown's-Collection-Impostor-Rollen — <strong>The Tesla</strong>, <strong>The Saboteur</strong>, <strong>The Silencer</strong>, <strong>The Poisoner</strong>, <strong>The Illusionist</strong>, <strong>The Maniac</strong>, <strong>The Shade</strong> und <strong>The Manipulator</strong> — plus der neutrale <strong>Collector</strong> zu normalen Picks (max. je einer pro Spiel), und die Zufalls-Beförderung wird unterdrückt, damit der Draft entscheidet. Der Poltergeist ist bewusst nicht draftbar — er ist keine Startrolle. Die Integration liegt komplett im Plugin via Harmony-Patches — TORs Quellcode bleibt unangetastet. (In der Draft-Liste sind die Impostor-Buttons impostor-rot, damit der Fraktionsfilter sie zeigt; im Spiel kehrt die jeweilige Eigenfarbe zurück.)</p>"
           }
         }
       ]

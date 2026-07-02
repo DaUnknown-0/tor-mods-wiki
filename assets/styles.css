@@ -362,3 +362,8 @@ tbody tr:hover { background: rgba(255,255,255,.018); }
   .hl { flex-direction: column; align-items: flex-start; gap: 6px; }
   .hl-tag { min-width: 0; }
 }
+
+/* "Unknown's Collection" click-decode effect: subtle cyan glow while the letters resolve */
+.uc-scrambling {
+  text-shadow: 0 0 10px rgba(31, 184, 255, 0.55);
+}

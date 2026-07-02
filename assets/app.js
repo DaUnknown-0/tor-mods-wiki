@@ -319,6 +319,81 @@
     if (f) f.innerHTML = `<p>${t("footer_note")}</p>`;
   }
 
+  /* ---------- "Unknown's Collection" click-decode effect ----------
+   * Text-only animation that fits the name: on click, the letters flicker as random
+   * glyphs and resolve left-to-right back into "Unknown's Collection". Plays on any
+   * link to the unknowns page (nav, mod card) before following it, replays on the
+   * page's own hero title, and auto-plays once when the page is opened. */
+  const UC_NAME_RE = /Unknown[’']s Collection/;
+  const UC_GLYPHS = "#%&?$@*<>!/=+";
+
+  function ucScramble(el, done, duration) {
+    duration = duration || 700;
+    if (!el || el.dataset.ucScrambling === "1") { if (done) done(); return; }
+    const original = el.textContent;
+    const m = original.match(UC_NAME_RE);
+    if (!m) { if (done) done(); return; }
+    el.dataset.ucScrambling = "1";
+    el.classList.add("uc-scrambling");
+    const from = m.index, to = m.index + m[0].length;
+    const start = performance.now();
+    const step = (now) => {
+      const p = Math.min(1, (now - start) / duration);
+      let out = original.slice(0, from);
+      for (let i = from; i < to; i++) {
+        const ch = original[i];
+        const reveal = (i - from) / (to - from); // left-to-right decode
+        if (ch === " " || ch === "'" || ch === "’" || p >= reveal * 0.85 + 0.15)
+          out += ch;
+        else out += UC_GLYPHS[(Math.random() * UC_GLYPHS.length) | 0];
+      }
+      el.textContent = out + original.slice(to);
+      if (p < 1) requestAnimationFrame(step);
+      else {
+        el.textContent = original;
+        el.classList.remove("uc-scrambling");
+        delete el.dataset.ucScrambling;
+        if (done) done();
+      }
+    };
+    requestAnimationFrame(step);
+  }
+
+  // Finds the deepest element inside root whose own text carries the mod name.
+  function ucFindNameEl(root) {
+    if (!root) return null;
+    if (root.children.length === 0)
+      return UC_NAME_RE.test(root.textContent) ? root : null;
+    for (const n of root.querySelectorAll("*"))
+      if (n.children.length === 0 && UC_NAME_RE.test(n.textContent)) return n;
+    return null;
+  }
+
+  function wireUcScramble() {
+    if (!window.__ucScrambleWired) {
+      window.__ucScrambleWired = true; // renderAll re-runs on language switch - wire once
+      document.addEventListener("click", (e) => {
+        const a = e.target.closest('a[href$="unknowns.html"]');
+        if (!a) return;
+        const nameEl = ucFindNameEl(a);
+        if (!nameEl) return;
+        e.preventDefault();
+        if (page === "unknowns") { ucScramble(nameEl); return; }
+        ucScramble(nameEl, () => { location.href = a.href; });
+      });
+    }
+    if (page === "unknowns") {
+      // target the big title specifically - the hero kicker also contains the name
+      const h1 = ucFindNameEl(document.querySelector(".mod-hero h1")) ||
+                 ucFindNameEl(document.querySelector(".mod-hero"));
+      if (h1) {
+        ucScramble(h1, null, 900);
+        h1.style.cursor = "pointer";
+        h1.addEventListener("click", () => ucScramble(h1, null, 900));
+      }
+    }
+  }
+
   /* ---------- helpers ---------- */
   function escapeAttr(s) {
     return String(s).replace(/"/g, "&quot;");
@@ -334,6 +409,7 @@
     else if (page === "useful") renderModPage(USEFUL);
     else if (page === "unknowns") renderModPage(UNKNOWNS);
     wireBackTop();
+    wireUcScramble();
     // keep scroll position stable on language switch
   }
 
