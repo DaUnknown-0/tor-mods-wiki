@@ -1,10 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Useful TOR Stuff — TOR Mods Wiki</title>
   <meta name="description" content="Useful TOR Stuff for The Other Roles: quality-of-life fixes, new role options and an in-game Mod Manager. Click any feature for details." />
+  <meta name="theme-color" content="#070b16" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='8' y='22' width='12' height='26' rx='6' fill='%23c2374c'/%3E%3Cpath d='M17 27C17 14 24 6 33 6s16 8 16 21v21c0 6-4 10-10 10h-3v-8h-8v8h-3c-6 0-10-4-10-10z' fill='%23f4586a'/%3E%3Cellipse cx='41' cy='24' rx='12' ry='8' fill='%23bfe8f7'/%3E%3Cellipse cx='45' cy='22' rx='5' ry='3' fill='%23eafcff'/%3E%3C/svg%3E" />
+  <script>
+    // set the theme before first paint to avoid a flash
+    (function () {
+      var t = localStorage.getItem("tormods-theme");
+      if (t !== "light" && t !== "dark")
+        t = window.matchMedia && matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      document.documentElement.dataset.theme = t;
+      document.documentElement.dataset.fx =
+        localStorage.getItem("tormods-fx") === "off" ? "off" : "on";
+    })();
+  </script>
   <link rel="stylesheet" href="assets/fonts.css" />
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
@@ -18,6 +31,7 @@
   <button id="backTop" aria-label="Back to top">↑</button>
 
   <script src="assets/data.js"></script>
+  <script src="assets/fx.js"></script>
   <script src="assets/app.js"></script>
 </body>
 </html>

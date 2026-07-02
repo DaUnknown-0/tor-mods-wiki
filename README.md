@@ -1,18 +1,29 @@
 # TOR Mods Wiki
 
-A static, wiki-style site for two companion mods for *The Other Roles*:
+A static, wiki-style site for three companion mods for *The Other Roles*:
 
 - **Chance Modifier** (`chance.html`)
-- **Useful TOR Stuff** (`useful.html`)
-- **Home** (`index.html`) — both mods merged with highlights and links
+- **Forgotten Fixes / Useful TOR Stuff** (`useful.html`)
+- **Unknown's Collection** (`unknowns.html`)
+- **Home** (`index.html`) — all mods merged with highlights and links
 
 ## Features
 
 - Bilingual **English / German** (default English; choice saved in `localStorage`).
+- **Dark / light theme** toggle (dark = "lights out"; follows the system preference
+  on first visit, choice saved in `localStorage`).
+- **Overdrive FX mode** (sparkle button top right, on by default), driven by the
+  `TORFX` engine in `assets/fx.js`: canvas starfield with pointer parallax, twinkle
+  and meteor trails (soft bokeh in light mode), animated auroras, drifting crewmates
+  (click one…), 3D card tilt with glare, cursor spotlight on entries, staggered
+  scroll reveals, a task-bar scroll progress meter, scanlines, glow & headline sheen.
+  Respects `prefers-reduced-motion`, pauses in hidden tabs.
+- **Theme switch as circular reveal** (View Transitions API, graceful fallback).
 - Each change is a **clickable accordion** — click the title to read the explanation.
-- **Live search** filters every feature on a mod page.
+- **Live search** filters every feature on a mod page (press `/` to focus it).
 - Sticky **section sidebar** with scroll-spy, **expand/collapse all**, back-to-top.
-- No build step — pure HTML/CSS/JS.
+- No build step — pure HTML/CSS/JS. Self-hosted fonts: Chakra Petch (display),
+  Rubik (body), JetBrains Mono (labels/code).
 
 ## Editing content
 

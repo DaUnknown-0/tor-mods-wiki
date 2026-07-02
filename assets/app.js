@@ -12,6 +12,59 @@
   const t = (key) => (UI[lang] && UI[lang][key]) || (UI.en[key] || key);
   const L = (obj) => (obj ? (obj[lang] != null ? obj[lang] : obj.en) : "");
 
+  /* ---------- theme (dark = "lights out" / light) ---------- */
+  const THEME_KEY = "tormods-theme";
+  const THEME_COLORS = { dark: "#070b16", light: "#edf1f8" };
+  function applyTheme(theme) {
+    document.documentElement.dataset.theme = theme;
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.content = THEME_COLORS[theme] || THEME_COLORS.dark;
+  }
+  function toggleTheme(ev) {
+    const next = document.documentElement.dataset.theme === "light" ? "dark" : "light";
+    const commit = () => {
+      localStorage.setItem(THEME_KEY, next);
+      applyTheme(next);
+    };
+    // circular reveal from the toggle button; the global reduced-motion CSS
+    // kill-switch does not cover ::view-transition pseudos, so guard here
+    const reduce = window.matchMedia &&
+      matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (document.startViewTransition && !reduce) {
+      const btn = ev && ev.currentTarget;
+      if (btn && btn.getBoundingClientRect) {
+        const r = btn.getBoundingClientRect();
+        document.documentElement.style.setProperty("--vt-x", r.left + r.width / 2 + "px");
+        document.documentElement.style.setProperty("--vt-y", r.top + r.height / 2 + "px");
+      }
+      document.startViewTransition(commit);
+    } else {
+      commit();
+    }
+  }
+
+  const ICO_SUN = `<svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.4"/><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.3 5.3l1.7 1.7M17 17l1.7 1.7M18.7 5.3L17 7M7 17l-1.7 1.7"/></svg>`;
+  const ICO_MOON = `<svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.4 14.2A8.4 8.4 0 0 1 9.8 3.6a8.4 8.4 0 1 0 10.6 10.6z"/></svg>`;
+  const ICO_SPARK = `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.6l2 5.9 5.9 2-5.9 2-2 5.9-2-5.9-5.9-2 5.9-2zM19.4 15.2l1 2.9 2.9 1-2.9 1-1 2.9-1-2.9-2.9-1 2.9-1z"/></svg>`;
+
+  /* ---------- FX overdrive mode ---------- */
+  const FX_KEY = "tormods-fx";
+  const fxOn = () => document.documentElement.dataset.fx === "on";
+  function applyFx(on) {
+    document.documentElement.dataset.fx = on ? "on" : "off";
+    if (window.TORFX) (on ? TORFX.start() : TORFX.stop());
+    const btn = document.querySelector(".fx-toggle");
+    if (btn) {
+      btn.classList.toggle("on", on);
+      btn.setAttribute("aria-pressed", String(on));
+    }
+  }
+  function toggleFx() {
+    const next = !fxOn();
+    localStorage.setItem(FX_KEY, next ? "on" : "off");
+    applyFx(next);
+  }
+
   /* ---------- top bar (shared) ---------- */
   function renderTopbar() {
     const el = document.getElementById("topbar");
@@ -21,7 +74,7 @@
     el.innerHTML = `
       <div class="topbar-inner">
         <a class="brand" href="index.html">
-          <span class="brand-mark">⬢</span>
+          <span class="crewmate" aria-hidden="true"></span>
           <span class="brand-text">TOR&nbsp;Mods</span>
         </a>
         <nav class="topnav">
@@ -30,15 +83,23 @@
           ${link("useful.html", "nav_useful")}
           ${link("unknowns.html", "nav_unknowns")}
         </nav>
-        <div class="lang-switch" role="group" aria-label="Language">
-          <button data-lang="en" class="${lang === "en" ? "on" : ""}">EN</button>
-          <button data-lang="de" class="${lang === "de" ? "on" : ""}">DE</button>
+        <div class="topbar-actions">
+          <div class="lang-switch" role="group" aria-label="Language">
+            <button data-lang="en" class="${lang === "en" ? "on" : ""}">EN</button>
+            <button data-lang="de" class="${lang === "de" ? "on" : ""}">DE</button>
+          </div>
+          <button class="theme-toggle" aria-label="Lights on / lights out" title="Lights">${ICO_SUN}${ICO_MOON}</button>
+          <button class="theme-toggle fx-toggle${fxOn() ? " on" : ""}" aria-label="Visual effects" aria-pressed="${fxOn()}" title="Overdrive FX">${ICO_SPARK}</button>
+          <button class="menu-toggle" aria-label="Menu">☰</button>
         </div>
-        <button class="menu-toggle" aria-label="Menu">☰</button>
       </div>`;
     el.querySelectorAll(".lang-switch button").forEach((b) =>
       b.addEventListener("click", () => setLang(b.dataset.lang))
     );
+    const tt = el.querySelector(".theme-toggle:not(.fx-toggle)");
+    if (tt) tt.addEventListener("click", toggleTheme);
+    const fx = el.querySelector(".fx-toggle");
+    if (fx) fx.addEventListener("click", toggleFx);
     const mt = el.querySelector(".menu-toggle");
     if (mt) mt.addEventListener("click", () => document.body.classList.toggle("sidebar-open"));
   }
@@ -75,7 +136,7 @@
           <span class="chevron" aria-hidden="true">›</span>
         </button>
         <p class="entry-summary">${L(entry.summary)}</p>
-        <div class="entry-body">${L(entry.body)}</div>
+        <div class="entry-collapse"><div class="entry-body">${L(entry.body)}</div></div>
       </article>`;
   }
 
@@ -96,23 +157,25 @@
       : "";
     main.innerHTML = `
       <header class="mod-hero ${mod.key}">
-        <div class="mod-hero-inner">
-          <p class="kicker">${L(mod.fullName)}</p>
-          <h1>${mod.name}</h1>
-          <p class="lead">${L(mod.tagline)}</p>
-          <div class="meta-row">
-            <span class="chip">${t("version")} ${mod.version}</span>
-            ${allClients}
-            <a class="btn primary" href="${mod.download}" target="_blank" rel="noopener">${t("download")}</a>
-            <a class="btn ghost" href="${mod.repo}" target="_blank" rel="noopener">${t("repo")}</a>
-          </div>
+        <span class="crewmate hero-crewmate c-${mod.key} float" aria-hidden="true"></span>
+        <p class="kicker">${L(mod.fullName)}</p>
+        <h1>${mod.name}</h1>
+        <p class="lead">${L(mod.tagline)}</p>
+        <div class="meta-row">
+          <span class="chip">${t("version")} ${mod.version}</span>
+          ${allClients}
+          <a class="btn primary" href="${mod.download}" target="_blank" rel="noopener">${t("download")}</a>
+          <a class="btn" href="${mod.repo}" target="_blank" rel="noopener">${t("repo")}</a>
         </div>
       </header>
 
       <div class="intro-block">${L(mod.intro)}</div>
 
       <div class="toolbar">
-        <input type="search" id="search" placeholder="${escapeAttr(t("search_placeholder"))}" autocomplete="off" />
+        <span class="search-wrap">
+          <input type="search" id="search" placeholder="${escapeAttr(t("search_placeholder"))}" autocomplete="off" />
+          <span class="search-key" aria-hidden="true">/</span>
+        </span>
         <button class="btn small" id="expandAll">${t("expand_all")}</button>
         <button class="btn small" id="collapseAll">${t("collapse_all")}</button>
       </div>
@@ -164,6 +227,7 @@
 
     const card = (mod) => `
       <a class="mod-card ${mod.key}" href="${mod.key}.html">
+        <span class="crewmate c-${mod.key}" aria-hidden="true"></span>
         <div class="mod-card-top">
           <h3>${mod.name}</h3>
           <span class="chip">v${mod.version}</span>
@@ -199,8 +263,14 @@
 
     main.innerHTML = `
       <header class="home-hero">
+        <div class="eject-lane" aria-hidden="true"><span class="crewmate"></span></div>
+        <div class="home-crew" aria-hidden="true">
+          <span class="crewmate c-chance float"></span>
+          <span class="crewmate c-useful float"></span>
+          <span class="crewmate c-unknowns float"></span>
+        </div>
         <p class="kicker">${t("home_hero_kicker")}</p>
-        <h1>${t("home_hero_title")}</h1>
+        <h1>${heroWords(t("home_hero_title"))}</h1>
         <p class="lead">${t("home_hero_sub")}</p>
       </header>
 
@@ -254,6 +324,17 @@
   function wireSearch() {
     const input = document.getElementById("search");
     if (!input) return;
+    // "/" focuses the search box (unless already typing somewhere)
+    if (!window.__searchKeyWired) {
+      window.__searchKeyWired = true;
+      document.addEventListener("keydown", (e) => {
+        if (e.key !== "/" || e.ctrlKey || e.metaKey || e.altKey) return;
+        const tag = document.activeElement && document.activeElement.tagName;
+        if (tag === "INPUT" || tag === "TEXTAREA") return;
+        const s = document.getElementById("search");
+        if (s) { e.preventDefault(); s.focus(); }
+      });
+    }
     const noRes = document.getElementById("noResults");
     input.addEventListener("input", () => {
       const q = input.value.trim().toLowerCase();
@@ -316,7 +397,7 @@
   /* ---------- footer ---------- */
   function renderFooter() {
     const f = document.getElementById("footer");
-    if (f) f.innerHTML = `<p>${t("footer_note")}</p>`;
+    if (f) f.innerHTML = `<p><span class="crewmate" aria-hidden="true"></span>${t("footer_note")}</p>`;
   }
 
   /* ---------- "Unknown's Collection" click-decode effect ----------
@@ -399,9 +480,19 @@
     return String(s).replace(/"/g, "&quot;");
   }
 
+  // staggered entrance for the home headline (title is plain text, no HTML)
+  function heroWords(s) {
+    return String(s)
+      .split(" ")
+      .map((w, i) => `<span class="hero-word" style="--wd:${80 + i * 90}ms">${w}</span>`)
+      .join(" ");
+  }
+
   /* ---------- boot ---------- */
   function renderAll() {
     document.documentElement.lang = lang;
+    applyTheme(document.documentElement.dataset.theme || "dark");
+    applyFx(localStorage.getItem(FX_KEY) !== "off"); // overdrive is on by default
     renderTopbar();
     renderFooter();
     if (page === "home") renderHome();
@@ -410,6 +501,7 @@
     else if (page === "unknowns") renderModPage(UNKNOWNS);
     wireBackTop();
     wireUcScramble();
+    if (window.TORFX) TORFX.refresh(); // re-observe the freshly rendered DOM
     // keep scroll position stable on language switch
   }
 
