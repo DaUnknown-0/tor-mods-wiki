@@ -82,6 +82,7 @@
           ${link("chance.html", "nav_chance")}
           ${link("useful.html", "nav_useful")}
           ${link("unknowns.html", "nav_unknowns")}
+          ${link("nightfall.html", "nav_nightfall")}
         </nav>
         <div class="topbar-actions">
           <div class="lang-switch" role="group" aria-label="Language">
@@ -279,6 +280,7 @@
         ${card(CHANCE)}
         ${card(USEFUL)}
         ${card(UNKNOWNS)}
+        ${card(NIGHTFALL)}
       </div>
 
       <h2 class="center">${t("home_combined")}</h2>
@@ -499,6 +501,7 @@
     else if (page === "chance") renderModPage(CHANCE);
     else if (page === "useful") renderModPage(USEFUL);
     else if (page === "unknowns") renderModPage(UNKNOWNS);
+    else if (page === "nightfall") renderModPage(NIGHTFALL);
     wireBackTop();
     wireUcScramble();
     if (window.TORFX) TORFX.refresh(); // re-observe the freshly rendered DOM

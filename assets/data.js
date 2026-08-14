@@ -10,6 +10,7 @@ const UI = {
     nav_chance: "Chance Modifier",
     nav_useful: "Forgotten Fixes",
     nav_unknowns: "Unknown's Collection",
+    nav_nightfall: "Nightfall",
     search_placeholder: "Search features…",
     search_none: "No entries match your search.",
     on_this_page: "On this page",
@@ -39,6 +40,7 @@ const UI = {
     nav_chance: "Chance Modifier",
     nav_useful: "Forgotten Fixes",
     nav_unknowns: "Unknown's Collection",
+    nav_nightfall: "Nightfall",
     search_placeholder: "Features durchsuchen…",
     search_none: "Keine Einträge passen zu deiner Suche.",
     on_this_page: "Auf dieser Seite",
@@ -2209,4 +2211,300 @@ const UNKNOWNS = {
   ]
 };
 
-const MODS = { chance: CHANCE, useful: USEFUL, unknowns: UNKNOWNS };
+/* ============================================================================
+ * NIGHTFALL
+ * ==========================================================================*/
+const NIGHTFALL = {
+  key: "nightfall",
+  name: "Nightfall",
+  fullName: { en: "Nightfall — first person for Among Us", de: "Nightfall — Ich-Perspektive für Among Us" },
+  version: "0.2.0",
+  allClients: true,
+  repo: "https://github.com/DaUnknown-0/Nightfall",
+  download: "https://github.com/DaUnknown-0/Nightfall/releases/latest",
+  tagline: {
+    en: "When Unknown's Collection's werewolf transforms, the top-down view is gone: real walls in perspective, a flashlight in your hand — and the beast gets red predator sight and its own claws.",
+    de: "Sobald sich der Werwolf aus Unknown's Collection verwandelt, ist die Draufsicht weg: perspektivische Wände, eine Taschenlampe in der Hand — und das Biest bekommt rote Raubtiersicht und seine eigenen Krallen."
+  },
+  intro: {
+    en: "Nightfall is a standalone BepInEx plugin. It changes neither The Other Roles nor Unknown's Collection, it only reads their state by reflection — without Unknown's Collection it loads anyway and stays quiet. The picture is drawn by a software renderer that contains no Unity at all, and is put on screen as one full-screen sprite under the HUD. <strong>Only Polus has a described world so far</strong>; on every other map the view deliberately stays off (see <em>World &amp; maps</em>).",
+    de: "Nightfall ist ein eigenständiges BepInEx-Plugin. Es verändert weder The Other Roles noch Unknown's Collection, sondern liest deren Zustand nur per Reflection mit — ohne Unknown's Collection lädt es trotzdem und hält still. Das Bild zeichnet ein Software-Renderer, der überhaupt kein Unity enthält, und landet als ein einziges Vollbild-Sprite unter dem HUD auf dem Schirm. <strong>Bisher hat nur Polus eine beschriebene Welt</strong>; auf jeder anderen Karte bleibt die Sicht bewusst aus (siehe <em>Welt &amp; Karten</em>)."
+  },
+  install: {
+    en: "<ol><li>Install <a href='https://github.com/TheOtherRolesAU/TheOtherRoles'>The Other Roles</a> into your Among Us BepInEx setup. <a href='https://github.com/DaUnknown-0/UnknownsCollection'>Unknown's Collection</a> is optional, but it is what supplies the Werewolf whose transformation triggers Nightfall.</li><li>Download the latest <code>Nightfall.dll</code> from the releases page.</li><li>Copy it into <code>&lt;Among Us&gt;/BepInEx/plugins/</code>.</li><li>Start the game.</li></ol><p>After the first install, the built-in updater checks this repo's GitHub releases on the main menu and offers an update button — manual downloads are only needed for the initial setup.</p>",
+    de: "<ol><li>Installiere <a href='https://github.com/TheOtherRolesAU/TheOtherRoles'>The Other Roles</a> in dein Among-Us-BepInEx-Setup. <a href='https://github.com/DaUnknown-0/UnknownsCollection'>Unknown's Collection</a> ist optional, liefert aber den Werwolf, dessen Verwandlung Nightfall auslöst.</li><li>Lade die neueste <code>Nightfall.dll</code> von der Releases-Seite.</li><li>Kopiere sie nach <code>&lt;Among Us&gt;/BepInEx/plugins/</code>.</li><li>Starte das Spiel.</li></ol><p>Nach der ersten Installation prüft der eingebaute Updater die GitHub-Releases dieses Repos im Hauptmenü und bietet einen Update-Button an — manuelle Downloads sind nur für die Erstinstallation nötig.</p>"
+  },
+  deps: {
+    en: "<ul><li><strong>The Other Roles 4.8.0</strong> (hard dependency)</li><li><strong>Unknown's Collection</strong> (optional) — supplies the Werewolf whose transformation is the default trigger. Without it, the view is only reachable via the <em>Always</em> mode and the debug key.</li></ul>",
+    de: "<ul><li><strong>The Other Roles 4.8.0</strong> (harte Abhängigkeit)</li><li><strong>Unknown's Collection</strong> (optional) — liefert den Werwolf, dessen Verwandlung der Standard-Auslöser ist. Ohne UC ist die Sicht nur über den Modus <em>Always</em> und die Debug-Taste erreichbar.</li></ul>"
+  },
+  sections: [
+    {
+      id: "how-it-works",
+      title: { en: "How it works", de: "Wie es funktioniert" },
+      intro: {
+        en: "A software renderer instead of real 3D, a fairness handshake before anything switches, and one relay that puts everything the mods place in the world back into the picture.",
+        de: "Ein Software-Renderer statt echtem 3D, ein Fairness-Handshake, bevor überhaupt etwas umschaltet, und ein Weiterleiter, der alles zurück ins Bild holt, was die Mods in die Welt stellen."
+      },
+      entries: [
+        {
+          id: "trigger",
+          title: { en: "When the world flips", de: "Wann die Welt kippt" },
+          summary: {
+            en: "The werewolf's transformation is the default trigger; four hard blocks come before everything else.",
+            de: "Die Verwandlung des Werwolfs ist der Standard-Auslöser; vier harte Sperren stehen vor allem anderen."
+          },
+          body: {
+            en: "<p>By default the view begins when Unknown's Collection's werewolf transforms and ends when it reverts. The host can widen or switch that off entirely with the <strong>3D Mode</strong> option (see <em>Configuration</em>).</p><p>Four blocks sit <strong>before</strong> everything else, including the debug key and the mode:</p>" + tbl(["Block", "Why"], [
+              ["Ghosts", "The rest of a ghost's game is tasks and watching, and neither survives being put into a corridor."],
+              ["Meeting, voting, exile", "The head must not follow the cursor that is currently voting."],
+              ["Round end", "Between the win condition firing and the actual scene change the game already draws its end screen — the view has to be gone by then."],
+              ["Maps without a described world", "Only Polus is built. On the other maps the view never comes up at all."]
+            ]),
+            de: "<p>Standardmäßig beginnt die Sicht mit dem Verwandeln des Werwolfs aus Unknown's Collection und endet mit dem Zurückverwandeln. Der Host kann das mit der Option <strong>3D Mode</strong> ausweiten oder ganz abschalten (siehe <em>Einstellungen</em>).</p><p>Vier Sperren stehen <strong>vor</strong> allem anderen, auch vor der Debug-Taste und vor dem Modus:</p>" + tbl(["Sperre", "Warum"], [
+              ["Geist", "Das Restspiel eines Geistes sind Aufgaben und Zusehen, und beides überlebt es nicht, in einen Gang gesteckt zu werden."],
+              ["Besprechung, Abstimmung, Ausschluss", "Der Kopf darf nicht dem Zeiger folgen, der gerade abstimmt."],
+              ["Rundenende", "Zwischen dem Auslösen der Siegbedingung und dem Szenenwechsel zeichnet das Spiel schon seinen Endbildschirm — die Sicht muss da weg sein."],
+              ["Karten ohne beschriebene Welt", "Gebaut ist bisher nur Polus. Auf den anderen Karten kommt die Sicht gar nicht erst hoch."]
+            ])
+          }
+        },
+        {
+          id: "renderer",
+          title: { en: "The renderer, and why it is not Unity 3D", de: "Der Renderer, und warum er kein Unity-3D ist" },
+          summary: {
+            en: "Among Us has no wall geometry. The renderer needs exactly one thing from the host: put this byte array on screen.",
+            de: "Among Us hat keine Wandgeometrie. Der Renderer braucht vom Wirt genau eine Fähigkeit: leg dieses Byte-Array auf den Schirm."
+          },
+          body: {
+            en: "<p>Real 3D would need runtime meshes, a shader that survives Il2Cpp stripping and an asset pipeline — three unknowns instead of none. Nightfall draws its own picture in plain C# instead (it began as a raycaster and is a triangle rasterizer today) and hands the finished image to a single full-screen sprite on the world camera, under the HUD. <strong>Not one call crosses the Il2Cpp border per frame.</strong></p><p>Measured on Polus over all 91 viewpoints with a full turn at each, at the default <code>854x480</code>: <strong>16.6 ms worst viewpoint, 13.7 ms average</strong>, 38 228 triangles. The 16.7 ms of a 60 Hz frame is the line the default resolution is chosen against.</p>",
+            de: "<p>Echtes 3D bräuchte Laufzeit-Meshes, einen Shader, der das Il2Cpp-Stripping überlebt, und eine Asset-Pipeline: drei Unbekannte statt keiner. Nightfall zeichnet sein Bild stattdessen in reinem C# (angefangen als Raycaster, heute ein Dreiecks-Rasterizer) und übergibt es einem einzigen Vollbild-Sprite auf der Weltkamera, unter dem HUD. <strong>Pro Bild geht kein einziger Aufruf über die Il2Cpp-Grenze.</strong></p><p>Gemessen auf Polus über alle 91 Standpunkte mit voller Drehung an jedem, bei der Standardauflösung <code>854x480</code>: <strong>16,6 ms schlechtester Standpunkt, 13,7 ms im Mittel</strong>, 38 228 Dreiecke. Die 16,7 ms eines 60-Hz-Bildes sind die Grenze, gegen die die Standardauflösung gewählt ist.</p>"
+          }
+        },
+        {
+          id: "offline-tool",
+          title: { en: "The same code draws PNGs outside the game", de: "Derselbe Code zeichnet PNGs außerhalb des Spiels" },
+          summary: {
+            en: "The renderer contains no Unity on purpose — an offline tool compiles the identical files and produces the identical picture.",
+            de: "Der Renderer enthält absichtlich kein Unity — ein Offline-Werkzeug kompiliert dieselben Dateien und erzeugt dasselbe Bild."
+          },
+          body: {
+            en: "<p>Everything under <code>Core\\</code> is Unity-free by design. The same files are compiled into an offline render tool that draws the identical picture into PNG files, which is how the look is checked and corrected without launching the game — including a camera that can be placed at an exact coordinate and angle, so a screenshot reported from a playtest can be reproduced and held against the fix. <strong>What is checked outside the game as an image is line-for-line what runs inside it.</strong></p><p>The tool also measures the frame cost across every viewpoint of the map with a full turn at each; those are the numbers quoted here.</p>",
+            de: "<p>Alles unter <code>Core\\</code> ist bewusst Unity-frei. Dieselben Dateien werden in ein Offline-Render-Werkzeug kompiliert, das dasselbe Bild als PNG zeichnet — so wird die Optik geprüft und korrigiert, ohne das Spiel zu starten, samt einer Kamera, die sich auf eine exakte Koordinate und einen exakten Winkel stellen lässt: ein aus dem Spieltest gemeldeter Screenshot ist damit nachstellbar und gegen den Fix zu halten. <strong>Was außerhalb des Spiels als Bild geprüft wird, ist zeilengleich das, was im Spiel läuft.</strong></p><p>Dasselbe Werkzeug misst auch die Bildkosten über jeden Standpunkt der Karte mit voller Drehung — daher stammen die hier genannten Zahlen.</p>"
+          }
+        },
+        {
+          id: "wolf-vs-crew",
+          title: { en: "Torch against predator sight", de: "Taschenlampe gegen Raubtiersicht" },
+          summary: {
+            en: "Crew carry a flashlight and only see people inside its beam; the beast has no lamp, sees further and shows its own claws.",
+            de: "Die Crew trägt eine Taschenlampe und sieht Menschen nur in ihrem Kegel; das Biest hat keine Lampe, sieht weiter und zeigt seine eigenen Krallen."
+          },
+          body: {
+            en: "<p>A person outside the beam has to disappear, otherwise the blackout is a radar. Player figures are judged against a narrow cone of their own (full at 22°, nothing at 33°) plus a range limit, with a deliberate arm's-length exception: closer than a metre nobody is ever invisible, but never more than half — walk through someone and you see a shape, not an identity. Walls may stay dark-but-readable; people may not.</p><p>The werewolf gets the other side of it: no torch, a red night sight that reaches further, living prey lifted to full brightness so it reads as a heat signature against the cold room, blood-red distance fog, and its own front paws at the bottom of the screen. That asymmetry is what makes the transformation playable.</p>",
+            de: "<p>Ein Mensch außerhalb des Kegels muss weg, sonst ist der Blackout ein Radar. Spielerfiguren werden gegen einen eigenen, engen Kegel bewertet (voll bei 22°, null bei 33°) plus eine Reichweitengrenze, mit einer bewussten Armlängen-Ausnahme: näher als ein Meter ist nie jemand unsichtbar, aber höchstens halb — wer durch einen hindurchläuft, sieht eine Gestalt, keine Identität. Wände dürfen dunkel-aber-lesbar sein, Menschen nicht.</p><p>Der Werwolf bekommt die Gegenseite: keine Lampe, eine rote Nachtsicht, die weiter reicht, lebende Beute auf volle Helligkeit gehoben (eine Wärmesignatur gegen den kalten Raum), blutroter Distanznebel und seine eigenen Vorderpfoten im Bild. Diese Asymmetrie macht die Verwandlung spielbar.</p>"
+          }
+        },
+        {
+          id: "handshake",
+          title: { en: "The fairness handshake", de: "Der Fairness-Handshake" },
+          badges: [{ en: "All clients", de: "Alle Clients" }],
+          summary: {
+            en: "By default the view only arms when every player in the lobby has Nightfall installed.",
+            de: "Standardmäßig schaltet die Sicht nur, wenn jeder in der Lobby Nightfall installiert hat."
+          },
+          body: {
+            en: "<p>Whoever is missing the mod would keep the top-down overview during the hunt, and in a blackout that is not a cosmetic difference but a real advantage: they can read a room the others have to walk into. So <code>RequireEveryone</code> (on by default) holds the view back for <em>everybody</em> until every player in the lobby has answered the lobby handshake. The host gets a single log warning with the names.</p><p>The switch exists to be turned off for solo testing — that is the one case in which a client may act on its own settings instead of the host's.</p>",
+            de: "<p>Wem die Mod fehlt, der behielte während der Jagd die Draufsicht, und im Blackout ist das kein Schönheits-, sondern ein Spielvorteil: er liest einen Raum, den die anderen betreten müssen. Deshalb hält <code>RequireEveryone</code> (standardmäßig an) die Sicht bei <em>allen</em> zurück, bis jeder Spieler in der Lobby den Lobby-Handshake beantwortet hat. Der Host bekommt einmal eine Log-Warnung mit den Namen.</p><p>Der Schalter ist dafür da, für Solo-Tests ausgeschaltet zu werden — das ist der eine Fall, in dem ein Client mit seinen eigenen Einstellungen statt mit denen des Hosts rechnet.</p>"
+          }
+        },
+        {
+          id: "world-relay",
+          title: { en: "Roles in first person: one relay instead of thirty special cases", de: "Rollen in der Ich-Perspektive: ein Weiterleiter statt dreißig Sonderfällen" },
+          summary: {
+            en: "Traps, relics, clones, ghost hands: everything the three mods place in the world comes back into the picture through one generic path.",
+            de: "Fallen, Relikte, Klone, Geisterhände: alles, was die drei Mods in die Welt stellen, kommt über einen einzigen allgemeinen Weg zurück ins Bild."
+          },
+          body: {
+            en: "<p>Hiding the vanilla top-down world also hides every world sprite a mod creates. Rather than teaching Nightfall each ability one by one, a relay walks the scene's root objects, skips the handful Nightfall draws itself plus the HUD and the cameras, and turns everything else into a billboard. <strong>A new role appears in first person on the day it appears in the game</strong>, without a line of code here.</p><p>Two properties come for free: the relay reads the <em>live</em> renderers, so it can never show what the game has already hidden from that player (a trap only its owner may see is inactive for everyone else anyway) — and the 2D sort depth doubles as height above the floor, so floor stickers stay on the floor and auras float.</p><p>Screen arrows are handled the same way in spirit: task, sabotage and tracker arrows leave the lens and become glowing target pins standing in the room, in the arrow's own colour. They are exempt from the visibility cone — a direction hint is game information the player is entitled to — but walls still hide them.</p>",
+            de: "<p>Wer die Vanilla-Draufsicht verbirgt, verbirgt auch jedes Welt-Sprite, das eine Mod erzeugt. Statt Nightfall jede Fähigkeit einzeln beizubringen, läuft ein Weiterleiter die Wurzel-Objekte der Szene ab, überspringt die wenigen, die Nightfall selbst zeichnet, plus HUD und Kameras, und macht aus allem Übrigen ein Billboard. <strong>Eine neue Rolle erscheint in der Ich-Perspektive an dem Tag, an dem sie im Spiel erscheint</strong>, ohne eine Zeile hier.</p><p>Zwei Eigenschaften fallen umsonst ab: der Weiterleiter liest die <em>lebenden</em> Renderer, kann also nie zeigen, was das Spiel vor diesem Spieler ohnehin verborgen hat (eine Falle, die nur ihr Besitzer sehen darf, ist für alle anderen längst deaktiviert) — und die 2D-Sortiertiefe ist zugleich die Höhe über dem Boden, also bleiben Boden-Aufkleber unten und Auren schweben.</p><p>Die Bildschirm-Pfeile folgen demselben Gedanken: Task-, Sabotage- und Tracker-Pfeile verlassen die Linse und werden zu leuchtenden Zielpins im Raum, in der Farbe des jeweiligen Pfeils. Sie sind vom Sichtbarkeitskegel ausgenommen — ein Richtungshinweis ist Spielinformation, die dem Spieler zusteht — aber Wände verdecken sie weiterhin.</p>"
+          }
+        }
+      ]
+    },
+    {
+      id: "controls",
+      title: { en: "Controls & keys", de: "Steuerung & Tasten" },
+      intro: {
+        en: "The mouse turns the head instead of pointing at things — which is exactly why every ability needs a key, and why the key is printed on its button.",
+        de: "Die Maus dreht den Kopf, statt auf etwas zu zeigen — genau deshalb braucht jede Fähigkeit eine Taste, und genau deshalb steht die Taste auf ihrem Knopf."
+      },
+      entries: [
+        {
+          id: "movement",
+          title: { en: "Looking and walking", de: "Sehen und Laufen" },
+          summary: {
+            en: "Mouse turns the view, WASD walks relative to it, and the view freezes wherever the cursor is needed.",
+            de: "Die Maus dreht den Blick, WASD läuft relativ dazu, und der Blick friert ein, wo der Zeiger gebraucht wird."
+          },
+          body: {
+            en: "<p>The mouse turns the view and WASD walks relative to it (<code>W</code> forwards). With a task, a meeting, the chat, a vent or <strong>any map — including the sabotage map</strong> open, the view freezes and the cursor is released, so a click on a console or a reactor does not yank the player around. Holding <strong>Alt</strong> releases the cursor at any time for as long as the key is held.</p>" + tbl(["Key", "Effect"], [
+              ["Mouse", "Turn the view"],
+              ["W A S D", "Walk, relative to the view (configurable)"],
+              ["Alt (hold)", "Release the cursor, freeze the view"],
+              ["F9", "Force the first-person view on (testing). Bypasses the handshake, <strong>not</strong> the four blocks."]
+            ]) + "<p class='note'>Nightfall does not touch the physics. The only intervention is one postfix that <em>rotates</em> the movement vector; collision, colliders and doors stay entirely with the game — the mod cannot change where you can walk through.</p>",
+            de: "<p>Die Maus dreht den Blick, WASD läuft relativ dazu (<code>W</code> vorwärts). Bei offenem Task, Meeting, Chat, im Vent oder bei <strong>offener Karte — auch der Sabotage-Karte</strong> friert der Blick ein und der Zeiger wird freigegeben, damit ein Klick auf eine Konsole oder einen Reaktor den Spieler nicht herumreißt. <strong>Alt</strong> gibt den Zeiger jederzeit frei, solange die Taste gehalten wird.</p>" + tbl(["Taste", "Wirkung"], [
+              ["Maus", "Blick drehen"],
+              ["W A S D", "Laufen, relativ zum Blick (konfigurierbar)"],
+              ["Alt (halten)", "Zeiger freigeben, Blick einfrieren"],
+              ["F9", "Ich-Perspektive erzwingen (Test). Umgeht den Handshake, <strong>nicht</strong> die vier Sperren."]
+            ]) + "<p class='note'>Nightfall fasst die Physik nicht an. Der einzige Eingriff ist ein Postfix, der den Bewegungsvektor <em>dreht</em>; Kollision, Collider und Türen bleiben vollständig beim Spiel — die Mod kann nicht ändern, wo man hindurchlaufen kann.</p>"
+          }
+        },
+        {
+          id: "ability-keys",
+          title: { en: "A key for every ability", de: "Eine Taste für jede Fähigkeit" },
+          summary: {
+            en: "With the cursor captured, an ability without a key is an ability the player has lost. Nightfall fills the gaps and resolves clashes.",
+            de: "Bei gefangenem Zeiger ist eine Fähigkeit ohne Taste eine verlorene Fähigkeit. Nightfall füllt die Lücken und löst Kollisionen auf."
+          },
+          body: {
+            en: "<p>The HUD buttons are still drawn and still clickable — but only while Alt is held, and holding Alt also stops you looking, which in the middle of a hunt is the same as not having the ability at all. Three things were missing, and all three are fixed from the outside, <strong>without changing a line of The Other Roles</strong>:</p><ul><li><strong>Some buttons had no key at all</strong> (TOR's Shifter, garlic and bomb-defuse; Unknown's Collection's four Copycat buttons were mouse-only by design).</li><li><strong>Keys were handed out per mod, not per player.</strong> TOR's convention (Q kill, F ability, G second, H third) assumes one role per player, and that assumption is gone: a role, a modifier with its own button, a cross-role counterplay button and a Forgotten Fixes extra can all be on screen at once.</li><li><strong>The key was nowhere on the button.</strong> The player learned it from a wiki.</li></ul><p>Five buttons get a fixed, written-down key; everything else keeps whatever key its own mod gave it and only moves if a real clash is detected for that player in that moment. Nightfall is not a rebinding mod — a player who knows the Sheriff shoots with Q must not have to relearn it.</p>" + tbl(["Button", "Key", "Why this one"], [
+              ["Shifter (shift)", "V", "A <em>modifier</em>, so it sits on top of an arbitrary role."],
+              ["Garlic", "B", "Belongs to every living player as soon as garlic is in play."],
+              ["Defuse bomb", "N", "Belongs to every living player while a bomb is armed."],
+              ["Saboteur search", "M", "Belongs to every non-impostor — and sat on F, which the Scout needs for its own role."],
+              ["Lover Revenger", "X", "Granted by the Lover modifier, sat on Q like the role underneath it."]
+            ]) + "<p>The key is printed in the <strong>top-right corner of the button</strong>, and by default all the time rather than only during the view: a key learned during the round is a key already known when the lights go out. Vanilla buttons (use, kill, report, sabotage, vent) stay unlabelled — they carry Among Us' own bindings.</p>",
+            de: "<p>Die HUD-Knöpfe werden weiter gezeichnet und sind weiter klickbar — aber nur, solange Alt gehalten wird, und wer Alt hält, dreht sich nicht mehr, was mitten in einer Jagd dasselbe ist wie keine Fähigkeit zu haben. Drei Dinge fehlten, und alle drei sind von außen gelöst, <strong>ohne eine Zeile an The Other Roles zu ändern</strong>:</p><ul><li><strong>Manche Knöpfe hatten überhaupt keine Taste</strong> (TORs Shifter, Knoblauch und Bomben-Entschärfung; die vier Copycat-Knöpfe aus Unknown's Collection waren bewusst nur mit der Maus bedienbar).</li><li><strong>Tasten wurden pro Mod vergeben, nicht pro Spieler.</strong> TORs Konvention (Q Töten, F Fähigkeit, G zweite, H dritte) setzt eine Rolle je Spieler voraus, und diese Annahme hält nicht mehr: eine Rolle, ein Modifier mit eigenem Knopf, ein fremder Gegenspiel-Knopf und ein Forgotten-Fixes-Zusatz können gleichzeitig auf dem Schirm sein.</li><li><strong>Die Taste stand nirgends auf dem Knopf.</strong> Der Spieler erfuhr sie aus der Wiki.</li></ul><p>Fünf Knöpfe bekommen eine fest vergebene, aufgeschriebene Taste; alles andere behält die Taste seiner eigenen Mod und wird nur verschoben, wenn für diesen Spieler in diesem Moment wirklich eine Kollision auftritt. Nightfall ist kein Umbelegungs-Mod — wer weiß, dass der Sheriff mit Q schießt, soll das nicht neu lernen müssen.</p>" + tbl(["Knopf", "Taste", "Warum genau der"], [
+              ["Shifter (Shift)", "V", "Ein <em>Modifier</em>, sitzt also auf einer beliebigen Rolle obendrauf."],
+              ["Knoblauch", "B", "Gehört jedem lebenden Spieler, sobald Knoblauch im Spiel ist."],
+              ["Bombe entschärfen", "N", "Gehört jedem lebenden Spieler, solange eine Bombe scharf ist."],
+              ["Saboteur-Suche", "M", "Gehört jedem Nicht-Impostor — und lag auf F, das der Scout für seine eigene Rolle braucht."],
+              ["Lover Revenger", "X", "Vom Lover-Modifier verliehen, lag auf Q wie die Rolle darunter."]
+            ]) + "<p>Die Taste steht <strong>oben rechts auf dem Knopf</strong>, standardmäßig immer und nicht nur während der Sicht: eine Taste, die man während der Runde gelernt hat, kennt man schon, wenn das Licht ausgeht. Vanilla-Knöpfe (Benutzen, Töten, Melden, Sabotage, Lüftung) bleiben unbeschriftet — sie tragen Among Us' eigene Bindungen.</p>"
+          }
+        }
+      ]
+    },
+    {
+      id: "configuration",
+      title: { en: "Configuration", de: "Einstellungen" },
+      intro: {
+        en: "One host-synchronised option, everything else local: resolution and mouse sensitivity are a property of the machine, not of the lobby.",
+        de: "Eine host-synchronisierte Option, alles andere lokal: Auflösung und Mausempfindlichkeit sind Sache der Maschine, nicht der Lobby."
+      },
+      entries: [
+        {
+          id: "mode-option",
+          title: { en: "3D Mode (host setting)", de: "3D Mode (Host-Einstellung)" },
+          badges: [{ en: "Host-authoritative", de: "Host-autoritativ" }],
+          summary: {
+            en: "Always / Werewolf only / Never — registered as a TOR option in the General tab, so the host's value travels.",
+            de: "Always / Werewolf only / Never — als TOR-Option im General-Tab registriert, also reist der Wert des Hosts mit."
+          },
+          body: {
+            en: "<p>Everything else Nightfall settles is a matter of taste on one machine. The mode is not: it decides whether a player spends the round inside a corridor or looking down on the map, and two players who answer that differently are not playing the same game. So it is registered into The Other Roles' own option list (<strong>General</strong> tab, <code>Nightfall: 3D Mode</code>) and is host-synchronised for free.</p>" + tbl(["Value", "Meaning"], [
+              ["<strong>Werewolf only</strong> (default)", "The view starts when Unknown's Collection's werewolf transforms and stops when it reverts."],
+              ["Always", "First person for the whole round, werewolf or not."],
+              ["Never", "Off. Nothing brings the view up."]
+            ]) + "<p>The default is deliberately <em>Werewolf only</em>, so an existing lobby plays exactly as it did and nobody finds themselves in a corridor after an update. <em>Always</em> waits out the lobby and the intro cutscene; ghosts keep the top-down view in all three modes.</p><p class='note'>Without The Other Roles the mode falls back to a local config entry with the same three values.</p>",
+            de: "<p>Alles andere, was Nightfall einstellt, ist Geschmackssache auf einem Rechner. Der Modus ist es nicht: er entscheidet, ob ein Spieler die Runde in einem Gang verbringt oder von oben auf die Karte sieht, und zwei Spieler, die das verschieden beantworten, spielen nicht dasselbe Spiel. Deshalb trägt er sich in die Options-Liste von The Other Roles ein (<strong>General</strong>-Tab, <code>Nightfall: 3D Mode</code>) und ist damit umsonst host-synchron.</p>" + tbl(["Wert", "Bedeutung"], [
+              ["<strong>Werewolf only</strong> (Standard)", "Die Sicht beginnt mit dem Verwandeln des Werwolfs aus Unknown's Collection und endet mit dem Zurückverwandeln."],
+              ["Always", "Ich-Perspektive die ganze Runde, unabhängig vom Werwolf."],
+              ["Never", "Aus. Nichts bringt die Sicht hoch."]
+            ]) + "<p>Der Standard ist bewusst <em>Werewolf only</em>, damit eine bestehende Lobby sich exakt wie vorher spielt und niemand sich nach einem Update ungefragt in einem Korridor wiederfindet. <em>Always</em> wartet Lobby und Intro-Cutscene ab; Geister behalten in allen drei Modi die Draufsicht.</p><p class='note'>Ohne The Other Roles fällt der Modus auf einen lokalen Konfigurationseintrag mit denselben drei Werten zurück.</p>"
+          }
+        },
+        {
+          id: "config-file",
+          title: { en: "Local settings", de: "Lokale Einstellungen" },
+          summary: {
+            en: "Everything in BepInEx\\config\\com.tormod.nightfall.cfg — feature switches, look, key labels.",
+            de: "Alles in BepInEx\\config\\com.tormod.nightfall.cfg — Feature-Schalter, Optik, Tastenbeschriftung."
+          },
+          body: {
+            en: "<p>File: <code>BepInEx\\config\\com.tormod.nightfall.cfg</code>. Editable in the game's mod-config UI as well.</p>" + tbl(["Key", "Default", "What it does"], [
+              ["<code>Nightfall / Enabled</code>", "true", "Switch the first-person view on when Unknown's Collection's werewolf transforms."],
+              ["<code>Nightfall / Mode</code>", "WerewolfOnly", "Fallback for the host option above — only in force when The Other Roles is not installed."],
+              ["<code>Nightfall / RequireEveryone</code>", "true", "Only arm the view when every player in the lobby has Nightfall installed. Whoever is missing it would otherwise keep the top-down overview during the hunt, which is a real advantage. Turn off for solo testing."],
+              ["<code>Nightfall / RelativeMovement</code>", "true", "Move relative to where you are looking (W walks forwards). Off means Among Us' normal world-axis movement, which is far less disorienting but also far less first person."],
+              ["<code>Look / RenderWidth</code>", "854 <span class='note'>(160–1280)</span>", "Internal horizontal resolution; the image is point-magnified to the screen, so lower is chunkier and cheaper. Height follows at 16:9. 640 if the machine is tight, 960 is for looking at the map rather than playing on it."],
+              ["<code>Look / FieldOfView</code>", "75 <span class='note'>(50–110)</span>", "Horizontal field of view in degrees."],
+              ["<code>Look / TorchRange</code>", "13 <span class='note'>(4–30)</span>", "How far the flashlight reaches, in world units."],
+              ["<code>Look / TurnSpeed</code>", "9 <span class='note'>(2–30)</span>", "How quickly the head follows the mouse."],
+              ["<code>Look / MouseSensitivity</code>", "3.2 <span class='note'>(0.5–12)</span>", "How far the view turns per unit of mouse movement."],
+              ["<code>Keys / ShowKeyOnButton</code>", "true", "Print each ability's key in the top-right corner of its button."],
+              ["<code>Keys / AlwaysOn</code>", "true", "Hand out keys and label the buttons all the time, not only while the first-person view is up."],
+              ["<code>General / Enabled</code>", "true", "Whether the mod is loaded at all — the Mod Manager's own switch, which needs a restart either way. Kept separate from the feature-level toggle above."]
+            ]),
+            de: "<p>Datei: <code>BepInEx\\config\\com.tormod.nightfall.cfg</code>. Auch über die Mod-Config-Oberfläche im Spiel editierbar.</p>" + tbl(["Schlüssel", "Standard", "Funktion"], [
+              ["<code>Nightfall / Enabled</code>", "true", "Schaltet die Ich-Perspektive ein, wenn sich der Werwolf aus Unknown's Collection verwandelt."],
+              ["<code>Nightfall / Mode</code>", "WerewolfOnly", "Rückfallwert für die Host-Option oben — nur wirksam, wenn The Other Roles nicht installiert ist."],
+              ["<code>Nightfall / RequireEveryone</code>", "true", "Die Sicht nur scharfschalten, wenn jeder Spieler in der Lobby Nightfall installiert hat. Wem sie fehlt, der behielte während der Jagd die Draufsicht, und das ist ein echter Vorteil. Für Solo-Tests ausschalten."],
+              ["<code>Nightfall / RelativeMovement</code>", "true", "Bewegung relativ zur Blickrichtung (W läuft vorwärts). Aus bedeutet Among Us' normale Bewegung entlang der Weltachsen: deutlich weniger verwirrend, aber auch deutlich weniger Ich-Perspektive."],
+              ["<code>Look / RenderWidth</code>", "854 <span class='note'>(160–1280)</span>", "Interne horizontale Auflösung; das Bild wird punktweise auf den Schirm vergrößert, niedriger ist also gröber und billiger. Die Höhe folgt in 16:9. 640 für schwache Rechner, 960 zum Anschauen statt zum Spielen."],
+              ["<code>Look / FieldOfView</code>", "75 <span class='note'>(50–110)</span>", "Horizontales Sichtfeld in Grad."],
+              ["<code>Look / TorchRange</code>", "13 <span class='note'>(4–30)</span>", "Wie weit die Taschenlampe reicht, in Welteinheiten."],
+              ["<code>Look / TurnSpeed</code>", "9 <span class='note'>(2–30)</span>", "Wie schnell der Kopf der Maus folgt."],
+              ["<code>Look / MouseSensitivity</code>", "3,2 <span class='note'>(0,5–12)</span>", "Wie weit sich der Blick pro Einheit Mausbewegung dreht."],
+              ["<code>Keys / ShowKeyOnButton</code>", "true", "Die Taste jeder Fähigkeit oben rechts auf ihren Knopf schreiben."],
+              ["<code>Keys / AlwaysOn</code>", "true", "Tasten vergeben und Knöpfe beschriften auch außerhalb der Ich-Perspektive."],
+              ["<code>General / Enabled</code>", "true", "Ob die Mod überhaupt geladen wird — der Schalter des Mod Managers, der ohnehin einen Neustart braucht. Bewusst getrennt vom Feature-Schalter oben."]
+            ])
+          }
+        }
+      ]
+    },
+    {
+      id: "world",
+      title: { en: "World & maps", de: "Welt & Karten" },
+      intro: {
+        en: "Polus is hand-built and complete. The other four maps are switched off on purpose — the honest state of the project, not a promise.",
+        de: "Polus ist von Hand gebaut und fertig. Die anderen vier Karten sind bewusst abgeschaltet — der ehrliche Stand des Projekts, kein Versprechen."
+      },
+      entries: [
+        {
+          id: "polus",
+          title: { en: "Polus is built, not guessed", de: "Polus ist gebaut, nicht geraten" },
+          summary: {
+            en: "17 areas, every number read off a printed grid over the map photo and checked from eye level.",
+            de: "17 Bereiche, jede Zahl am gedruckten Gitter über dem Kartenfoto abgelesen und aus Augenhöhe nachgeprüft."
+          },
+          body: {
+            en: "<p>Polus' geometry is described by hand: <strong>17 areas, 172 floors, 126 walls (38 openings), 57 ceilings and over 1100 pieces of furniture</strong>, plus a catalogue of drawn surfaces. It is the most accurate description of Polus this project has.</p><p>The obvious alternative would have been the game's own colliders, and they are not walls: a collider runs into every door recess and back out, encloses crates, ends in mid-air and follows a wire fence in Electrical — windows, plinths, door frames and lintels are missing entirely, because the game never needs them as collision. What the game <em>does</em> supply and Nightfall reads directly: the footstep-sound zones (a complete floor-material map of the station, set by the developers) and the physics layers, which say what is a full-height wall and what is a hip-high table you can see over.</p><p>Sixteen doors are coupled to the game's own doors, eye height follows the floor (smoothed, so stairs carry the camera), and the night sky is a panorama baked once per session — stars, Milky Way, aurora and horizon extinction, standing still while the head pans past it.</p>",
+            de: "<p>Die Geometrie von Polus ist von Hand beschrieben: <strong>17 Bereiche, 172 Böden, 126 Wände (38 Öffnungen), 57 Decken und über 1100 Einrichtungsstücke</strong>, dazu ein Katalog gezeichneter Oberflächen. Das ist die genaueste Beschreibung von Polus, die es in diesem Projekt gibt.</p><p>Die naheliegende Alternative wären die Collider des Spiels, und die sind keine Wände: ein Collider läuft in jede Türnische hinein und wieder heraus, umschließt Kisten, endet mitten im Nichts und folgt in Electrical einem Maschendrahtzaun — Fenster, Sockel, Türrahmen und Sturz fehlen ganz, weil das Spiel sie nie als Kollision braucht. Was das Spiel dagegen <em>mitliefert</em> und Nightfall direkt ausliest: die Schrittgeräusch-Zonen (eine vollständige Bodenmaterialkarte der Station, von den Entwicklern gesetzt) und die Physik-Ebenen, die sagen, was eine volle Wand ist und was ein hüfthoher Tisch, über den man hinwegsieht.</p><p>Sechzehn Türen sind an die Türen des Spiels gekoppelt, die Augenhöhe folgt dem Boden (geglättet, damit Treppen die Kamera tragen), und der Nachthimmel ist ein einmal pro Sitzung gebackenes Panorama — Sterne, Milchstraße, Aurora und Horizont-Extinktion, still stehend, während der Kopf daran vorbeischwenkt.</p>"
+          }
+        },
+        {
+          id: "other-maps",
+          title: { en: "The other four maps are off", de: "Die anderen vier Karten sind aus" },
+          badges: [{ en: "In progress", de: "In Arbeit" }],
+          summary: {
+            en: "Skeld, Mira, Airship and Fungle: the view deliberately never comes up until they have a described world.",
+            de: "Skeld, Mira, Airship und Fungle: Die Sicht kommt bewusst gar nicht erst hoch, bis sie eine beschriebene Welt haben."
+          },
+          body: {
+            en: "<p>Only Polus has a built world. The other four maps used to run through the older collider-and-map-photograph path, and that path was never good enough to play on — it <em>renders</em>, and that is exactly the problem, because “it renders” reads to a player as “this is the mod”, and they would judge Polus by Skeld.</p><p>So the map block sits <strong>before</strong> everything, including the debug key: on a map without a described world there is nothing worth forcing on. One line goes into the log per map, so that “nothing happens” does not happen silently. The old path stays in the code and remains reachable from the offline render tool; the day a second map is described, one line changes.</p><p>A side effect that saves more than the block itself: on an undescribed map the map photograph and the sprite harvest are skipped entirely — those exist only to feed a picture that is never drawn there.</p>",
+            de: "<p>Nur Polus hat eine gebaute Welt. Die anderen vier Karten liefen früher über den älteren Weg aus Collidern und Kartenfotografie, und der war nie gut genug zum Spielen — er <em>rendert</em>, und genau das ist das Problem, denn „es rendert“ liest sich für einen Spieler als „so ist die Mod“, und er beurteilt Polus dann nach Skeld.</p><p>Deshalb steht die Karten-Sperre <strong>vor</strong> allem anderen, auch vor der Debug-Taste: auf einer Karte ohne beschriebene Welt gibt es nichts, das zu erzwingen sich lohnt. Ins Log geht eine Zeile je Karte, damit „nichts passiert“ nicht schweigend passiert. Der alte Weg bleibt im Code und ist aus dem Offline-Render-Werkzeug weiter erreichbar; sobald eine zweite Karte beschrieben ist, ändert sich genau eine Zeile.</p><p>Ein Nebeneffekt, der mehr spart als die Sperre selbst: auf einer nicht beschriebenen Karte entfallen Kartenfotografie und Sprite-Ernte ganz — beide gibt es nur, um ein Bild zu füttern, das dort nie gezeichnet wird.</p>"
+          }
+        },
+        {
+          id: "known-limits",
+          title: { en: "Known limits", de: "Bekannte Grenzen" },
+          summary: {
+            en: "Written down rather than hidden: invented ceilings, opaque windows, no name tags, aliased edges.",
+            de: "Aufgeschrieben statt versteckt: erfundene Decken, undurchsichtige Fenster, keine Namensschilder, harte Kanten."
+          },
+          body: {
+            en: "<ul><li><strong>Ceilings are invented.</strong> A top-down view does not contain any, so they are dark panels in a desaturated derivation of the room's colour.</li><li><strong>Windows are opaque dark blue.</strong> The rasterizer cannot blend; a window at night is nearly that anyway.</li><li><strong>There are no name tags in first person</strong>, and three abilities that write into the name (a bomb carrier's shield, a silenced marker, a red killer name) are therefore only visible in meetings. Bringing name tags back is exactly the radar question that makes players vanish outside the beam in the first place — a decision that belongs to the user.</li><li><strong>Edges are not anti-aliased.</strong> Texture filtering is in place (mip pyramid), triangle edges are not: a pillar against the night sky is still a staircase.</li><li><strong>Security Guard's cameras</strong> hang under the ship instead of at scene root and are missed by the world relay. Left open deliberately rather than guessed at.</li><li><strong>Sound and vents as walkable objects</strong> are still open.</li></ul><p class='note'>Nightfall is under active development and playtesting; the repository's README keeps the full, current list of findings and open points.</p>",
+            de: "<ul><li><strong>Decken sind erfunden.</strong> Eine Draufsicht enthält keine, also sind es dunkle Paneele in einer stark entsättigten Ableitung der Raumfarbe.</li><li><strong>Fenster sind undurchsichtiges Dunkelblau.</strong> Der Rasterizer kann nicht mischen; ein Fenster bei Nacht ist ohnehin fast genau das.</li><li><strong>Namen über den Köpfen gibt es in der Ich-Perspektive nicht</strong>, und drei Fähigkeiten, die in den Namen schreiben (Bombenträger-Schild, Stumm-Markierung, roter Killername), sind deshalb nur im Meeting sichtbar. Namensschilder wieder einzublenden ist genau die Radar-Frage, wegen der Spieler außerhalb des Lichtkegels überhaupt verschwinden — eine Entscheidung, die dem Nutzer gehört.</li><li><strong>Kanten sind nicht geglättet.</strong> Die Texturfilterung sitzt (Mip-Pyramide), die Dreieckskanten nicht: eine Säulenkante gegen den Nachthimmel ist weiterhin eine Treppe.</li><li><strong>Die Kameras des Security Guard</strong> hängen unter dem Schiff statt auf Wurzelebene und fallen durch den Welt-Weiterleiter. Bewusst offen gelassen statt geraten.</li><li><strong>Ton und begehbare Lüftungen</strong> sind weiterhin offen.</li></ul><p class='note'>Nightfall wird aktiv weiterentwickelt und getestet; die README des Repos führt die vollständige, aktuelle Liste der Befunde und offenen Punkte.</p>"
+          }
+        }
+      ]
+    }
+  ]
+};
+
+const MODS = { chance: CHANCE, useful: USEFUL, unknowns: UNKNOWNS, nightfall: NIGHTFALL };

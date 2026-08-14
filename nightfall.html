@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nightfall — TOR Mods Wiki</title>
+  <meta name="description" content="Nightfall for The Other Roles: a true first-person view for Among Us. When Unknown's Collection's werewolf transforms, the top-down view is gone — real walls in perspective, a flashlight in your hand, and red predator sight for the beast. Click any feature for details." />
+  <meta name="theme-color" content="#070b16" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M34 6 A26 26 0 1 0 34 58 A19 19 0 1 1 34 6 Z' fill='%235e8bff'/%3E%3Cpath d='M40 40 L58 34 L52 54 Z' fill='%23f4e4b0' opacity='0.85'/%3E%3C/svg%3E" />
+  <script>
+    // set the theme before first paint to avoid a flash
+    (function () {
+      var t = localStorage.getItem("tormods-theme");
+      if (t !== "light" && t !== "dark")
+        t = window.matchMedia && matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      document.documentElement.dataset.theme = t;
+      document.documentElement.dataset.fx =
+        localStorage.getItem("tormods-fx") === "off" ? "off" : "on";
+    })();
+  </script>
+  <link rel="stylesheet" href="assets/fonts.css" />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body data-page="nightfall">
+  <header id="topbar"></header>
+  <div class="layout">
+    <aside id="sidebar"></aside>
+    <main id="content"></main>
+  </div>
+  <footer id="footer"></footer>
+  <button id="backTop" aria-label="Back to top">↑</button>
+
+  <script src="assets/data.js"></script>
+  <script src="assets/fx.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
