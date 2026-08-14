@@ -23,8 +23,8 @@ const UI = {
     download: "Download latest",
     back_top: "Back to top",
     home_hero_kicker: "Companion mods for The Other Roles",
-    home_hero_title: "Three mods. One wiki.",
-    home_hero_sub: "Randomized chaos, a pile of quality-of-life fixes, and brand-new custom roles for The Other Roles 4.8.0. Click any feature to read what it does.",
+    home_hero_title: "Four mods. One wiki.",
+    home_hero_sub: "Randomized chaos, a pile of quality-of-life fixes, brand-new custom roles, and a first-person view for The Other Roles 4.8.0. Click any feature to read what it does.",
     home_explore: "Explore the mods",
     home_combined: "Combined feature highlights",
     open_mod: "Open wiki page",
@@ -53,8 +53,8 @@ const UI = {
     download: "Neueste Version laden",
     back_top: "Nach oben",
     home_hero_kicker: "Begleit-Mods für The Other Roles",
-    home_hero_title: "Drei Mods. Ein Wiki.",
-    home_hero_sub: "Zufalls-Chaos, ein Haufen Komfort-Fixes und brandneue eigene Rollen für The Other Roles 4.8.0. Klick auf ein Feature, um zu lesen, was es macht.",
+    home_hero_title: "Vier Mods. Ein Wiki.",
+    home_hero_sub: "Zufalls-Chaos, ein Haufen Komfort-Fixes, brandneue eigene Rollen und eine Ich-Perspektive für The Other Roles 4.8.0. Klick auf ein Feature, um zu lesen, was es macht.",
     home_explore: "Mods erkunden",
     home_combined: "Kombinierte Feature-Highlights",
     open_mod: "Wiki-Seite öffnen",
@@ -80,7 +80,7 @@ const CHANCE = {
   key: "chance",
   name: "Chance Modifier",
   fullName: { en: "TOR — Unknown Chaos (Chance Modifier)", de: "TOR — Unknown Chaos (Chance Modifier)" },
-  version: "1.2.19",
+  version: "1.2.20",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/TOR-Chance",
   download: "https://github.com/DaUnknown-0/TOR-Chance/releases/latest",
@@ -312,17 +312,17 @@ const USEFUL = {
   key: "useful",
   name: "Forgotten Fixes",
   fullName: { en: "TOR - Forgotten Fixes", de: "TOR - Forgotten Fixes" },
-  version: "1.3.0",
+  version: "1.4.0",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/Useful-TOR-stuff",
   download: "https://github.com/DaUnknown-0/Useful-TOR-stuff/releases/latest",
   tagline: {
-    en: "A bundle of quality-of-life fixes and new role options for TOR 4.8.0, plus a cross-mod Mod Manager.",
-    de: "Ein Bündel aus Komfort-Fixes und neuen Rollen-Optionen für TOR 4.8.0, plus ein Mod-übergreifender Mod Manager."
+    en: "A bundle of quality-of-life fixes and new role options for TOR 4.8.0, plus a cross-mod Mod Manager, a 25-language localization engine, mod sync, a newcomer kill shield and a browser settings editor.",
+    de: "Ein Bündel aus Komfort-Fixes und neuen Rollen-Optionen für TOR 4.8.0, plus ein Mod-übergreifender Mod Manager, eine 25-Sprachen-Lokalisierung, Mod-Abgleich, ein Newcomer-Kill-Schild und ein Browser-Einstellungs-Editor."
   },
   intro: {
-    en: "TOR - Forgotten Fixes (formerly Useful TOR Stuff) adds new options to TOR 4.8.0 and fixes bugs without touching TOR's source. It resolves TOR types via reflection, so every patch degrades to a no-op (with a log warning) rather than crashing if TOR's internals change. Most win-checks and meeting overrides are host-authoritative — they apply regardless of who has the mod.",
-    de: "TOR - Forgotten Fixes (früher Useful TOR Stuff) fügt TOR 4.8.0 neue Optionen hinzu und behebt Bugs ohne Änderung an TORs Quellcode. Es löst TOR-Typen per Reflection auf, sodass jeder Patch zu einem No-Op (mit Log-Warnung) degradiert, statt abzustürzen, wenn sich TORs Interna ändern. Die meisten Win-Checks und Meeting-Overrides sind host-autoritativ — sie wirken unabhängig davon, wer den Mod hat."
+    en: "TOR - Forgotten Fixes (formerly Useful TOR Stuff) adds new options to TOR 4.8.0 and fixes bugs without touching TOR's source. It resolves TOR types via reflection, so every patch degrades to a no-op (with a log warning) rather than crashing if TOR's internals change. Most win-checks and meeting overrides are host-authoritative — they apply regardless of who has the mod. Recent releases added a localization engine for the whole mod family, a meeting map ping, mod sync in the lobby, a kill shield for session newcomers, a random Impostor count, Multi-Jester, true modifier chances, the WebConfig browser settings page and a fairness gate for hosts without the mod.",
+    de: "TOR - Forgotten Fixes (früher Useful TOR Stuff) fügt TOR 4.8.0 neue Optionen hinzu und behebt Bugs ohne Änderung an TORs Quellcode. Es löst TOR-Typen per Reflection auf, sodass jeder Patch zu einem No-Op (mit Log-Warnung) degradiert, statt abzustürzen, wenn sich TORs Interna ändern. Die meisten Win-Checks und Meeting-Overrides sind host-autoritativ — sie wirken unabhängig davon, wer den Mod hat. Die letzten Releases brachten eine Lokalisierungs-Engine für die ganze Mod-Familie, einen Meeting-Map-Ping, Mod-Abgleich in der Lobby, ein Kill-Schild für Session-Neulinge, eine zufällige Impostor-Anzahl, Multi-Jester, echte Modifier-Chancen, die WebConfig-Browser-Einstellungsseite und ein Fairness-Gate für Hosts ohne den Mod."
   },
   install: {
     en: "<ol><li>Install <a href='https://github.com/TheOtherRolesAU/TheOtherRoles'>The Other Roles</a> into your Among Us BepInEx setup.</li><li>Download the latest <code>UsefulTORStuff.dll</code> from the releases page.</li><li>Copy it into <code>&lt;Among Us&gt;/BepInEx/plugins/</code>.</li><li>Start the game.</li></ol><p>An in-game auto-updater checks GitHub on the main menu and offers an update button.</p>",
@@ -376,6 +376,66 @@ const USEFUL = {
           body: {
             en: "<p><strong>Problem:</strong> TOR's Snitch reveal reads <code>playerRoomMap</code>, which gets wiped on the host by a reset.</p><p><strong>Fix:</strong> a persistent own <code>roomMap</code> records every <code>ShareRoom</code> RPC. The Snitch chat, map, and HUD are reimplemented over this own map. It only takes effect when all players have Forgotten Fixes (<code>SnitchClientFixActive</code>); otherwise TOR's original behavior (plus TOR - Hostfix Fix 4) applies.</p>",
             de: "<p><strong>Problem:</strong> TORs Snitch-Reveal liest <code>playerRoomMap</code>, die beim Host durch einen Reset verloren geht.</p><p><strong>Fix:</strong> Eine persistente eigene <code>roomMap</code> zeichnet jeden <code>ShareRoom</code>-RPC auf. Snitch-Chat, -Karte und -HUD werden über diese eigene Map reimplementiert. Wirkt nur, wenn alle Spieler Forgotten Fixes haben (<code>SnitchClientFixActive</code>); sonst greift TORs Original (plus TOR - Hostfix Fix 4).</p>"
+          }
+        },
+        {
+          id: "armored-bomber",
+          title: { en: "Armored Bomber fix", de: "Armored-Bomber-Fix" },
+          summary: {
+            en: "An armored Bomber no longer loses his armor (and his bomb) just by planting one.",
+            de: "Ein gepanzerter Bomber verliert seine Panzerung (und seine Bombe) nicht mehr allein durchs Legen."
+          },
+          body: {
+            en: "<p><strong>Problem:</strong> planting a bomb runs a kill self-probe against the Bomber himself; with the Armored modifier, that probe consumed the armor and locked the bomb.</p><p><strong>Fix:</strong> the self-probe skips the armor, so an armored Bomber keeps both his protection and his bomb.</p>",
+            de: "<p><strong>Problem:</strong> Das Legen einer Bombe führt eine Kill-Selbstprobe gegen den Bomber selbst aus; mit dem Armored-Modifier verbrauchte diese Probe die Panzerung und sperrte die Bombe.</p><p><strong>Fix:</strong> Die Selbstprobe überspringt die Panzerung, ein gepanzerter Bomber behält Schutz und Bombe.</p>"
+          }
+        },
+        {
+          id: "sound-buttons",
+          title: { en: "Dead end-screen buttons after bomb sounds", de: "Tote End-Screen-Buttons nach Bomben-Sounds" },
+          summary: {
+            en: "Positional sound playback no longer destroys the game's own audio sources, which used to kill the Play Again / Leave buttons.",
+            de: "Positionale Sound-Wiedergabe zerstört nicht mehr die spieleigenen Audio-Quellen, was vorher die Play-Again-/Leave-Buttons lahmlegte."
+          },
+          body: {
+            en: "<p><strong>Problem:</strong> TOR's <code>playAtPosition</code> destroyed AudioSources owned by the game's SoundManager; after bomb sounds the end screen's Play Again and Leave buttons went dead.</p><p><strong>Fix:</strong> the playback no longer tears down SoundManager-owned sources.</p>",
+            de: "<p><strong>Problem:</strong> TORs <code>playAtPosition</code> zerstörte AudioSources, die dem SoundManager des Spiels gehören; nach Bomben-Sounds waren die Play-Again- und Leave-Buttons des End-Screens tot.</p><p><strong>Fix:</strong> Die Wiedergabe reißt keine SoundManager-eigenen Quellen mehr ab.</p>"
+          }
+        },
+        {
+          id: "lobby-leaks",
+          title: { en: "Lobby leak guard", de: "Lobby-Leak-Guard" },
+          summary: {
+            en: "Phantom Mini / Armored / Tiebreaker holders no longer leak from your last game into a foreign lobby.",
+            de: "Phantom-Mini-/Armored-/Tiebreaker-Träger leaken nicht mehr aus deinem letzten Spiel in eine fremde Lobby."
+          },
+          body: {
+            en: "<p><strong>Problem:</strong> per-round player lists were only cleared by TOR's round reset. Joining a different lobby without playing a round first left stale player IDs behind, so random players in the new lobby appeared as Mini, Armored or Tiebreaker holders.</p><p><strong>Fix:</strong> a lobby-leak guard additionally clears all such lists when joining a game, so state can never travel between lobbies.</p>",
+            de: "<p><strong>Problem:</strong> Per-Runden-Spielerlisten wurden nur von TORs Runden-Reset geleert. Wer ohne gespielte Runde in eine andere Lobby wechselte, nahm alte PlayerIds mit, und zufällige Spieler der neuen Lobby galten plötzlich als Mini-, Armored- oder Tiebreaker-Träger.</p><p><strong>Fix:</strong> Ein Lobby-Leak-Guard leert alle solchen Listen zusätzlich beim Lobby-Beitritt, sodass Zustand nie zwischen Lobbys wandern kann.</p>"
+          }
+        },
+        {
+          id: "trapper-freeze",
+          title: { en: "Trapper log meeting freeze", de: "Trapper-Log-Meeting-Freeze" },
+          summary: {
+            en: "The Trapper's trap log no longer freezes the meeting for every ghost.",
+            de: "Das Fallen-Log des Trappers friert das Meeting für Geister nicht mehr ein."
+          },
+          body: {
+            en: "<p><strong>Problem:</strong> rendering the Trapper's trap information at meeting start could throw for dead players and freeze their meeting UI.</p><p><strong>Fix:</strong> the log is built defensively, so ghosts get their meeting like everyone else.</p>",
+            de: "<p><strong>Problem:</strong> Der Aufbau der Trapper-Fallen-Info beim Meeting-Start konnte für tote Spieler eine Exception werfen und ihr Meeting-UI einfrieren.</p><p><strong>Fix:</strong> Das Log wird defensiv gebaut, Geister bekommen ihr Meeting wie alle anderen.</p>"
+          }
+        },
+        {
+          id: "modmanager-disabled",
+          title: { en: "Mod Manager survives being disabled", de: "Mod Manager überlebt das Deaktivieren" },
+          summary: {
+            en: "Disabling Forgotten Fixes in the Mod Manager no longer takes the Mod Manager down with it.",
+            de: "Forgotten Fixes im Mod Manager zu deaktivieren nimmt den Mod Manager nicht mehr mit."
+          },
+          body: {
+            en: "<p><strong>Problem:</strong> disabling the mod also disabled the Mod Manager UI it provides, and with it the only switch to turn the mod back on.</p><p><strong>Fix:</strong> the Mod Manager keeps running while the rest of the mod is disabled. Unknown's Collection got the same treatment for its own entry.</p>",
+            de: "<p><strong>Problem:</strong> Das Deaktivieren des Mods deaktivierte auch die von ihm gestellte Mod-Manager-UI, und damit den einzigen Schalter, um den Mod wieder einzuschalten.</p><p><strong>Fix:</strong> Der Mod Manager läuft weiter, während der Rest des Mods deaktiviert ist. Unknown's Collection bekam dieselbe Behandlung für seinen eigenen Eintrag.</p>"
           }
         }
       ]
@@ -887,6 +947,214 @@ const USEFUL = {
       ]
     },
     {
+      id: "assignment",
+      title: { en: "Role assignment", de: "Rollenzuweisung" },
+      intro: {
+        en: "Three host-side features that change how roles and modifiers are handed out: a secret random Impostor count, up to three solo Jesters, and modifier chances that finally mean what they say.",
+        de: "Drei host-seitige Features, die verändern, wie Rollen und Modifier vergeben werden: eine geheime zufällige Impostor-Anzahl, bis zu drei Solo-Jester und Modifier-Chancen, die endlich bedeuten, was sie sagen."
+      },
+      entries: [
+        {
+          id: "impostor-count-range",
+          title: { en: "Random Impostor count (Min/Max)", de: "Zufällige Impostor-Anzahl (Min/Max)" },
+          badges: [{ en: "Host-authoritative", de: "Host-autoritativ" }],
+          summary: {
+            en: "The host rolls the Impostor count once per game between Min and Max; every visible surface shows the maximum, so the real number stays secret.",
+            de: "Der Host würfelt die Impostor-Anzahl einmal pro Spiel zwischen Min und Max; jede sichtbare Fläche zeigt das Maximum, die echte Zahl bleibt geheim."
+          },
+          body: {
+            en: "<p>With <em>Random Impostor Count</em> on, the host rolls the actual Impostor count once per game between the configured minimum and maximum (each 1–3), right before roles are assigned. Secrecy is the point: lobby and intro always display the <strong>maximum</strong>, and the intro team view is additionally obscured when a single Impostor plus a possible Spy would give the number away. Because TOR normally enables the Spy only with 2+ Impostors (which itself would leak the roll), the Spy stays in the pool whenever the configured maximum is at least 2. Two mutually exclusive Sidekick modes hook in when TOR's \"Jackal Can Create A Sidekick\" is on: <em>Sidekick Only Fills A Missing Impostor</em> guarantees the Jackal the button exactly when fewer Impostors spawned than the maximum, and <em>Chance That The Jackal Can Create A Sidekick</em> rolls a per-game percentage instead.</p>" + tbl(["Option", "Default", "What it does"], [
+              ["Random Impostor Count", "Off", "Enables the random roll."],
+              ["Minimum Impostors", "1", "Lower bound of the roll (1–3)."],
+              ["Maximum Impostors", "2", "Upper bound of the roll and the number everyone sees (1–3)."],
+              ["Sidekick Only Fills A Missing Impostor", "Off", "Jackal gets the Sidekick button exactly when Impostors < Max."],
+              ["Chance That The Jackal Can Create A Sidekick", "100%", "Per-game rolled chance (0–100); 100% = pure TOR behaviour."]
+            ]),
+            de: "<p>Mit <em>Random Impostor Count</em> würfelt der Host die tatsächliche Impostor-Anzahl einmal pro Spiel zwischen konfiguriertem Minimum und Maximum (je 1–3), direkt bevor die Rollen vergeben werden. Die Geheimhaltung ist der Kern: Lobby und Intro zeigen immer das <strong>Maximum</strong>, und die Intro-Team-Anzeige wird zusätzlich verschleiert, wenn ein einzelner Impostor plus möglicher Spy die Zahl verraten würde. Weil TOR den Spy normalerweise nur bei 2+ Impostoren aktiviert (was selbst schon den Wurf leaken würde), bleibt der Spy im Pool, sobald das konfigurierte Maximum mindestens 2 ist. Zwei sich ausschließende Sidekick-Modi greifen, wenn TORs \"Jackal Can Create A Sidekick\" an ist: <em>Sidekick Only Fills A Missing Impostor</em> garantiert dem Jackal den Button genau dann, wenn weniger Impostoren gespawnt sind als das Maximum, und <em>Chance That The Jackal Can Create A Sidekick</em> würfelt stattdessen eine Pro-Spiel-Prozentchance.</p>" + tbl(["Option", "Standard", "Funktion"], [
+              ["Random Impostor Count", "Off", "Aktiviert den Zufalls-Wurf."],
+              ["Minimum Impostors", "1", "Untergrenze des Wurfs (1–3)."],
+              ["Maximum Impostors", "2", "Obergrenze des Wurfs und die Zahl, die alle sehen (1–3)."],
+              ["Sidekick Only Fills A Missing Impostor", "Off", "Jackal bekommt den Sidekick-Button genau dann, wenn Impostoren < Max."],
+              ["Chance That The Jackal Can Create A Sidekick", "100%", "Pro Spiel gewürfelte Chance (0–100); 100% = pures TOR-Verhalten."]
+            ])
+          }
+        },
+        {
+          id: "multi-jester",
+          title: { en: "Multi-Jester", de: "Multi-Jester" },
+          summary: {
+            en: "Up to three Jesters per round, each winning alone. Extra Jesters are drawn from the leftover plain crewmates.",
+            de: "Bis zu drei Jester pro Runde, jeder gewinnt allein. Zusätzliche Jester kommen aus den übrigen reinen Crewmates."
+          },
+          body: {
+            en: "<p><em>Jester Quantity</em> (1–3, default 1) allows extra Jesters, drawn randomly from the remaining plain crewmates after TOR's role assignment (only when TOR spawned a Jester at all; in Role Draft rounds extra Jester picks are enabled through a placeholder-role trick). Every Jester wins <strong>alone</strong>: whoever gets voted out is the sole winner, and every other Jester is removed from the winner list at any other game end. The mod patches every spot where TOR asks \"is this the Jester?\" (role display, fake tasks, Impostor vision, killer status, ejection text, win trigger), so extra Jesters behave exactly like the original. The feature automatically falls back to a single Jester when not all players have the mod.</p>",
+            de: "<p><em>Jester Quantity</em> (1–3, Default 1) erlaubt zusätzliche Jester, zufällig aus den verbleibenden reinen Crewmates nach TORs Rollenzuweisung gezogen (nur wenn TOR überhaupt einen Jester gespawnt hat; in Role-Draft-Runden werden weitere Jester-Picks über einen Platzhalter-Rollen-Trick ermöglicht). Jeder Jester gewinnt <strong>allein</strong>: Wer rausgewählt wird, ist alleiniger Sieger, und jeder andere Jester wird bei jedem anderen Spielende aus der Siegerliste entfernt. Der Mod flickt jede Stelle, an der TOR \"ist das der Jester?\" fragt (Rollenanzeige, Fake-Tasks, Impostor-Sicht, Killer-Status, Verbannungstext, Sieg-Auslösung), sodass sich zusätzliche Jester exakt wie das Original verhalten. Das Feature fällt automatisch auf einen einzelnen Jester zurück, wenn nicht alle Spieler den Mod haben.</p>"
+          }
+        },
+        {
+          id: "true-modifier-chances",
+          title: { en: "True modifier chances", de: "Echte Modifier-Chancen" },
+          badges: [{ en: "Host-authoritative", de: "Host-autoritativ" }],
+          summary: {
+            en: "10% finally means 10%: every modifier is rolled once per round against its real percentage instead of TOR's relative ticket lottery.",
+            de: "10% heißt endlich 10%: Jeder Modifier wird einmal pro Runde echt gegen seinen Prozentsatz gewürfelt, statt TORs relativer Ticket-Lotterie."
+          },
+          body: {
+            en: "<p><strong>Problem:</strong> TOR treats modifier percentages as relative lottery tickets, not probabilities. With enough free modifier slots even a 10% modifier spawns almost every round, and with few slots a 90% modifier is often missing.</p><p><strong>Fix:</strong> with <em>True Modifier Chances</em> on, every modifier (and every copy of quantity modifiers) is rolled once per round against its actual configured percentage before TOR assigns. Winners go through TOR's own assignment machinery as guaranteed, losers are dropped for the round; the Min/Max modifier limit then acts as a pure upper cap with random trimming. The Lover is untouched (TOR already rolls it correctly). Host-side only and compatible with plain TOR clients.</p>",
+            de: "<p><strong>Problem:</strong> TOR behandelt Modifier-Prozente als relative Lose, nicht als Wahrscheinlichkeiten. Mit genug freien Modifier-Slots spawnt selbst ein 10%-Modifier fast jede Runde, mit wenigen Slots fehlt oft sogar ein 90%-Modifier.</p><p><strong>Fix:</strong> Mit <em>True Modifier Chances</em> wird jeder Modifier (und jede Kopie von Mengen-Modifiern) einmal pro Runde echt gegen seinen konfigurierten Prozentsatz gewürfelt, bevor TOR zuweist. Gewinner laufen als garantiert durch TORs eigene Zuweisungsmaschinerie, Verlierer setzen die Runde aus; das Min/Max-Modifier-Limit wirkt dann als reine Obergrenze mit zufälligem Kürzen. Der Lover bleibt unangetastet (TOR würfelt ihn bereits korrekt). Rein host-seitig und kompatibel mit reinen TOR-Clients.</p>"
+          }
+        }
+      ]
+    },
+    {
+      id: "newcomer-shield",
+      title: { en: "Newcomer kill shield", de: "Newcomer-Kill-Schild" },
+      intro: {
+        en: "A free first round for anyone new to this play session: newcomers cannot be killed until the first meeting, marked by a gold outline.",
+        de: "Eine freie erste Runde für alle, die neu in dieser Spiel-Session sind: Neuankömmlinge können bis zum ersten Meeting nicht getötet werden, markiert mit goldener Outline."
+      },
+      entries: [
+        {
+          id: "newcomer-shield-core",
+          title: { en: "How the shield works", de: "Wie das Schild funktioniert" },
+          badges: [{ en: "Host-authoritative", de: "Host-autoritativ" }],
+          summary: {
+            en: "Players new to the session cannot be killed or even targeted until the first meeting, by vanilla kills and TOR role kills alike. A gold outline marks them.",
+            de: "Session-Neulinge können bis zum ersten Meeting weder getötet noch überhaupt anvisiert werden, von Vanilla-Kills wie von TOR-Rollen-Kills. Eine goldene Outline markiert sie."
+          },
+          body: {
+            en: "<p>With <em>Protect Players New To This Session</em> on, a player joining the host's session for the first time gets a shield for their very first round: they cannot be killed or targeted, neither by vanilla Impostor kills nor by TOR role kills (Sheriff, Jackal, Vampire and friends; even roles that suicide on a failed kill simply cannot pick them). The shield ends exactly at the first meeting, never later, so it can never decide a game. Shielded players carry a <strong>gold</strong> outline (deliberately neither the Medic cyan nor the first-kill blue), and the killer optionally learns why the kill failed. Lover cascades are deliberately not suppressed: the shield guards against being killed, not against the lover bond.</p>",
+            de: "<p>Mit <em>Protect Players New To This Session</em> bekommt ein Spieler, der zum ersten Mal in der Session des Hosts mitspielt, ein Schild für seine allererste Runde: Er kann weder getötet noch anvisiert werden, weder von Vanilla-Impostor-Kills noch von TOR-Rollen-Kills (Sheriff, Jackal, Vampire und Co.; selbst Rollen, die bei einem Fehlkill Selbstmord begehen, können ihn schlicht nicht auswählen). Das Schild endet exakt beim ersten Meeting, nie später, damit es nie ein Spiel entscheidet. Geschützte tragen eine <strong>goldene</strong> Outline (bewusst weder Medic-Cyan noch Erste-Kill-Blau), und der Killer erfährt optional, warum der Kill fehlschlug. Lover-Kaskaden werden bewusst nicht unterdrückt: Das Schild schützt vor dem Getötetwerden, nicht vor der Lover-Bindung.</p>"
+          }
+        },
+        {
+          id: "newcomer-shield-session",
+          title: { en: "Session rules & host control", de: "Session-Regeln & Host-Kontrolle" },
+          summary: {
+            en: "\"New\" is tracked per friend code across the session, the very first lobby counts as the regular group, and the host can mark or unmark anyone by hand.",
+            de: "\"Neu\" wird pro Friend-Code über die Session verfolgt, die allererste Lobby gilt als Stammgruppe, und der Host kann jeden von Hand markieren oder demarkieren."
+          },
+          body: {
+            en: "<p>The host tracks who has already played this session by <strong>friend code</strong> (with a name fallback on servers without accounts). The very first lobby of a session is the grace period: nobody counts as new there, that is the regular group. From the second round on, an unknown friend code means protection. The host can also mark players as new or revoke the shield manually in a lobby panel, and the hand mark beats the automatic in both directions. The session state survives a restart or crash for 10 minutes, after which the session genuinely starts over.</p>",
+            de: "<p>Der Host verfolgt per <strong>Friend-Code</strong>, wer in dieser Session schon gespielt hat (mit Namens-Fallback auf Servern ohne Accounts). Die allererste Lobby einer Session ist die Gnadenfrist: Dort zählt niemand als neu, das ist die Stammgruppe. Ab der zweiten Runde bedeutet ein unbekannter Friend-Code Schutz. Der Host kann Spieler außerdem in einem Lobby-Panel von Hand als neu markieren oder das Schild entziehen, und die Handmarkierung schlägt die Automatik in beide Richtungen. Der Session-Zustand übersteht einen Neustart oder Crash für 10 Minuten, danach beginnt die Session wirklich von vorn.</p>"
+          }
+        }
+      ]
+    },
+    {
+      id: "modsync",
+      title: { en: "Mod sync", de: "Mod-Abgleich" },
+      intro: {
+        en: "The lobby compares your mods against the host's and fetches what is missing, over a catalog of trusted IDs, never over URLs from the network.",
+        de: "Die Lobby vergleicht deine Mods mit denen des Hosts und lädt Fehlendes nach, über einen Katalog vertrauenswürdiger IDs, nie über URLs aus dem Netz."
+      },
+      entries: [
+        {
+          id: "modsync-compare",
+          title: { en: "Compare & fetch", de: "Vergleichen & Nachladen" },
+          summary: {
+            en: "A lobby button appears when the host has mods you are missing (or newer versions); one click installs everything uncritical, single clicks handle the rest.",
+            de: "Ein Lobby-Button erscheint, wenn der Host Mods hat, die dir fehlen (oder neuere Versionen); ein Klick installiert alles Unkritische, Einzelklicks den Rest."
+          },
+          body: {
+            en: "<p>Every client with the mod reports its installed companion mods (missing / active / disabled, exact version) in the lobby. Non-hosts compare their inventory against the <strong>host's</strong> and get a button in the lower left, only when there is something actionable: install what is missing, upgrade what is older, a hint when a mod is merely disabled, and an info line for things you have that the host lacks. A collect button runs all uncritical actions in one go; after downloads a restart applies them. The catalog currently covers all five family mods (Forgotten Fixes, Chance, Unknown's Collection, TOR - Hostfix, Nightfall).</p>",
+            de: "<p>Jeder Client mit dem Mod meldet in der Lobby seine installierten Begleit-Mods (fehlend / aktiv / deaktiviert, exakte Version). Nicht-Hosts vergleichen ihr Inventar mit dem des <strong>Hosts</strong> und bekommen unten links einen Button, nur wenn es etwas zu tun gibt: Fehlendes installieren, Älteres aktualisieren, ein Hinweis, wenn ein Mod nur deaktiviert ist, und eine Info-Zeile für Dinge, die du hast und der Host nicht. Ein Sammel-Button führt alle unkritischen Aktionen in einem Rutsch aus; nach Downloads übernimmt ein Neustart sie. Der Katalog deckt aktuell alle fünf Familien-Mods ab (Forgotten Fixes, Chance, Unknown's Collection, TOR - Hostfix, Nightfall).</p>"
+          }
+        },
+        {
+          id: "modsync-safety",
+          title: { en: "Safety rules & rejoin", de: "Sicherheitsregeln & Rejoin" },
+          summary: {
+            en: "Only a catalog ID ever crosses the wire, downloads are whitelisted GitHub releases only, downgrades need an explicit single click, and a main-menu button rejoins the lobby after the restart.",
+            de: "Über die Leitung geht nur eine Katalog-ID, Downloads sind ausschließlich whitelisted GitHub-Releases, Downgrades brauchen einen expliziten Einzelklick, und ein Hauptmenü-Button bringt dich nach dem Neustart zurück in die Lobby."
+          },
+          body: {
+            en: "<p>The wire format is deliberately minimal: the host only ever sends a numeric catalog ID, never a name, repo or URL. Everything security-relevant (repo owner, repo name, file name, target path) is fixed in the local catalog, downloads must match the host's exact release version, and the URL is checked against a strict GitHub-releases whitelist before a byte is fetched. Only the host's inventory produces suggestions, and the sender is taken from the transport layer, so nobody can spoof being the host. <strong>Downgrades and test builds are excluded from the collect action</strong> and need an explicit per-mod click, so an outdated host cannot drag the whole lobby backwards. After the restart, a main-menu button offers to rejoin the last lobby by its code.</p>",
+            de: "<p>Das Leitungsformat ist bewusst minimal: Der Host sendet immer nur eine numerische Katalog-ID, nie Name, Repo oder URL. Alles Sicherheitsrelevante (Repo-Besitzer, Repo-Name, Dateiname, Zielpfad) steht fest im lokalen Katalog, Downloads müssen exakt der vom Host gemeldeten Release-Version entsprechen, und die URL wird vor dem ersten Byte gegen eine strikte GitHub-Releases-Whitelist geprüft. Nur das Inventar des Hosts erzeugt Vorschläge, und der Absender kommt aus der Transportschicht, niemand kann sich als Host ausgeben. <strong>Downgrades und Test-Builds sind von der Sammel-Aktion ausgeschlossen</strong> und brauchen einen expliziten Klick pro Mod, damit ein veralteter Host nicht die ganze Lobby zurückzieht. Nach dem Neustart bietet ein Hauptmenü-Button an, der letzten Lobby per Code wieder beizutreten.</p>"
+          }
+        }
+      ]
+    },
+    {
+      id: "localization",
+      title: { en: "Languages & communication", de: "Sprachen & Kommunikation" },
+      intro: {
+        en: "A 25-language localization engine for the whole mod family, plus a meeting map ping that lets you literally point at the map.",
+        de: "Eine 25-Sprachen-Lokalisierungs-Engine für die ganze Mod-Familie, plus ein Meeting-Map-Ping, mit dem du buchstäblich auf die Karte zeigen kannst."
+      },
+      entries: [
+        {
+          id: "localization-engine",
+          title: { en: "Localization engine (25 languages)", de: "Lokalisierungs-Engine (25 Sprachen)" },
+          summary: {
+            en: "Translates TOR's roles and options plus all Forgotten Fixes surfaces; 15 languages follow the game language, 10 extra ones are a per-client mod setting. Role names stay English on purpose.",
+            de: "Übersetzt TORs Rollen und Optionen plus alle Forgotten-Fixes-Oberflächen; 15 Sprachen folgen der Spielsprache, 10 weitere sind eine Per-Client-Mod-Einstellung. Rollennamen bleiben absichtlich englisch."
+          },
+          body: {
+            en: "<p>The engine translates TOR's role descriptions, intros and the entire options tree, plus every Forgotten Fixes surface. The 15 languages the game itself ships follow the game language automatically; 10 extra languages (Turkish, Polish, Czech, Hungarian, Romanian, Swedish, Finnish, Ukrainian, Indonesian, Vietnamese) are selectable per client in the BepInEx config, deliberately not a host-synced option, since language is personal. For the extra languages even vanilla strings are translated via a one-time dump. Community overrides are supported: a JSON per language in the config folder wins over the built-in tables. The other family mods (Unknown's Collection, TOR - Hostfix) follow the active language over a shared contract. <strong>Role names stay English in every language</strong>, so mixed-language lobbies keep a common vocabulary. A language toggle sits on the map view; left and right click cycle through auto plus all languages.</p>",
+            de: "<p>Die Engine übersetzt TORs Rollenbeschreibungen, Intros und den kompletten Options-Baum, plus jede Forgotten-Fixes-Oberfläche. Die 15 Sprachen des Spiels folgen automatisch der Spielsprache; 10 weitere (Türkisch, Polnisch, Tschechisch, Ungarisch, Rumänisch, Schwedisch, Finnisch, Ukrainisch, Indonesisch, Vietnamesisch) sind pro Client in der BepInEx-Config wählbar, bewusst keine host-gesyncte Option, denn Sprache ist persönlich. Für die Extra-Sprachen werden per einmaligem Dump sogar Vanilla-Strings übersetzt. Community-Overrides werden unterstützt: Ein JSON pro Sprache im Config-Ordner schlägt die eingebauten Tabellen. Die anderen Familien-Mods (Unknown's Collection, TOR - Hostfix) folgen der aktiven Sprache über einen geteilten Kontrakt. <strong>Rollennamen bleiben in jeder Sprache englisch</strong>, damit gemischtsprachige Lobbys ein gemeinsames Vokabular behalten. Ein Sprach-Umschalter sitzt auf der Kartenansicht; Links- und Rechtsklick zyklieren durch Auto plus alle Sprachen.</p>"
+          }
+        },
+        {
+          id: "meeting-map-ping",
+          title: { en: "Meeting map ping", de: "Meeting-Map-Ping" },
+          summary: {
+            en: "During meetings, click the minimap to drop a marker in your player colour that everyone sees. One marker per player, 2 s cooldown, gone after 10 s.",
+            de: "Klicke während Meetings auf die Minimap, um einen Marker in deiner Spielerfarbe zu setzen, den alle sehen. Ein Marker pro Spieler, 2 s Cooldown, nach 10 s weg."
+          },
+          body: {
+            en: "<p>\"Where did you find the body?\" finally has a better answer than room names: during a meeting, every living player can left-click the minimap to drop a marker that all players (ghosts included) see, a here-point icon tinted in the sender's player colour with a red outline and a short pop-and-pulse animation. Each player has one marker at a time (a new click moves it), with a 2-second cooldown and a 10-second lifetime. Clients without the mod simply ignore the ping. Deliberately exempt from the settings gate: it is pure communication and gives nobody a rules advantage.</p>",
+            de: "<p>\"Wo hast du die Leiche gefunden?\" hat endlich eine bessere Antwort als Raumnamen: Während eines Meetings kann jeder lebende Spieler per Linksklick auf die Minimap einen Marker setzen, den alle Spieler (auch Geister) sehen, ein Here-Point-Icon in der Spielerfarbe des Senders mit rotem Rand und kurzer Pop-und-Puls-Animation. Jeder Spieler hat einen Marker gleichzeitig (ein neuer Klick verschiebt ihn), mit 2 Sekunden Cooldown und 10 Sekunden Lebensdauer. Clients ohne den Mod ignorieren den Ping einfach. Bewusst vom Settings-Gate ausgenommen: reines Kommunikationsmittel, verschafft niemandem einen Regelvorteil.</p>"
+          }
+        }
+      ]
+    },
+    {
+      id: "webconfig",
+      title: { en: "WebConfig — settings in the browser", de: "WebConfig — Einstellungen im Browser" },
+      intro: {
+        en: "A local, host-only browser page that edits every mod option and the curated vanilla options, with search, instead of scrolling in-game menus.",
+        de: "Eine lokale, host-only Browser-Seite, die jede Mod-Option und die kuratierten Vanilla-Optionen editierbar macht, mit Suche, statt In-Game-Menü-Gescrolle."
+      },
+      entries: [
+        {
+          id: "webconfig-page",
+          title: { en: "The settings page", de: "Die Einstellungs-Seite" },
+          badges: [{ en: "Host only", de: "Nur Host" }],
+          summary: {
+            en: "http://127.0.0.1:32200 serves all TOR + mod options and the vanilla game settings, live-editable while the lobby is open. Local machine only, never reachable from the LAN.",
+            de: "http://127.0.0.1:32200 liefert alle TOR- + Mod-Optionen und die Vanilla-Einstellungen, live editierbar bei offener Lobby. Nur der eigene Rechner, nie aus dem LAN erreichbar."
+          },
+          body: {
+            en: "<p>While the game runs, a tiny local web server (default <code>http://127.0.0.1:32200</code>, bound strictly to the local machine, never to the LAN) serves a settings page with every custom option of TOR and all loaded mods plus a curated set of vanilla options (meetings and voting, roles, tasks), searchable and grouped like the in-game menus. Changes go through TOR's canonical option setter and the game's own options sync, so all clients receive them exactly as if the host had clicked in-game. Only the host can write: without host status the page is read-only and write requests are rejected. Controlled via the BepInEx config (<code>WebConfig.Enabled</code>, <code>WebConfig.Port</code>).</p>",
+            de: "<p>Während das Spiel läuft, liefert ein winziger lokaler Webserver (Standard <code>http://127.0.0.1:32200</code>, strikt an den eigenen Rechner gebunden, nie ans LAN) eine Einstellungs-Seite mit jeder Custom-Option von TOR und allen geladenen Mods plus einem kuratierten Satz Vanilla-Optionen (Meetings und Voting, Rollen, Tasks), durchsuchbar und gruppiert wie die In-Game-Menüs. Änderungen laufen über TORs kanonischen Options-Setter und den Options-Sync des Spiels, alle Clients erhalten sie exakt so, als hätte der Host im Spiel geklickt. Nur der Host darf schreiben: Ohne Host-Status ist die Seite eine reine Leseansicht, Schreib-Requests werden abgelehnt. Gesteuert über die BepInEx-Config (<code>WebConfig.Enabled</code>, <code>WebConfig.Port</code>).</p>"
+          }
+        }
+      ]
+    },
+    {
+      id: "gate",
+      title: { en: "The settings gate", de: "Das Settings-Gate" },
+      intro: {
+        en: "If the host does not run Forgotten Fixes, all option-based features fall back to pure TOR behaviour, so nobody plays by private rules.",
+        de: "Hat der Host Forgotten Fixes nicht, fallen alle options-basierten Features auf pures TOR-Verhalten zurück, damit niemand nach privaten Regeln spielt."
+      },
+      entries: [
+        {
+          id: "gate-fallback",
+          title: { en: "No host, no house rules", de: "Kein Host, keine Hausregeln" },
+          summary: {
+            en: "As a client under a host without the mod, every option-based feature returns its default: pure TOR. Cosmetic and communication features stay on.",
+            de: "Als Client unter einem Host ohne den Mod liefert jedes options-basierte Feature seinen Default: pures TOR. Kosmetik- und Kommunikations-Features bleiben an."
+          },
+          body: {
+            en: "<p>TOR's options sync is host-driven: the host only shares options it owns. Under a host without Forgotten Fixes, a client's own option values would silently stay active, a one-sided rule change (shorter cooldowns, extra modifiers, extra buttons) nobody else sees. The gate closes that hole: as a client under such a host, every option-based feature returns its default and behaves like pure TOR. Gated is exactly what could grant an advantage others do not share; purely cosmetic or communicative features (like the map ping) and option-less bugfixes stay active. The gate opens when you are the host or the host is confirmed to run the mod.</p>",
+            de: "<p>TORs Options-Sync ist host-getrieben: Der Host teilt nur Optionen, die er besitzt. Unter einem Host ohne Forgotten Fixes blieben die eigenen Optionswerte eines Clients stillschweigend aktiv, eine einseitige Regeländerung (kürzere Cooldowns, extra Modifier, extra Buttons), die sonst niemand sieht. Das Gate schließt dieses Loch: Als Client unter so einem Host liefert jedes options-basierte Feature seinen Default und verhält sich wie pures TOR. Gegated ist genau das, was einen Vorteil verschaffen könnte, den andere nicht teilen; rein kosmetische oder kommunikative Features (wie der Map-Ping) und optionslose Bugfixes bleiben aktiv. Das Gate öffnet, wenn du selbst Host bist oder der Host den Mod nachweislich hat.</p>"
+          }
+        }
+      ]
+    },
+    {
       id: "manager",
       title: { en: "Mod Manager & version handshake", de: "Mod Manager & Versions-Handshake" },
       entries: [
@@ -940,17 +1208,17 @@ const UNKNOWNS = {
   key: "unknowns",
   name: "Unknown's Collection",
   fullName: { en: "Unknown's Collection — custom roles for TOR", de: "Unknown's Collection — eigene Rollen für TOR" },
-  version: "1.1.0",
+  version: "1.2.0",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/UnknownsCollection",
   download: "https://github.com/DaUnknown-0/UnknownsCollection/releases/latest",
   tagline: {
-    en: "Brand-new custom roles for The Other Roles, layered on without touching TOR's source. Impostor: The Tesla, The Saboteur, The Silencer, The Poisoner, The Illusionist, The Maniac, The Shade & The Manipulator. Crewmate: The Siphoner, The Witness, The Scout & The Beacon. Neutral: The Bug, The Follower, The Copycat & The Collector. Ghost: The Poltergeist.",
-    de: "Brandneue eigene Rollen für The Other Roles, aufgesetzt ohne Änderung an TORs Quellcode. Impostor: The Tesla, The Saboteur, The Silencer, The Poisoner, The Illusionist, The Maniac, The Shade & The Manipulator. Crewmate: The Siphoner, The Witness, The Scout & The Beacon. Neutral: The Bug, The Follower, The Copycat & The Collector. Geist: The Poltergeist."
+    en: "Brand-new custom roles for The Other Roles, layered on without touching TOR's source. Impostor: The Tesla, The Saboteur, The Silencer, The Poisoner, The Illusionist, The Maniac, The Shade, The Manipulator, The Werewolf & The Auditor. Crewmate: The Siphoner, The Witness, The Scout, The Beacon & The Hunter. Neutral: The Bug, The Follower, The Copycat, The Collector & The Pelican. Ghost: The Poltergeist. Modifier: The Gambler. Plus kill cutscenes, custom hats and a 26-language role guide.",
+    de: "Brandneue eigene Rollen für The Other Roles, aufgesetzt ohne Änderung an TORs Quellcode. Impostor: The Tesla, The Saboteur, The Silencer, The Poisoner, The Illusionist, The Maniac, The Shade, The Manipulator, The Werewolf & The Auditor. Crewmate: The Siphoner, The Witness, The Scout, The Beacon & The Hunter. Neutral: The Bug, The Follower, The Copycat, The Collector & The Pelican. Geist: The Poltergeist. Modifier: The Gambler. Dazu Kill-Cutscenes, eigene Hüte und ein Rollen-Guide in 26 Sprachen."
   },
   intro: {
-    en: "Unknown's Collection is a separate plugin that adds <strong>new roles</strong> to TOR 4.8.0 purely through Harmony patches — TOR's source is never modified, and the only hard dependency is The Other Roles. The roles are client-side, so the lobby can only be started when every player runs the same Unknown's Collection version. Current roles — Impostor: <strong>The Tesla</strong>, <strong>The Saboteur</strong>, <strong>The Silencer</strong>, <strong>The Poisoner</strong>, <strong>The Illusionist</strong>, <strong>The Maniac</strong>, <strong>The Shade</strong> and <strong>The Manipulator</strong>; Crewmate: <strong>The Siphoner</strong>, <strong>The Witness</strong>, <strong>The Scout</strong> and <strong>The Beacon</strong>; Neutral: <strong>The Bug</strong>, <strong>The Follower</strong>, <strong>The Copycat</strong> and <strong>The Collector</strong>; plus <strong>The Poltergeist</strong> — a ghost role the first dead player rises into. All Impostor roles and the Collector are pickable in TOR's Role Draft. Since 1.0.1.60 every ability comes with dedicated particle effects and positional stereo sound.",
-    de: "Unknown's Collection ist ein eigenständiges Plugin, das TOR 4.8.0 <strong>neue Rollen</strong> rein über Harmony-Patches hinzufügt — TORs Quellcode wird nie verändert, einzige harte Abhängigkeit ist The Other Roles. Die Rollen sind client-seitig, daher kann die Lobby nur gestartet werden, wenn alle Spieler dieselbe Unknown's-Collection-Version haben. Aktuelle Rollen — Impostor: <strong>The Tesla</strong>, <strong>The Saboteur</strong>, <strong>The Silencer</strong>, <strong>The Poisoner</strong>, <strong>The Illusionist</strong>, <strong>The Maniac</strong>, <strong>The Shade</strong> und <strong>The Manipulator</strong>; Crewmate: <strong>The Siphoner</strong>, <strong>The Witness</strong>, <strong>The Scout</strong> und <strong>The Beacon</strong>; Neutral: <strong>The Bug</strong>, <strong>The Follower</strong>, <strong>The Copycat</strong> und <strong>The Collector</strong>; dazu <strong>The Poltergeist</strong> — eine Geist-Rolle, in die der erste Tote aufsteigt. Alle Impostor-Rollen und der Collector sind im Role Draft von TOR wählbar. Seit 1.0.1.60 hat jede Fähigkeit eigene Partikeleffekte und positionalen Stereo-Sound."
+    en: "Unknown's Collection is a separate plugin that adds <strong>new roles</strong> to TOR 4.8.0 purely through Harmony patches — TOR's source is never modified, and the only hard dependency is The Other Roles. The roles are client-side, so the lobby can only be started when every player runs the same Unknown's Collection version. Current roles — Impostor: <strong>The Tesla</strong>, <strong>The Saboteur</strong>, <strong>The Silencer</strong>, <strong>The Poisoner</strong>, <strong>The Illusionist</strong>, <strong>The Maniac</strong>, <strong>The Shade</strong>, <strong>The Manipulator</strong>, <strong>The Werewolf</strong> and <strong>The Auditor</strong>; Crewmate: <strong>The Siphoner</strong>, <strong>The Witness</strong>, <strong>The Scout</strong>, <strong>The Beacon</strong> and <strong>The Hunter</strong> (a mid-round promotion in Werewolf rounds); Neutral: <strong>The Bug</strong>, <strong>The Follower</strong>, <strong>The Copycat</strong>, <strong>The Collector</strong> and <strong>The Pelican</strong>; plus <strong>The Poltergeist</strong> — a ghost role the first dead player rises into — and <strong>The Gambler</strong>, a crew modifier that bets on the round. All Impostor roles, the Collector, the Pelican and the Werewolf are pickable in TOR's Role Draft. Beyond roles, 1.2.0 adds custom kill cutscenes, three custom hats and a searchable role guide in 26 languages; since 1.0.1.60 every ability comes with dedicated particle effects and positional stereo sound.",
+    de: "Unknown's Collection ist ein eigenständiges Plugin, das TOR 4.8.0 <strong>neue Rollen</strong> rein über Harmony-Patches hinzufügt — TORs Quellcode wird nie verändert, einzige harte Abhängigkeit ist The Other Roles. Die Rollen sind client-seitig, daher kann die Lobby nur gestartet werden, wenn alle Spieler dieselbe Unknown's-Collection-Version haben. Aktuelle Rollen — Impostor: <strong>The Tesla</strong>, <strong>The Saboteur</strong>, <strong>The Silencer</strong>, <strong>The Poisoner</strong>, <strong>The Illusionist</strong>, <strong>The Maniac</strong>, <strong>The Shade</strong>, <strong>The Manipulator</strong>, <strong>The Werewolf</strong> und <strong>The Auditor</strong>; Crewmate: <strong>The Siphoner</strong>, <strong>The Witness</strong>, <strong>The Scout</strong>, <strong>The Beacon</strong> und <strong>The Hunter</strong> (eine Beförderung mitten in Werwolf-Runden); Neutral: <strong>The Bug</strong>, <strong>The Follower</strong>, <strong>The Copycat</strong>, <strong>The Collector</strong> und <strong>The Pelican</strong>; dazu <strong>The Poltergeist</strong> — eine Geist-Rolle, in die der erste Tote aufsteigt — und <strong>The Gambler</strong>, ein Crew-Modifier, der auf die Runde wettet. Alle Impostor-Rollen, der Collector, der Pelican und der Werewolf sind im Role Draft von TOR wählbar. Über Rollen hinaus bringt 1.2.0 eigene Kill-Cutscenes, drei eigene Hüte und einen durchsuchbaren Rollen-Guide in 26 Sprachen; seit 1.0.1.60 hat jede Fähigkeit eigene Partikeleffekte und positionalen Stereo-Sound."
   },
   install: {
     en: "<ol><li>Install <a href='https://github.com/TheOtherRolesAU/TheOtherRoles'>The Other Roles</a> into your Among Us BepInEx setup.</li><li>Download the latest <code>UnknownsCollection.dll</code> from the releases page.</li><li>Copy it into <code>&lt;Among Us&gt;/BepInEx/plugins/</code> (next to <code>TheOtherRoles.dll</code>).</li><li>Start the game. Every player who should see the role needs the mod — same version.</li></ol><p>A channel-aware in-game auto-updater checks GitHub and integrates with the Mod Manager (from Forgotten Fixes).</p>",
@@ -2122,6 +2390,530 @@ const UNKNOWNS = {
       ]
     },
     {
+      id: "werewolf",
+      title: { en: "The Werewolf (Impostor)", de: "The Werewolf (Impostor)" },
+      intro: {
+        en: "An Impostor with a second shape. While the lights are sabotaged, an alpha charge builds; as the last living Impostor the Werewolf can then transform and plunge the whole map into wolf darkness, where everyone else is down to a flashlight beam.",
+        de: "Ein Impostor mit einer zweiten Gestalt. Während die Lichter sabotiert sind, baut sich eine Alpha-Ladung auf; als letzter lebender Impostor kann sich der Werewolf dann verwandeln und die ganze Map in Wolfsdunkelheit stürzen, in der alle anderen nur noch einen Taschenlampen-Kegel haben."
+      },
+      entries: [
+        {
+          id: "werewolf-alpha",
+          title: { en: "The alpha charge", de: "Die Alpha-Ladung" },
+          summary: {
+            en: "The charge only builds while the lights are sabotaged; transforming requires a full charge, lights out, and (by default) being the last living Impostor.",
+            de: "Die Ladung wächst nur, während die Lichter sabotiert sind; die Verwandlung braucht volle Ladung, Licht aus und (standardmäßig) den Status als letzter lebender Impostor."
+          },
+          body: {
+            en: "<p>The alpha charge (default 8 s) builds exclusively while the lights sabotage is active. Fixing the lights pauses the charge by default; an option resets it instead. Transforming is only possible when the charge is full, the lights are still out, no meeting is running and, with <em>Only As Last Impostor</em> on (default), every other Impostor is dead (the Spy optionally counts as one). The wolf form lasts a configured duration (default 12 s), ends early at meeting start or on the Werewolf's death, and afterwards the charge starts over from zero. In wolf form the Werewolf is faster (default 140%) and kills with a reduced cooldown (default 30% less); an optional howl announces the transformation and an optional exhaustion slow punishes the reversion. The button label shows the remaining form time.</p>",
+            de: "<p>Die Alpha-Ladung (Default 8 s) wächst ausschließlich, während die Licht-Sabotage aktiv ist. Ein Licht-Fix pausiert die Ladung standardmäßig; eine Option setzt sie stattdessen zurück. Verwandeln geht nur mit voller Ladung, weiterhin ausgeschaltetem Licht, außerhalb von Meetings und, mit <em>Only As Last Impostor</em> an (Default), wenn jeder andere Impostor tot ist (der Spy zählt optional als Impostor). Die Wolfsform hält eine konfigurierte Dauer (Default 12 s), endet vorzeitig beim Meeting-Start oder mit dem Tod des Werewolfs, und danach beginnt die Ladung wieder bei null. In Wolfsform ist der Werewolf schneller (Default 140%) und tötet mit reduziertem Cooldown (Default 30% weniger); ein optionales Heulen kündigt die Verwandlung an, und ein optionaler Erschöpfungs-Slow bestraft die Rückverwandlung. Der Button zeigt die verbleibende Formdauer.</p>"
+          }
+        },
+        {
+          id: "werewolf-darkness",
+          title: { en: "Wolf darkness & flashlights", de: "Wolfsdunkelheit & Taschenlampen" },
+          summary: {
+            en: "During the wolf form everyone is reduced to a real flashlight cone and a tiny vision radius; the lights cannot be fixed until the form ends. The wolf, the Lighter and the Hunter see more.",
+            de: "Während der Wolfsform haben alle nur einen echten Taschenlampen-Kegel und einen winzigen Sichtradius; die Lichter sind bis zum Ende der Form nicht reparierbar. Wolf, Lighter und Hunter sehen mehr."
+          },
+          body: {
+            en: "<p>For the duration of the wolf form the darkness is unfixable and every player gets a Lighter-style flashlight cone plus a configurable vision radius (default 0.5x of normal crew vision, up to <em>Infinite</em>). Three exceptions: the <strong>Werewolf</strong> keeps full Impostor vision, the <strong>Lighter</strong> keeps their own light, and the <strong>Hunter</strong> gets a scaled crew radius instead of the fixed value (see the Hunter section). <em>Wolf Form Restrictions</em> optionally locks other actions during the darkness.</p>",
+            de: "<p>Für die Dauer der Wolfsform ist die Dunkelheit nicht reparierbar, und jeder Spieler bekommt einen Lighter-artigen Taschenlampen-Kegel plus einen konfigurierbaren Sichtradius (Default 0.5x der normalen Crew-Sicht, bis hin zu <em>Infinite</em>). Drei Ausnahmen: Der <strong>Werewolf</strong> behält volle Impostor-Sicht, der <strong>Lighter</strong> behält sein eigenes Licht, und der <strong>Hunter</strong> bekommt einen skalierten Crew-Radius statt des Fixwerts (siehe Hunter-Sektion). <em>Wolf Form Restrictions</em> sperrt optional weitere Aktionen während der Dunkelheit.</p>"
+          }
+        },
+        {
+          id: "werewolf-silver",
+          title: { en: "The silver rules", de: "Die Silber-Regeln" },
+          summary: {
+            en: "The Hunter always kills the wolf. The Sheriff's shot is survivable once per game against the wolf form. Traps wound but never kill. Deputy handcuffs force the wolf back into human shape.",
+            de: "Der Hunter tötet den Wolf immer. Der Sheriff-Schuss gegen die Wolfsform ist einmal pro Spiel überlebbar. Fallen verwunden, töten aber nie. Deputy-Handschellen zwingen den Wolf zurück in Menschengestalt."
+          },
+          body: {
+            en: "<p>A fixed interaction matrix governs who can hurt the beast:</p>" + tbl(["Source", "Effect on the wolf form"], [
+              ["<strong>Hunter</strong>", "Always lethal, in every form and every silver mode."],
+              ["<strong>Sheriff</strong>", "Kills the human form. Against the wolf form (silver mode <em>Wounds The Wolf</em>, default) the first shot is survivable once per game: forced reversion, 0.8x slow for 10 s, kill cooldown set to maximum, charge restarts. The next hit kills. Mode <em>Kills The Wolf</em> removes the exception, <em>No Silver Effect</em> disables it."],
+              ["<strong>Traps</strong> (Trapper / UC Saboteur)", "Always wound, never kill, and do not consume the once-per-game toughness (a trap is iron, not silver). Each toggleable."],
+              ["<strong>Deputy handcuffs</strong>", "Force the reversion regardless of the silver mode; they do not count as silver damage."]
+            ]),
+            de: "<p>Eine feste Interaktions-Matrix regelt, wer dem Biest etwas anhaben kann:</p>" + tbl(["Quelle", "Wirkung auf die Wolfsform"], [
+              ["<strong>Hunter</strong>", "Immer tödlich, in jeder Form und jedem Silber-Modus."],
+              ["<strong>Sheriff</strong>", "Tötet die Menschenform. Gegen die Wolfsform (Silber-Modus <em>Wounds The Wolf</em>, Default) ist der erste Schuss einmal pro Spiel überlebbar: Zwangs-Rückverwandlung, 0.8x Slow für 10 s, Kill-Cooldown auf Maximum, Ladung startet neu. Der nächste Treffer tötet. Modus <em>Kills The Wolf</em> entfernt die Ausnahme, <em>No Silver Effect</em> deaktiviert sie."],
+              ["<strong>Fallen</strong> (Trapper / UC-Saboteur)", "Verwunden immer, töten nie und verbrauchen die Einmal-pro-Spiel-Zähigkeit nicht (eine Falle ist Eisen, kein Silber). Jeweils abschaltbar."],
+              ["<strong>Deputy-Handschellen</strong>", "Erzwingen die Rückverwandlung unabhängig vom Silber-Modus; sie zählen nicht als Silberschaden."]
+            ])
+          }
+        },
+        {
+          id: "werewolf-look",
+          title: { en: "The look of the beast", de: "Der Look des Biests" },
+          summary: {
+            en: "A short camo-black beat, then a full-body werewolf costume at 1.5x player size with glowing eyes. With Nightfall installed, the transformation even switches the wolf into first person.",
+            de: "Ein kurzer Kamo-schwarzer Beat, dann ein Ganzkörper-Werwolf-Kostüm bei 1.5x Spielergröße mit glühenden Augen. Mit installiertem Nightfall wechselt die Verwandlung den Wolf sogar in die Ich-Perspektive."
+          },
+          body: {
+            en: "<p>The transformation plays a short camo-black beat (like TOR's Camouflager) and then dresses the wolf in the full-body <em>Werewolf</em> hat (visor, skin and pet hidden) at <strong>1.5x player size</strong>, with animated glowing eyes. While the Werewolf role is enabled, the Werewolf hat is locked in the wardrobe so nobody can impersonate the beast; a previously worn hat is restored afterwards. With the separate <a href='nightfall.html'>Nightfall</a> plugin installed, the transformation additionally switches the Werewolf into a real first-person view.</p>",
+            de: "<p>Die Verwandlung spielt einen kurzen Kamo-schwarzen Beat (wie TORs Camouflager) und steckt den Wolf dann in den Ganzkörper-Hut <em>Werewolf</em> (Visor, Skin und Pet ausgeblendet) bei <strong>1.5x Spielergröße</strong>, mit animiert glühenden Augen. Solange die Werewolf-Rolle aktiviert ist, ist der Werewolf-Hut in der Garderobe gesperrt, damit niemand das Biest imitieren kann; ein zuvor getragener Hut wird danach wiederhergestellt. Mit dem separaten Plugin <a href='nightfall.html'>Nightfall</a> wechselt die Verwandlung den Werewolf zusätzlich in eine echte Ich-Perspektive.</p>"
+          }
+        },
+        {
+          id: "werewolf-options",
+          title: { en: "Options (Impostor tab)", de: "Optionen (Impostor-Tab)" },
+          summary: {
+            en: "Spawn rate, charge and form timing, silver mode, flashlight radius and the trap/handcuff toggles.",
+            de: "Spawnrate, Lade- und Form-Timing, Silber-Modus, Taschenlampen-Radius und die Fallen-/Handschellen-Toggles."
+          },
+          body: {
+            en: tbl(["Option", "Default", "What it does"], [
+              ["Werewolf", "Off", "Spawn chance of the role."],
+              ["Werewolf Minimum Players To Spawn", "6", "The role is not assigned below this lobby size."],
+              ["Wolf Kill Cooldown Reduction (%)", "30%", "Kill cooldown reduction in wolf form (0–75)."],
+              ["Wolf Speed Multiplier (%)", "140%", "Movement speed in wolf form (100–200)."],
+              ["Alpha Charge Time In Darkness (s)", "8", "Lights-out time needed for a full charge (3–30)."],
+              ["Wolf Form Duration (s)", "12", "How long the wolf form and the darkness last (5–30)."],
+              ["Silver Interaction", "Wounds The Wolf", "Wounds The Wolf / Kills The Wolf / No Silver Effect."],
+              ["Howl On Transform", "On", "Audible howl when the wolf transforms."],
+              ["Charge Reset On Lights Fix", "Off", "Whether a lights fix resets the charge instead of pausing it."],
+              ["Only As Last Impostor", "On", "Transformation only as the last living Impostor."],
+              ["Spy Counts As Impostor", "Off", "Whether a living Spy blocks the last-Impostor check."],
+              ["Flashlight Radius For Everyone", "0.5x", "Vision radius during wolf darkness (Infinite, 2.0x–0.5x)."],
+              ["Wolf Form Restrictions", "On", "Extra action locks during the wolf form."],
+              ["Exhaustion Slow After Revert", "On", "Slow after reverting to human shape."],
+              ["Trapper Trap Wounds The Wolf", "On", "Whether Trapper traps wound the wolf."],
+              ["Saboteur Trap Wounds The Wolf", "On", "Whether UC Saboteur traps wound the wolf."],
+              ["Deputy Handcuffs Force Revert", "On", "Whether handcuffs force the wolf back into human shape."]
+            ]),
+            de: tbl(["Option", "Standard", "Funktion"], [
+              ["Werewolf", "Off", "Spawn-Chance der Rolle."],
+              ["Werewolf Minimum Players To Spawn", "6", "Die Rolle wird unter dieser Lobby-Größe nicht vergeben."],
+              ["Wolf Kill Cooldown Reduction (%)", "30%", "Kill-Cooldown-Reduktion in Wolfsform (0–75)."],
+              ["Wolf Speed Multiplier (%)", "140%", "Bewegungstempo in Wolfsform (100–200)."],
+              ["Alpha Charge Time In Darkness (s)", "8", "Benötigte Licht-aus-Zeit für volle Ladung (3–30)."],
+              ["Wolf Form Duration (s)", "12", "Dauer der Wolfsform und der Dunkelheit (5–30)."],
+              ["Silver Interaction", "Wounds The Wolf", "Wounds The Wolf / Kills The Wolf / No Silver Effect."],
+              ["Howl On Transform", "On", "Hörbares Heulen bei der Verwandlung."],
+              ["Charge Reset On Lights Fix", "Off", "Ob ein Licht-Fix die Ladung zurücksetzt statt pausiert."],
+              ["Only As Last Impostor", "On", "Verwandlung nur als letzter lebender Impostor."],
+              ["Spy Counts As Impostor", "Off", "Ob ein lebender Spy den Letzter-Impostor-Check blockiert."],
+              ["Flashlight Radius For Everyone", "0.5x", "Sichtradius während der Wolfsdunkelheit (Infinite, 2.0x–0.5x)."],
+              ["Wolf Form Restrictions", "On", "Zusätzliche Aktions-Sperren während der Wolfsform."],
+              ["Exhaustion Slow After Revert", "On", "Slow nach der Rückverwandlung."],
+              ["Trapper Trap Wounds The Wolf", "On", "Ob Trapper-Fallen den Wolf verwunden."],
+              ["Saboteur Trap Wounds The Wolf", "On", "Ob UC-Saboteur-Fallen den Wolf verwunden."],
+              ["Deputy Handcuffs Force Revert", "On", "Ob Handschellen den Wolf in die Menschenform zwingen."]
+            ])
+          }
+        }
+      ]
+    },
+    {
+      id: "hunter",
+      title: { en: "The Hunter (Crewmate)", de: "The Hunter (Crewmate)" },
+      intro: {
+        en: "Not a rolled role but an event inside a Werewolf round: once every non-Werewolf Impostor is dead, the living original Sheriff rises to become the Hunter, the one crewmate the beast should fear.",
+        de: "Keine ausgeloste Rolle, sondern ein Ereignis in einer Werwolf-Runde: Sobald jeder Nicht-Werwolf-Impostor tot ist, steigt der lebende Original-Sheriff zum Hunter auf, dem einen Crewmate, den das Biest fürchten muss."
+      },
+      entries: [
+        {
+          id: "hunter-promotion",
+          title: { en: "The promotion", de: "Die Beförderung" },
+          summary: {
+            en: "When all non-Werewolf Impostors are dead, the living original Sheriff becomes the Hunter, exactly once per round. A living Deputy can be promoted to Sheriff to fill the gap.",
+            de: "Sind alle Nicht-Werwolf-Impostor tot, wird der lebende Original-Sheriff zum Hunter, genau einmal pro Runde. Ein lebender Deputy kann zum Sheriff nachrücken."
+          },
+          body: {
+            en: "<p>The host checks the condition on every murder and exile plus a once-per-second poll (which also catches disconnects): as soon as every non-Werewolf Impostor is dead and the original Sheriff is still alive, the promotion fires, exactly once per round. By default only the <em>original</em> Sheriff qualifies, not a Deputy who inherited the badge. Optionally a living Deputy is promoted to the new Sheriff at the same moment, so the crew does not lose its lawman. The Hunter is deliberately <strong>not</strong> in the Role Draft: it is an event, not a starting role.</p>",
+            de: "<p>Der Host prüft die Bedingung bei jedem Mord und Exile plus einem 1-Hz-Poll (der auch Disconnects abfängt): Sobald jeder Nicht-Werwolf-Impostor tot ist und der Original-Sheriff noch lebt, feuert die Beförderung, genau einmal pro Runde. Standardmäßig qualifiziert sich nur der <em>originale</em> Sheriff, kein Deputy, der den Stern geerbt hat. Optional wird im selben Moment ein lebender Deputy zum neuen Sheriff befördert, damit die Crew ihren Gesetzeshüter behält. Der Hunter ist bewusst <strong>nicht</strong> im Role Draft: Er ist ein Ereignis, keine Startrolle.</p>"
+          }
+        },
+        {
+          id: "hunter-abilities",
+          title: { en: "Silver bullets & hunter's sight", de: "Silberkugeln & Jägersicht" },
+          summary: {
+            en: "An own kill button that always kills the Werewolf (in any form) and other Impostors, optionally neutral killers too; a miss kills the Hunter. In wolf darkness the Hunter sees farther than everyone else.",
+            de: "Ein eigener Kill-Button, der den Werewolf (in jeder Form) und andere Impostoren immer tötet, optional auch neutrale Killer; ein Fehlschuss tötet den Hunter. In der Wolfsdunkelheit sieht der Hunter weiter als alle anderen."
+          },
+          body: {
+            en: "<p>The Hunter gets an own animated kill button on the Sheriff's cooldown. His shot <strong>always</strong> kills the Werewolf, in human or wolf form, regardless of the silver mode, and kills other Impostors like a Sheriff shot; optionally it also works on neutral killers. A wrong target kills the Hunter himself. During wolf darkness the Hunter is exempt from the fixed flashlight value and instead keeps a scaled crew radius (default 160%). His guessing behaviour is configurable: full guesser menu if he already was a Guesser, only the Werewolf, or no guessing. An optional public <em>Monster Hunter</em> hat makes him recognizable, which in turn removes him from everyone's guess menus (except knowledge shared by Lovers or the Jackal team).</p>",
+            de: "<p>Der Hunter bekommt einen eigenen animierten Kill-Button mit dem Cooldown des Sheriffs. Sein Schuss tötet den Werewolf <strong>immer</strong>, in Menschen- wie Wolfsform, unabhängig vom Silber-Modus, und tötet andere Impostoren wie ein Sheriff-Schuss; optional wirkt er auch gegen neutrale Killer. Ein falsches Ziel tötet den Hunter selbst. Während der Wolfsdunkelheit ist der Hunter vom fixen Taschenlampen-Wert ausgenommen und behält stattdessen einen skalierten Crew-Radius (Default 160%). Sein Guess-Verhalten ist konfigurierbar: volles Guesser-Menü, falls er schon Guesser war, nur der Werewolf, oder gar kein Guessen. Ein optionaler öffentlicher <em>Monster-Hunter</em>-Hut macht ihn erkennbar, was ihn im Gegenzug aus den Guess-Menüs aller entfernt (außer bei geteiltem Wissen von Lovers oder Jackal-Team).</p>"
+          }
+        },
+        {
+          id: "hunter-options",
+          title: { en: "Options (under the Werewolf)", de: "Optionen (unter dem Werewolf)" },
+          summary: {
+            en: "All Hunter options live under the Werewolf spawn rate, since the Hunter only exists in Werewolf rounds.",
+            de: "Alle Hunter-Optionen hängen unter der Werewolf-Spawnrate, da es den Hunter nur in Werwolf-Runden gibt."
+          },
+          body: {
+            en: tbl(["Option", "Default", "What it does"], [
+              ["Hunter Enabled", "On", "Whether the promotion event exists at all."],
+              ["Hunter Only From The Original Sheriff", "On", "Only the original Sheriff can rise, not a Deputy successor."],
+              ["Hunter Flashlight Multiplier (%)", "160%", "Vision radius in wolf darkness relative to crew vision (100–250)."],
+              ["Hunter Can Kill Neutral Killers", "On", "Whether the silver bullets also work on neutral killers."],
+              ["Deputy Promotes To Sheriff When The Hunter Rises", "On", "A living Deputy fills the empty Sheriff seat."],
+              ["Hunter Guessing", "Full Menu If Already Guesser", "Full Menu If Already Guesser / Only The Werewolf / No Hunter Guessing."],
+              ["Hunter Wears The Monster Hunter Hat", "On", "Public hunter costume; removes him from guess menus of everyone who sees it."]
+            ]),
+            de: tbl(["Option", "Standard", "Funktion"], [
+              ["Hunter Enabled", "On", "Ob es das Beförderungs-Ereignis überhaupt gibt."],
+              ["Hunter Only From The Original Sheriff", "On", "Nur der Original-Sheriff kann aufsteigen, kein Deputy-Nachfolger."],
+              ["Hunter Flashlight Multiplier (%)", "160%", "Sichtradius in der Wolfsdunkelheit relativ zur Crew-Sicht (100–250)."],
+              ["Hunter Can Kill Neutral Killers", "On", "Ob die Silberkugeln auch gegen neutrale Killer wirken."],
+              ["Deputy Promotes To Sheriff When The Hunter Rises", "On", "Ein lebender Deputy rückt auf den leeren Sheriff-Posten nach."],
+              ["Hunter Guessing", "Full Menu If Already Guesser", "Full Menu If Already Guesser / Only The Werewolf / No Hunter Guessing."],
+              ["Hunter Wears The Monster Hunter Hat", "On", "Öffentliches Jäger-Kostüm; entfernt ihn aus den Guess-Menüs aller, die es sehen."]
+            ])
+          }
+        }
+      ]
+    },
+    {
+      id: "pelican",
+      title: { en: "The Pelican (Neutral)", de: "The Pelican (Neutral)" },
+      intro: {
+        en: "A neutral killer that does not kill: it swallows. Victims vanish into the belly and can still come back, until the first meeting digests them. At two survivors the round turns into an open hunt with its own countdown.",
+        de: "Ein neutraler Killer, der nicht tötet: Er verschluckt. Opfer verschwinden im Bauch und können noch zurückkommen, bis das erste Meeting sie verdaut. Bei zwei Überlebenden kippt die Runde in eine offene Jagd mit eigenem Countdown."
+      },
+      entries: [
+        {
+          id: "pelican-swallow",
+          title: { en: "Swallowing instead of killing", de: "Verschlucken statt Töten" },
+          summary: {
+            en: "A swallowed player counts as dead, but the body is only hidden: no ghost info, no movement, camera locked on the Pelican. Vitals still shows them as alive.",
+            de: "Ein Verschluckter zählt als tot, aber die Leiche ist nur versteckt: keine Geister-Infos, keine Bewegung, Kamera fest auf dem Pelican. Vitals zeigt ihn weiter als lebendig."
+          },
+          body: {
+            en: "<p>The swallow runs through the full kill chain, so the victim technically dies, but the body is hidden instead of destroyed. Swallowed players cannot move, get no ghost information or roles, and their camera stays locked on the Pelican: they watch the belly that carries them around. The Vitals panel keeps showing them as alive, which quietly corrupts its information value in Pelican rounds.</p>",
+            de: "<p>Der Schluck durchläuft die volle Kill-Kette, das Opfer stirbt also technisch, aber die Leiche wird versteckt statt zerstört. Verschluckte können sich nicht bewegen, bekommen keine Geister-Informationen oder Rollen, und ihre Kamera bleibt auf den Pelican gerichtet: Sie schauen dem Bauch zu, der sie herumträgt. Das Vitals-Panel zeigt sie weiterhin als lebendig, was dessen Informationswert in Pelican-Runden leise untergräbt.</p>"
+          }
+        },
+        {
+          id: "pelican-release",
+          title: { en: "Digestion & release", de: "Verdauung & Befreiung" },
+          summary: {
+            en: "The first meeting digests everyone in the belly for good. But if the Pelican dies before a meeting, all swallowed players return alive in a ring around its corpse.",
+            de: "Das erste Meeting verdaut alle im Bauch endgültig. Stirbt der Pelican aber vor einem Meeting, kehren alle Verschluckten lebendig im Ring um seine Leiche zurück."
+          },
+          body: {
+            en: "<p>Swallowed players are in limbo until one of two things happens. If a meeting is called, the hidden bodies are destroyed and everyone in the belly is finally dead. If the Pelican dies first, and no meeting has passed since the swallow, every swallowed player comes back alive, placed in a ring around the Pelican's corpse. Killing the bird in time is therefore a real rescue mission.</p>",
+            de: "<p>Verschluckte hängen in der Schwebe, bis eins von zwei Dingen passiert. Wird ein Meeting einberufen, werden die versteckten Leichen zerstört, und alle im Bauch sind endgültig tot. Stirbt der Pelican zuerst, und seit dem Schluck gab es kein Meeting, kehrt jeder Verschluckte lebendig zurück, platziert im Ring um die Leiche des Pelicans. Den Vogel rechtzeitig zu erlegen ist damit eine echte Rettungsmission.</p>"
+          }
+        },
+        {
+          id: "pelican-hunt",
+          title: { en: "The hunt phase & winning", de: "Die Jagdphase & der Sieg" },
+          summary: {
+            en: "At two survivors including the Pelican, a public countdown starts: meetings, reports, the emergency button and venting are locked for everyone. Eat the last survivor before it ends, or lose.",
+            de: "Bei zwei Überlebenden inklusive Pelican startet ein öffentlicher Countdown: Meetings, Reports, Notfallknopf und Venten sind für alle gesperrt. Friss den letzten Überlebenden, bevor er abläuft, oder verliere."
+          },
+          body: {
+            en: "<p>As soon as exactly two players are left and one is the Pelican, the hunt phase begins with a public countdown (default 60 s). For <strong>all</strong> players, meetings, body reports, the emergency button and venting are locked; sabotage is locked too by default (toggleable), while ability buttons deliberately stay usable. If the Pelican swallows the last survivor, it wins alone (an own game-over reason). If the countdown runs out, the survivor wins with their own win condition and the Pelican loses. An endgame guard prevents the crew from winning via \"no killers left\" while the Pelican lives, and blocks other team wins during the two-player phase until the countdown resolves.</p>",
+            de: "<p>Sobald genau zwei Spieler übrig sind und einer der Pelican ist, beginnt die Jagdphase mit einem öffentlichen Countdown (Default 60 s). Für <strong>alle</strong> Spieler sind Meetings, Leichen-Reports, der Notfallknopf und das Venten gesperrt; Sabotage standardmäßig ebenfalls (abschaltbar), während Fähigkeiten-Buttons bewusst nutzbar bleiben. Verschluckt der Pelican den letzten Überlebenden, gewinnt er allein (eigener Game-Over-Reason). Läuft der Countdown ab, gewinnt der Überlebende mit seiner eigenen Win-Condition, und der Pelican verliert. Ein Endspiel-Guard verhindert, dass die Crew per \"keine Killer mehr übrig\" gewinnt, solange der Pelican lebt, und blockt andere Team-Siege in der Zwei-Spieler-Phase, bis der Countdown entschieden ist.</p>"
+          }
+        },
+        {
+          id: "pelican-options",
+          title: { en: "Options (Neutral tab)", de: "Optionen (Neutral-Tab)" },
+          summary: {
+            en: "Spawn rate, swallow cooldown, hunt countdown, tasks and the sabotage lock.",
+            de: "Spawnrate, Schluck-Cooldown, Jagd-Countdown, Tasks und die Sabotage-Sperre."
+          },
+          body: {
+            en: tbl(["Option", "Default", "What it does"], [
+              ["Pelican", "Off", "Spawn chance of the role."],
+              ["Pelican Minimum Players To Spawn", "6", "The role is not assigned below this lobby size."],
+              ["Pelican Swallow Cooldown", "27.5 s", "Cooldown between swallows (10–60)."],
+              ["Pelican Hunt Countdown (s)", "60", "Length of the final hunt phase (15–180)."],
+              ["Pelican Has Tasks", "Off", "Whether the Pelican carries fake tasks."],
+              ["Hunt Phase Also Blocks Sabotage", "On", "Whether sabotage is locked during the hunt."]
+            ]),
+            de: tbl(["Option", "Standard", "Funktion"], [
+              ["Pelican", "Off", "Spawn-Chance der Rolle."],
+              ["Pelican Minimum Players To Spawn", "6", "Die Rolle wird unter dieser Lobby-Größe nicht vergeben."],
+              ["Pelican Swallow Cooldown", "27.5 s", "Cooldown zwischen Schlucken (10–60)."],
+              ["Pelican Hunt Countdown (s)", "60", "Länge der finalen Jagdphase (15–180)."],
+              ["Pelican Has Tasks", "Off", "Ob der Pelican Fake-Tasks trägt."],
+              ["Hunt Phase Also Blocks Sabotage", "On", "Ob Sabotage während der Jagd gesperrt ist."]
+            ])
+          }
+        }
+      ]
+    },
+    {
+      id: "auditor",
+      title: { en: "The Auditor (Impostor)", de: "The Auditor (Impostor)" },
+      intro: {
+        en: "An Impostor who undoes progress: every task a living crewmate completes lands as a real, playable copy in the Auditor's own task list. Finishing that copy reverts the task at its original owner, for real, including the server-side task bar.",
+        de: "Ein Impostor, der Fortschritt zurückdreht: Jede Task, die ein lebender Crewmate abschließt, landet als echte, spielbare Kopie in der eigenen Task-Liste des Auditors. Schließt er die Kopie ab, wird die Task beim ursprünglichen Besitzer real zurückgesetzt, inklusive server-seitigem Task-Balken."
+      },
+      entries: [
+        {
+          id: "auditor-steal",
+          title: { en: "Stealing completed tasks", de: "Erledigte Tasks stehlen" },
+          summary: {
+            en: "Completed crew tasks queue up (default 3 at once) as playable tasks for the Auditor; each stolen copy has a limited lifetime that pauses in meetings and while he is working on it.",
+            de: "Erledigte Crew-Tasks landen in einer Warteschlange (Default 3 gleichzeitig) als spielbare Tasks des Auditors; jede gestohlene Kopie hat eine begrenzte Lebensdauer, die in Meetings und beim aktiven Bearbeiten pausiert."
+          },
+          body: {
+            en: "<p>Whenever a living crewmate completes a task that counts toward crew progress (never fake tasks), it is queued and appears as a genuine task in the Auditor's list. The queue holds a configured number of stolen tasks at once (default 3); when it is full, further completions simply pass by. Each entry expires after a configurable lifetime (default 90 s), paused during meetings and frozen while the Auditor is actively inside that task's minigame, so a task never expires mid-play. Entries also disappear when the original owner is recognised dead at the end of a meeting or when the Auditor dies. Normally consoles refuse Impostors entirely; for exactly the consoles of his stolen tasks the Auditor gets crew-style access so he can actually play them.</p>",
+            de: "<p>Immer wenn ein lebender Crewmate eine Task abschließt, die zum Crew-Fortschritt zählt (nie Fake-Tasks), wird sie eingereiht und erscheint als echte Task in der Liste des Auditors. Die Warteschlange hält eine konfigurierte Zahl gestohlener Tasks gleichzeitig (Default 3); ist sie voll, laufen weitere Abschlüsse einfach vorbei. Jeder Eintrag verfällt nach einer konfigurierbaren Lebensdauer (Default 90 s), pausiert während Meetings und eingefroren, solange der Auditor aktiv im Minigame dieser Task steckt, damit eine Task nie mitten im Spielen abläuft. Einträge verschwinden auch, wenn der ursprüngliche Besitzer am Ende eines Meetings als tot erkannt wird oder der Auditor stirbt. Normalerweise verweigern Konsolen Impostoren komplett; genau für die Konsolen seiner gestohlenen Tasks bekommt der Auditor Crew-Zugriff, damit er sie wirklich spielen kann.</p>"
+          }
+        },
+        {
+          id: "auditor-revert",
+          title: { en: "The revert is real", de: "Die Rücknahme ist echt" },
+          summary: {
+            en: "Completing a stolen task rebuilds the victim's task list server-side, so exactly that one task is open again and the crew task bar genuinely drops.",
+            de: "Das Abschließen einer gestohlenen Task baut die Task-Liste des Opfers server-seitig neu auf, sodass genau diese eine Task wieder offen ist und der Crew-Task-Balken wirklich sinkt."
+          },
+          body: {
+            en: "<p>When the Auditor finishes a stolen task, the host rebuilds the original owner's task list through the game's real task assignment (the only path the server also sees) and then has the victim's client automatically re-complete all its other finished tasks. Net effect: exactly the stolen task is open again, and the crew progress bar drops for real, so a crew task win moves genuinely out of reach. The victim is notified that a task was reset, never by whom; the timing is configurable (immediately, at the next meeting, or off). Optionally the Auditor sees who completed the stolen task, but that name is automatically suppressed whenever a Spy could be in the game: the Spy is the only player on the Auditor's Impostor list who completes real tasks and would be instantly exposed.</p>",
+            de: "<p>Schließt der Auditor eine gestohlene Task ab, baut der Host die Task-Liste des ursprünglichen Besitzers über die echte Task-Zuweisung des Spiels neu auf (der einzige Weg, den auch der Server sieht) und lässt den Client des Opfers danach alle übrigen erledigten Tasks automatisch erneut abhaken. Nettoeffekt: Genau die gestohlene Task ist wieder offen, und der Crew-Fortschrittsbalken sinkt real, ein Crew-Task-Sieg rückt also wirklich in die Ferne. Das Opfer wird benachrichtigt, dass eine Task zurückgesetzt wurde, nie von wem; der Zeitpunkt ist konfigurierbar (sofort, beim nächsten Meeting, oder aus). Optional sieht der Auditor, wer die gestohlene Task erledigt hat, aber dieser Name wird automatisch unterdrückt, sobald ein Spy im Spiel sein könnte: Der Spy ist der einzige Spieler auf der Impostor-Liste des Auditors, der echte Tasks abschließt, und wäre sofort enttarnt.</p>"
+          }
+        },
+        {
+          id: "auditor-cooldown",
+          title: { en: "Kill cooldown scales with audits", de: "Kill-Cooldown skaliert mit Rücknahmen" },
+          summary: {
+            en: "The Auditor starts slow (default 2.0x kill cooldown) and speeds up linearly with every successful revert, down to 0.5x at the configured target.",
+            de: "Der Auditor startet langsam (Default 2.0x Kill-Cooldown) und wird mit jeder erfolgreichen Rücknahme linear schneller, bis 0.5x am konfigurierten Ziel."
+          },
+          body: {
+            en: "<p>The Auditor's kill cooldown interpolates linearly between two multipliers based on his successful reverts this round: at zero reverts he kills at the slow end (default 2.0x), at the configured target count (default 8) he reaches the fast end (default 0.5x), after which it stays there. Paperwork first, murder later.</p>",
+            de: "<p>Der Kill-Cooldown des Auditors interpoliert linear zwischen zwei Multiplikatoren, abhängig von seinen erfolgreichen Rücknahmen in dieser Runde: Bei null Rücknahmen tötet er am langsamen Ende (Default 2.0x), beim konfigurierten Zielwert (Default 8) erreicht er das schnelle Ende (Default 0.5x), danach bleibt es dort. Erst der Papierkram, dann der Mord.</p>"
+          }
+        },
+        {
+          id: "auditor-options",
+          title: { en: "Options (Impostor tab)", de: "Optionen (Impostor-Tab)" },
+          summary: {
+            en: "Queue size, task lifetime, the cooldown curve and the information toggles.",
+            de: "Queue-Größe, Task-Lebensdauer, die Cooldown-Kurve und die Informations-Toggles."
+          },
+          body: {
+            en: tbl(["Option", "Default", "What it does"], [
+              ["Auditor", "Off", "Spawn chance of the role."],
+              ["Auditor Minimum Players To Spawn", "6", "The role is not assigned below this lobby size."],
+              ["Stolen Tasks Kept At Once", "3", "Queue size for stolen tasks (1–8)."],
+              ["Stolen Task Lifetime", "90 s", "How long a stolen task stays playable (30–300)."],
+              ["Kill Cooldown Multiplier At 0 Reverts", "2.0x", "Cooldown at the start of the round (0.5–3.0)."],
+              ["Kill Cooldown Multiplier At Full Reverts", "0.5x", "Cooldown once the target count is reached (0.25–2.0)."],
+              ["Reverts For Full Effect", "8", "Successful reverts needed for the full bonus (1–20)."],
+              ["Auditor Sees Who Completed The Task", "On", "Shows the completer's name (auto-suppressed while a Spy could exist)."],
+              ["Auditor Cannot Guess The Snitch", "On", "Removes the Snitch from the Auditor's guess menu."],
+              ["Victim Notification", "Immediately", "Immediately / At The Next Meeting / Off."]
+            ]),
+            de: tbl(["Option", "Standard", "Funktion"], [
+              ["Auditor", "Off", "Spawn-Chance der Rolle."],
+              ["Auditor Minimum Players To Spawn", "6", "Die Rolle wird unter dieser Lobby-Größe nicht vergeben."],
+              ["Stolen Tasks Kept At Once", "3", "Queue-Größe für gestohlene Tasks (1–8)."],
+              ["Stolen Task Lifetime", "90 s", "Wie lange eine gestohlene Task spielbar bleibt (30–300)."],
+              ["Kill Cooldown Multiplier At 0 Reverts", "2.0x", "Cooldown zu Rundenbeginn (0.5–3.0)."],
+              ["Kill Cooldown Multiplier At Full Reverts", "0.5x", "Cooldown ab Erreichen des Zielwerts (0.25–2.0)."],
+              ["Reverts For Full Effect", "8", "Nötige erfolgreiche Rücknahmen für den vollen Bonus (1–20)."],
+              ["Auditor Sees Who Completed The Task", "On", "Zeigt den Namen des Erledigers (automatisch unterdrückt, solange ein Spy existieren könnte)."],
+              ["Auditor Cannot Guess The Snitch", "On", "Entfernt den Snitch aus dem Guess-Menü des Auditors."],
+              ["Victim Notification", "Immediately", "Immediately / At The Next Meeting / Off."]
+            ])
+          }
+        }
+      ]
+    },
+    {
+      id: "gambler",
+      title: { en: "The Gambler (Modifier)", de: "The Gambler (Modifier)" },
+      intro: {
+        en: "A crew modifier that bets on the round itself: place wagers on kills, votes, tasks and deaths during the round, and collect (or pay) when the meeting settles them.",
+        de: "Ein Crew-Modifier, der auf die Runde selbst wettet: Schließe während der Runde Wetten auf Kills, Votes, Tasks und Tode ab, und kassiere (oder zahle), wenn das Meeting sie auflöst."
+      },
+      entries: [
+        {
+          id: "gambler-bets",
+          title: { en: "Placing bets", de: "Wetten platzieren" },
+          summary: {
+            en: "A HUD button opens a picker with 14 bet kinds in 6 tiers, some requiring a target player. Bets can only be placed outside meetings, limited by a cooldown and an open-bet cap.",
+            de: "Ein HUD-Button öffnet einen Picker mit 14 Wettarten in 6 Tiers, manche mit Zielspieler. Wetten gehen nur außerhalb von Meetings, begrenzt durch Cooldown und ein Limit offener Wetten."
+          },
+          body: {
+            en: "<p>The Gambler is assigned as a modifier on top of a regular crew role. A HUD button (default key F) opens a two-step picker: one of 14 bet kinds across 6 tiers (someone gets voted out, a kill happens within a time window, a tie vote, a chosen player dies next, a chosen player finishes N tasks, and more), then a target player where the bet needs one (never yourself). Placing bets requires being alive and outside a meeting, an elapsed cooldown (default 45 s) and a free slot under the open-bet cap (default 2). If the Gambler dies, all still-open bets are void.</p>",
+            de: "<p>Der Gambler wird als Modifier auf eine reguläre Crew-Rolle aufgesetzt. Ein HUD-Button (Standard-Taste F) öffnet einen zweistufigen Picker: eine von 14 Wettarten in 6 Tiers (jemand wird rausgevotet, ein Kill passiert in einem Zeitfenster, ein Tie-Vote, ein gewählter Spieler stirbt als nächster, ein gewählter Spieler schafft N Tasks, und mehr), dann ein Zielspieler, wo die Wette einen braucht (nie man selbst). Wetten platzieren erfordert Leben, kein laufendes Meeting, abgelaufenen Cooldown (Default 45 s) und einen freien Slot unter dem Limit offener Wetten (Default 2). Stirbt der Gambler, verfallen alle noch offenen Wetten.</p>"
+          }
+        },
+        {
+          id: "gambler-settle",
+          title: { en: "Meetings settle the bets", de: "Meetings lösen die Wetten auf" },
+          summary: {
+            en: "Bets never resolve mid-round: round facts settle at meeting start, voting facts after the vote. The Gambler's own vote is excluded from vote-count bets, and some bets can end in a push.",
+            de: "Wetten lösen sich nie mitten in der Runde auf: Rundenfakten beim Meeting-Start, Abstimmungsfakten nach dem Vote. Die eigene Stimme des Gamblers zählt bei Stimmenzahl-Wetten nicht, und manche Wetten enden als Push."
+          },
+          body: {
+            en: "<p>Deliberately, nothing settles during the round: a result popping up mid-round would be private insider knowledge, while a settlement in the meeting becomes table talk. Round facts (kills, deaths, tasks, sabotage) are evaluated when the meeting starts, voting facts (who got ejected, tie, vote counts) when voting completes. Bets that count votes exclude the Gambler's own vote so he cannot push his own bet through; bets on the plain voting result count the real outcome including his vote. Some bets can end in a push (no win, no loss), for example a kill-window bet interrupted by a meeting mid-window.</p>",
+            de: "<p>Bewusst löst sich nichts während der Runde auf: Ein Ergebnis mitten in der Runde wäre privates Insiderwissen, eine Auflösung im Meeting wird dagegen Gesprächsstoff. Rundenfakten (Kills, Tode, Tasks, Sabotage) werden beim Meeting-Start ausgewertet, Abstimmungsfakten (wer rausflog, Tie, Stimmenzahlen) nach dem Vote. Wetten, die Stimmen zählen, schließen die eigene Stimme des Gamblers aus, damit er seine Wette nicht selbst durchdrückt; Wetten auf das reine Abstimmungsergebnis zählen das echte Ergebnis inklusive seiner Stimme. Manche Wetten können als Push enden (kein Gewinn, kein Verlust), etwa eine Kill-Fenster-Wette, die ein Meeting mitten im Fenster unterbricht.</p>"
+          }
+        },
+        {
+          id: "gambler-stakes",
+          title: { en: "Winnings & losses", de: "Gewinne & Verluste" },
+          summary: {
+            en: "Stakes scale with the bet tier: speed changes, a task credited or reverted, up to a kill-cooldown change for all Impostors, who are only ever told that \"a Gambler\" did it.",
+            de: "Der Einsatz skaliert mit dem Tier: Tempo-Änderungen, eine gutgeschriebene oder zurückgenommene Task, bis hin zur Kill-Cooldown-Änderung aller Impostoren, die höchstens erfahren, dass \"ein Gambler\" es war."
+          },
+          body: {
+            en: "<p>What a bet is worth depends on its tier:</p>" + tbl(["Tier", "Win", "Loss"], [
+              ["1–2", "Temporary speed boost for the Gambler (default +15% for 30 s).", "Temporary slow of the same size."],
+              ["3–4", "One of his tasks is credited as completed.", "One of his completed tasks is reverted server-side (same technique as the Auditor). Without a matching task, the speed effect applies instead."],
+              ["5", "The kill cooldown of <strong>all Impostors</strong> gets longer (default 5 s) until the next meeting.", "It gets shorter by the same amount: a lost bet arms the enemy."],
+              ["6 (death bet)", "Both: 2 tasks plus the cooldown change.", "Both, in the Impostors' favour."]
+            ]) + "<p class='note'>Optionally the Impostors are told in chat that a Gambler changed their cooldown, but never who it is.</p>",
+            de: "<p>Was eine Wette wert ist, hängt vom Tier ab:</p>" + tbl(["Tier", "Gewinn", "Verlust"], [
+              ["1–2", "Temporärer Speed-Boost für den Gambler (Default +15% für 30 s).", "Temporärer Slow in gleicher Höhe."],
+              ["3–4", "Eine seiner Tasks wird als erledigt gutgeschrieben.", "Eine seiner erledigten Tasks wird server-seitig zurückgenommen (gleiche Technik wie beim Auditor). Ohne passende Task greift ersatzweise der Speed-Effekt."],
+              ["5", "Der Kill-Cooldown <strong>aller Impostoren</strong> wird länger (Default 5 s), bis zum nächsten Meeting.", "Er wird um denselben Wert kürzer: Eine verlorene Wette rüstet den Feind."],
+              ["6 (Todes-Wette)", "Beides: 2 Tasks plus die Cooldown-Änderung.", "Beides, zugunsten der Impostoren."]
+            ]) + "<p class='note'>Optional erfahren die Impostoren im Chat, dass ein Gambler ihren Cooldown verändert hat, aber nie, wer es ist.</p>"
+          }
+        },
+        {
+          id: "gambler-options",
+          title: { en: "Options (Modifier tab)", de: "Optionen (Modifier-Tab)" },
+          summary: {
+            en: "Spawn rate, cooldown, open-bet cap, bet thresholds and the effect sizes.",
+            de: "Spawnrate, Cooldown, Limit offener Wetten, Wett-Schwellen und die Effektgrößen."
+          },
+          body: {
+            en: tbl(["Option", "Default", "What it does"], [
+              ["Gambler", "Off", "Spawn chance of the modifier."],
+              ["Gambler Minimum Players To Spawn", "6", "Not assigned below this lobby size."],
+              ["Gambler Bet Cooldown", "45 s", "Cooldown between placed bets (10–180)."],
+              ["Gambler Open Bets At Once", "2", "Maximum simultaneous open bets (1–5)."],
+              ["Gambler Kill Bet Window", "30 s", "Time window for kill-window bets (10–120)."],
+              ["Gambler Task Bet Threshold", "4", "Task count for task bets (2–10)."],
+              ["Gambler Vote Bet Threshold", "3", "Vote count for vote bets (2–8)."],
+              ["Gambler Speed Change", "15%", "Size of the speed win/loss effect (5–50)."],
+              ["Gambler Speed Effect Duration", "30 s", "How long the speed effect lasts (10–120)."],
+              ["Gambler Kill Cooldown Change", "5 s", "Size of the Impostor cooldown change (1–20)."],
+              ["Impostors Are Told About Cooldown Changes", "On", "Anonymous chat notice to the Impostors."]
+            ]),
+            de: tbl(["Option", "Standard", "Funktion"], [
+              ["Gambler", "Off", "Spawn-Chance des Modifiers."],
+              ["Gambler Minimum Players To Spawn", "6", "Wird unter dieser Lobby-Größe nicht vergeben."],
+              ["Gambler Bet Cooldown", "45 s", "Cooldown zwischen platzierten Wetten (10–180)."],
+              ["Gambler Open Bets At Once", "2", "Maximal gleichzeitig offene Wetten (1–5)."],
+              ["Gambler Kill Bet Window", "30 s", "Zeitfenster für Kill-Fenster-Wetten (10–120)."],
+              ["Gambler Task Bet Threshold", "4", "Task-Anzahl für Task-Wetten (2–10)."],
+              ["Gambler Vote Bet Threshold", "3", "Stimmenzahl für Vote-Wetten (2–8)."],
+              ["Gambler Speed Change", "15%", "Größe des Speed-Gewinn/Verlust-Effekts (5–50)."],
+              ["Gambler Speed Effect Duration", "30 s", "Dauer des Speed-Effekts (10–120)."],
+              ["Gambler Kill Cooldown Change", "5 s", "Größe der Impostor-Cooldown-Änderung (1–20)."],
+              ["Impostors Are Told About Cooldown Changes", "On", "Anonymer Chat-Hinweis an die Impostoren."]
+            ])
+          }
+        }
+      ]
+    },
+    {
+      id: "uc-killcutscenes",
+      title: { en: "Kill cutscenes", de: "Kill-Cutscenes" },
+      intro: {
+        en: "Custom full-screen kill cutscenes: every UC special kill and ten TOR special-kill roles get their own animated death scene instead of the generic knife-and-tongue animation. Audience rules stay exactly vanilla: only killer and victim see them.",
+        de: "Eigene Vollbild-Kill-Cutscenes: Jeder UC-Spezialkill und zehn TOR-Spezialkill-Rollen bekommen eine eigene animierte Todesszene statt der generischen Messer-und-Zunge-Animation. Die Publikums-Regeln bleiben exakt vanilla: Nur Killer und Opfer sehen sie."
+      },
+      entries: [
+        {
+          id: "uc-killcutscenes-uc",
+          title: { en: "UC role cutscenes", de: "UC-Rollen-Cutscenes" },
+          summary: {
+            en: "Tesla, Saboteur task kills, Poisoner, Shade and the Maniac bomb each play their own scene, built from the roles' real sprites and sounds.",
+            de: "Tesla, Saboteur-Task-Kills, Poisoner, Shade und die Maniac-Bombe spielen je eine eigene Szene, gebaut aus den echten Sprites und Sounds der Rollen."
+          },
+          body: {
+            en: "<p>Five UC kills carry their own cutscene: the Tesla's lethal pull, the Saboteur's task kill (deliberately only task kills), the Poisoner's delayed poison death, the Shade swallowing a body into the shadows, and the Maniac's bomb. Crew figures are rendered in the real player colours; the Saboteur and Poisoner scenes deliberately show <strong>no</strong> killer figure, because those kills are anonymous in-game too. The audience is identical to vanilla (killer and victim only), and scenes queue politely until meeting or exile UI is gone. The Poisoner's meeting-time poison death, which normally has no death animation at all, finally gets one.</p>",
+            de: "<p>Fünf UC-Kills tragen eine eigene Cutscene: der tödliche Zug der Tesla, der Task-Kill des Saboteurs (bewusst nur Task-Kills), der verzögerte Gifttod des Poisoners, der Shade, der eine Leiche in die Schatten schluckt, und die Bombe des Maniacs. Crew-Figuren werden in den echten Spielerfarben gerendert; die Saboteur- und Poisoner-Szenen zeigen bewusst <strong>keine</strong> Killer-Figur, weil diese Kills auch im Spiel anonym sind. Das Publikum ist identisch zu vanilla (nur Killer und Opfer), und Szenen warten höflich in einer Queue, bis Meeting- oder Exile-UI verschwunden ist. Der Poisoner-Gifttod zur Meeting-Zeit, der normalerweise gar keine Todesanimation hat, bekommt endlich eine.</p>"
+          }
+        },
+        {
+          id: "uc-killcutscenes-tor",
+          title: { en: "TOR role cutscenes (12 scenes)", de: "TOR-Rollen-Cutscenes (12 Szenen)" },
+          summary: {
+            en: "Sheriff duel & misfire, vampire bite, warlock sigil, witch spell, ninja dash, rolling bomb, guesser shot in the meeting, thief steal & fail, jackal claw and a bounty-hunter wanted poster.",
+            de: "Sheriff-Duell & Fehlzündung, Vampirbiss, Warlock-Sigil, Hexenspruch, Ninja-Dash, rollende Bombe, Guesser-Schuss im Meeting, Thief-Steal & -Fail, Jackal-Kralle und ein Bounty-Hunter-Steckbrief."
+          },
+          body: {
+            en: "<p>Ten TOR special-kill roles get twelve dedicated scenes: a western duel for the Sheriff (plus a misfire scene when the shot backfires), fangs and garlic for the Vampire, a burning sigil for the Warlock, hat and spark stream for the Witch, a katana streak with teleport for the Ninja, a bomb that audibly rolls in for the Bomber (killer stays anonymous), a target-icon shot for the Guesser that plays inside the meeting, a role card being stolen (or the fail) for the Thief, a claw strike for Jackal and Sidekick, and a wanted poster with the victim's portrait plus a rain of coins for the Bounty Hunter. Wherever possible the scenes reuse TOR's own sounds and sprites, so they feel native. For delayed kills (vampire bite, warlock curse, witch spell) the scene plays at the actual death, never at the marking moment, so a still-living marked player is never tipped off; those death scenes show the killer figure in the real player colour, since ghosts see all roles anyway.</p>",
+            de: "<p>Zehn TOR-Spezialkill-Rollen bekommen zwölf eigene Szenen: ein Western-Duell für den Sheriff (plus eine Fehlzündungs-Szene, wenn der Schuss nach hinten losgeht), Fangzähne und Knoblauch für den Vampire, ein brennendes Sigil für den Warlock, Hut und Funkenstrom für die Witch, ein Katana-Streich mit Teleport für den Ninja, eine hörbar heranrollende Bombe für den Bomber (der Killer bleibt anonym), ein Zielscheiben-Schuss für den Guesser, der im Meeting spielt, eine gestohlene Rollenkarte (oder der Fehlschlag) für den Thief, ein Krallenhieb für Jackal und Sidekick und ein Steckbrief mit dem Porträt des Opfers plus Münzregen für den Bounty Hunter. Wo möglich nutzen die Szenen TORs eigene Sounds und Sprites, damit sie sich nativ anfühlen. Bei verzögerten Kills (Vampirbiss, Warlock-Fluch, Hexenspruch) spielt die Szene beim tatsächlichen Tod, nie beim Markieren, damit ein noch lebender Markierter nie vorgewarnt wird; diese Todesszenen zeigen die Killer-Figur in der echten Spielerfarbe, da Tote ohnehin alle Rollen sehen.</p>"
+          }
+        },
+        {
+          id: "uc-killcutscenes-toggles",
+          title: { en: "Local toggles", de: "Lokale Toggles" },
+          summary: {
+            en: "Two local switches in the UC options popup: UC scenes default on, TOR scenes default off. Deliberately not host-synced, it is a per-player viewing preference.",
+            de: "Zwei lokale Schalter im UC-Options-Popup: UC-Szenen standardmäßig an, TOR-Szenen standardmäßig aus. Bewusst nicht host-synced, es ist eine Per-Spieler-Sichtpräferenz."
+          },
+          body: {
+            en: "<p>Both groups have their own toggle in the UC options popup: <em>UC kill animations</em> (default on) and <em>TOR kill animations</em> (default off). The toggles are local per player and deliberately not host-synced: whether you want to watch cutscenes changes nothing about the game state, so it stays your own choice. Note that the toggle must be enabled on the <em>viewer's</em> client; a victim with the toggle off simply gets the vanilla animation.</p>",
+            de: "<p>Beide Gruppen haben einen eigenen Schalter im UC-Options-Popup: <em>UC-Kill-Animationen</em> (standardmäßig an) und <em>TOR-Kill-Animationen</em> (standardmäßig aus). Die Schalter sind lokal pro Spieler und bewusst nicht host-synced: Ob du Cutscenes sehen willst, ändert nichts am Spielzustand, also bleibt es deine eigene Wahl. Der Schalter muss auf dem Client des <em>Zuschauers</em> an sein; ein Opfer mit abgeschaltetem Toggle bekommt einfach die Vanilla-Animation.</p>"
+          }
+        }
+      ]
+    },
+    {
+      id: "uc-hats",
+      title: { en: "Custom hats", de: "Eigene Hüte" },
+      intro: {
+        en: "Three UC-exclusive hats appear in TOR's hat shop without touching TOR: Virus, an animated billboard, and the full-body Werewolf costume.",
+        de: "Drei UC-exklusive Hüte erscheinen in TORs Hut-Shop, ohne TOR anzufassen: Virus, eine animierte Werbetafel und das Ganzkörper-Werwolf-Kostüm."
+      },
+      entries: [
+        {
+          id: "uc-hats-set",
+          title: { en: "Virus, Werbetafel & Werewolf", de: "Virus, Werbetafel & Werewolf" },
+          summary: {
+            en: "A spiked virus silhouette, a six-frame blinking billboard worn on the back, and the werewolf full-body costume with glowing eyes, calibrated against the real in-game silhouette.",
+            de: "Eine Stachel-Virus-Silhouette, eine sechs Frames blinkende Werbetafel auf dem Rücken und das Ganzkörper-Werwolf-Kostüm mit Glüh-Augen, kalibriert an der echten In-Game-Silhouette."
+          },
+          body: {
+            en: "<p><strong>Virus</strong> wraps the whole crewmate in a ring of spikes and pustules; <strong>Werbetafel</strong> is an animated billboard blinking through six frames behind the player; <strong>Werewolf</strong> is the full side-profile beast with six animated eye-glow frames, including a proper climb pose. All three were calibrated against the game's real crewmate silhouette (measured from in-game screenshots), so they sit exactly on the body instead of floating around it. Technically the plugin extracts the sprites to TOR's hat folder and registers them through TOR's own custom-hat pipeline via reflection: TOR's source stays untouched, and the hats behave like any other custom hat in the shop. While the Werewolf role is enabled in the lobby, the Werewolf hat is locked in the wardrobe so the transformation stays unambiguous.</p>",
+            de: "<p><strong>Virus</strong> hüllt den ganzen Crewmate in einen Ring aus Stacheln und Pusteln; die <strong>Werbetafel</strong> ist eine animierte Reklametafel, die hinter dem Spieler durch sechs Frames blinkt; <strong>Werewolf</strong> ist die volle Bestie im Seitenprofil mit sechs animierten Augen-Glüh-Frames, inklusive echter Kletter-Pose. Alle drei wurden an der echten Crewmate-Silhouette des Spiels kalibriert (aus In-Game-Screenshots vermessen), sodass sie exakt auf dem Körper sitzen statt darum zu schweben. Technisch extrahiert das Plugin die Sprites in TORs Hut-Ordner und registriert sie per Reflection über TORs eigene Custom-Hat-Pipeline: TORs Quellcode bleibt unangetastet, und die Hüte verhalten sich wie jeder andere Custom-Hut im Shop. Solange die Werewolf-Rolle in der Lobby aktiviert ist, ist der Werewolf-Hut in der Garderobe gesperrt, damit die Verwandlung eindeutig bleibt.</p>"
+          }
+        }
+      ]
+    },
+    {
+      id: "uc-localization",
+      title: { en: "Localization & role guide", de: "Lokalisierung & Rollen-Guide" },
+      intro: {
+        en: "The whole plugin speaks 26 languages, and a searchable in-game role guide explains every UC and TOR role with its own hand-choreographed demo scene.",
+        de: "Das ganze Plugin spricht 26 Sprachen, und ein durchsuchbarer In-Game-Rollen-Guide erklärt jede UC- und TOR-Rolle mit einer eigenen handchoreografierten Demo-Szene."
+      },
+      entries: [
+        {
+          id: "uc-localization-langs",
+          title: { en: "26 languages", de: "26 Sprachen" },
+          summary: {
+            en: "All UC texts follow the game language (15 vanilla languages) or the shared mod language from Forgotten Fixes (10 extra ones). Role names deliberately stay English.",
+            de: "Alle UC-Texte folgen der Spielsprache (15 Vanilla-Sprachen) oder der geteilten Mod-Sprache aus Forgotten Fixes (10 weitere). Rollennamen bleiben bewusst englisch."
+          },
+          body: {
+            en: "<p>Every UC surface (options, buttons, HUD lines, help texts) is translated into 26 languages: the 15 languages the game itself offers follow the game language automatically, 10 extra languages (Turkish, Polish, Czech, Hungarian, Romanian, Swedish, Finnish, Ukrainian, Indonesian, Vietnamese) are available through the shared mod-language setting provided by <a href='useful.html'>Forgotten Fixes</a>. UC follows that shared setting when Forgotten Fixes is installed and works standalone with the vanilla game language otherwise. Role names deliberately stay English in every language, so players in mixed-language lobbies still talk about the same roles.</p>",
+            de: "<p>Jede UC-Oberfläche (Optionen, Buttons, HUD-Zeilen, Hilfetexte) ist in 26 Sprachen übersetzt: Die 15 Sprachen des Spiels folgen automatisch der Spielsprache, 10 weitere (Türkisch, Polnisch, Tschechisch, Ungarisch, Rumänisch, Schwedisch, Finnisch, Ukrainisch, Indonesisch, Vietnamesisch) sind über die geteilte Mod-Sprach-Einstellung aus <a href='useful.html'>Forgotten Fixes</a> verfügbar. UC folgt dieser geteilten Einstellung, wenn Forgotten Fixes installiert ist, und läuft sonst standalone mit der Vanilla-Spielsprache. Rollennamen bleiben in allen Sprachen bewusst englisch, damit Spieler in gemischtsprachigen Lobbys über dieselben Rollen reden.</p>"
+          }
+        },
+        {
+          id: "uc-localization-guide",
+          title: { en: "The role guide", de: "Der Rollen-Guide" },
+          summary: {
+            en: "An in-game help menu covering all 17 UC and 56 TOR roles, each with its own animated demo vignette, plus live search and a language toggle.",
+            de: "Ein In-Game-Hilfemenü über alle 17 UC- und 56 TOR-Rollen, jede mit eigener animierter Demo-Vignette, plus Live-Suche und Sprach-Umschalter."
+          },
+          body: {
+            en: "<p>The help menu covers every role in the lobby: 17 UC roles and 56 TOR roles, each entry with a description and a <strong>hand-choreographed demo vignette</strong>, a tiny animated scene of crewmates acting out the role's mechanic. A live search filters the list as you type (the search field requires a click to focus and only blocks player movement while you are actually typing), the list scrolls with the mouse wheel, and a toggle switches the guide between English and the active language on the fly.</p>",
+            de: "<p>Das Hilfemenü deckt jede Rolle der Lobby ab: 17 UC-Rollen und 56 TOR-Rollen, jeder Eintrag mit Beschreibung und einer <strong>handchoreografierten Demo-Vignette</strong>, einer kleinen animierten Szene, in der Crewmates die Mechanik der Rolle vorspielen. Eine Live-Suche filtert die Liste beim Tippen (das Suchfeld braucht einen Klick zum Fokussieren und blockiert die Spielerbewegung nur, während du wirklich tippst), die Liste scrollt mit dem Mausrad, und ein Umschalter wechselt den Guide fliegend zwischen Englisch und der aktiven Sprache.</p>"
+          }
+        }
+      ]
+    },
+    {
       id: "uc-fx",
       title: { en: "Visuals & audio (1.0.1.60)", de: "Visuals & Audio (1.0.1.60)" },
       intro: {
@@ -2171,21 +2963,21 @@ const UNKNOWNS = {
       id: "uc-roledraft",
       title: { en: "Role Draft support", de: "Role-Draft-Unterstützung" },
       intro: {
-        en: "All Unknown's Collection impostor roles plus the Collector are pickable in TOR's Role Draft — integrated entirely from the plugin without touching TOR's source.",
-        de: "Alle Unknown's-Collection-Impostor-Rollen plus der Collector sind in TORs Role Draft wählbar — komplett aus dem Plugin integriert, ohne TORs Quellcode anzufassen."
+        en: "All Unknown's Collection impostor roles plus the Collector and the Pelican are pickable in TOR's Role Draft — integrated entirely from the plugin without touching TOR's source.",
+        de: "Alle Unknown's-Collection-Impostor-Rollen plus der Collector und der Pelican sind in TORs Role Draft wählbar — komplett aus dem Plugin integriert, ohne TORs Quellcode anzufassen."
       },
       entries: [
         {
           id: "uc-roledraft-pick",
-          title: { en: "All impostor roles + the Collector draftable", de: "Alle Impostor-Rollen + der Collector draftbar" },
+          title: { en: "All impostor roles + Collector & Pelican draftable", de: "Alle Impostor-Rollen + Collector & Pelican draftbar" },
           badges: [{ en: "Draftable", de: "Draftbar" }],
           summary: {
-            en: "With Role Draft on, all eight Unknown's Collection impostor roles — Tesla, Saboteur, Silencer, Poisoner, Illusionist, Maniac, Shade and Manipulator — plus the neutral Collector appear as picks instead of being assigned by the usual random promotion.",
-            de: "Mit aktivem Role Draft erscheinen alle acht Unknown's-Collection-Impostor-Rollen — Tesla, Saboteur, Silencer, Poisoner, Illusionist, Maniac, Shade und Manipulator — plus der neutrale Collector als Picks, statt über die übliche Zufalls-Beförderung vergeben zu werden."
+            en: "With Role Draft on, all ten Unknown's Collection impostor roles — Tesla, Saboteur, Silencer, Poisoner, Illusionist, Maniac, Shade, Manipulator, Werewolf and Auditor — plus the neutral Collector and Pelican appear as picks instead of being assigned by the usual random promotion.",
+            de: "Mit aktivem Role Draft erscheinen alle zehn Unknown's-Collection-Impostor-Rollen — Tesla, Saboteur, Silencer, Poisoner, Illusionist, Maniac, Shade, Manipulator, Werewolf und Auditor — plus die neutralen Collector und Pelican als Picks, statt über die übliche Zufalls-Beförderung vergeben zu werden."
           },
           body: {
-            en: "<p>When TOR's <strong>Role Draft</strong> is enabled, all enabled Unknown's Collection impostor roles — <strong>The Tesla</strong>, <strong>The Saboteur</strong>, <strong>The Silencer</strong>, <strong>The Poisoner</strong>, <strong>The Illusionist</strong>, <strong>The Maniac</strong>, <strong>The Shade</strong> and <strong>The Manipulator</strong> — plus the neutral <strong>Collector</strong> become regular picks (max one each per game), and the random promotion is suppressed so the draft decides. The Poltergeist is deliberately not draftable — it is not a starting role. The integration lives entirely in the plugin via Harmony patches — TOR's source is untouched. (In the draft list the impostor buttons use the impostor red so the faction filter shows them; each role's own colour returns in-game.)</p>",
-            de: "<p>Ist TORs <strong>Role Draft</strong> aktiv, werden alle aktivierten Unknown's-Collection-Impostor-Rollen — <strong>The Tesla</strong>, <strong>The Saboteur</strong>, <strong>The Silencer</strong>, <strong>The Poisoner</strong>, <strong>The Illusionist</strong>, <strong>The Maniac</strong>, <strong>The Shade</strong> und <strong>The Manipulator</strong> — plus der neutrale <strong>Collector</strong> zu normalen Picks (max. je einer pro Spiel), und die Zufalls-Beförderung wird unterdrückt, damit der Draft entscheidet. Der Poltergeist ist bewusst nicht draftbar — er ist keine Startrolle. Die Integration liegt komplett im Plugin via Harmony-Patches — TORs Quellcode bleibt unangetastet. (In der Draft-Liste sind die Impostor-Buttons impostor-rot, damit der Fraktionsfilter sie zeigt; im Spiel kehrt die jeweilige Eigenfarbe zurück.)</p>"
+            en: "<p>When TOR's <strong>Role Draft</strong> is enabled, all enabled Unknown's Collection impostor roles — <strong>The Tesla</strong>, <strong>The Saboteur</strong>, <strong>The Silencer</strong>, <strong>The Poisoner</strong>, <strong>The Illusionist</strong>, <strong>The Maniac</strong>, <strong>The Shade</strong>, <strong>The Manipulator</strong>, <strong>The Werewolf</strong> and <strong>The Auditor</strong> — plus the neutral <strong>Collector</strong> and <strong>Pelican</strong> become regular picks (max one each per game), and the random promotion is suppressed so the draft decides. The Poltergeist and the Hunter are deliberately not draftable — neither is a starting role. The integration lives entirely in the plugin via Harmony patches — TOR's source is untouched. (In the draft list the impostor buttons use the impostor red so the faction filter shows them; each role's own colour returns in-game.)</p>",
+            de: "<p>Ist TORs <strong>Role Draft</strong> aktiv, werden alle aktivierten Unknown's-Collection-Impostor-Rollen — <strong>The Tesla</strong>, <strong>The Saboteur</strong>, <strong>The Silencer</strong>, <strong>The Poisoner</strong>, <strong>The Illusionist</strong>, <strong>The Maniac</strong>, <strong>The Shade</strong>, <strong>The Manipulator</strong>, <strong>The Werewolf</strong> und <strong>The Auditor</strong> — plus die neutralen <strong>Collector</strong> und <strong>Pelican</strong> zu normalen Picks (max. je einer pro Spiel), und die Zufalls-Beförderung wird unterdrückt, damit der Draft entscheidet. Poltergeist und Hunter sind bewusst nicht draftbar — beides sind keine Startrollen. Die Integration liegt komplett im Plugin via Harmony-Patches — TORs Quellcode bleibt unangetastet. (In der Draft-Liste sind die Impostor-Buttons impostor-rot, damit der Fraktionsfilter sie zeigt; im Spiel kehrt die jeweilige Eigenfarbe zurück.)</p>"
           }
         }
       ]
@@ -2218,7 +3010,7 @@ const NIGHTFALL = {
   key: "nightfall",
   name: "Nightfall",
   fullName: { en: "Nightfall — first person for Among Us", de: "Nightfall — Ich-Perspektive für Among Us" },
-  version: "0.2.0",
+  version: "0.3.0",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/Nightfall",
   download: "https://github.com/DaUnknown-0/Nightfall/releases/latest",
@@ -2475,6 +3267,18 @@ const NIGHTFALL = {
           body: {
             en: "<p>Polus' geometry is described by hand: <strong>17 areas, 172 floors, 126 walls (38 openings), 57 ceilings and over 1100 pieces of furniture</strong>, plus a catalogue of drawn surfaces. It is the most accurate description of Polus this project has.</p><p>The obvious alternative would have been the game's own colliders, and they are not walls: a collider runs into every door recess and back out, encloses crates, ends in mid-air and follows a wire fence in Electrical — windows, plinths, door frames and lintels are missing entirely, because the game never needs them as collision. What the game <em>does</em> supply and Nightfall reads directly: the footstep-sound zones (a complete floor-material map of the station, set by the developers) and the physics layers, which say what is a full-height wall and what is a hip-high table you can see over.</p><p>Sixteen doors are coupled to the game's own doors, eye height follows the floor (smoothed, so stairs carry the camera), and the night sky is a panorama baked once per session — stars, Milky Way, aurora and horizon extinction, standing still while the head pans past it.</p>",
             de: "<p>Die Geometrie von Polus ist von Hand beschrieben: <strong>17 Bereiche, 172 Böden, 126 Wände (38 Öffnungen), 57 Decken und über 1100 Einrichtungsstücke</strong>, dazu ein Katalog gezeichneter Oberflächen. Das ist die genaueste Beschreibung von Polus, die es in diesem Projekt gibt.</p><p>Die naheliegende Alternative wären die Collider des Spiels, und die sind keine Wände: ein Collider läuft in jede Türnische hinein und wieder heraus, umschließt Kisten, endet mitten im Nichts und folgt in Electrical einem Maschendrahtzaun — Fenster, Sockel, Türrahmen und Sturz fehlen ganz, weil das Spiel sie nie als Kollision braucht. Was das Spiel dagegen <em>mitliefert</em> und Nightfall direkt ausliest: die Schrittgeräusch-Zonen (eine vollständige Bodenmaterialkarte der Station, von den Entwicklern gesetzt) und die Physik-Ebenen, die sagen, was eine volle Wand ist und was ein hüfthoher Tisch, über den man hinwegsieht.</p><p>Sechzehn Türen sind an die Türen des Spiels gekoppelt, die Augenhöhe folgt dem Boden (geglättet, damit Treppen die Kamera tragen), und der Nachthimmel ist ein einmal pro Sitzung gebackenes Panorama — Sterne, Milchstraße, Aurora und Horizont-Extinktion, still stehend, während der Kopf daran vorbeischwenkt.</p>"
+          }
+        },
+        {
+          id: "nf-030",
+          title: { en: "New in 0.3.0", de: "Neu in 0.3.0" },
+          summary: {
+            en: "Decontamination doors finally open in first person, and player avatars are photographed completely instead of as empty suits.",
+            de: "Dekontaminations-Türen öffnen sich endlich auch in der Ich-Perspektive, und Spieler-Avatare werden komplett fotografiert statt als leere Anzüge."
+          },
+          body: {
+            en: "<ul><li><strong>Decon doors open now.</strong> Polus' decontamination doors are a different door type that never appears in the game's regular door list, so the world builder had baked them into the walls: the button sound played, the real door opened, the first-person wall stayed shut. Their colliders are now tracked as door sources of their own and synced from the real collider state every frame.</li><li><strong>Whole avatars, not empty suits.</strong> The body, visor and skin of a crewmate only render inside the game's sight mask, and the isolated capture camera had no mask in view, so avatar photos came out as a hat and a suit floating with nobody inside. Masking is now suspended for the duration of the capture and restored right after.</li></ul>",
+            de: "<ul><li><strong>Decon-Türen öffnen jetzt.</strong> Die Dekontaminations-Türen von Polus sind ein anderer Türtyp, der nie in der regulären Türliste des Spiels auftaucht, deshalb hatte der Welt-Bau sie in die Wände eingebacken: Der Knopf-Sound spielte, die echte Tür öffnete, die Ich-Perspektiven-Wand blieb zu. Ihre Collider werden jetzt als eigene Tür-Quellen geführt und jeden Frame vom echten Collider-Zustand synchronisiert.</li><li><strong>Ganze Avatare, keine leeren Anzüge.</strong> Körper, Visor und Skin eines Crewmates rendern nur innerhalb der Sichtmaske des Spiels, und die isolierte Foto-Kamera hatte keine Maske im Blick, also kamen Avatar-Fotos als Hut und Anzug heraus, in denen niemand steckt. Die Maskierung wird jetzt für die Dauer der Aufnahme ausgesetzt und direkt danach wiederhergestellt.</li></ul>"
           }
         },
         {

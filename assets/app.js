@@ -250,10 +250,16 @@
       { mod: "unknowns", de: "The Silencer — markiert Opfer zum Stummschalten im Meeting", en: "The Silencer — marks victims to be muted in meetings" },
       { mod: "unknowns", de: "The Siphoner — zieht passiv Kill-Cooldown von Impostoren", en: "The Siphoner — passively drains Impostor kill cooldown" },
       { mod: "unknowns", de: "The Witness — alleiniger Zeuge, öffentliche/anonyme Enthüllung", en: "The Witness — sole witness, public/anonymous reveal" },
-      { mod: "unknowns", de: "The Corrupter — Halluzinations-Zonen nach Kills", en: "The Corrupter — hallucination zones after kills" },
+      { mod: "unknowns", de: "The Werewolf: Alpha-Ladung im Dunkeln, Wolfsform, Silber-Regeln", en: "The Werewolf: alpha charge in the dark, wolf form, silver rules" },
+      { mod: "unknowns", de: "The Auditor: nimmt erledigte Crew-Tasks server-echt zurück", en: "The Auditor: reverts completed crew tasks for real" },
       { mod: "unknowns", de: "The Illusionist — Pfad-Clone mit Kill-Block", en: "The Illusionist — path clone with kill block" },
+      { mod: "unknowns", de: "Eigene Kill-Cutscenes für UC- und TOR-Spezialkills", en: "Custom kill cutscenes for UC and TOR special kills" },
       { mod: "unknowns", de: "Eigene Rollen ohne Änderung an TORs Quellcode", en: "Custom roles without touching TOR's source" },
       { mod: "useful", de: "Lover Revenger — Überlebender wird zum Rächer", en: "Lover Revenger — survivor becomes the avenger" },
+      { mod: "useful", de: "Newcomer-Kill-Schild: freie erste Runde für Session-Neulinge", en: "Newcomer kill shield: a free first round for session newcomers" },
+      { mod: "useful", de: "Mod-Abgleich: fehlende Mods des Hosts per Klick nachladen", en: "Mod sync: fetch the host's missing mods with one click" },
+      { mod: "useful", de: "25 Sprachen für TOR und die ganze Mod-Familie", en: "25 languages for TOR and the whole mod family" },
+      { mod: "nightfall", de: "Ich-Perspektive, sobald sich der Werwolf verwandelt", en: "First person the moment the werewolf transforms" },
     ];
     const hl = highlights
       .map(
@@ -269,6 +275,7 @@
           <span class="crewmate c-chance float"></span>
           <span class="crewmate c-useful float"></span>
           <span class="crewmate c-unknowns float"></span>
+          <span class="crewmate c-nightfall float"></span>
         </div>
         <p class="kicker">${t("home_hero_kicker")}</p>
         <h1>${heroWords(t("home_hero_title"))}</h1>
