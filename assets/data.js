@@ -73,6 +73,86 @@ function tbl(headers, rows) {
   return `<div class="table-wrap"><table><thead><tr>${h}</tr></thead><tbody>${r}</tbody></table></div>`;
 }
 
+/* ----------------------------------------------------------------------------
+ * Shield matrix — one data set, rendered per language.
+ * Cell codes: b = the shield holds, p = the attack goes through,
+ *             o = depends on an option, n = not applicable.
+ * Row order inside a group is the order the wiki shows; the column order is
+ * SHIELD_HEADS and must match the seven characters of every `v` string.
+ * -------------------------------------------------------------------------- */
+const SHIELD_HEADS = {
+  en: ["Medic", "Time Master", "Armored", "Mini", "First kill", "Newcomer", "Spawn zone"],
+  de: ["Medic", "Time Master", "Armored", "Mini", "Erstopfer", "Neuling", "Spawnschutz"]
+};
+
+const SHIELD_CELL = {
+  b: `<span style="color:var(--task-green);font-weight:700" title="blocked">✓</span>`,
+  p: `<span style="color:var(--crew-red);font-weight:700" title="goes through">✗</span>`,
+  o: `<span style="color:var(--chance);font-weight:700" title="option">~</span>`,
+  n: `<span style="color:var(--faint)">·</span>`
+};
+
+function shieldTbl(lang, rows) {
+  const head = [lang === "de" ? "Interaktion" : "Interaction"].concat(SHIELD_HEADS[lang]);
+  const body = rows.map(r => [`${r[lang]} <span style="color:var(--faint);font-size:.85em">${r.mod}</span>`]
+    .concat(r.v.split("").map(c => SHIELD_CELL[c] || SHIELD_CELL.n)));
+  return tbl(head, body);
+}
+
+const SHIELD_LEGEND = {
+  en: `<p><span style="color:var(--task-green);font-weight:700">✓</span> the shield holds &nbsp; <span style="color:var(--crew-red);font-weight:700">✗</span> the attack goes through &nbsp; <span style="color:var(--chance);font-weight:700">~</span> depends on an option &nbsp; <span style="color:var(--faint)">·</span> not applicable</p>`,
+  de: `<p><span style="color:var(--task-green);font-weight:700">✓</span> das Schild hält &nbsp; <span style="color:var(--crew-red);font-weight:700">✗</span> der Angriff geht durch &nbsp; <span style="color:var(--chance);font-weight:700">~</span> hängt an einer Option &nbsp; <span style="color:var(--faint)">·</span> nicht anwendbar</p>`
+};
+
+/* Group 1 — everything that goes through TOR's kill funnel (Helpers.checkMuderAttempt),
+   where all seven shields apply at once. */
+const SHIELD_FUNNEL = [
+  { en: "Impostor kill button", de: "Impostor-Kill-Knopf", mod: "TOR", v: "bbbbbbb" },
+  { en: "Sheriff shot", de: "Sheriff-Schuss", mod: "TOR", v: "bbbbbbb" },
+  { en: "Jackal kill", de: "Jackal-Kill", mod: "TOR", v: "bbbbbbb" },
+  { en: "Sidekick kill", de: "Sidekick-Kill", mod: "TOR", v: "bbbbbbb" },
+  { en: "Vampire bite", de: "Vampire-Biss", mod: "TOR", v: "bbbbbbb" },
+  { en: "Warlock curse kill", de: "Warlock-Fluch-Kill", mod: "TOR", v: "bbbbbbb" },
+  { en: "Witch spell (cast and resolution)", de: "Witch-Zauber (Wurf und Auflösung)", mod: "TOR", v: "bbbbbbb" },
+  { en: "Ninja marked kill", de: "Ninja-Markierungskill", mod: "TOR", v: "bbbbbbb" },
+  { en: "Thief kill", de: "Thief-Kill", mod: "TOR", v: "bbbbbbb" },
+  { en: "Bomber explosion", de: "Bomber-Explosion", mod: "TOR", v: "bbbbbbb" },
+  { en: "Pelican swallow", de: "Pelican verschluckt", mod: "UC", v: "bbbbbbb" },
+  { en: "Hunter shot", de: "Hunter-Schuss", mod: "UC", v: "bbbbbbb" },
+  { en: "Copycat with a copied ability", de: "Copycat mit kopierter Fähigkeit", mod: "UC", v: "bbbbbbb" },
+  { en: "Revenger kill after a partner's death", de: "Revenger-Kill nach Partnertod", mod: "FF", v: "bbbbbbb" },
+  { en: "Sidekick kills the Jackal", de: "Sidekick tötet den Jackal", mod: "FF", v: "bbbbbbb" }
+];
+
+/* Group 2 — deaths with their own path; the funnel and therefore most shields never see them. */
+const SHIELD_BYPASS = [
+  { en: "Guesser shot in a meeting", de: "Guesser-Schuss im Meeting", mod: "TOR", v: "ooppppp" },
+  { en: "Arsonist ignites", de: "Arsonist zündet", mod: "TOR", v: "ppppppp" },
+  { en: "Lover cascade", de: "Lover-Kaskade", mod: "TOR", v: "ppppppp" },
+  { en: "Lawyer or Pursuer dies with the client", de: "Lawyer oder Pursuer stirbt mit dem Klienten", mod: "TOR", v: "ppppppp" },
+  { en: "Ejection by vote", de: "Rauswurf per Abstimmung", mod: "Vanilla", v: "ppppppp" },
+  { en: "Tesla discharge", de: "Tesla-Entladung", mod: "UC", v: "ppppppp" },
+  { en: "Saboteur task trap", de: "Saboteur-Taskfalle", mod: "UC", v: "ppppppp" },
+  { en: "Poison death of the reporter", de: "Poisoner-Gifttod des Melders", mod: "UC", v: "ppppppp" },
+  { en: "Maniac bomb (the blast)", de: "Maniac-Bombe (Explosion)", mod: "UC", v: "oopbbbb" },
+  { en: "Thralls die with the Necromancer", de: "Thralls sterben mit dem Necromancer", mod: "UC", v: "ppppppp" }
+];
+
+/* Group 3 — abilities that target a player without killing. Since 2026-08-18 they announce
+   themselves as peaceful, so both Forgotten Fixes shields let them through. */
+const SHIELD_PEACEFUL = [
+  { en: "Medic places a shield", de: "Medic schildet jemanden", mod: "TOR", v: "nnnnnpp" },
+  { en: "Shifter swaps roles", de: "Shifter tauscht die Rolle", mod: "TOR", v: "nnnnnpp" },
+  { en: "Morphling takes a sample", de: "Morphling nimmt eine Probe", mod: "TOR", v: "nnnnnpp" },
+  { en: "Tracker attaches", de: "Tracker heftet sich an", mod: "TOR", v: "nnnnnpp" },
+  { en: "Deputy handcuffs", de: "Deputy legt Handschellen an", mod: "TOR", v: "nnnnnpp" },
+  { en: "Eraser erases a role", de: "Eraser löscht eine Rolle", mod: "TOR", v: "nnnbnpp" },
+  { en: "Arsonist douses", de: "Arsonist begießt", mod: "TOR", v: "nnnbnpp" },
+  { en: "Pursuer hands out a blank", de: "Pursuer gibt eine Platzpatrone", mod: "TOR", v: "nnnnnpp" },
+  { en: "Silencer marks a target", de: "Silencer schaltet stumm", mod: "UC", v: "nnnnnpp" },
+  { en: "Maniac plants or passes the bomb", de: "Maniac pflanzt oder übergibt die Bombe", mod: "UC", v: "nnnbnbb" }
+];
+
 /* ============================================================================
  * CHANCE MODIFIER
  * ==========================================================================*/
@@ -312,7 +392,7 @@ const USEFUL = {
   key: "useful",
   name: "Forgotten Fixes",
   fullName: { en: "TOR - Forgotten Fixes", de: "TOR - Forgotten Fixes" },
-  version: "1.4.0",
+  version: "1.4.2",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/Useful-TOR-stuff",
   download: "https://github.com/DaUnknown-0/Useful-TOR-stuff/releases/latest",
@@ -547,14 +627,14 @@ const USEFUL = {
           badges: [{ en: "Crewmate → Spy", de: "Crewmate → Spy" }],
           summary: {
             en: "Lets the Spy travel through vents like an Engineer, not just enter/exit.",
-            de: "Erlaubt dem Spy, wie ein Ingenieur durch Vents zu reisen, nicht nur betreten/verlassen."
+            de: "Erlaubt dem Spy, wie ein Engineer durch Vents zu reisen, nicht nur betreten/verlassen."
           },
           body: {
             en: tbl(["Option", "Values", "What it does"], [
               ["Spy Can Fully Vent", "Off / On", "Spy can not only enter/exit vents but travel inside them like an Engineer."]
             ]) + "<p class='note'>TOR only allows enter/exit; this option unlocks the directional arrows.</p>",
             de: tbl(["Option", "Werte", "Funktion"], [
-              ["Spy Can Fully Vent", "Off / On", "Spy kann Vents nicht nur betreten/verlassen, sondern wie ein Ingenieur darin reisen."]
+              ["Spy Can Fully Vent", "Off / On", "Spy kann Vents nicht nur betreten/verlassen, sondern wie ein Engineer darin reisen."]
             ]) + "<p class='note'>TOR erlaubt nur Betreten/Verlassen; diese Option schaltet die Richtungspfeile frei.</p>"
           }
         },
@@ -618,7 +698,7 @@ const USEFUL = {
             de: tbl(["Option", "Werte", "Funktion"], [
               ["Vulture Counts Guessed Players As Eaten", "Off / On", "Vulture erhält +1 Körper, wenn er im Guesser-Modus einen Spieler errät."],
               ["Play Eat Sound On Counted Guess", "Off / On", "Spielt den Fress-Sound bei einem gewerteten Guess ab (hörbar für alle)."]
-            ]) + "<p class='note'>Nur der direkt erratene Spieler zählt; ein mitsterbender Liebhaber-Partner nicht.</p>"
+            ]) + "<p class='note'>Nur der direkt erratene Spieler zählt; ein mitsterbender Lover-Partner nicht.</p>"
           }
         },
         {
@@ -640,11 +720,11 @@ const USEFUL = {
         },
         {
           id: "lawyer-lover-tracking",
-          title: { en: "Lawyer / Lover position tracking", de: "Anwalt- / Liebhaber-Positionsanzeige" },
+          title: { en: "Lawyer / Lover position tracking", de: "Lawyer- / Lover-Positionsanzeige" },
           badges: [{ en: "Neutral → Lawyer · Modifier → Lover", de: "Neutral → Lawyer · Modifier → Lover" }],
           summary: {
             en: "Lets the Lawyer see their target, and a Lover see their partner, on the map.",
-            de: "Lässt den Anwalt sein Ziel und einen Liebhaber seinen Partner auf der Karte sehen."
+            de: "Lässt den Lawyer sein Ziel und einen Lover seinen Partner auf der Karte sehen."
           },
           body: {
             en: tbl(["Option", "Values", "What it does"], [
@@ -654,9 +734,9 @@ const USEFUL = {
               ["…Last Position Visible In Meeting", "Off / On", "Marker stays at the last known position during meetings."]
             ]),
             de: tbl(["Option", "Werte", "Funktion"], [
-              ["Lawyer Knows Target Position", "Off / On", "Anwalt sieht sein Ziel auf der Karte."],
+              ["Lawyer Knows Target Position", "Off / On", "Lawyer sieht sein Ziel auf der Karte."],
               ["…Last Position Visible In Meeting", "Off / On", "Marker bleibt im Meeting auf der letzten bekannten Position."],
-              ["Lover Knows Partner Position", "Off / On", "Liebhaber sieht seinen Partner auf der Karte."],
+              ["Lover Knows Partner Position", "Off / On", "Lover sieht seinen Partner auf der Karte."],
               ["…Last Position Visible In Meeting", "Off / On", "Marker bleibt im Meeting auf der letzten bekannten Position."]
             ])
           }
@@ -1008,10 +1088,10 @@ const USEFUL = {
     },
     {
       id: "newcomer-shield",
-      title: { en: "Newcomer kill shield", de: "Newcomer-Kill-Schild" },
+      title: { en: "Kill shields", de: "Kill-Schilde" },
       intro: {
-        en: "A free first round for anyone new to this play session: newcomers cannot be killed until the first meeting, marked by a gold outline.",
-        de: "Eine freie erste Runde für alle, die neu in dieser Spiel-Session sind: Neuankömmlinge können bis zum ersten Meeting nicht getötet werden, markiert mit goldener Outline."
+        en: "Two shields of our own — a free first round for newcomers, and a safe spawn zone — plus the full table of which shield stops which interaction.",
+        de: "Zwei eigene Schilde — eine freie erste Runde für Neulinge und eine sichere Spawnzone — plus die vollständige Tabelle, welches Schild welche Interaktion aufhält."
       },
       entries: [
         {
@@ -1023,8 +1103,8 @@ const USEFUL = {
             de: "Session-Neulinge können bis zum ersten Meeting weder getötet noch überhaupt anvisiert werden, von Vanilla-Kills wie von TOR-Rollen-Kills. Eine goldene Outline markiert sie."
           },
           body: {
-            en: "<p>With <em>Protect Players New To This Session</em> on, a player joining the host's session for the first time gets a shield for their very first round: they cannot be killed or targeted, neither by vanilla Impostor kills nor by TOR role kills (Sheriff, Jackal, Vampire and friends; even roles that suicide on a failed kill simply cannot pick them). The shield ends exactly at the first meeting, never later, so it can never decide a game. Shielded players carry a <strong>gold</strong> outline (deliberately neither the Medic cyan nor the first-kill blue), and the killer optionally learns why the kill failed. Lover cascades are deliberately not suppressed: the shield guards against being killed, not against the lover bond.</p>",
-            de: "<p>Mit <em>Protect Players New To This Session</em> bekommt ein Spieler, der zum ersten Mal in der Session des Hosts mitspielt, ein Schild für seine allererste Runde: Er kann weder getötet noch anvisiert werden, weder von Vanilla-Impostor-Kills noch von TOR-Rollen-Kills (Sheriff, Jackal, Vampire und Co.; selbst Rollen, die bei einem Fehlkill Selbstmord begehen, können ihn schlicht nicht auswählen). Das Schild endet exakt beim ersten Meeting, nie später, damit es nie ein Spiel entscheidet. Geschützte tragen eine <strong>goldene</strong> Outline (bewusst weder Medic-Cyan noch Erste-Kill-Blau), und der Killer erfährt optional, warum der Kill fehlschlug. Lover-Kaskaden werden bewusst nicht unterdrückt: Das Schild schützt vor dem Getötetwerden, nicht vor der Lover-Bindung.</p>"
+            en: "<p>With <em>Protect Players New To This Session</em> on, a player joining the host's session for the first time gets a shield for their very first round: they cannot be killed, neither by vanilla Impostor kills nor by TOR role kills (Sheriff, Jackal, Vampire and friends). Attackers cannot even pick them as a target, so a role that suicides on a failed kill never fires in the first place. <strong>Peaceful abilities are exempt</strong>: the Medic can still shield them, the Tracker still tracks them, the Shifter still shifts. The shield ends exactly at the first meeting, never later, so it can never decide a game. Shielded players carry a <strong>gold</strong> outline (deliberately neither the Medic cyan nor the first-kill blue), and the killer optionally learns why the kill failed. Lover cascades are deliberately not suppressed: the shield guards against being killed, not against the lover bond.</p>",
+            de: "<p>Mit <em>Protect Players New To This Session</em> bekommt ein Spieler, der zum ersten Mal in der Session des Hosts mitspielt, ein Schild für seine allererste Runde: Er kann nicht getötet werden, weder von Vanilla-Impostor-Kills noch von TOR-Rollen-Kills (Sheriff, Jackal, Vampire und Co.). Angreifer können ihn nicht einmal als Ziel auswählen, eine Rolle mit Selbstmord bei Fehlkill schießt also gar nicht erst. <strong>Friedliche Fähigkeiten sind ausgenommen</strong>: Der Medic kann ihn weiterhin schilden, der Tracker ihn verfolgen, der Shifter mit ihm tauschen. Das Schild endet exakt beim ersten Meeting, nie später, damit es nie ein Spiel entscheidet. Geschützte tragen eine <strong>goldene</strong> Outline (bewusst weder Medic-Cyan noch Erste-Kill-Blau), und der Killer erfährt optional, warum der Kill fehlschlug. Lover-Kaskaden werden bewusst nicht unterdrückt: Das Schild schützt vor dem Getötetwerden, nicht vor der Lover-Bindung.</p>"
           }
         },
         {
@@ -1037,6 +1117,45 @@ const USEFUL = {
           body: {
             en: "<p>The host tracks who has already played this session by <strong>friend code</strong> (with a name fallback on servers without accounts). The very first lobby of a session is the grace period: nobody counts as new there, that is the regular group. From the second round on, an unknown friend code means protection. The host can also mark players as new or revoke the shield manually in a lobby panel, and the hand mark beats the automatic in both directions. The session state survives a restart or crash for 10 minutes, after which the session genuinely starts over.</p>",
             de: "<p>Der Host verfolgt per <strong>Friend-Code</strong>, wer in dieser Session schon gespielt hat (mit Namens-Fallback auf Servern ohne Accounts). Die allererste Lobby einer Session ist die Gnadenfrist: Dort zählt niemand als neu, das ist die Stammgruppe. Ab der zweiten Runde bedeutet ein unbekannter Friend-Code Schutz. Der Host kann Spieler außerdem in einem Lobby-Panel von Hand als neu markieren oder das Schild entziehen, und die Handmarkierung schlägt die Automatik in beide Richtungen. Der Session-Zustand übersteht einen Neustart oder Crash für 10 Minuten, danach beginnt die Session wirklich von vorn.</p>"
+          }
+        },
+        {
+          id: "anti-start-kill",
+          title: { en: "Anti Start Kill: the spawn is a safe zone", de: "Anti Start Kill: Der Spawn ist eine Schutzzone" },
+          badges: [{ en: "Host-authoritative", de: "Host-autoritativ" }],
+          summary: {
+            en: "Nobody kills (or sidekicks) until both sides have left the spawn area once. A green outline marks who is still protected.",
+            de: "Niemand tötet (oder sidekickt), bis beide Seiten den Startbereich einmal verlassen haben. Eine grüne Outline zeigt, wer noch geschützt ist."
+          },
+          body: {
+            en: "<p>The classic start kill decides a round before it begins: somebody camps the Dropship and stabs a player who is still reading their role card. With <em>Anti Start Kill</em> on, every player carries one flag — <em>has left the spawn area once</em> — and a kill needs both flags, the killer's and the victim's. The zone is the spawn <strong>room</strong> itself (Dropship, Cafeteria, Launchpad), read from the map at round start, so nothing is hard-coded per map; only a spawn that resolves to no room at all (the Fungle beach) falls back to a circle. Teleport-style jumps in the opening seconds re-record the spawn instead of counting as leaving, so an Airship spawn select or a vent hop never hands out a free kill.</p><p>Any meeting ends all remaining protection for good — the rule covers the round opening, never the mid-game. Two optional global caps answer the spawn camper: protection can also end after a time limit or after a number of fixed sabotages. As with the newcomer shield, peaceful abilities are exempt, and the whole feature is off by default.</p>",
+            de: "<p>Der klassische Start-Kill entscheidet eine Runde, bevor sie beginnt: Jemand campt das Dropship und ersticht einen Spieler, der noch seine Rollenkarte liest. Mit <em>Anti Start Kill</em> trägt jeder Spieler ein Flag — <em>hat den Startbereich einmal verlassen</em> — und ein Kill braucht beide Flags, das des Killers und das des Opfers. Die Zone ist der Spawn-<strong>Raum</strong> selbst (Dropship, Cafeteria, Launchpad), beim Rundenstart aus der Map gelesen, also nichts pro Map fest verdrahtet; nur ein Spawn, der gar keinen Raum auflöst (der Fungle-Strand), fällt auf einen Kreis zurück. Teleport-Sprünge in den ersten Sekunden zeichnen den Spawn neu auf, statt als Verlassen zu zählen, damit ein Airship-Spawn-Select oder ein Vent-Hop nie einen Freikill verschenkt.</p><p>Jedes Meeting beendet allen verbliebenen Schutz endgültig — die Regel deckt die Rundeneröffnung ab, nie die Spielmitte. Zwei optionale globale Deckel beantworten den Spawn-Camper: Der Schutz kann zusätzlich nach einem Zeitlimit oder nach einer Anzahl behobener Sabotagen enden. Wie beim Newcomer-Schild sind friedliche Fähigkeiten ausgenommen, und das ganze Feature ist standardmäßig aus.</p>"
+          }
+        },
+        {
+          id: "shield-matrix",
+          title: { en: "Which shield stops what", de: "Welches Schild hält was" },
+          summary: {
+            en: "The full matrix: every kill and every targeted ability against all seven shields in TOR, Unknown's Collection and Forgotten Fixes.",
+            de: "Die vollständige Matrix: jeder Kill und jede Zielaktion gegen alle sieben Schilde aus TOR, Unknown's Collection und Forgotten Fixes."
+          },
+          body: {
+            en: "<p>Seven shields can protect a player at once, and whether one applies comes down to a single question: does the kill go through TOR's shared kill check, or does it have a path of its own? Everything in the first table asks that check, so <strong>all seven shields hold at once</strong>. Everything in the second table has its own death path and asks no shield at all, unless it brings its own check.</p>"
+              + SHIELD_LEGEND.en
+              + "<p><strong>Kills through TOR's kill check</strong></p>" + shieldTbl("en", SHIELD_FUNNEL)
+              + "<p><strong>Kills that bypass the check</strong></p>" + shieldTbl("en", SHIELD_BYPASS)
+              + "<p><strong>Abilities that target without killing</strong> — since 2026-08-18 these announce themselves as peaceful, so both of our shields let them through. Planting the Maniac's bomb stays blocked: that one is the attack, the blast is only its delay.</p>"
+              + shieldTbl("en", SHIELD_PEACEFUL)
+              + "<p><strong>Notes.</strong> Armored does not cleanly abort a kill, it blanks it: the victim survives, the armor breaks, the attacker still loses their cooldown. The Guesser only knows the Medic shield (TOR option <em>Guesser Kills Through Shield</em>); our own <em>Unguessable After Shield Saved A Kill</em> additionally takes the Time Master out of the guess list once his time shield has saved him. The Maniac's <em>Pierces Shield</em> option reaches the Medic and Time Master shields only. The Poisoner is answered by the Medic's antidote, not by a shield. Roles that never offer the not-grown-up Mini as a target fail before the check even runs.</p>"
+              + "<p><strong>Outside the matrix.</strong> The Werewolf survives one Sheriff bullet in wolf form (the Hunter always kills him, traps only wound); the Illusionist's clone wears a fake shield and never dies; the Hide'n'Seek prey has its own rewinding time shield; a Submerged elevator suppresses kills while you ride it; and the Deputy's handcuffs block the attacker rather than protecting the victim. Only the newcomer shield and the spawn zone are additionally enforced host-side, so they hold even against a client without the mods.</p>",
+            de: "<p>Sieben Schilde können einen Spieler gleichzeitig schützen, und ob eines greift, hängt an einer einzigen Frage: Läuft die Tötung durch TORs gemeinsame Kill-Prüfung oder hat sie einen eigenen Weg? Alles in der ersten Tabelle fragt diese Prüfung, dort halten <strong>alle sieben Schilde gleichzeitig</strong>. Alles in der zweiten Tabelle hat einen eigenen Todespfad und fragt gar kein Schild, sofern es keine eigene Prüfung mitbringt.</p>"
+              + SHIELD_LEGEND.de
+              + "<p><strong>Tötungen durch TORs Kill-Prüfung</strong></p>" + shieldTbl("de", SHIELD_FUNNEL)
+              + "<p><strong>Tötungen an der Prüfung vorbei</strong></p>" + shieldTbl("de", SHIELD_BYPASS)
+              + "<p><strong>Aktionen mit Ziel, aber ohne Tötung</strong> — seit dem 18.08.2026 melden sie sich als friedlich an, beide eigenen Schilde lassen sie durch. Das Pflanzen der Maniac-Bombe bleibt gesperrt: Das ist der Angriff, die Explosion nur seine Verzögerung.</p>"
+              + shieldTbl("de", SHIELD_PEACEFUL)
+              + "<p><strong>Anmerkungen.</strong> Armored bricht einen Kill nicht sauber ab, sie macht ihn zur Platzpatrone: Das Opfer überlebt, die Panzerung zerbricht, der Angreifer verliert trotzdem seinen Cooldown. Der Guesser kennt nur das Medic-Schild (TOR-Option <em>Guesser Kills Through Shield</em>); unser <em>Unguessable After Shield Saved A Kill</em> nimmt den Time Master zusätzlich aus der Guesser-Liste, sobald sein Zeitschild ihn einmal gerettet hat. Die <em>Pierces Shield</em>-Option des Maniac erreicht nur das Medic- und das Time-Master-Schild. Gegen Gift hilft das Gegenmittel des Medics, kein Schild. Rollen, die ein nicht ausgewachsenes Mini gar nicht erst als Ziel anbieten, scheitern schon vor der Prüfung.</p>"
+              + "<p><strong>Außerhalb der Matrix.</strong> Der Werewolf überlebt in Wolfsform eine Sheriff-Kugel (der Hunter tötet ihn immer, Fallen verwunden nur); der Klon des Illusionist trägt ein Schein-Schild und stirbt nie; der Hunted im Hide'n'Seek hat sein eigenes zurückspulendes Zeitschild; ein Submerged-Aufzug unterdrückt Kills während der Fahrt; und die Handschellen des Deputy blockieren den Angreifer, statt das Opfer zu schützen. Nur Newcomer-Schild und Spawnzone sind zusätzlich host-seitig abgesichert und halten damit auch gegen einen Client ohne die Mods.</p>"
           }
         }
       ]
@@ -1208,7 +1327,7 @@ const UNKNOWNS = {
   key: "unknowns",
   name: "Unknown's Collection",
   fullName: { en: "Unknown's Collection — custom roles for TOR", de: "Unknown's Collection — eigene Rollen für TOR" },
-  version: "1.2.0",
+  version: "1.2.2",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/UnknownsCollection",
   download: "https://github.com/DaUnknown-0/UnknownsCollection/releases/latest",
@@ -1218,7 +1337,7 @@ const UNKNOWNS = {
   },
   intro: {
     en: "Unknown's Collection is a separate plugin that adds <strong>new roles</strong> to TOR 4.8.0 purely through Harmony patches — TOR's source is never modified, and the only hard dependency is The Other Roles. The roles are client-side, so the lobby can only be started when every player runs the same Unknown's Collection version. Current roles — Impostor: <strong>The Tesla</strong>, <strong>The Saboteur</strong>, <strong>The Silencer</strong>, <strong>The Poisoner</strong>, <strong>The Illusionist</strong>, <strong>The Maniac</strong>, <strong>The Shade</strong>, <strong>The Manipulator</strong>, <strong>The Werewolf</strong> and <strong>The Auditor</strong>; Crewmate: <strong>The Siphoner</strong>, <strong>The Witness</strong>, <strong>The Scout</strong>, <strong>The Beacon</strong> and <strong>The Hunter</strong> (a mid-round promotion in Werewolf rounds); Neutral: <strong>The Bug</strong>, <strong>The Follower</strong>, <strong>The Copycat</strong>, <strong>The Collector</strong> and <strong>The Pelican</strong>; plus <strong>The Poltergeist</strong> — a ghost role the first dead player rises into — and <strong>The Gambler</strong>, a crew modifier that bets on the round. All Impostor roles, the Collector, the Pelican and the Werewolf are pickable in TOR's Role Draft. Beyond roles, 1.2.0 adds custom kill cutscenes, three custom hats and a searchable role guide in 26 languages; since 1.0.1.60 every ability comes with dedicated particle effects and positional stereo sound.",
-    de: "Unknown's Collection ist ein eigenständiges Plugin, das TOR 4.8.0 <strong>neue Rollen</strong> rein über Harmony-Patches hinzufügt — TORs Quellcode wird nie verändert, einzige harte Abhängigkeit ist The Other Roles. Die Rollen sind client-seitig, daher kann die Lobby nur gestartet werden, wenn alle Spieler dieselbe Unknown's-Collection-Version haben. Aktuelle Rollen — Impostor: <strong>The Tesla</strong>, <strong>The Saboteur</strong>, <strong>The Silencer</strong>, <strong>The Poisoner</strong>, <strong>The Illusionist</strong>, <strong>The Maniac</strong>, <strong>The Shade</strong>, <strong>The Manipulator</strong>, <strong>The Werewolf</strong> und <strong>The Auditor</strong>; Crewmate: <strong>The Siphoner</strong>, <strong>The Witness</strong>, <strong>The Scout</strong>, <strong>The Beacon</strong> und <strong>The Hunter</strong> (eine Beförderung mitten in Werwolf-Runden); Neutral: <strong>The Bug</strong>, <strong>The Follower</strong>, <strong>The Copycat</strong>, <strong>The Collector</strong> und <strong>The Pelican</strong>; dazu <strong>The Poltergeist</strong> — eine Geist-Rolle, in die der erste Tote aufsteigt — und <strong>The Gambler</strong>, ein Crew-Modifier, der auf die Runde wettet. Alle Impostor-Rollen, der Collector, der Pelican und der Werewolf sind im Role Draft von TOR wählbar. Über Rollen hinaus bringt 1.2.0 eigene Kill-Cutscenes, drei eigene Hüte und einen durchsuchbaren Rollen-Guide in 26 Sprachen; seit 1.0.1.60 hat jede Fähigkeit eigene Partikeleffekte und positionalen Stereo-Sound."
+    de: "Unknown's Collection ist ein eigenständiges Plugin, das TOR 4.8.0 <strong>neue Rollen</strong> rein über Harmony-Patches hinzufügt — TORs Quellcode wird nie verändert, einzige harte Abhängigkeit ist The Other Roles. Die Rollen sind client-seitig, daher kann die Lobby nur gestartet werden, wenn alle Spieler dieselbe Unknown's-Collection-Version haben. Aktuelle Rollen — Impostor: <strong>The Tesla</strong>, <strong>The Saboteur</strong>, <strong>The Silencer</strong>, <strong>The Poisoner</strong>, <strong>The Illusionist</strong>, <strong>The Maniac</strong>, <strong>The Shade</strong>, <strong>The Manipulator</strong>, <strong>The Werewolf</strong> und <strong>The Auditor</strong>; Crewmate: <strong>The Siphoner</strong>, <strong>The Witness</strong>, <strong>The Scout</strong>, <strong>The Beacon</strong> und <strong>The Hunter</strong> (eine Beförderung mitten in Werewolf-Runden); Neutral: <strong>The Bug</strong>, <strong>The Follower</strong>, <strong>The Copycat</strong>, <strong>The Collector</strong> und <strong>The Pelican</strong>; dazu <strong>The Poltergeist</strong> — eine Geist-Rolle, in die der erste Tote aufsteigt — und <strong>The Gambler</strong>, ein Crew-Modifier, der auf die Runde wettet. Alle Impostor-Rollen, der Collector, der Pelican und der Werewolf sind im Role Draft von TOR wählbar. Über Rollen hinaus bringt 1.2.0 eigene Kill-Cutscenes, drei eigene Hüte und einen durchsuchbaren Rollen-Guide in 26 Sprachen; seit 1.0.1.60 hat jede Fähigkeit eigene Partikeleffekte und positionalen Stereo-Sound."
   },
   install: {
     en: "<ol><li>Install <a href='https://github.com/TheOtherRolesAU/TheOtherRoles'>The Other Roles</a> into your Among Us BepInEx setup.</li><li>Download the latest <code>UnknownsCollection.dll</code> from the releases page.</li><li>Copy it into <code>&lt;Among Us&gt;/BepInEx/plugins/</code> (next to <code>TheOtherRoles.dll</code>).</li><li>Start the game. Every player who should see the role needs the mod — same version.</li></ol><p>A channel-aware in-game auto-updater checks GitHub and integrates with the Mod Manager (from Forgotten Fixes).</p>",
@@ -1541,7 +1660,7 @@ const UNKNOWNS = {
       entries: [
         {
           id: "witness-sighting",
-          title: { en: "Sole-witness sighting", de: "Allein-Zeugen-Sichtung" },
+          title: { en: "Sole-witness sighting", de: "Witness allein am Tatort" },
           summary: {
             en: "If the Witness is the only crewmate who saw the kill, the killer's name glows red for the Witness.",
             de: "Wenn der Witness der einzige Crewmate ist, der den Kill gesehen hat, leuchtet der Name des Killers rot für den Witness."
@@ -2192,7 +2311,7 @@ const UNKNOWNS = {
       title: { en: "The Collector (Neutral)", de: "The Collector (Neutral)" },
       intro: {
         en: "A neutral relic hunter. Hidden relics are scattered across the map — only the Collector can see them clearly. Collect enough and the Collector wins alone.",
-        de: "Ein neutraler Relikt-Jäger. Versteckte Relikte sind über die Map verteilt — nur der Collector sieht sie klar. Wer genug sammelt, gewinnt allein."
+        de: "Ein Neutraler auf Reliktjagd. Versteckte Relikte sind über die Map verteilt — nur der Collector sieht sie klar. Wer genug sammelt, gewinnt allein."
       },
       entries: [
         {
@@ -2448,7 +2567,7 @@ const UNKNOWNS = {
           title: { en: "The look of the beast", de: "Der Look des Biests" },
           summary: {
             en: "A short camo-black beat, then a full-body werewolf costume at 1.5x player size with glowing eyes. With Nightfall installed, the transformation even switches the wolf into first person.",
-            de: "Ein kurzer Kamo-schwarzer Beat, dann ein Ganzkörper-Werwolf-Kostüm bei 1.5x Spielergröße mit glühenden Augen. Mit installiertem Nightfall wechselt die Verwandlung den Wolf sogar in die Ich-Perspektive."
+            de: "Ein kurzer Kamo-schwarzer Beat, dann ein Ganzkörper-Werewolf-Kostüm bei 1.5x Spielergröße mit glühenden Augen. Mit installiertem Nightfall wechselt die Verwandlung den Wolf sogar in die Ich-Perspektive."
           },
           body: {
             en: "<p>The transformation plays a short camo-black beat (like TOR's Camouflager) and then dresses the wolf in the full-body <em>Werewolf</em> hat (visor, skin and pet hidden) at <strong>1.5x player size</strong>, with animated glowing eyes. While the Werewolf role is enabled, the Werewolf hat is locked in the wardrobe so nobody can impersonate the beast; a previously worn hat is restored afterwards. With the separate <a href='nightfall.html'>Nightfall</a> plugin installed, the transformation additionally switches the Werewolf into a real first-person view.</p>",
@@ -2510,7 +2629,7 @@ const UNKNOWNS = {
       title: { en: "The Hunter (Crewmate)", de: "The Hunter (Crewmate)" },
       intro: {
         en: "Not a rolled role but an event inside a Werewolf round: once every non-Werewolf Impostor is dead, the living original Sheriff rises to become the Hunter, the one crewmate the beast should fear.",
-        de: "Keine ausgeloste Rolle, sondern ein Ereignis in einer Werwolf-Runde: Sobald jeder Nicht-Werwolf-Impostor tot ist, steigt der lebende Original-Sheriff zum Hunter auf, dem einen Crewmate, den das Biest fürchten muss."
+        de: "Keine ausgeloste Rolle, sondern ein Ereignis in einer Werewolf-Runde: Sobald jeder Nicht-Werewolf-Impostor tot ist, steigt der lebende Original-Sheriff zum Hunter auf, dem einen Crewmate, den das Biest fürchten muss."
       },
       entries: [
         {
@@ -2518,16 +2637,16 @@ const UNKNOWNS = {
           title: { en: "The promotion", de: "Die Beförderung" },
           summary: {
             en: "When all non-Werewolf Impostors are dead, the living original Sheriff becomes the Hunter, exactly once per round. A living Deputy can be promoted to Sheriff to fill the gap.",
-            de: "Sind alle Nicht-Werwolf-Impostor tot, wird der lebende Original-Sheriff zum Hunter, genau einmal pro Runde. Ein lebender Deputy kann zum Sheriff nachrücken."
+            de: "Sind alle Nicht-Werewolf-Impostor tot, wird der lebende Original-Sheriff zum Hunter, genau einmal pro Runde. Ein lebender Deputy kann zum Sheriff nachrücken."
           },
           body: {
             en: "<p>The host checks the condition on every murder and exile plus a once-per-second poll (which also catches disconnects): as soon as every non-Werewolf Impostor is dead and the original Sheriff is still alive, the promotion fires, exactly once per round. By default only the <em>original</em> Sheriff qualifies, not a Deputy who inherited the badge. Optionally a living Deputy is promoted to the new Sheriff at the same moment, so the crew does not lose its lawman. The Hunter is deliberately <strong>not</strong> in the Role Draft: it is an event, not a starting role.</p>",
-            de: "<p>Der Host prüft die Bedingung bei jedem Mord und Exile plus einem 1-Hz-Poll (der auch Disconnects abfängt): Sobald jeder Nicht-Werwolf-Impostor tot ist und der Original-Sheriff noch lebt, feuert die Beförderung, genau einmal pro Runde. Standardmäßig qualifiziert sich nur der <em>originale</em> Sheriff, kein Deputy, der den Stern geerbt hat. Optional wird im selben Moment ein lebender Deputy zum neuen Sheriff befördert, damit die Crew ihren Gesetzeshüter behält. Der Hunter ist bewusst <strong>nicht</strong> im Role Draft: Er ist ein Ereignis, keine Startrolle.</p>"
+            de: "<p>Der Host prüft die Bedingung bei jedem Mord und Exile plus einem 1-Hz-Poll (der auch Disconnects abfängt): Sobald jeder Nicht-Werewolf-Impostor tot ist und der Original-Sheriff noch lebt, feuert die Beförderung, genau einmal pro Runde. Standardmäßig qualifiziert sich nur der <em>originale</em> Sheriff, kein Deputy, der den Stern geerbt hat. Optional wird im selben Moment ein lebender Deputy zum neuen Sheriff befördert, damit die Crew ihren Gesetzeshüter behält. Der Hunter ist bewusst <strong>nicht</strong> im Role Draft: Er ist ein Ereignis, keine Startrolle.</p>"
           }
         },
         {
           id: "hunter-abilities",
-          title: { en: "Silver bullets & hunter's sight", de: "Silberkugeln & Jägersicht" },
+          title: { en: "Silver bullets & hunter's sight", de: "Silberkugeln & Hunter-Sicht" },
           summary: {
             en: "An own kill button that always kills the Werewolf (in any form) and other Impostors, optionally neutral killers too; a miss kills the Hunter. In wolf darkness the Hunter sees farther than everyone else.",
             de: "Ein eigener Kill-Button, der den Werewolf (in jeder Form) und andere Impostoren immer tötet, optional auch neutrale Killer; ein Fehlschuss tötet den Hunter. In der Wolfsdunkelheit sieht der Hunter weiter als alle anderen."
@@ -2542,7 +2661,7 @@ const UNKNOWNS = {
           title: { en: "Options (under the Werewolf)", de: "Optionen (unter dem Werewolf)" },
           summary: {
             en: "All Hunter options live under the Werewolf spawn rate, since the Hunter only exists in Werewolf rounds.",
-            de: "Alle Hunter-Optionen hängen unter der Werewolf-Spawnrate, da es den Hunter nur in Werwolf-Runden gibt."
+            de: "Alle Hunter-Optionen hängen unter der Werewolf-Spawnrate, da es den Hunter nur in Werewolf-Runden gibt."
           },
           body: {
             en: tbl(["Option", "Default", "What it does"], [
@@ -2561,7 +2680,7 @@ const UNKNOWNS = {
               ["Hunter Can Kill Neutral Killers", "On", "Ob die Silberkugeln auch gegen neutrale Killer wirken."],
               ["Deputy Promotes To Sheriff When The Hunter Rises", "On", "Ein lebender Deputy rückt auf den leeren Sheriff-Posten nach."],
               ["Hunter Guessing", "Full Menu If Already Guesser", "Full Menu If Already Guesser / Only The Werewolf / No Hunter Guessing."],
-              ["Hunter Wears The Monster Hunter Hat", "On", "Öffentliches Jäger-Kostüm; entfernt ihn aus den Guess-Menüs aller, die es sehen."]
+              ["Hunter Wears The Monster Hunter Hat", "On", "Öffentliches Hunter-Kostüm; entfernt ihn aus den Guess-Menüs aller, die es sehen."]
             ])
           }
         }
@@ -2862,7 +2981,7 @@ const UNKNOWNS = {
       title: { en: "Custom hats", de: "Eigene Hüte" },
       intro: {
         en: "Three UC-exclusive hats appear in TOR's hat shop without touching TOR: Virus, an animated billboard, and the full-body Werewolf costume.",
-        de: "Drei UC-exklusive Hüte erscheinen in TORs Hut-Shop, ohne TOR anzufassen: Virus, eine animierte Werbetafel und das Ganzkörper-Werwolf-Kostüm."
+        de: "Drei UC-exklusive Hüte erscheinen in TORs Hut-Shop, ohne TOR anzufassen: Virus, eine animierte Werbetafel und das Ganzkörper-Werewolf-Kostüm."
       },
       entries: [
         {
@@ -2870,7 +2989,7 @@ const UNKNOWNS = {
           title: { en: "Virus, Werbetafel & Werewolf", de: "Virus, Werbetafel & Werewolf" },
           summary: {
             en: "A spiked virus silhouette, a six-frame blinking billboard worn on the back, and the werewolf full-body costume with glowing eyes, calibrated against the real in-game silhouette.",
-            de: "Eine Stachel-Virus-Silhouette, eine sechs Frames blinkende Werbetafel auf dem Rücken und das Ganzkörper-Werwolf-Kostüm mit Glüh-Augen, kalibriert an der echten In-Game-Silhouette."
+            de: "Eine Stachel-Virus-Silhouette, eine sechs Frames blinkende Werbetafel auf dem Rücken und das Ganzkörper-Werewolf-Kostüm mit Glüh-Augen, kalibriert an der echten In-Game-Silhouette."
           },
           body: {
             en: "<p><strong>Virus</strong> wraps the whole crewmate in a ring of spikes and pustules; <strong>Werbetafel</strong> is an animated billboard blinking through six frames behind the player; <strong>Werewolf</strong> is the full side-profile beast with six animated eye-glow frames, including a proper climb pose. All three were calibrated against the game's real crewmate silhouette (measured from in-game screenshots), so they sit exactly on the body instead of floating around it. Technically the plugin extracts the sprites to TOR's hat folder and registers them through TOR's own custom-hat pipeline via reflection: TOR's source stays untouched, and the hats behave like any other custom hat in the shop. While the Werewolf role is enabled in the lobby, the Werewolf hat is locked in the wardrobe so the transformation stays unambiguous.</p>",
@@ -3016,7 +3135,7 @@ const NIGHTFALL = {
   download: "https://github.com/DaUnknown-0/Nightfall/releases/latest",
   tagline: {
     en: "When Unknown's Collection's werewolf transforms, the top-down view is gone: real walls in perspective, a flashlight in your hand — and the beast gets red predator sight and its own claws.",
-    de: "Sobald sich der Werwolf aus Unknown's Collection verwandelt, ist die Draufsicht weg: perspektivische Wände, eine Taschenlampe in der Hand — und das Biest bekommt rote Raubtiersicht und seine eigenen Krallen."
+    de: "Sobald sich der Werewolf aus Unknown's Collection verwandelt, ist die Draufsicht weg: perspektivische Wände, eine Taschenlampe in der Hand — und das Biest bekommt rote Raubtiersicht und seine eigenen Krallen."
   },
   intro: {
     en: "Nightfall is a standalone BepInEx plugin. It changes neither The Other Roles nor Unknown's Collection, it only reads their state by reflection — without Unknown's Collection it loads anyway and stays quiet. The picture is drawn by a software renderer that contains no Unity at all, and is put on screen as one full-screen sprite under the HUD. <strong>Only Polus has a described world so far</strong>; on every other map the view deliberately stays off (see <em>World &amp; maps</em>).",
@@ -3024,11 +3143,11 @@ const NIGHTFALL = {
   },
   install: {
     en: "<ol><li>Install <a href='https://github.com/TheOtherRolesAU/TheOtherRoles'>The Other Roles</a> into your Among Us BepInEx setup. <a href='https://github.com/DaUnknown-0/UnknownsCollection'>Unknown's Collection</a> is optional, but it is what supplies the Werewolf whose transformation triggers Nightfall.</li><li>Download the latest <code>Nightfall.dll</code> from the releases page.</li><li>Copy it into <code>&lt;Among Us&gt;/BepInEx/plugins/</code>.</li><li>Start the game.</li></ol><p>After the first install, the built-in updater checks this repo's GitHub releases on the main menu and offers an update button — manual downloads are only needed for the initial setup.</p>",
-    de: "<ol><li>Installiere <a href='https://github.com/TheOtherRolesAU/TheOtherRoles'>The Other Roles</a> in dein Among-Us-BepInEx-Setup. <a href='https://github.com/DaUnknown-0/UnknownsCollection'>Unknown's Collection</a> ist optional, liefert aber den Werwolf, dessen Verwandlung Nightfall auslöst.</li><li>Lade die neueste <code>Nightfall.dll</code> von der Releases-Seite.</li><li>Kopiere sie nach <code>&lt;Among Us&gt;/BepInEx/plugins/</code>.</li><li>Starte das Spiel.</li></ol><p>Nach der ersten Installation prüft der eingebaute Updater die GitHub-Releases dieses Repos im Hauptmenü und bietet einen Update-Button an — manuelle Downloads sind nur für die Erstinstallation nötig.</p>"
+    de: "<ol><li>Installiere <a href='https://github.com/TheOtherRolesAU/TheOtherRoles'>The Other Roles</a> in dein Among-Us-BepInEx-Setup. <a href='https://github.com/DaUnknown-0/UnknownsCollection'>Unknown's Collection</a> ist optional, liefert aber den Werewolf, dessen Verwandlung Nightfall auslöst.</li><li>Lade die neueste <code>Nightfall.dll</code> von der Releases-Seite.</li><li>Kopiere sie nach <code>&lt;Among Us&gt;/BepInEx/plugins/</code>.</li><li>Starte das Spiel.</li></ol><p>Nach der ersten Installation prüft der eingebaute Updater die GitHub-Releases dieses Repos im Hauptmenü und bietet einen Update-Button an — manuelle Downloads sind nur für die Erstinstallation nötig.</p>"
   },
   deps: {
     en: "<ul><li><strong>The Other Roles 4.8.0</strong> (hard dependency)</li><li><strong>Unknown's Collection</strong> (optional) — supplies the Werewolf whose transformation is the default trigger. Without it, the view is only reachable via the <em>Always</em> mode and the debug key.</li></ul>",
-    de: "<ul><li><strong>The Other Roles 4.8.0</strong> (harte Abhängigkeit)</li><li><strong>Unknown's Collection</strong> (optional) — liefert den Werwolf, dessen Verwandlung der Standard-Auslöser ist. Ohne UC ist die Sicht nur über den Modus <em>Always</em> und die Debug-Taste erreichbar.</li></ul>"
+    de: "<ul><li><strong>The Other Roles 4.8.0</strong> (harte Abhängigkeit)</li><li><strong>Unknown's Collection</strong> (optional) — liefert den Werewolf, dessen Verwandlung der Standard-Auslöser ist. Ohne UC ist die Sicht nur über den Modus <em>Always</em> und die Debug-Taste erreichbar.</li></ul>"
   },
   sections: [
     {
@@ -3044,7 +3163,7 @@ const NIGHTFALL = {
           title: { en: "When the world flips", de: "Wann die Welt kippt" },
           summary: {
             en: "The werewolf's transformation is the default trigger; four hard blocks come before everything else.",
-            de: "Die Verwandlung des Werwolfs ist der Standard-Auslöser; vier harte Sperren stehen vor allem anderen."
+            de: "Die Verwandlung des Werewolfs ist der Standard-Auslöser; vier harte Sperren stehen vor allem anderen."
           },
           body: {
             en: "<p>By default the view begins when Unknown's Collection's werewolf transforms and ends when it reverts. The host can widen or switch that off entirely with the <strong>3D Mode</strong> option (see <em>Configuration</em>).</p><p>Four blocks sit <strong>before</strong> everything else, including the debug key and the mode:</p>" + tbl(["Block", "Why"], [
@@ -3053,7 +3172,7 @@ const NIGHTFALL = {
               ["Round end", "Between the win condition firing and the actual scene change the game already draws its end screen — the view has to be gone by then."],
               ["Maps without a described world", "Only Polus is built. On the other maps the view never comes up at all."]
             ]),
-            de: "<p>Standardmäßig beginnt die Sicht mit dem Verwandeln des Werwolfs aus Unknown's Collection und endet mit dem Zurückverwandeln. Der Host kann das mit der Option <strong>3D Mode</strong> ausweiten oder ganz abschalten (siehe <em>Einstellungen</em>).</p><p>Vier Sperren stehen <strong>vor</strong> allem anderen, auch vor der Debug-Taste und vor dem Modus:</p>" + tbl(["Sperre", "Warum"], [
+            de: "<p>Standardmäßig beginnt die Sicht mit dem Verwandeln des Werewolfs aus Unknown's Collection und endet mit dem Zurückverwandeln. Der Host kann das mit der Option <strong>3D Mode</strong> ausweiten oder ganz abschalten (siehe <em>Einstellungen</em>).</p><p>Vier Sperren stehen <strong>vor</strong> allem anderen, auch vor der Debug-Taste und vor dem Modus:</p>" + tbl(["Sperre", "Warum"], [
               ["Geist", "Das Restspiel eines Geistes sind Aufgaben und Zusehen, und beides überlebt es nicht, in einen Gang gesteckt zu werden."],
               ["Besprechung, Abstimmung, Ausschluss", "Der Kopf darf nicht dem Zeiger folgen, der gerade abstimmt."],
               ["Rundenende", "Zwischen dem Auslösen der Siegbedingung und dem Szenenwechsel zeichnet das Spiel schon seinen Endbildschirm — die Sicht muss da weg sein."],
@@ -3094,7 +3213,7 @@ const NIGHTFALL = {
           },
           body: {
             en: "<p>A person outside the beam has to disappear, otherwise the blackout is a radar. Player figures are judged against a narrow cone of their own (full at 22°, nothing at 33°) plus a range limit, with a deliberate arm's-length exception: closer than a metre nobody is ever invisible, but never more than half — walk through someone and you see a shape, not an identity. Walls may stay dark-but-readable; people may not.</p><p>The werewolf gets the other side of it: no torch, a red night sight that reaches further, living prey lifted to full brightness so it reads as a heat signature against the cold room, blood-red distance fog, and its own front paws at the bottom of the screen. That asymmetry is what makes the transformation playable.</p>",
-            de: "<p>Ein Mensch außerhalb des Kegels muss weg, sonst ist der Blackout ein Radar. Spielerfiguren werden gegen einen eigenen, engen Kegel bewertet (voll bei 22°, null bei 33°) plus eine Reichweitengrenze, mit einer bewussten Armlängen-Ausnahme: näher als ein Meter ist nie jemand unsichtbar, aber höchstens halb — wer durch einen hindurchläuft, sieht eine Gestalt, keine Identität. Wände dürfen dunkel-aber-lesbar sein, Menschen nicht.</p><p>Der Werwolf bekommt die Gegenseite: keine Lampe, eine rote Nachtsicht, die weiter reicht, lebende Beute auf volle Helligkeit gehoben (eine Wärmesignatur gegen den kalten Raum), blutroter Distanznebel und seine eigenen Vorderpfoten im Bild. Diese Asymmetrie macht die Verwandlung spielbar.</p>"
+            de: "<p>Ein Mensch außerhalb des Kegels muss weg, sonst ist der Blackout ein Radar. Spielerfiguren werden gegen einen eigenen, engen Kegel bewertet (voll bei 22°, null bei 33°) plus eine Reichweitengrenze, mit einer bewussten Armlängen-Ausnahme: näher als ein Meter ist nie jemand unsichtbar, aber höchstens halb — wer durch einen hindurchläuft, sieht eine Gestalt, keine Identität. Wände dürfen dunkel-aber-lesbar sein, Menschen nicht.</p><p>Der Werewolf bekommt die Gegenseite: keine Lampe, eine rote Nachtsicht, die weiter reicht, lebende Beute auf volle Helligkeit gehoben (eine Wärmesignatur gegen den kalten Raum), blutroter Distanznebel und seine eigenen Vorderpfoten im Bild. Diese Asymmetrie macht die Verwandlung spielbar.</p>"
           }
         },
         {
@@ -3203,8 +3322,8 @@ const NIGHTFALL = {
               ["Never", "Off. Nothing brings the view up."]
             ]) + "<p>The default is deliberately <em>Werewolf only</em>, so an existing lobby plays exactly as it did and nobody finds themselves in a corridor after an update. <em>Always</em> waits out the lobby and the intro cutscene; ghosts keep the top-down view in all three modes.</p><p class='note'>Without The Other Roles the mode falls back to a local config entry with the same three values.</p>",
             de: "<p>Alles andere, was Nightfall einstellt, ist Geschmackssache auf einem Rechner. Der Modus ist es nicht: er entscheidet, ob ein Spieler die Runde in einem Gang verbringt oder von oben auf die Karte sieht, und zwei Spieler, die das verschieden beantworten, spielen nicht dasselbe Spiel. Deshalb trägt er sich in die Options-Liste von The Other Roles ein (<strong>General</strong>-Tab, <code>Nightfall: 3D Mode</code>) und ist damit umsonst host-synchron.</p>" + tbl(["Wert", "Bedeutung"], [
-              ["<strong>Werewolf only</strong> (Standard)", "Die Sicht beginnt mit dem Verwandeln des Werwolfs aus Unknown's Collection und endet mit dem Zurückverwandeln."],
-              ["Always", "Ich-Perspektive die ganze Runde, unabhängig vom Werwolf."],
+              ["<strong>Werewolf only</strong> (Standard)", "Die Sicht beginnt mit dem Verwandeln des Werewolfs aus Unknown's Collection und endet mit dem Zurückverwandeln."],
+              ["Always", "Ich-Perspektive die ganze Runde, unabhängig vom Werewolf."],
               ["Never", "Aus. Nichts bringt die Sicht hoch."]
             ]) + "<p>Der Standard ist bewusst <em>Werewolf only</em>, damit eine bestehende Lobby sich exakt wie vorher spielt und niemand sich nach einem Update ungefragt in einem Korridor wiederfindet. <em>Always</em> wartet Lobby und Intro-Cutscene ab; Geister behalten in allen drei Modi die Draufsicht.</p><p class='note'>Ohne The Other Roles fällt der Modus auf einen lokalen Konfigurationseintrag mit denselben drei Werten zurück.</p>"
           }
@@ -3232,7 +3351,7 @@ const NIGHTFALL = {
               ["<code>General / Enabled</code>", "true", "Whether the mod is loaded at all — the Mod Manager's own switch, which needs a restart either way. Kept separate from the feature-level toggle above."]
             ]),
             de: "<p>Datei: <code>BepInEx\\config\\com.tormod.nightfall.cfg</code>. Auch über die Mod-Config-Oberfläche im Spiel editierbar.</p>" + tbl(["Schlüssel", "Standard", "Funktion"], [
-              ["<code>Nightfall / Enabled</code>", "true", "Schaltet die Ich-Perspektive ein, wenn sich der Werwolf aus Unknown's Collection verwandelt."],
+              ["<code>Nightfall / Enabled</code>", "true", "Schaltet die Ich-Perspektive ein, wenn sich der Werewolf aus Unknown's Collection verwandelt."],
               ["<code>Nightfall / Mode</code>", "WerewolfOnly", "Rückfallwert für die Host-Option oben — nur wirksam, wenn The Other Roles nicht installiert ist."],
               ["<code>Nightfall / RequireEveryone</code>", "true", "Die Sicht nur scharfschalten, wenn jeder Spieler in der Lobby Nightfall installiert hat. Wem sie fehlt, der behielte während der Jagd die Draufsicht, und das ist ein echter Vorteil. Für Solo-Tests ausschalten."],
               ["<code>Nightfall / RelativeMovement</code>", "true", "Bewegung relativ zur Blickrichtung (W läuft vorwärts). Aus bedeutet Among Us' normale Bewegung entlang der Weltachsen: deutlich weniger verwirrend, aber auch deutlich weniger Ich-Perspektive."],
