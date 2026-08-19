@@ -103,6 +103,40 @@
     if (fx) fx.addEventListener("click", toggleFx);
     const mt = el.querySelector(".menu-toggle");
     if (mt) mt.addEventListener("click", () => document.body.classList.toggle("sidebar-open"));
+    wireSecretDoor(el);
+  }
+
+  /* ---------- hidden entrance to the prerelease test board ----------
+   * Five quick clicks on the crewmate next to the wordmark open test.html. The
+   * crewmate sits inside the brand link, so every click has to be swallowed and
+   * the normal navigation replayed by hand - otherwise the first click would
+   * already leave the page and the burst could never finish. A burst that stops
+   * short of five still goes home, so the logo keeps behaving like a logo. */
+  const SECRET_CLICKS = 5;
+  const SECRET_WINDOW = 550; // ms between clicks
+  function wireSecretDoor(topbar) {
+    const brand = topbar.querySelector(".brand");
+    const crew = brand && brand.querySelector(".crewmate");
+    if (!crew) return;
+    const home = brand.getAttribute("href") || "index.html";
+    let hits = 0;
+    let timer = null;
+    crew.style.cursor = "pointer";
+    crew.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      hits++;
+      clearTimeout(timer);
+      if (hits >= SECRET_CLICKS) {
+        hits = 0;
+        location.href = "test.html";
+        return;
+      }
+      timer = setTimeout(() => {
+        hits = 0;
+        if (page !== "home" || home !== "index.html") location.href = home;
+      }, SECRET_WINDOW);
+    });
   }
   function navKey(p) {
     return p.indexOf("chance") >= 0 ? "chance"
@@ -509,6 +543,7 @@
     else if (page === "useful") renderModPage(USEFUL);
     else if (page === "unknowns") renderModPage(UNKNOWNS);
     else if (page === "nightfall") renderModPage(NIGHTFALL);
+    else if (page === "test" && window.TORTEST) TORTEST.render(); // hidden board, see wireSecretDoor
     wireBackTop();
     wireUcScramble();
     if (window.TORFX) TORFX.refresh(); // re-observe the freshly rendered DOM
