@@ -257,6 +257,18 @@
       },
     },
     {
+      id: "ff-newcomer-sidekick", mod: "useful",
+      title: { en: "Newcomer shield lets the Sidekick through", de: "Newcomer-Schild lässt den Sidekick durch" },
+      how: {
+        en: "As Jackal, target a shielded newcomer: recruiting him as Sidekick must work, killing him must still fail with the usual message. After the sidekick exists, the shielded player must be untargetable again.",
+        de: "Als Jackal einen geschützten Neuling anvisieren: Ihn als Sidekick anzuwerben muss klappen, ihn zu töten muss weiterhin mit der üblichen Meldung scheitern. Sobald der Sidekick existiert, muss der Geschützte wieder unanvisierbar sein.",
+      },
+      risk: {
+        en: "The kill now rests on the two kill blocks alone, since the targeting gate stands down for the Jackal.",
+        de: "Der Kill hängt jetzt allein an den beiden Kill-Sperren, weil die Ziel-Sperre für den Jackal aussetzt.",
+      },
+    },
+    {
       id: "ff-modsync", mod: "useful",
       title: { en: "Mod sync against the host", de: "Mod-Abgleich mit dem Host" },
       how: {
