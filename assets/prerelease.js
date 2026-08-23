@@ -400,14 +400,14 @@
     },
     {
       id: "ff-guesser-shield", mod: "useful",
-      title: { en: "Guesser cannot shoot a shielded player", de: "Guesser trifft keinen geschützten Spieler" },
+      title: { en: "Newcomer shield inside the first meeting", de: "Neuling-Schild im ersten Meeting" },
       how: {
-        en: "With the newcomer shield or the spawn protection active, open the guess grid on a protected player. The grid must refuse to open, with the fail sound and a chat line. Then check that guessing an unprotected player still works normally.",
-        de: "Mit aktivem Newcomer-Schild oder Spawn-Schutz das Guess-Raster auf einem geschützten Spieler öffnen. Es darf sich nicht öffnen, mit Fail-Sound und Chat-Zeile. Danach prüfen, dass ein ungeschützter Spieler weiterhin normal geraten werden kann.",
+        en: "The shield now lasts THROUGH the first meeting instead of ending when it opens. Inside that meeting a shielded newcomer must be neither guessable nor votable: the guess grid must refuse to open (fail sound plus a chat line), and a vote against them must not register, from the host and from a remote client alike. Skip votes must still work. Once the meeting is over the shield is gone: check that the same player is normally votable in the second meeting. The spawn protection is deliberately NOT involved here.",
+        de: "Der Schild hält jetzt DURCH das erste Meeting, statt beim Öffnen zu enden. In diesem Meeting darf ein geschützter Neuling weder ratbar noch wählbar sein: das Guess-Raster darf sich nicht öffnen (Fail-Sound plus Chat-Zeile), und eine Stimme gegen ihn darf nicht ankommen, weder vom Host noch von einem entfernten Client. Skip-Stimmen müssen weiter funktionieren. Nach dem Meeting ist der Schild weg: prüfen, dass derselbe Spieler im zweiten Meeting normal wählbar ist. Der Spawn-Schutz ist hier bewusst NICHT beteiligt.",
       },
       risk: {
-        en: "The send-side block always applies; the receive-side block only when everyone has the mod. In a mixed lobby an unpatched shooter still gets the kill, and that is deliberate: the alternative would be a lobby that disagrees about who is dead.",
-        de: "Der Sendeblock gilt immer, der Empfangsblock nur wenn alle den Mod haben. In einer gemischten Lobby trifft ein Schütze ohne Mod weiterhin, und das ist Absicht: die Alternative wäre eine Lobby, die sich über den Tod uneinig ist.",
+        en: "This widens what the feature does: it can now carry a player through a whole vote, where before it only kept them alive between votes. The vote block is host-authoritative and therefore holds for unmodded clients too; the guess block does not, so in a mixed lobby an unpatched shooter still gets the kill (deliberate, the alternative is a lobby that disagrees about who is dead). The greyed-out vote button is cosmetic only.",
+        de: "Das erweitert, was das Feature tut: es trägt einen Spieler jetzt durch eine ganze Abstimmung, während es vorher nur zwischen den Abstimmungen am Leben hielt. Die Vote-Sperre ist host-autoritativ und gilt damit auch für Clients ohne Mod; die Guess-Sperre nicht, in einer gemischten Lobby trifft ein Schütze ohne Mod also weiterhin (Absicht, die Alternative wäre eine Lobby, die sich über den Tod uneinig ist). Der ausgegraute Vote-Knopf ist reine Kosmetik.",
       },
     },
     {
