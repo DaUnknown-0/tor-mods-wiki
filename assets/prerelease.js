@@ -374,6 +374,130 @@
         de: "Rollen, Modifier, Speed, Cooldown, Vent-Sperre und Tasks anderer Spieler über Chat, F7-Overlay und die Web-Seite auf 32210 setzen. Jede Änderung muss beim Zielclient ankommen.",
       },
     },
+    {
+      id: "tool-killreason", mod: "tools",
+      title: { en: "Role Control: staged kills with a chosen cutscene", de: "Role Control: Testkill mit wählbarem Grund" },
+      how: {
+        en: "Run /killreasons for the list, then /kill <victim> <reason> (optionally a third argument for the killer). Do the same from the F7 overlay and from the web page. Walk the whole list once: all 22 cutscenes should be reachable this way without ever rolling the matching role.",
+        de: "/killreasons zeigt die Liste, dann /kill <opfer> <grund> (optional ein dritter Parameter für den Täter). Dasselbe über das F7-Overlay und die Web-Seite. Einmal die ganze Liste durchgehen: alle 22 Cutscenes müssen so erreichbar sein, ohne die passende Rolle je zu würfeln.",
+      },
+      risk: {
+        en: "Local host tool: Role Control is not released, so this is checked on the host's own machine and nowhere else. The arming is a broadcast that has to land before the kill RPC, so if a cutscene shows the vanilla overlay instead of the chosen one, that ordering is the first thing to check. Anonymous kinds (VampireBiteDeath, WarlockCurse, WitchSpellDeath) deliberately show no killer figure.",
+        de: "Lokales Host-Werkzeug: Role Control wird nicht released, das wird also nur auf dem Rechner des Hosts geprüft. Das Scharfmachen ist ein Broadcast, der vor dem Kill-RPC ankommen muss. Zeigt eine Cutscene die Vanilla-Anzeige statt der gewählten, ist diese Reihenfolge das Erste, was man prüft. Anonyme Arten (VampireBiteDeath, WarlockCurse, WitchSpellDeath) zeigen absichtlich keine Täterfigur.",
+      },
+    },
+    {
+      id: "uc-speed-velocity", mod: "unknowns",
+      title: { en: "Scout and Werewolf speed, rebuilt", de: "Scout- und Werewolf-Speed, umgebaut" },
+      how: {
+        en: "Both now multiply the velocity instead of writing MyPhysics.Speed. Check plain movement first, then the combinations that used to break: cast a Poltergeist hex on a running Scout, and hex a Werewolf and let it revert inside the hex window. Nobody may keep a speed bonus after the effect ends.",
+        de: "Beide multiplizieren jetzt die Velocity statt MyPhysics.Speed zu schreiben. Erst normale Bewegung, dann die Kombinationen, die vorher kaputt waren: Poltergeist-Hex auf einen laufenden Scout, und einen Werewolf hexen und ihn im Hex-Fenster zurückverwandeln lassen. Niemand darf nach Effektende einen Speed-Bonus behalten.",
+      },
+      risk: {
+        en: "The Poltergeist hex is now the only absolute writer left. Watch for a slow that stacks with a trap or a Trapper limp, and for wolf form ending exactly during a hex.",
+        de: "Der Poltergeist-Hex ist jetzt der einzige absolute Schreiber. Achte auf Verlangsamungen, die sich mit einer Falle oder dem Trapper-Limp stapeln, und auf ein Wolfsform-Ende genau während eines Hex.",
+      },
+    },
+    {
+      id: "ff-guesser-shield", mod: "useful",
+      title: { en: "Guesser cannot shoot a shielded player", de: "Guesser trifft keinen geschützten Spieler" },
+      how: {
+        en: "With the newcomer shield or the spawn protection active, open the guess grid on a protected player. The grid must refuse to open, with the fail sound and a chat line. Then check that guessing an unprotected player still works normally.",
+        de: "Mit aktivem Newcomer-Schild oder Spawn-Schutz das Guess-Raster auf einem geschützten Spieler öffnen. Es darf sich nicht öffnen, mit Fail-Sound und Chat-Zeile. Danach prüfen, dass ein ungeschützter Spieler weiterhin normal geraten werden kann.",
+      },
+      risk: {
+        en: "The send-side block always applies; the receive-side block only when everyone has the mod. In a mixed lobby an unpatched shooter still gets the kill, and that is deliberate: the alternative would be a lobby that disagrees about who is dead.",
+        de: "Der Sendeblock gilt immer, der Empfangsblock nur wenn alle den Mod haben. In einer gemischten Lobby trifft ein Schütze ohne Mod weiterhin, und das ist Absicht: die Alternative wäre eine Lobby, die sich über den Tod uneinig ist.",
+      },
+    },
+    {
+      id: "uc-rpc-guards", mod: "unknowns",
+      title: { en: "Ability RPCs now check who sent them", de: "Fähigkeits-RPCs prüfen jetzt den Absender" },
+      how: {
+        en: "Play a normal round with Shade, Saboteur, Maniac, Manipulator, Auditor, Collector, Scout and Copycat and use every one of their abilities once. Nothing may be refused: the guards only reject senders that could never legitimately send that message.",
+        de: "Normale Runde mit Shade, Saboteur, Maniac, Manipulator, Auditor, Collector, Scout und Copycat spielen und jede ihrer Fähigkeiten einmal benutzen. Nichts darf abgelehnt werden: die Guards weisen nur Absender ab, die die Nachricht nie legitim senden könnten.",
+      },
+      risk: {
+        en: "Watch the log for \"ignored\" lines from UCRpc. One during normal play means a guard is too strict. The Saboteur console and the Maniac bomb pass are the two that took the most thought.",
+        de: "Im Log auf \"ignored\"-Zeilen von UCRpc achten. Eine davon im normalen Spiel heißt, ein Guard ist zu streng. Die Saboteur-Console und das Weitergeben der Maniac-Bombe waren die zwei kniffligsten.",
+      },
+    },
+    {
+      id: "uc-poltergeist-manifest-end", mod: "unknowns",
+      title: { en: "Killing a Poltergeist manifestation", de: "Manifestation des Poltergeist töten" },
+      how: {
+        en: "Let the Poltergeist manifest, then stab it as an impostor. Everyone must see the poof and hear the stinger immediately, not only the killer, and not only when the timer runs out.",
+        de: "Poltergeist manifestieren lassen und als Impostor zustechen. Alle müssen Poof und Stinger sofort sehen bzw. hören, nicht nur der Täter, und nicht erst wenn der Timer abläuft.",
+      },
+    },
+    {
+      id: "uc-lobby-resets", mod: "unknowns",
+      title: { en: "Nothing leaks into the next lobby", de: "Nichts leckt in die nächste Lobby" },
+      how: {
+        en: "Play a round with several UC roles, leave the lobby without finishing it, and join a different one. No role, marker, charge or tag from the previous game may appear on whoever inherits those player ids.",
+        de: "Runde mit mehreren UC-Rollen spielen, die Lobby ohne Abschluss verlassen und einer anderen beitreten. Keine Rolle, Markierung, Ladung oder Kennzeichnung aus dem Vorspiel darf bei denen auftauchen, die die PlayerIds erben.",
+      },
+      risk: {
+        en: "Eleven roles got an OnGameJoined reset they never had. The self-test now fails if one goes missing again, so run it (F10 in freeplay) after any role change.",
+        de: "Elf Rollen haben einen OnGameJoined-Reset bekommen, den sie nie hatten. Der Selbsttest schlägt jetzt fehl, wenn einer wieder fehlt, also nach jeder Rollenänderung einmal laufen lassen (F10 im Freeplay).",
+      },
+    },
+    {
+      id: "uc-follower-role", mod: "unknowns",
+      title: { en: "Follower: takeover and the dead player's record", de: "Follower: Übernahme und die Akte des Toten" },
+      how: {
+        en: "Let the Follower take over, then finish the round. In the summary and in the tracker export the dead player must still be listed with the role they actually had, while during the round a Medium or Seer must NOT see that role twice. Also kill the first player with a poison, a guess or a lover death: each must trigger the takeover now.",
+        de: "Follower übernehmen lassen, dann die Runde beenden. In der Abrechnung und im Tracker-Export muss der Tote weiterhin mit seiner echten Rolle stehen, während im Spiel ein Medium oder Seer diese Rolle NICHT doppelt sehen darf. Außerdem den ersten Spieler per Gift, Guess oder Lover-Tod sterben lassen: jedes davon muss die Übernahme jetzt auslösen.",
+      },
+    },
+    {
+      id: "chance-c1-erase", mod: "chance",
+      title: { en: "Chaos reroll on plain TOR clients", de: "Chaos-Reroll auf reinen TOR-Clients" },
+      how: {
+        en: "Run a chaos reroll in a lobby where at least one client has TOR but not Unknown Chaos. Nobody may end up holding two roles, and a player rerolled to none must really lose their old one there too.",
+        de: "Chaos-Reroll in einer Lobby laufen lassen, in der mindestens ein Client TOR, aber nicht Unknown Chaos hat. Niemand darf zwei Rollen haben, und wer auf \"keine\" gerollt wird, muss seine alte auch dort wirklich verlieren.",
+      },
+      risk: {
+        en: "The erase is broadcast but deliberately not applied to the host's own erased list, otherwise chaos mode would exclude every rerolled player from all later rerolls. A host who is also Eraser and Guesser cannot guess rerolled players: that is the accepted cost.",
+        de: "Das Erase wird gesendet, aber bewusst nicht in die eigene Erased-Liste des Hosts übernommen, sonst schlösse Chaos Mode jeden rerollten Spieler von allen weiteren Rerolls aus. Ein Host, der zugleich Eraser und Guesser ist, kann rerollte Spieler nicht raten: das ist der akzeptierte Preis.",
+      },
+    },
+    {
+      id: "ff-tor-upstream", mod: "useful",
+      title: { en: "The TOR bugfix batch", de: "Das TOR-Bugfix-Paket" },
+      how: {
+        en: "Roughly forty fixes against TOR itself, all external. The ones worth deliberately reproducing: a Bounty Hunter must never be given an impostor as a target; a Lawyer whose client is voted out must become the Pursuer and stay alive; a cancelled Swapper swap must return exactly one charge; a Bomber whose plant is blanked must be able to plant again; and with the lights out the crew must NOT have full vision.",
+        de: "Rund vierzig Fixes gegen TOR selbst, alle extern. Die, die man gezielt nachstellen sollte: ein Bounty Hunter darf nie einen Impostor als Ziel bekommen; ein Lawyer, dessen Mandant rausgewählt wird, muss Pursuer werden und am Leben bleiben; ein abgebrochener Swapper-Tausch gibt genau eine Ladung zurück; ein Bomber, dessen Plant geblankt wurde, muss erneut legen können; und bei Lights Out darf die Crew NICHT volle Sicht haben.",
+      },
+      risk: {
+        en: "Three of them rebuild a whole TOR method (ReloadHotkeys, SetRoleTexts, roleCanUseVents). Those are the first to break after a TOR update, and roleCanUseVents in particular carries four of our own postfixes.",
+        de: "Drei davon bauen eine komplette TOR-Methode nach (ReloadHotkeys, SetRoleTexts, roleCanUseVents). Die brechen als Erstes nach einem TOR-Update, und an roleCanUseVents hängen zusätzlich vier eigene Postfixes.",
+      },
+    },
+    {
+      id: "ff-csrf", mod: "useful",
+      title: { en: "Web pages reject foreign requests", de: "Web-Seiten weisen fremde Anfragen ab" },
+      how: {
+        en: "Open the WebConfig page on 32200 and the Role Control page on 32210 and use them normally: everything must still work. Both now check the Host header and, for writes, the Origin, so a page on another site can no longer post into them.",
+        de: "Die WebConfig-Seite auf 32200 und die Role-Control-Seite auf 32210 öffnen und normal benutzen: alles muss weiter funktionieren. Beide prüfen jetzt den Host-Header und bei Schreibzugriffen den Origin, sodass eine Seite auf einer fremden Domain nicht mehr hineinschreiben kann.",
+      },
+      risk: {
+        en: "If a button suddenly answers with 403, the check is too strict for that request. Reaching the page through anything other than 127.0.0.1 or localhost is refused by design.",
+        de: "Antwortet ein Knopf plötzlich mit 403, ist die Prüfung für diese Anfrage zu streng. Ein Zugriff über etwas anderes als 127.0.0.1 oder localhost wird absichtlich abgelehnt.",
+      },
+    },
+    {
+      id: "nf-audit", mod: "nightfall",
+      title: { en: "Nightfall after the audit pass", de: "Nightfall nach dem Audit-Durchgang" },
+      how: {
+        en: "Play a werewolf round in first person. Check that walls and props look the same as before (the texture quantiser changed), that the ability keys are stable across rounds, and that typing in chat no longer fires an ability.",
+        de: "Werwolf-Runde in der Ich-Perspektive spielen. Prüfen, dass Wände und Props aussehen wie vorher (der Textur-Quantisierer wurde geändert), dass die Fähigkeitstasten über Runden stabil bleiben und dass Tippen im Chat keine Fähigkeit mehr auslöst.",
+      },
+      risk: {
+        en: "Textures are now written without the tone curve, so surfaces above 75% brightness are lighter than before. That is the intended correction, but it is the most visible change in the batch.",
+        de: "Texturen werden jetzt ohne Tone-Kurve geschrieben, Flächen über 75% Helligkeit sind also heller als vorher. Das ist die beabsichtigte Korrektur, aber die sichtbarste Änderung im Paket.",
+      },
+    },
   ];
 
   /* ------------------------------------------------------------------ i18n */
