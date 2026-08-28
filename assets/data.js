@@ -392,7 +392,7 @@ const USEFUL = {
   key: "useful",
   name: "Forgotten Fixes",
   fullName: { en: "TOR - Forgotten Fixes", de: "TOR - Forgotten Fixes" },
-  version: "1.4.2",
+  version: "1.4.3",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/Useful-TOR-stuff",
   download: "https://github.com/DaUnknown-0/Useful-TOR-stuff/releases/latest",
@@ -495,6 +495,30 @@ const USEFUL = {
           }
         },
         {
+          id: "medic-shift-shield",
+          title: { en: "Medic shield survives the Shifter", de: "Medic-Schild überlebt den Shifter" },
+          summary: {
+            en: "A medic who dies with a shield still queued no longer takes the charge with them.",
+            de: "Ein Medic, der mit vorgemerktem Schild stirbt, nimmt die Ladung nicht mehr mit."
+          },
+          body: {
+            en: "<p><strong>Problem:</strong> with <em>Set Shield After Meeting</em> on, pressing the shield button spends the charge immediately but places the shield only at the exile screen, and only while the medic is alive. A medic killed in between therefore never delivers it — and <code>usedShield</code> is a static that belongs to the ROLE, reset only at round start. The Shifter moves the medic pointer and nothing else, so whoever is shifted into the role inherits a used-up shield for a shield nobody ever received. Quieter second half: the queued target stayed set, so at the NEXT exile the medic pointer is a living player again and TOR places that stale shield — one the new medic never chose.</p><p><strong>Fix:</strong> both are cleared. Only the undelivered charge is refunded; a shield that was really placed stays spent, so a successor does not get a second one.</p>",
+            de: "<p><strong>Problem:</strong> Mit <em>Set Shield After Meeting</em> verbraucht der Knopfdruck die Ladung sofort, legt das Schild aber erst beim Exile — und nur, solange der Medic lebt. Stirbt er dazwischen, wird es nie gelegt, und <code>usedShield</code> ist ein Statik-Flag der ROLLE, das nur beim Rundenstart zurückgesetzt wird. Der Shifter verschiebt nur den Medic-Zeiger, also erbt der Nachrücker ein verbrauchtes Schild für ein Schild, das nie jemand bekommen hat. Leisere zweite Hälfte: das vorgemerkte Ziel blieb stehen, sodass beim NÄCHSTEN Exile wieder ein lebender Medic da ist und TOR dieses alte Schild legt — eines, das der neue Medic nie gewählt hat.</p><p><strong>Fix:</strong> Beides wird geräumt. Zurückgegeben wird nur die nie gelieferte Ladung; ein wirklich gelegtes Schild bleibt verbraucht, der Nachfolger bekommt also kein zweites.</p>"
+          }
+        },
+        {
+          id: "settings-popup-name",
+          title: { en: "Settings popup names the setting", de: "Settings-Popup nennt die Einstellung" },
+          summary: {
+            en: "Changing a modded option showed only the value, never which setting it belonged to.",
+            de: "Beim Ändern einer Mod-Option stand nur der Wert da, nie die zugehörige Einstellung."
+          },
+          body: {
+            en: "<p><strong>Problem:</strong> the notification in the lobby\'s bottom-left corner read just <code>3</code> or <code>On</code>. TOR passes <code>(StringNames)(id + 6000)</code> as the name key, and the vanilla method builds its line as <em>name: value</em>. That key is not a real <code>StringNames</code> — the offset exists precisely so it collides with nothing — so the lookup finds nothing and only the value survives.</p><p><strong>Fix:</strong> the name was never lost, it was never asked for. The option is resolved from TOR\'s own option list under that id and the whole line is written out. Vanilla settings and ids with no option behind them fall through untouched.</p>",
+            de: "<p><strong>Problem:</strong> Die Meldung unten links in der Lobby zeigte nur <code>3</code> oder <code>On</code>. TOR übergibt <code>(StringNames)(id + 6000)</code> als Namensschlüssel, und die Vanilla-Methode baut ihre Zeile als <em>Name: Wert</em>. Dieser Schlüssel ist kein echter <code>StringNames</code> — der Versatz existiert gerade, damit er mit nichts kollidiert — also findet die Suche nichts und nur der Wert bleibt übrig.</p><p><strong>Fix:</strong> Der Name war nie verloren, er wurde nie erfragt. Die Option wird unter dieser ID aus TORs eigener Optionsliste geholt und die ganze Zeile geschrieben. Vanilla-Einstellungen und IDs ohne Option laufen unangetastet durch.</p>"
+          }
+        },
+        {
           id: "trapper-freeze",
           title: { en: "Trapper log meeting freeze", de: "Trapper-Log-Meeting-Freeze" },
           summary: {
@@ -524,6 +548,19 @@ const USEFUL = {
       id: "crewmate",
       title: { en: "New options — Crewmate", de: "Neue Optionen — Crewmate" },
       entries: [
+        {
+          id: "trapper-extras",
+          title: { en: "Trapper: find your traps, keep the log", de: "Trapper: Fallen finden, Log behalten" },
+          badges: [{ en: "Crewmate → Trapper", de: "Crewmate → Trapper" }],
+          summary: {
+            en: "The traps are numbered on the map, and the trap log stays reachable in the chat after the meeting.",
+            de: "Die Fallen sind auf der Karte nummeriert, und das Fallen-Log bleibt nach dem Meeting im Chat erreichbar."
+          },
+          body: {
+            en: "<p>Two gaps, both about information the trapper already owns but cannot reach. Each is a host option, default on.</p><p><strong>The traps are numbered on the map.</strong> TOR\'s log says <em>Trap 3:</em> using a counter that already runs 1..X, and never says where trap 3 is: the traps are drawn in the world but only on the screen the trapper is standing on, so on Airship or Polus the number answers a question they cannot ask. The markers use TOR\'s own here-point and the same world-to-map transform its trapped-player markers use, so a trap marker lands where a player marker for the same spot would.</p><p><strong>The log survives the meeting.</strong> It is written into the meeting chat, and the traps that produced it are destroyed a few lines later, so afterwards there is no way back to it. A button of the trapper\'s own (<kbd>L</kbd>) reopens the chat and writes in whatever they have not been shown yet; reopening adds nothing, and each meeting\'s entries appear the next time. The entries carry TOR\'s own shuffle of who walked into which trap, rather than the true trigger order it shuffles precisely to hide. Two narrow concessions make that work: the in-round chat clamp gains one more exemption for as long as the view is open, and sending is refused for exactly as long — the trapper reads, and cannot start talking mid-round.</p>",
+            de: "<p>Zwei Lücken, beide über Wissen, das der Trapper längst besitzt, aber nicht erreicht. Je eine Host-Option, Standard an.</p><p><strong>Die Fallen sind auf der Karte nummeriert.</strong> TORs Log sagt <em>Trap 3:</em> über einen Zähler, der ohnehin 1..X läuft, und sagt nie, wo Falle 3 ist: die Fallen sind in der Welt gezeichnet, aber nur auf dem Bildschirm, auf dem der Trapper gerade steht — auf Airship oder Polus beantwortet die Nummer also eine Frage, die er nicht stellen kann. Die Marker benutzen TORs eigenen Here-Point und dieselbe Welt-zu-Karte-Umrechnung wie seine Marker für gefangene Spieler, damit ein Fallen-Marker dort landet, wo ein Spielermarker für denselben Punkt läge.</p><p><strong>Das Log überlebt das Meeting.</strong> Es wird in den Meeting-Chat geschrieben, und die Fallen, die es erzeugt haben, werden wenige Zeilen später zerstört — danach führt kein Weg mehr dorthin zurück. Ein eigener Knopf (<kbd>L</kbd>) öffnet den Chat wieder und schreibt nach, was der Trapper noch nicht gesehen hat; erneutes Öffnen fügt nichts hinzu, und die Einträge jedes Meetings erscheinen beim nächsten Mal. Die Einträge tragen TORs eigene Mischung, wer in welche Falle gelaufen ist, statt der echten Reihenfolge, die TOR gerade deshalb mischt. Zwei enge Zugeständnisse machen das möglich: die Chat-Sperre der laufenden Runde bekommt eine Ausnahme mehr, solange die Ansicht offen ist, und Senden ist genauso lange gesperrt — der Trapper liest, und kann nicht mitten in der Runde zu reden anfangen.</p>"
+          }
+        },
         {
           id: "sheriff-parity",
           title: { en: "Sheriff prevents killer parity win", de: "Sheriff verhindert Killer-Parity-Win" },
@@ -3001,12 +3038,24 @@ const UNKNOWNS = {
     },
     {
       id: "uc-hats",
-      title: { en: "Custom hats", de: "Eigene Hüte" },
+      title: { en: "Cosmetics", de: "Kosmetik" },
       intro: {
-        en: "Three UC-exclusive hats appear in TOR's hat shop without touching TOR: Virus, an animated billboard, and the full-body Werewolf costume.",
-        de: "Drei UC-exklusive Hüte erscheinen in TORs Hut-Shop, ohne TOR anzufassen: Virus, eine animierte Werbetafel und das Ganzkörper-Werewolf-Kostüm."
+        en: "Three UC-exclusive hats appear in TOR's hat shop without touching TOR — Virus, an animated billboard and the full-body Werewolf costume — plus one more player colour.",
+        de: "Drei UC-exklusive Hüte erscheinen in TORs Hut-Shop, ohne TOR anzufassen — Virus, eine animierte Werbetafel und das Ganzkörper-Werewolf-Kostüm — dazu eine weitere Spielerfarbe."
       },
       entries: [
+        {
+          id: "uc-colour-purpur",
+          title: { en: "Purpur, and the fallback behind it", de: "Purpur, und der Fallback dahinter" },
+          summary: {
+            en: "One more player colour — which nobody may wear while somebody in the lobby is missing the mod.",
+            de: "Eine weitere Spielerfarbe — die niemand tragen darf, solange jemand in der Lobby den Mod nicht hat."
+          },
+          body: {
+            en: "<p><strong>Purpur</strong> (#75151E) is a deep wine red, added to the palette the way TOR adds its own colours.</p><p>It needed a guard, and the reason is worth stating plainly: a player colour is an <em>index</em> into the colour array, and that array is only as long as the mods present made it — vanilla ends at 17, TOR appends up to 41, this adds one more at 42. The index is what travels over the network, so a client whose array stops at 41 and is told <em>colour 42</em> reads past the end of it while drawing. The version handshake blocks the game from STARTING when somebody is missing the mod, but it does not stop them JOINING, and the colour is already on screen in the lobby.</p><p>So two things happen the moment such a client is in the room. <strong>Nobody keeps the colour:</strong> the host moves anyone wearing it to the nearest colour that exists without this mod, worked out at runtime rather than hard-coded, and skipping onwards if that one is taken. <strong>Nobody can pick it:</strong> the chip disappears from the colour tab, using the mechanism TOR\'s own tab builder already has — it lays out only the chips it knows about and switches off the rest. In the main menu there is no lobby to be unsafe in, so the colour is selectable there as normal.</p>",
+            de: "<p><strong>Purpur</strong> (#75151E) ist ein tiefes Weinrot, der Palette auf demselben Weg hinzugefügt, auf dem TOR seine eigenen Farben ergänzt.</p><p>Es brauchte eine Absicherung, und der Grund gehört klar gesagt: Eine Spielerfarbe ist ein <em>Index</em> in das Farb-Array, und das ist nur so lang, wie die vorhandenen Mods es gemacht haben — Vanilla endet bei 17, TOR hängt bis 41 an, hier kommt eine weitere bei 42 dazu. Über das Netz geht der Index, also liest ein Client, dessen Array bei 41 endet und dem <em>Farbe 42</em> gesagt wird, beim Zeichnen daneben. Der Versions-Handshake blockiert den START, wenn jemandem der Mod fehlt, aber nicht das BEITRETEN — und in der Lobby ist die Farbe längst zu sehen.</p><p>Deshalb passieren zwei Dinge, sobald so ein Client im Raum ist. <strong>Niemand behält die Farbe:</strong> Der Host schiebt jeden, der sie trägt, auf die nächstgelegene Farbe, die es auch ohne diesen Mod gibt — zur Laufzeit ermittelt statt fest verdrahtet, und weitergesucht, falls sie belegt ist. <strong>Niemand kann sie wählen:</strong> Der Farbchip verschwindet aus dem Tab, über den Mechanismus, den TORs eigener Tab-Aufbau schon mitbringt — er legt nur die Chips aus, die er kennt, und schaltet den Rest ab. Im Hauptmenü gibt es keine Lobby, in der etwas unsicher sein könnte, dort ist die Farbe also ganz normal wählbar.</p>"
+          }
+        },
         {
           id: "uc-hats-set",
           title: { en: "Virus, Werbetafel & Werewolf", de: "Virus, Werbetafel & Werewolf" },
@@ -3152,7 +3201,7 @@ const NIGHTFALL = {
   key: "nightfall",
   name: "Nightfall",
   fullName: { en: "Nightfall — first person for Among Us", de: "Nightfall — Ich-Perspektive für Among Us" },
-  version: "0.3.0",
+  version: "0.3.1",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/Nightfall",
   download: "https://github.com/DaUnknown-0/Nightfall/releases/latest",
@@ -3161,8 +3210,8 @@ const NIGHTFALL = {
     de: "Sobald sich der Werewolf aus Unknown's Collection verwandelt, ist die Draufsicht weg: perspektivische Wände, eine Taschenlampe in der Hand — und das Biest bekommt rote Raubtiersicht und seine eigenen Krallen."
   },
   intro: {
-    en: "Nightfall is a standalone BepInEx plugin. It changes neither The Other Roles nor Unknown's Collection, it only reads their state by reflection — without Unknown's Collection it loads anyway and stays quiet. The picture is drawn by a software renderer that contains no Unity at all, and is put on screen as one full-screen sprite under the HUD. <strong>Only Polus has a described world so far</strong>; on every other map the view deliberately stays off (see <em>World &amp; maps</em>).",
-    de: "Nightfall ist ein eigenständiges BepInEx-Plugin. Es verändert weder The Other Roles noch Unknown's Collection, sondern liest deren Zustand nur per Reflection mit — ohne Unknown's Collection lädt es trotzdem und hält still. Das Bild zeichnet ein Software-Renderer, der überhaupt kein Unity enthält, und landet als ein einziges Vollbild-Sprite unter dem HUD auf dem Schirm. <strong>Bisher hat nur Polus eine beschriebene Welt</strong>; auf jeder anderen Karte bleibt die Sicht bewusst aus (siehe <em>Welt &amp; Karten</em>)."
+    en: "Nightfall is a standalone BepInEx plugin. It changes neither The Other Roles nor Unknown's Collection, it only reads their state by reflection — without Unknown's Collection it loads anyway and stays quiet. The picture is drawn by a software renderer that contains no Unity at all, and is put on screen as one full-screen sprite under the HUD. <strong>Polus, Mira HQ and the Skeld have a described world</strong>; on the remaining maps the view deliberately stays off (see <em>World &amp; maps</em>).",
+    de: "Nightfall ist ein eigenständiges BepInEx-Plugin. Es verändert weder The Other Roles noch Unknown's Collection, sondern liest deren Zustand nur per Reflection mit — ohne Unknown's Collection lädt es trotzdem und hält still. Das Bild zeichnet ein Software-Renderer, der überhaupt kein Unity enthält, und landet als ein einziges Vollbild-Sprite unter dem HUD auf dem Schirm. <strong>Polus, Mira HQ und die Skeld haben eine beschriebene Welt</strong>; auf den übrigen Karten bleibt die Sicht bewusst aus (siehe <em>Welt &amp; Karten</em>)."
   },
   install: {
     en: "<ol><li>Install <a href='https://github.com/TheOtherRolesAU/TheOtherRoles'>The Other Roles</a> into your Among Us BepInEx setup. <a href='https://github.com/DaUnknown-0/UnknownsCollection'>Unknown's Collection</a> is optional, but it is what supplies the Werewolf whose transformation triggers Nightfall.</li><li>Download the latest <code>Nightfall.dll</code> from the releases page.</li><li>Copy it into <code>&lt;Among Us&gt;/BepInEx/plugins/</code>.</li><li>Start the game.</li></ol><p>After the first install, the built-in updater checks this repo's GitHub releases on the main menu and offers an update button — manual downloads are only needed for the initial setup.</p>",
@@ -3193,13 +3242,13 @@ const NIGHTFALL = {
               ["Ghosts", "The rest of a ghost's game is tasks and watching, and neither survives being put into a corridor."],
               ["Meeting, voting, exile", "The head must not follow the cursor that is currently voting."],
               ["Round end", "Between the win condition firing and the actual scene change the game already draws its end screen — the view has to be gone by then."],
-              ["Maps without a described world", "Only Polus is built. On the other maps the view never comes up at all."]
+              ["Maps without a described world", "Polus, Mira HQ and the Skeld are built. On Airship and Fungle the view never comes up at all."]
             ]),
             de: "<p>Standardmäßig beginnt die Sicht mit dem Verwandeln des Werewolfs aus Unknown's Collection und endet mit dem Zurückverwandeln. Der Host kann das mit der Option <strong>3D Mode</strong> ausweiten oder ganz abschalten (siehe <em>Einstellungen</em>).</p><p>Vier Sperren stehen <strong>vor</strong> allem anderen, auch vor der Debug-Taste und vor dem Modus:</p>" + tbl(["Sperre", "Warum"], [
               ["Geist", "Das Restspiel eines Geistes sind Aufgaben und Zusehen, und beides überlebt es nicht, in einen Gang gesteckt zu werden."],
               ["Besprechung, Abstimmung, Ausschluss", "Der Kopf darf nicht dem Zeiger folgen, der gerade abstimmt."],
               ["Rundenende", "Zwischen dem Auslösen der Siegbedingung und dem Szenenwechsel zeichnet das Spiel schon seinen Endbildschirm — die Sicht muss da weg sein."],
-              ["Karten ohne beschriebene Welt", "Gebaut ist bisher nur Polus. Auf den anderen Karten kommt die Sicht gar nicht erst hoch."]
+              ["Karten ohne beschriebene Welt", "Gebaut sind Polus, Mira HQ und die Skeld. Auf Airship und Fungle kommt die Sicht gar nicht erst hoch."]
             ])
           }
         },
@@ -3395,8 +3444,8 @@ const NIGHTFALL = {
       id: "world",
       title: { en: "World & maps", de: "Welt & Karten" },
       intro: {
-        en: "Polus is hand-built and complete. The other four maps are switched off on purpose — the honest state of the project, not a promise.",
-        de: "Polus ist von Hand gebaut und fertig. Die anderen vier Karten sind bewusst abgeschaltet — der ehrliche Stand des Projekts, kein Versprechen."
+        en: "Three maps are hand-built and complete: Polus, Mira HQ and the Skeld. Airship and Fungle are switched off on purpose — the honest state of the project, not a promise.",
+        de: "Drei Karten sind von Hand gebaut und fertig: Polus, Mira HQ und die Skeld. Airship und Fungle sind bewusst abgeschaltet — der ehrliche Stand des Projekts, kein Versprechen."
       },
       entries: [
         {
@@ -3409,6 +3458,18 @@ const NIGHTFALL = {
           body: {
             en: "<p>Polus' geometry is described by hand: <strong>17 areas, 172 floors, 126 walls (38 openings), 57 ceilings and over 1100 pieces of furniture</strong>, plus a catalogue of drawn surfaces. It is the most accurate description of Polus this project has.</p><p>The obvious alternative would have been the game's own colliders, and they are not walls: a collider runs into every door recess and back out, encloses crates, ends in mid-air and follows a wire fence in Electrical — windows, plinths, door frames and lintels are missing entirely, because the game never needs them as collision. What the game <em>does</em> supply and Nightfall reads directly: the footstep-sound zones (a complete floor-material map of the station, set by the developers) and the physics layers, which say what is a full-height wall and what is a hip-high table you can see over.</p><p>Sixteen doors are coupled to the game's own doors, eye height follows the floor (smoothed, so stairs carry the camera), and the night sky is a panorama baked once per session — stars, Milky Way, aurora and horizon extinction, standing still while the head pans past it.</p>",
             de: "<p>Die Geometrie von Polus ist von Hand beschrieben: <strong>17 Bereiche, 172 Böden, 126 Wände (38 Öffnungen), 57 Decken und über 1100 Einrichtungsstücke</strong>, dazu ein Katalog gezeichneter Oberflächen. Das ist die genaueste Beschreibung von Polus, die es in diesem Projekt gibt.</p><p>Die naheliegende Alternative wären die Collider des Spiels, und die sind keine Wände: ein Collider läuft in jede Türnische hinein und wieder heraus, umschließt Kisten, endet mitten im Nichts und folgt in Electrical einem Maschendrahtzaun — Fenster, Sockel, Türrahmen und Sturz fehlen ganz, weil das Spiel sie nie als Kollision braucht. Was das Spiel dagegen <em>mitliefert</em> und Nightfall direkt ausliest: die Schrittgeräusch-Zonen (eine vollständige Bodenmaterialkarte der Station, von den Entwicklern gesetzt) und die Physik-Ebenen, die sagen, was eine volle Wand ist und was ein hüfthoher Tisch, über den man hinwegsieht.</p><p>Sechzehn Türen sind an die Türen des Spiels gekoppelt, die Augenhöhe folgt dem Boden (geglättet, damit Treppen die Kamera tragen), und der Nachthimmel ist ein einmal pro Sitzung gebackenes Panorama — Sterne, Milchstraße, Aurora und Horizont-Extinktion, still stehend, während der Kopf daran vorbeischwenkt.</p>"
+          }
+        },
+        {
+          id: "mira",
+          title: { en: "Mira HQ, and what it cost", de: "Mira HQ, und was es gekostet hat" },
+          summary: {
+            en: "17 areas and 215 drawn materials — and the first build of it ran a 32-bit Among Us out of memory.",
+            de: "17 Bereiche und 215 gezeichnete Materialien — und der erste Aufbau davon hat ein 32-Bit-Among-Us den Speicher gekostet."
+          },
+          body: {
+            en: "<p>Mira HQ is described the same way Polus is: <strong>17 areas, 161 floors, 129 walls (18 openings), 109 ceilings and 615 pieces of furniture</strong>. What makes it different is the surfaces. Mira gives almost every room its own palette, so it needs <strong>215 drawn materials</strong> against Polus\' 32 — and that is what broke it.</p><p>The first round ever played on it killed the client. The log ends mid-write, and the line before it is an <code>OutOfMemoryException</code> thrown right after the world was built. Among Us is a 32-bit process, so its address space is the budget, and the catalogue was spending it: <strong>72 MB of retained textures and 304 MB allocated to draw them</strong>, against 11 MB and 47 MB for Polus.</p><p>Two changes fixed it, and both help every map. The drawing buffer is a megabyte-sized scratch pad that nothing keeps afterwards, so there is now <em>one</em> of it, reused, instead of one per material. And texture resolution follows how much world a texture covers rather than habit: the same 256-pixel tile is 177 texels per unit on a wall panel and 1280 on a gem, so anything below a threshold is drawn at half size. Mira now retains 46 MB and allocates 63 MB. Across the offline renderer\'s 67 viewpoints the pictures differ by a mean absolute error of 0.02 of 255 — which is to say the change is invisible.</p><p>Three drawing bugs surfaced while porting it, all of them in the prototype and all invisible in a plan view: nine calls using a function signature that does not exist, which meant the SkyBridge parapet band, the roof light strips and the Door Log\'s red rings were never painted at all; a missing colour argument that silently reset a brace to hairline width; and a window carrying its glass tint on the opening, where nothing reads it. Room signs are drawn for the first time too — STORAGE, DECONTAMINATION, REACTOR and LABORATORY — through a 5x7 stencil alphabet, because the renderer\'s canvas has no text.</p>",
+            de: "<p>Mira HQ ist genauso beschrieben wie Polus: <strong>17 Bereiche, 161 Böden, 129 Wände (18 Öffnungen), 109 Decken und 615 Einrichtungsstücke</strong>. Der Unterschied sind die Oberflächen. Mira gibt fast jedem Raum eine eigene Palette und braucht deshalb <strong>215 gezeichnete Materialien</strong> gegen 32 bei Polus — und daran ist es zerbrochen.</p><p>Die erste Runde darauf hat den Client getötet. Der Log endet mitten im Schreiben, und die Zeile davor ist eine <code>OutOfMemoryException</code>, geworfen direkt nach dem Weltaufbau. Among Us ist ein 32-Bit-Prozess, sein Adressraum ist also das Budget, und der Katalog hat es ausgegeben: <strong>72 MB behaltene Texturen und 304 MB alloziert, um sie zu zeichnen</strong>, gegen 11 MB und 47 MB bei Polus.</p><p>Zwei Änderungen haben es behoben, und beide helfen jeder Karte. Der Zeichenpuffer ist ein megabytegroßer Notizzettel, den danach niemand behält — es gibt jetzt <em>einen</em>, wiederverwendet, statt einen pro Material. Und die Texturauflösung folgt der Weltfläche, die eine Textur abdeckt, statt der Gewohnheit: dieselbe 256er-Kachel sind 177 Texel pro Einheit auf einer Wandplatte und 1280 auf einem Edelstein, also wird alles unterhalb einer Schwelle halb so groß gezeichnet. Mira behält jetzt 46 MB und alloziert 63 MB. Über die 67 Blickpunkte des Offline-Renderers unterscheiden sich die Bilder um einen mittleren absoluten Fehler von 0,02 von 255 — der Unterschied ist also unsichtbar.</p><p>Beim Portieren kamen drei Zeichenfehler ans Licht, alle im Prototyp und alle in der Draufsicht unsichtbar: neun Aufrufe mit einer Signatur, die es nicht gibt, wodurch das Geländerband der SkyBridge, die Dachlichtstreifen und die roten Ringe des Door Logs nie gemalt wurden; ein fehlendes Farbargument, das eine Strebe still auf Haarbreite zurücksetzte; und ein Fenster, das seine Glastönung an der Öffnung trug, wo sie niemand liest. Zum ersten Mal gibt es außerdem Raumschilder — STORAGE, DECONTAMINATION, REACTOR und LABORATORY — über ein 5x7-Schablonenalphabet, weil die Zeichenfläche des Renderers keinen Text kann.</p>"
           }
         },
         {
@@ -3425,15 +3486,15 @@ const NIGHTFALL = {
         },
         {
           id: "other-maps",
-          title: { en: "The other four maps are off", de: "Die anderen vier Karten sind aus" },
+          title: { en: "Airship and Fungle are off", de: "Airship und Fungle sind aus" },
           badges: [{ en: "In progress", de: "In Arbeit" }],
           summary: {
-            en: "Skeld, Mira, Airship and Fungle: the view deliberately never comes up until they have a described world.",
-            de: "Skeld, Mira, Airship und Fungle: Die Sicht kommt bewusst gar nicht erst hoch, bis sie eine beschriebene Welt haben."
+            en: "The two remaining maps: the view deliberately never comes up until they have a described world.",
+            de: "Die beiden verbliebenen Karten: Die Sicht kommt bewusst gar nicht erst hoch, bis sie eine beschriebene Welt haben."
           },
           body: {
-            en: "<p>Only Polus has a built world. The other four maps used to run through the older collider-and-map-photograph path, and that path was never good enough to play on — it <em>renders</em>, and that is exactly the problem, because “it renders” reads to a player as “this is the mod”, and they would judge Polus by Skeld.</p><p>So the map block sits <strong>before</strong> everything, including the debug key: on a map without a described world there is nothing worth forcing on. One line goes into the log per map, so that “nothing happens” does not happen silently. The old path stays in the code and remains reachable from the offline render tool; the day a second map is described, one line changes.</p><p>A side effect that saves more than the block itself: on an undescribed map the map photograph and the sprite harvest are skipped entirely — those exist only to feed a picture that is never drawn there.</p>",
-            de: "<p>Nur Polus hat eine gebaute Welt. Die anderen vier Karten liefen früher über den älteren Weg aus Collidern und Kartenfotografie, und der war nie gut genug zum Spielen — er <em>rendert</em>, und genau das ist das Problem, denn „es rendert“ liest sich für einen Spieler als „so ist die Mod“, und er beurteilt Polus dann nach Skeld.</p><p>Deshalb steht die Karten-Sperre <strong>vor</strong> allem anderen, auch vor der Debug-Taste: auf einer Karte ohne beschriebene Welt gibt es nichts, das zu erzwingen sich lohnt. Ins Log geht eine Zeile je Karte, damit „nichts passiert“ nicht schweigend passiert. Der alte Weg bleibt im Code und ist aus dem Offline-Render-Werkzeug weiter erreichbar; sobald eine zweite Karte beschrieben ist, ändert sich genau eine Zeile.</p><p>Ein Nebeneffekt, der mehr spart als die Sperre selbst: auf einer nicht beschriebenen Karte entfallen Kartenfotografie und Sprite-Ernte ganz — beide gibt es nur, um ein Bild zu füttern, das dort nie gezeichnet wird.</p>"
+            en: "<p>Airship and Fungle have no built world yet. They still run through the older collider-and-map-photograph path, and that path was never good enough to play on — it <em>renders</em>, and that is exactly the problem, because “it renders” reads to a player as “this is the mod”, and they would judge Polus by Airship.</p><p>So the map block sits <strong>before</strong> everything, including the debug key: on a map without a described world there is nothing worth forcing on. One line goes into the log per map, so that “nothing happens” does not happen silently. The old path stays in the code and remains reachable from the offline render tool.</p><p>Which maps count as described is decided in ONE place, a registry of (map key, build function). Adding the next one is an entry there plus its two generated files — that is how Mira HQ and the Skeld arrived, and it is why this list keeps getting shorter.</p><p>A side effect that saves more than the block itself: on an undescribed map the map photograph and the sprite harvest are skipped entirely — those exist only to feed a picture that is never drawn there.</p>",
+            de: "<p>Airship und Fungle haben noch keine gebaute Welt. Sie laufen weiter über den älteren Weg aus Collidern und Kartenfotografie, und der war nie gut genug zum Spielen — er <em>rendert</em>, und genau das ist das Problem, denn „es rendert“ liest sich für einen Spieler als „so ist die Mod“, und er beurteilt Polus dann nach Airship.</p><p>Deshalb steht die Karten-Sperre <strong>vor</strong> allem anderen, auch vor der Debug-Taste: auf einer Karte ohne beschriebene Welt gibt es nichts, das zu erzwingen sich lohnt. Ins Log geht eine Zeile je Karte, damit „nichts passiert“ nicht schweigend passiert. Der alte Weg bleibt im Code und ist aus dem Offline-Render-Werkzeug weiter erreichbar.</p><p>Welche Karten als beschrieben gelten, entscheidet EINE Stelle, eine Liste aus (Kartenschlüssel, Bau-Funktion). Die nächste Karte ist ein Eintrag dort plus ihre zwei generierten Dateien — so kamen Mira HQ und die Skeld dazu, und deshalb wird diese Liste immer kürzer.</p><p>Ein Nebeneffekt, der mehr spart als die Sperre selbst: auf einer nicht beschriebenen Karte entfallen Kartenfotografie und Sprite-Ernte ganz — beide gibt es nur, um ein Bild zu füttern, das dort nie gezeichnet wird.</p>"
           }
         },
         {
