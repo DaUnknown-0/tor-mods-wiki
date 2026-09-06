@@ -139,6 +139,42 @@
       },
     },
     {
+      id: "uc-stalker", mod: "unknowns",
+      title: { en: "Stalker: cone light, unseen clock, strike", de: "Stalker: Kegellicht, ungesehene Uhr, Schlag" },
+      how: {
+        en: "As Stalker, check that the cone light renders next to your normal vision and follows the mouse. Stand in the ring between crew vision and cone reach with the target in the cone: the button must read WATCHING and the percentage must climb; step into the target's sight and it must read SEEN and stop. Let the target confirm the meter every 15 s, then strike at 100% and check the game ends with the Stalker win.",
+        de: "Als Stalker prüfen, dass der Kegel neben der normalen Sicht gerendert wird und der Maus folgt. Im Ring zwischen Crew-Sicht und Kegel-Reichweite stehen, Ziel im Kegel: Der Button muss IM BLICK zeigen und der Prozentwert steigen; in die Sicht des Ziels treten, dann muss GESEHEN stehen und die Uhr stoppen. Das Ziel bestätigt das Meter alle 15 s, dann bei 100% zuschlagen und prüfen, dass das Spiel mit dem Stalker-Sieg endet.",
+      },
+      risk: {
+        en: "The cone is a cloned LightSource (untested engine corner: it may not render, the clock still runs). The half-angle assumes vanilla width = fraction of a full circle; calibrate option 1644 in play.",
+        de: "Der Kegel ist eine geklonte LightSource (ungetestete Engine-Ecke: Er könnte nicht rendern, die Uhr läuft trotzdem). Der Halbwinkel nimmt an, dass die Vanilla-Breite ein Anteil des Vollkreises ist; Option 1644 im Spiel kalibrieren.",
+      },
+    },
+    {
+      id: "uc-void", mod: "unknowns",
+      title: { en: "Void: the ejection that does not happen", de: "Void: der Rauswurf, der nicht stattfindet" },
+      how: {
+        en: "Vote the Void out. The exile screen must run as a skip with the purple void line and its glitch (ghost copies, jolts), nobody dies, and the round continues. Vote him out again: now he must be ejected normally. Check his own vote weighs nothing in the tally.",
+        de: "Den Void rauswählen. Der Exile-Bildschirm muss als Skip mit der violetten Void-Zeile und ihrem Glitch (Geisterkopien, Ruckler) laufen, niemand stirbt, die Runde geht weiter. Erneut rauswählen: Jetzt muss er normal rausfliegen. Prüfen, dass seine eigene Stimme im Ergebnis nichts wiegt.",
+      },
+      risk: {
+        en: "The text override path (completeString vs GetString) and whether the cloned ghost text objects render on the exile screen.",
+        de: "Der Text-Override-Pfad (completeString vs. GetString) und ob die geklonten Geister-Textobjekte auf dem Exile-Bildschirm rendern.",
+      },
+    },
+    {
+      id: "uc-king", mod: "unknowns",
+      title: { en: "King: advisor reveal and the royal VIP", de: "King: Ratgeber-Anzeige und der königliche VIP" },
+      how: {
+        en: "As King, check the chat line names the advisor with the right role and that the role stays under their name in the world and in meetings. With VIP enabled, confirm the rolled VIP lost the tag, the King shows VIP, and his murder flashes gold with the text for everyone. The task bar must not count him.",
+        de: "Als King prüfen, dass die Chat-Zeile den Ratgeber mit der richtigen Rolle nennt und die Rolle in Welt und Meeting unter dessen Namen bleibt. Mit aktivem VIP bestätigen, dass der ausgeloste VIP den Tag verloren hat, der King VIP zeigt und sein Mord für alle gold mit Text flasht. Die Task-Leiste darf ihn nicht zählen.",
+      },
+      risk: {
+        en: "The advisor capture runs 1 s after the assignment: a UC promotion landing later than that would be missed (shows Crewmate).",
+        de: "Die Ratgeber-Erfassung läuft 1 s nach der Zuweisung: Eine später landende UC-Beförderung würde fehlen (zeigt Crewmate).",
+      },
+    },
+    {
       id: "uc-auditor", mod: "unknowns",
       title: { en: "Auditor: taking completed tasks back", de: "Auditor: erledigte Tasks zurücknehmen" },
       how: {

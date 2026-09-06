@@ -120,6 +120,7 @@ const SHIELD_FUNNEL = [
   { en: "Pelican swallow", de: "Pelican verschluckt", mod: "UC", v: "bbbbbbb" },
   { en: "Hunter shot", de: "Hunter-Schuss", mod: "UC", v: "bbbbbbb" },
   { en: "Copycat with a copied ability", de: "Copycat mit kopierter Fähigkeit", mod: "UC", v: "bbbbbbb" },
+  { en: "Stalker strike (after 100%)", de: "Stalker-Schlag (nach 100%)", mod: "UC", v: "bbbbbbb" },
   { en: "Revenger kill after a partner's death", de: "Revenger-Kill nach Partnertod", mod: "FF", v: "bbbbbbb" },
   { en: "Sidekick kills the Jackal", de: "Sidekick tötet den Jackal", mod: "FF", v: "bbbbbbb" }
 ];
@@ -2985,6 +2986,194 @@ const UNKNOWNS = {
               ["Gambler Speed Effect Duration", "30 s", "Dauer des Speed-Effekts (10–120)."],
               ["Gambler Kill Cooldown Change", "5 s", "Größe der Impostor-Cooldown-Änderung (1–20)."],
               ["Impostors Are Told About Cooldown Changes", "On", "Anonymer Chat-Hinweis an die Impostoren."]
+            ])
+          }
+        }
+      ]
+    },
+    {
+      id: "stalker",
+      title: { en: "The Stalker (Neutral)", de: "The Stalker (Neutral)" },
+      intro: {
+        en: "A neutral with one target. Watch them from a narrow torch cone without anyone being able to see you; once the clock is full, strike. Any death of the target after that wins the game for the Stalker alone.",
+        de: "Ein Neutraler mit einem Ziel. Beobachte es aus einem schmalen Lichtkegel, ohne dass dich jemand sehen könnte; ist die Uhr voll, schlag zu. Jeder Tod des Ziels danach gewinnt das Spiel für den Stalker allein."
+      },
+      entries: [
+        {
+          id: "stalker-cone",
+          title: { en: "The cone & the clock", de: "Der Kegel & die Uhr" },
+          summary: {
+            en: "Normal crew vision plus a narrow torch cone that reaches 1.5–2× crew vision. The clock runs only while the target is inside the cone and nobody alive could see the Stalker with standard crew vision.",
+            de: "Normale Crew-Sicht plus ein schmaler Lichtkegel mit 1,5- bis 2-facher Crew-Reichweite. Die Uhr läuft nur, solange das Ziel im Kegel steht und niemand Lebendes den Stalker mit Standard-Crew-Sicht sehen könnte."
+          },
+          body: {
+            en: "<p>The Stalker keeps his normal vision and carries a second light: a narrow flashlight cone aimed with the mouse (or stick), reaching a configurable multiple of crew vision. His target has to stand inside that cone with a clear line of sight. At the same time the stalking clock only advances while <strong>nobody</strong> alive, the target included, could see him: every living player is checked against the standard crew light radius plus a wall raycast. Impostors usually see further, but the rule deliberately uses the crew radius so the Stalker can reason about it, and sabotaged lights shrink that radius for everyone: a blackout is his best friend. The sweet spot is the ring between crew vision and cone reach, in line of sight.</p><p>The button label tells him what the clock is doing: <em>STALK</em> (idle), <em>WATCHING</em> (the target is in the cone and the clock runs), <em>SEEN</em> (someone could see him, the clock stands).</p>",
+            de: "<p>Der Stalker behält seine normale Sicht und trägt ein zweites Licht: einen schmalen Taschenlampen-Kegel, der mit der Maus (oder dem Stick) gerichtet wird und ein einstellbares Vielfaches der Crew-Sicht erreicht. Sein Ziel muss in diesem Kegel stehen, mit freier Sichtlinie. Gleichzeitig läuft die Stalk-Uhr nur, solange <strong>niemand</strong> Lebendes, das Ziel eingeschlossen, ihn sehen könnte: Jeder lebende Spieler wird gegen den Standard-Crew-Lichtradius plus einen Wand-Raycast geprüft. Impostoren sehen meist weiter, die Regel nutzt aber bewusst den Crew-Radius, damit der Stalker damit planen kann, und sabotierte Lichter verkleinern diesen Radius für alle: Ein Blackout ist sein bester Freund. Die Komfortzone ist der Ring zwischen Crew-Sicht und Kegel-Reichweite, in Sichtlinie.</p><p>Die Button-Beschriftung verrät ihm, was die Uhr tut: <em>STALKEN</em> (Leerlauf), <em>IM BLICK</em> (Ziel im Kegel, die Uhr läuft), <em>GESEHEN</em> (jemand könnte ihn sehen, die Uhr steht).</p>"
+          }
+        },
+        {
+          id: "stalker-meter",
+          title: { en: "The stalk meter", de: "Das Stalk-Meter" },
+          summary: {
+            en: "Every 15 seconds the target sees how much stalking time is left. An option shows it never, only from 50%, or always.",
+            de: "Alle 15 Sekunden sieht das Ziel, wie viel Stalk-Zeit noch fehlt. Eine Option zeigt es nie, erst ab 50% oder immer."
+          },
+          body: {
+            en: "<p>The Stalker's client broadcasts the remaining time every 15 seconds; only the target displays it, as a line at the bottom of the screen. Because the meter only moves while the Stalker is close and unseen, a drop since the last tick is itself a clue (\"who was near me just now?\"), which is exactly the counterplay the role is built around. The option <em>Target Sees The Stalk Meter</em> decides whether the target learns about the stalking at all, only once half the time is done, or from the first tick. When the clock is full the meter changes to a warning that the stalker is ready to strike.</p>",
+            de: "<p>Der Client des Stalkers sendet alle 15 Sekunden die Restzeit; nur das Ziel zeigt sie an, als Zeile am unteren Bildschirmrand. Weil das Meter nur sinkt, solange der Stalker nah und ungesehen ist, ist ein Rückgang seit dem letzten Tick selbst ein Hinweis (\"wer war gerade in meiner Nähe?\"), und genau darauf ist das Counterplay der Rolle gebaut. Die Option <em>Target Sees The Stalk Meter</em> entscheidet, ob das Ziel überhaupt vom Stalken erfährt, erst ab der Hälfte der Zeit oder ab dem ersten Tick. Ist die Uhr voll, wechselt das Meter zur Warnung, dass der Stalker bereit zum Zuschlagen ist.</p>"
+          }
+        },
+        {
+          id: "stalker-strike",
+          title: { en: "Strike, win & fallback", de: "Zuschlagen, Sieg & Fallback" },
+          summary: {
+            en: "At 100% the Stalker gets a kill button for his target (own cooldown). Any death of the target afterwards, by his strike, an ejection or a guess, ends the game with a Stalker win. If the target dies before 100%, he becomes the Pursuer (or gets a new target, option).",
+            de: "Bei 100% bekommt der Stalker einen Kill-Button für sein Ziel (eigener Cooldown). Jeder Tod des Ziels danach, durch seinen Schlag, einen Rauswurf oder einen Guess, beendet das Spiel mit einem Stalker-Sieg. Stirbt das Ziel vor 100%, wird er zum Pursuer (oder bekommt ein neues Ziel, Option)."
+          },
+          body: {
+            en: "<p>The strike goes through TOR's regular kill funnel, so every shield (Medic, Time Master, Armored, …) applies exactly as for a Sheriff shot. The button only ever targets the one legal victim; the cone light goes out once the clock is full. The win is checked by the host: the moment the target is dead after 100%, while the Stalker himself is still alive, the game ends with an own game-over reason and the Stalker as sole winner. A target who dies too early ends the stalking: by default the Stalker is promoted to TOR's Pursuer (the Lawyer's fallback path), optionally he is handed a fresh target and keeps his progress. A target who merely disconnects is replaced either way.</p>",
+            de: "<p>Der Schlag läuft durch TORs regulären Kill-Trichter, jedes Schild (Medic, Time Master, Armored, …) greift also genau wie bei einem Sheriff-Schuss. Der Button zielt immer nur auf das eine erlaubte Opfer; der Kegel erlischt, sobald die Uhr voll ist. Den Sieg prüft der Host: Sobald das Ziel nach 100% tot ist und der Stalker selbst noch lebt, endet das Spiel mit eigenem Game-Over-Reason und dem Stalker als Alleinsieger. Stirbt das Ziel zu früh, ist das Stalken vorbei: Standardmäßig wird der Stalker zu TORs Pursuer befördert (der Fallback-Pfad des Lawyers), optional bekommt er ein frisches Ziel und behält seinen Fortschritt. Ein Ziel, das nur die Verbindung verliert, wird in jedem Fall ersetzt.</p>"
+          }
+        },
+        {
+          id: "stalker-options",
+          title: { en: "Options (Neutral tab)", de: "Optionen (Neutral-Tab)" },
+          summary: {
+            en: "Spawn rate, stalking time, cone reach and width, meter visibility, strike cooldown, early-death fallback, tasks and vents.",
+            de: "Spawnrate, Stalk-Zeit, Kegel-Reichweite und -Breite, Meter-Sichtbarkeit, Schlag-Cooldown, Fallback bei frühem Tod, Tasks und Vents."
+          },
+          body: {
+            en: tbl(["Option", "Default", "What it does"], [
+              ["Stalker", "Off", "Spawn chance of the role."],
+              ["Stalker Minimum Players To Spawn", "7", "The role is not assigned below this lobby size."],
+              ["Stalking Time Needed", "90 s", "Unseen watching time until the strike is unlocked (30–300)."],
+              ["Stalk Cone Reach (x Crew Vision)", "1.75", "Cone length as a multiple of crew vision (1.5–2.0)."],
+              ["Stalk Cone Width", "0.2", "Vanilla flashlight width (0.1–0.5); the clock treats it as the fraction of a full circle."],
+              ["Target Sees The Stalk Meter", "Always", "Always / From 50% / Never."],
+              ["Strike Cooldown", "10 s", "Cooldown of the kill button after 100% (5–60)."],
+              ["If The Target Dies Before 100%", "Stalker Becomes Pursuer", "Or: New Target, Progress Kept."],
+              ["Stalker Has Tasks", "Off", "Whether his tasks count for the crew."],
+              ["Stalker Can Use Vents", "Off", "Vent access."]
+            ]),
+            de: tbl(["Option", "Standard", "Funktion"], [
+              ["Stalker", "Off", "Spawn-Chance der Rolle."],
+              ["Stalker Minimum Players To Spawn", "7", "Unter dieser Lobby-Größe wird die Rolle nicht vergeben."],
+              ["Stalking Time Needed", "90 s", "Ungesehene Beobachtungszeit bis zum freigeschalteten Schlag (30–300)."],
+              ["Stalk Cone Reach (x Crew Vision)", "1,75", "Kegellänge als Vielfaches der Crew-Sicht (1,5–2,0)."],
+              ["Stalk Cone Width", "0,2", "Vanilla-Taschenlampenbreite (0,1–0,5); die Uhr wertet sie als Anteil eines Vollkreises."],
+              ["Target Sees The Stalk Meter", "Always", "Always / From 50% / Never."],
+              ["Strike Cooldown", "10 s", "Cooldown des Kill-Buttons nach 100% (5–60)."],
+              ["If The Target Dies Before 100%", "Stalker Becomes Pursuer", "Oder: New Target, Progress Kept."],
+              ["Stalker Has Tasks", "Off", "Ob seine Tasks für die Crew zählen."],
+              ["Stalker Can Use Vents", "Off", "Vent-Zugang."]
+            ])
+          }
+        }
+      ]
+    },
+    {
+      id: "void",
+      title: { en: "The Void (Modifier)", de: "The Void (Modifier)" },
+      intro: {
+        en: "A crew modifier the vote cannot reach, once: the first ejection that would hit the Void simply does not happen. In return, his own vote never counts.",
+        de: "Ein Crew-Modifier, den die Abstimmung nicht erreicht, einmal: Der erste Rauswurf, der den Void treffen würde, findet schlicht nicht statt. Dafür zählt seine eigene Stimme nie."
+      },
+      entries: [
+        {
+          id: "void-immunity",
+          title: { en: "One ejection passes through", de: "Ein Rauswurf geht durch ihn hindurch" },
+          summary: {
+            en: "Everyone votes normally and the tally is shown. If the Void would be ejected, the host swaps the verdict for \"nobody\": no death, no lover cascade, no Jester or Lawyer bookkeeping. The immunity is spent afterwards.",
+            de: "Alle voten normal, das Ergebnis wird gezeigt. Würde der Void rausfliegen, tauscht der Host das Urteil gegen \"niemand\": kein Tod, keine Lover-Kaskade, keine Jester- oder Lawyer-Buchführung. Danach ist die Immunität verbraucht."
+          },
+          body: {
+            en: "<p>The cut is made at the host's vote result: TOR's vote counting decides who is exiled, and right before that verdict leaves the host it is rewritten to a skip when the Void is the one. Nothing in TOR ever believes the Void died, so no secondary effect fires. It works exactly once per game; after that the Void is a normal, votable crewmate. The Void is crew-only, so an exposed Void is confirmed crew: that is the design's intent, the immunity is his one shield and it is public the moment it is used.</p><p>The Void is an <strong>after-death modifier</strong>, the same family as TOR's VIP, Bait and Bloody: while \"VIP, Bait & Bloody Are Hidden\" is on, the tag is hidden from everyone, its carrier included, until they die or the game ends. A player usually learns they were the Void the moment the vote fails to eject them. Its spawn option sits under its own \"After Death Modifier\" heading in the Modifier tab.</p>",
+            de: "<p>Der Schnitt sitzt beim Abstimmungsergebnis des Hosts: TORs Stimmenzählung bestimmt, wer rausfliegt, und unmittelbar bevor dieses Urteil den Host verlässt, wird es zu einem Skip umgeschrieben, wenn es den Void trifft. Nichts in TOR glaubt je, der Void sei gestorben, also feuert kein Folgeeffekt. Es wirkt genau einmal pro Spiel; danach ist der Void ein normaler, rauswählbarer Crewmate. Der Void ist Crew-only, ein enttarnter Void ist also bestätigte Crew: Das ist so gewollt, die Immunität ist sein einziger Schild, und sie ist öffentlich, sobald sie benutzt wurde.</p><p>Der Void ist ein <strong>After-Death-Modifier</strong>, dieselbe Familie wie TORs VIP, Bait und Bloody: Solange \"VIP, Bait & Bloody Are Hidden\" an ist, bleibt der Tag vor allen verborgen, auch vor dem Träger selbst, bis er stirbt oder das Spiel endet. Meist erfährt ein Spieler erst in dem Moment, dass er der Void war, in dem die Abstimmung ihn nicht rauswirft. Seine Spawn-Option steht im Modifier-Tab unter einer eigenen Überschrift \"After Death Modifier\".</p>"
+          }
+        },
+        {
+          id: "void-animation",
+          title: { en: "The exile screen", de: "Der Exile-Bildschirm" },
+          summary: {
+            en: "The plain skip screen, with one difference: the line reads \"The vote vanished into the void.\" in void purple, with a light glitch (magenta and deep-purple ghost copies, short jolts, flickering characters).",
+            de: "Der normale Skip-Bildschirm, mit einem Unterschied: Die Zeile lautet \"Die Stimme verschwand im Nichts.\" in Void-Violett, mit leichtem Glitch (Geisterkopien in Magenta und Dunkelviolett, kurze Ruckler, flackernde Zeichen)."
+          },
+          body: {
+            en: "<p>Purely cosmetic and driven on every client from a host message that arrives right before the vote result. No figure flies by: the vanilla \"No one was ejected\" typewriter line is kept and only re-textured in the void's colours, styled after Tower Defense Simulator's void theme. Two tinted copies of the text ride slightly offset behind it like chromatic aberration; every few hundred milliseconds a short burst shoves them apart, flickers the colour towards magenta and replaces a couple of the ghost characters with ASCII noise. The meeting then ends like a skipped vote.</p>",
+            de: "<p>Rein kosmetisch und auf jedem Client durch eine Host-Nachricht ausgelöst, die direkt vor dem Abstimmungsergebnis eintrifft. Es fliegt keine Figur vorbei: Die Vanilla-Schreibmaschinenzeile \"Niemand wurde rausgeworfen\" bleibt und wird nur in den Farben des Nichts eingefärbt, angelehnt an das Void-Thema von Tower Defense Simulator. Zwei getönte Kopien des Textes liegen leicht versetzt dahinter wie eine Farbverschiebung; alle paar hundert Millisekunden schiebt ein kurzer Ruck sie auseinander, lässt die Farbe Richtung Magenta flackern und ersetzt ein paar Zeichen der Geisterkopien durch ASCII-Rauschen. Das Meeting endet danach wie ein Skip.</p>"
+          }
+        },
+        {
+          id: "void-options",
+          title: { en: "Options (Modifier tab)", de: "Optionen (Modifier-Tab)" },
+          summary: {
+            en: "Spawn rate, minimum players and whether his own vote counts.",
+            de: "Spawnrate, Mindestspieler und ob seine eigene Stimme zählt."
+          },
+          body: {
+            en: tbl(["Option", "Default", "What it does"], [
+              ["Void", "Off", "Spawn chance of the modifier (crew only)."],
+              ["Void Minimum Players To Spawn", "5", "Not assigned below this lobby size."],
+              ["Void's Own Vote Counts", "Off", "Off: his vote is accepted but weighs nothing (the icon still shows where it landed)."]
+            ]),
+            de: tbl(["Option", "Standard", "Funktion"], [
+              ["Void", "Off", "Spawn-Chance des Modifiers (nur Crew)."],
+              ["Void Minimum Players To Spawn", "5", "Wird unter dieser Lobby-Größe nicht vergeben."],
+              ["Void's Own Vote Counts", "Off", "Off: Seine Stimme wird angenommen, wiegt aber nichts (das Icon zeigt weiter, wo sie landete)."]
+            ])
+          }
+        }
+      ]
+    },
+    {
+      id: "king",
+      title: { en: "The King (Crewmate)", de: "The King (Crewmate)" },
+      intro: {
+        en: "A crewmate with no tasks and no powers, but a court: the King knows his advisor's role from the start, and while TOR's VIP modifier is enabled, the crown is the VIP.",
+        de: "Ein Crewmate ohne Tasks und ohne Fähigkeiten, aber mit Hofstaat: Der King kennt von Anfang an die Rolle seines Ratgebers, und solange TORs VIP-Modifier aktiv ist, trägt die Krone den VIP."
+      },
+      entries: [
+        {
+          id: "king-advisor",
+          title: { en: "The advisor", de: "Der Ratgeber" },
+          summary: {
+            en: "The host appoints one other crewmate. The King sees that player's starting role under their name for the whole game, in the world and in meetings. The advisor is never told; later role changes are not tracked.",
+            de: "Der Host ernennt einen anderen Crewmate. Der King sieht dessen Startrolle das ganze Spiel unter dem Namen, in der Welt und in Meetings. Der Ratgeber erfährt nichts; spätere Rollenwechsel werden nicht verfolgt."
+          },
+          body: {
+            en: "<p>The advisor is preferably a crew player (no Impostor, no neutral). The King's client captures the role text once, shortly after the roles are final (after the draft and the random promotions), and keeps showing exactly that: a Sidekick recruitment, a shift or an erase later on is deliberately invisible to him. A King who dies loses the line to TOR's regular ghost information.</p>",
+            de: "<p>Der Ratgeber ist bevorzugt ein Crew-Spieler (kein Impostor, kein Neutraler). Der Client des Kings erfasst den Rollentext einmal, kurz nachdem die Rollen final sind (nach Draft und Zufallsbeförderungen), und zeigt genau das weiter: Eine spätere Sidekick-Rekrutierung, ein Shift oder ein Erase bleiben ihm bewusst verborgen. Stirbt der King, geht die Zeile in TORs reguläre Geister-Information über.</p>"
+          }
+        },
+        {
+          id: "king-vip",
+          title: { en: "The crown is the VIP", de: "Die Krone trägt den VIP" },
+          summary: {
+            en: "Option (on by default): the King is always a VIP, on top of the VIPs TOR rolls. His murder notifies everyone with a royal flash and a line of text. While the option is on, TOR's VIP rate cannot be parked at 0.",
+            de: "Option (standardmäßig an): Der King ist immer ein VIP, zusätzlich zu den VIPs, die TOR auslost. Sein Mord benachrichtigt alle mit einem königlichen Flash und einer Textzeile. Solange die Option an ist, lässt sich TORs VIP-Rate nicht auf 0 stellen."
+          },
+          body: {
+            en: "<p>TOR's own VIPs keep their tag (rate and quantity decide how many there are); the King simply is one more. He is not put into TOR's VIP list (that would fire TOR's yellow blink on top): the VIP tag is appended to his role info, and the flash is the mod's own, gold by default or the killer's team colour when TOR's \"Show Team Color\" is on, with the message \"The King has fallen!\". A forced VIP with the modifier switched off would contradict itself, so while the option is on and the King can spawn, the host's VIP rate is held at 10–100 %. The King carries no tasks: they are removed server-side at the assignment, so the crew's task total shrinks by his share.</p>",
+            de: "<p>TORs eigene VIPs behalten ihren Tag (Rate und Anzahl bestimmen, wie viele es sind); der King ist schlicht ein weiterer. Er landet nicht in TORs VIP-Liste (das würde TORs gelbes Blinken obendrauf auslösen): Der VIP-Tag wird an seine Rolleninfo angehängt, und der Flash ist der mod-eigene, standardmäßig gold oder in der Teamfarbe des Killers, wenn TORs \"Show Team Color\" an ist, mit der Meldung \"Der King ist gefallen!\". Ein erzwungener VIP bei abgeschaltetem Modifier wäre ein Widerspruch, deshalb wird die VIP-Rate des Hosts bei aktiver Option und spawnfähigem King auf 10–100 % gehalten. Der King trägt keine Tasks: Sie werden bei der Zuweisung server-seitig entfernt, die Task-Summe der Crew schrumpft also um seinen Anteil.</p>"
+          }
+        },
+        {
+          id: "king-options",
+          title: { en: "Options (Crewmate tab)", de: "Optionen (Crewmate-Tab)" },
+          summary: {
+            en: "Spawn rate, minimum players and the VIP coupling.",
+            de: "Spawnrate, Mindestspieler und die VIP-Kopplung."
+          },
+          body: {
+            en: tbl(["Option", "Default", "What it does"], [
+              ["King", "Off", "Spawn chance of the role."],
+              ["King Minimum Players To Spawn", "6", "The role is not assigned below this lobby size."],
+              ["King Is Always The VIP", "On", "The King is a VIP in addition to TOR's rolled VIPs; holds TOR's VIP rate at 10–100 %."]
+            ]),
+            de: tbl(["Option", "Standard", "Funktion"], [
+              ["King", "Off", "Spawn-Chance der Rolle."],
+              ["King Minimum Players To Spawn", "6", "Unter dieser Lobby-Größe wird die Rolle nicht vergeben."],
+              ["King Is Always The VIP", "On", "Der King ist zusätzlich zu TORs ausgelosten VIPs ein VIP; hält TORs VIP-Rate auf 10–100 %."]
             ])
           }
         }
