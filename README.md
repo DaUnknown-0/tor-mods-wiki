@@ -1,6 +1,6 @@
 # TOR Mods Wiki
 
-A static, wiki-style site for three companion mods for *The Other Roles*:
+A static, wiki-style site for five companion mods for *The Other Roles*:
 
 - **Chance Modifier** (`chance.html`)
 - **Forgotten Fixes / Useful TOR Stuff** (`useful.html`)
@@ -12,12 +12,14 @@ A static, wiki-style site for three companion mods for *The Other Roles*:
 - Bilingual **English / German** (default English; choice saved in `localStorage`).
 - **Dark / light theme** toggle (dark = "lights out"; follows the system preference
   on first visit, choice saved in `localStorage`).
-- **Overdrive FX mode** (sparkle button top right, on by default), driven by the
-  `TORFX` engine in `assets/fx.js`: canvas starfield with pointer parallax, twinkle
-  and meteor trails (soft bokeh in light mode), animated auroras, drifting crewmates
-  (click one…), 3D card tilt with glare, cursor spotlight on entries, staggered
-  scroll reveals, a task-bar scroll progress meter, scanlines, glow & headline sheen.
-  Respects `prefers-reduced-motion`, pauses in hidden tabs.
+- **Station-map design**: the page is laid out like an Among Us map seen from above.
+  Floor plates as background, sections as rooms with a wall, entries and cards as
+  consoles, buttons as physical keys that press down, cel-shaded CSS/SVG crewmates.
+- **Overdrive FX mode** (sparkle key top right, on by default), driven by the
+  `TORFX` engine in `assets/fx.js`: task-bar scroll meter under the top beam,
+  crew wandering behind the page (click one...), light tilt on the mod rooms,
+  staggered scroll reveals, accent glow on lit consoles.
+  Respects `prefers-reduced-motion`.
 - **Theme switch as circular reveal** (View Transitions API, graceful fallback).
 - Each change is a **clickable accordion** — click the title to read the explanation.
 - **Live search** filters every feature on a mod page (press `/` to focus it).

@@ -14,7 +14,7 @@
 
   /* ---------- theme (dark = "lights out" / light) ---------- */
   const THEME_KEY = "tormods-theme";
-  const THEME_COLORS = { dark: "#070b16", light: "#edf1f8" };
+  const THEME_COLORS = { dark: "#2b3a63", light: "#b7c2d8" };
   function applyTheme(theme) {
     document.documentElement.dataset.theme = theme;
     const meta = document.querySelector('meta[name="theme-color"]');
@@ -143,6 +143,8 @@
     return p.indexOf("chance") >= 0 ? "chance"
       : p.indexOf("useful") >= 0 ? "useful"
       : p.indexOf("unknowns") >= 0 ? "unknowns"
+      : p.indexOf("nightfall") >= 0 ? "nightfall"
+      : p.indexOf("atlas") >= 0 ? "atlas"
       : "home";
   }
 
@@ -193,9 +195,9 @@
       : "";
     main.innerHTML = `
       <header class="mod-hero ${mod.key}">
-        <span class="crewmate hero-crewmate c-${mod.key} float" aria-hidden="true"></span>
+        <span class="stand" aria-hidden="true"><span class="crewmate c-${mod.key} float"></span></span>
         <p class="kicker">${L(mod.fullName)}</p>
-        <h1>${mod.name}</h1>
+        <h1 class="sticker">${mod.name}</h1>
         <p class="lead">${L(mod.tagline)}</p>
         <div class="meta-row">
           <span class="chip">${t("version")} ${mod.version}</span>
@@ -203,6 +205,7 @@
           <a class="btn primary" href="${mod.download}" target="_blank" rel="noopener">${t("download")}</a>
           <a class="btn" href="${mod.repo}" target="_blank" rel="noopener">${t("repo")}</a>
         </div>
+        ${heroArt(mod)}
       </header>
 
       <div class="intro-block">${L(mod.intro)}</div>
@@ -237,6 +240,18 @@
     wireScrollSpy();
   }
 
+  /* map art for the Atlas page: the forest overview on a map table plus the
+   * two in-game map logos, which jump to the map entries */
+  function heroArt(mod) {
+    if (mod.key !== "atlas") return "";
+    return `
+      <div class="map-frame"><img src="assets/img/forest_preview.webp" alt="" loading="lazy" decoding="async" /></div>
+      <div class="map-logos">
+        <a class="map-logo" href="#museum"><img src="assets/img/btn_museum.webp" alt="The Museum" width="220" height="55" /></a>
+        <a class="map-logo" href="#forest"><img src="assets/img/btn_wald.webp" alt="The Forest" width="220" height="55" /></a>
+      </div>`;
+  }
+
   function renderSidebar(mod) {
     const side = document.getElementById("sidebar");
     if (!side) return;
@@ -263,7 +278,7 @@
 
     const card = (mod) => `
       <a class="mod-card ${mod.key}" href="${mod.key}.html">
-        <span class="crewmate c-${mod.key}" aria-hidden="true"></span>
+        <span class="stand" aria-hidden="true"><span class="crewmate c-${mod.key}"></span></span>
         <div class="mod-card-top">
           <h3>${mod.name}</h3>
           <span class="chip">v${mod.version}</span>
@@ -307,16 +322,16 @@
     main.innerHTML = `
       <header class="home-hero">
         <div class="eject-lane" aria-hidden="true"><span class="crewmate"></span></div>
-        <div class="home-crew" aria-hidden="true">
-          <span class="crewmate c-chance float"></span>
-          <span class="crewmate c-useful float"></span>
-          <span class="crewmate c-unknowns float"></span>
-          <span class="crewmate c-nightfall float"></span>
-          <span class="crewmate c-atlas float"></span>
-        </div>
         <p class="kicker">${t("home_hero_kicker")}</p>
-        <h1>${heroWords(t("home_hero_title"))}</h1>
+        <h1 class="sticker">${heroWords(t("home_hero_title"))}</h1>
         <p class="lead">${t("home_hero_sub")}</p>
+        <div class="home-crew" aria-hidden="true">
+          <span class="stand"><span class="crewmate c-chance float"></span></span>
+          <span class="stand"><span class="crewmate c-useful float"></span></span>
+          <span class="stand"><span class="crewmate c-unknowns float"></span></span>
+          <span class="stand"><span class="crewmate c-nightfall float"></span></span>
+          <span class="stand"><span class="crewmate c-atlas float"></span></span>
+        </div>
       </header>
 
       <h2 class="center">${t("home_explore")}</h2>
@@ -349,6 +364,13 @@
       const target = document.querySelector(location.hash);
       if (target && target.classList.contains("entry")) openEntry(target);
     }
+    // in-page links to an entry (map logos) open it as well
+    document.querySelectorAll('#content a[href^="#"]').forEach((a) => {
+      a.addEventListener("click", () => {
+        const target = document.querySelector(a.getAttribute("href"));
+        if (target && target.classList.contains("entry")) openEntry(target);
+      });
+    });
   }
   function openEntry(entry) {
     entry.classList.add("open");
