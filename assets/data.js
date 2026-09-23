@@ -11,6 +11,7 @@ const UI = {
     nav_useful: "Forgotten Fixes",
     nav_unknowns: "Unknown's Collection",
     nav_nightfall: "Nightfall",
+    nav_atlas: "Atlas",
     search_placeholder: "Search features…",
     search_none: "No entries match your search.",
     on_this_page: "On this page",
@@ -23,8 +24,8 @@ const UI = {
     download: "Download latest",
     back_top: "Back to top",
     home_hero_kicker: "Companion mods for The Other Roles",
-    home_hero_title: "Four mods. One wiki.",
-    home_hero_sub: "Randomized chaos, a pile of quality-of-life fixes, brand-new custom roles, and a first-person view for The Other Roles 4.8.0. Click any feature to read what it does.",
+    home_hero_title: "Five mods. One wiki.",
+    home_hero_sub: "Randomized chaos, a pile of quality-of-life fixes, brand-new custom roles, a first-person view and new maps for The Other Roles 4.8.0. Click any feature to read what it does.",
     home_explore: "Explore the mods",
     home_combined: "Combined feature highlights",
     open_mod: "Open wiki page",
@@ -41,6 +42,7 @@ const UI = {
     nav_useful: "Forgotten Fixes",
     nav_unknowns: "Unknown's Collection",
     nav_nightfall: "Nightfall",
+    nav_atlas: "Atlas",
     search_placeholder: "Features durchsuchen…",
     search_none: "Keine Einträge passen zu deiner Suche.",
     on_this_page: "Auf dieser Seite",
@@ -53,8 +55,8 @@ const UI = {
     download: "Neueste Version laden",
     back_top: "Nach oben",
     home_hero_kicker: "Begleit-Mods für The Other Roles",
-    home_hero_title: "Vier Mods. Ein Wiki.",
-    home_hero_sub: "Zufalls-Chaos, ein Haufen Komfort-Fixes, brandneue eigene Rollen und eine Ich-Perspektive für The Other Roles 4.8.0. Klick auf ein Feature, um zu lesen, was es macht.",
+    home_hero_title: "Fünf Mods. Ein Wiki.",
+    home_hero_sub: "Zufalls-Chaos, ein Haufen Komfort-Fixes, brandneue eigene Rollen, eine Ich-Perspektive und neue Karten für The Other Roles 4.8.0. Klick auf ein Feature, um zu lesen, was es macht.",
     home_explore: "Mods erkunden",
     home_combined: "Kombinierte Feature-Highlights",
     open_mod: "Wiki-Seite öffnen",
@@ -3715,4 +3717,73 @@ const NIGHTFALL = {
   ]
 };
 
-const MODS = { chance: CHANCE, useful: USEFUL, unknowns: UNKNOWNS, nightfall: NIGHTFALL };
+const ATLAS = {
+  key: "atlas",
+  name: "Unknown's Atlas",
+  fullName: { en: "Unknown's Atlas: new maps for Among Us", de: "Unknown's Atlas: neue Karten für Among Us" },
+  version: "0.3.0.1",
+  allClients: true,
+  repo: "https://github.com/DaUnknown-0/UnknownsAtlas",
+  download: "https://github.com/DaUnknown-0/UnknownsAtlas/releases",
+  tagline: {
+    en: "Two brand-new maps: the Vesper Museum after closing time and the Nadelkamm forest station. Pick them next to the vanilla maps, in Freeplay and in the lobby.",
+    de: "Zwei brandneue Karten: das Vesper-Museum nach Feierabend und die Forststation Nadelkamm. Auswählbar neben den Vanilla-Karten, im Freeplay und in der Lobby."
+  },
+  intro: {
+    en: "Unknown's Atlas is a standalone BepInEx plugin. Its maps are built on top of the Skeld: every task, vent, door, camera and sabotage of the Skeld is moved to its new place, and only the scenery is new. That is why everything works online without extra network code, and why the maps currently need <strong>every player</strong> to have Atlas installed. <strong>Test version:</strong> both maps are playable but still being polished.",
+    de: "Unknown's Atlas ist ein eigenständiges BepInEx-Plugin. Seine Karten sitzen auf der Skeld: jede Aufgabe, jeder Vent, jede Tür, jede Kamera und jede Sabotage der Skeld wird an ihren neuen Platz gesetzt, neu ist nur die Kulisse. Deshalb funktioniert online alles ohne eigenen Netzcode, und deshalb brauchen derzeit <strong>alle Spieler</strong> Atlas. <strong>Testversion:</strong> beide Karten sind spielbar, werden aber noch poliert."
+  },
+  install: {
+    en: "<ol><li>Download <code>UnknownsAtlas.dll</code> from the latest release.</li><li>Put it into <code>BepInEx\\plugins</code> next to your other mods (Reactor is required, The Other Roles is optional).</li><li>Start the game. In <strong>Freeplay</strong> the new maps appear below the vanilla maps; in a <strong>lobby</strong> the host picks them in the map selection of the game settings.</li></ol>",
+    de: "<ol><li>Lade <code>UnknownsAtlas.dll</code> aus dem neuesten Release.</li><li>Leg sie nach <code>BepInEx\\plugins</code> zu deinen anderen Mods (Reactor wird benötigt, The Other Roles ist optional).</li><li>Starte das Spiel. Im <strong>Freeplay</strong> stehen die neuen Karten unter den Vanilla-Karten; in einer <strong>Lobby</strong> wählt der Host sie in der Kartenauswahl der Spieleinstellungen.</li></ol>"
+  },
+  deps: {
+    en: "<ul><li><strong>Reactor 2.3.1</strong> and BepInEx 6 (be.697), Among Us 2024.11.26</li><li><strong>All players</strong> need Atlas; players without it would see the Skeld.</li><li>Works alongside The Other Roles and the rest of the mod family.</li></ul>",
+    de: "<ul><li><strong>Reactor 2.3.1</strong> und BepInEx 6 (be.697), Among Us 2024.11.26</li><li><strong>Alle Spieler</strong> brauchen Atlas; wer es nicht hat, sähe die Skeld.</li><li>Läuft zusammen mit The Other Roles und dem Rest der Mod-Familie.</li></ul>"
+  },
+  sections: [
+    {
+      id: "maps",
+      title: { en: "The maps", de: "Die Karten" },
+      intro: { en: "Two maps, each with 14 areas, all Skeld tasks, three vent networks and the full set of sabotages.", de: "Zwei Karten mit je 14 Bereichen, allen Skeld-Aufgaben, drei Vent-Netzen und allen Sabotagen." },
+      entries: [
+        {
+          id: "museum",
+          title: { en: "Vesper Museum", de: "Vesper-Museum" },
+          summary: { en: "A natural history and technology museum after closing time: dinosaur rotunda, gallery, planetarium, machine hall and more.", de: "Ein Museum für Naturkunde und Technik nach Feierabend: Dinosaurier-Rotunde, Galerie, Planetarium, Technikhalle und mehr." },
+          body: {
+            en: "<p>The night shift (the crew) tidies up while the impostors pose as staff. 14 halls around a central rotunda with a T. rex skeleton; showcases block movement but not sight, while partition walls and shelves block both. Fire shutters (the doors) can be seen through.</p>" + tbl(["Sabotage", "In the museum"], [["Reactor", "Burglar alarm: two hand scanners at the same time"], ["Oxygen", "Extinguishing gas: two abort keypads"], ["Lights", "Fuse box in the utilities room"], ["Comms", "Telephone switchboard"], ["Doors", "Fire shutters, see-through"]]),
+            de: "<p>Die Nachtschicht (die Crew) räumt auf, während sich die Impostor als Personal ausgeben. 14 Säle rund um eine Rotunde mit T.-Rex-Skelett; Vitrinen sperren den Weg, aber nicht die Sicht, Stellwände und Regale sperren beides. Durch die Brandschutz-Rollgitter (die Türen) sieht man hindurch.</p>" + tbl(["Sabotage", "Im Museum"], [["Reaktor", "Einbruchalarm: zwei Handscanner gleichzeitig"], ["Sauerstoff", "Löschgas: zwei Abbruch-Keypads"], ["Licht", "Sicherungskasten in der Haustechnik"], ["Comms", "Telefonzentrale"], ["Türen", "Brandschutz-Rollgitter, durchsichtig"]])
+          }
+        },
+        {
+          id: "forest",
+          title: { en: "Forest Station", de: "Forststation" },
+          summary: { en: "A remote forestry and research station: log cabins with doors, grassy clearings and forest paths.", de: "Eine abgelegene Forst- und Forschungsstation: Blockhütten mit Türen, Lichtungen und Waldwege." },
+          body: {
+            en: "<p>Eight walk-in log cabins (mess hall, field station, lab, sawmill, storehouse, boathouse, ranger office, generator shed) and six clearings (lookout rock, radio mast, water tower, hunting stand, pump station, creek dock), connected by wide forest paths. The dense forest is the wall. The mess hall bell calls the meeting.</p>" + tbl(["Sabotage", "In the forest"], [["Reactor", "Wildfire alarm: water tower and lookout rock"], ["Oxygen", "Water supply: field lab and creek dock"], ["Lights", "Fuse cabinet in the generator shed"], ["Comms", "Radio set at the mast"], ["Doors", "Cabin doors"]]),
+            de: "<p>Acht begehbare Blockhütten (Messe, Feldstation, Labor, Sägewerk, Lagerhaus, Bootshaus, Försterstube, Generatorschuppen) und sechs Lichtungen (Aussichtsfels, Funkmast, Wasserturm, Hochsitz, Pumpstation, Bachsteg), verbunden durch breite Waldwege. Der dichte Wald ist die Wand. Die Glocke in der Messe ruft das Meeting.</p>" + tbl(["Sabotage", "Im Wald"], [["Reaktor", "Waldbrand-Alarm: Wasserturm und Aussichtsfels"], ["Sauerstoff", "Wasserversorgung: Labor und Bachsteg"], ["Licht", "Sicherungsschrank im Generatorschuppen"], ["Comms", "Funkgerät am Mast"], ["Türen", "Hüttentüren"]])
+          }
+        }
+      ]
+    },
+    {
+      id: "selection",
+      title: { en: "Choosing a map", de: "Karte wählen" },
+      intro: { en: "Next to the vanilla maps, no config file needed.", de: "Neben den Vanilla-Karten, ohne Config-Datei." },
+      entries: [
+        {
+          id: "pick",
+          title: { en: "Freeplay and lobby", de: "Freeplay und Lobby" },
+          summary: { en: "Extra map buttons in the Freeplay menu and in the host's map picker; the host's choice is sent to everyone.", de: "Zusätzliche Kartenknöpfe im Freeplay-Menü und in der Kartenauswahl des Hosts; die Wahl des Hosts geht an alle." },
+          body: {
+            en: "<p>In <strong>Freeplay</strong> the museum and forest buttons sit below the five vanilla maps. In a <strong>lobby</strong> the host finds them in the map picker of the game settings; picking a vanilla map switches back. The choice is sent to all players whenever it changes, when someone joins, every few seconds in the lobby and right before the game starts.</p>",
+            de: "<p>Im <strong>Freeplay</strong> stehen die Knöpfe für Museum und Wald unter den fünf Vanilla-Karten. In einer <strong>Lobby</strong> findet der Host sie in der Kartenauswahl der Spieleinstellungen; eine Vanilla-Karte schaltet zurück. Die Wahl geht an alle Spieler, sobald sie sich ändert, wenn jemand beitritt, alle paar Sekunden in der Lobby und direkt vor dem Spielstart.</p>"
+          }
+        }
+      ]
+    }
+  ]
+};
+
+const MODS = { chance: CHANCE, useful: USEFUL, unknowns: UNKNOWNS, nightfall: NIGHTFALL, atlas: ATLAS };

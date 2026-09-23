@@ -26,6 +26,7 @@
   --useful: #3fe0cb;
   --unknowns: #b18aff;
   --nightfall: #5e8bff;
+  --atlas: #e0b04a;
   --crew-red: #f4586a;
   --task-green: #3ddc84;
   --accent-ink: #0b1020;          /* text on accent surfaces */
@@ -73,6 +74,7 @@ html[data-theme="light"] {
   --useful: #077e6f;
   --unknowns: #6f35d8;
   --nightfall: #2d4fc4;
+  --atlas: #9a6a12;
   --crew-red: #d63d4e;
   --task-green: #1d9e58;
   --accent-ink: #ffffff;
@@ -95,6 +97,7 @@ body[data-page="chance"]   { --accent: var(--chance); }
 body[data-page="useful"]   { --accent: var(--useful); }
 body[data-page="unknowns"] { --accent: var(--unknowns); }
 body[data-page="nightfall"] { --accent: var(--nightfall); }
+body[data-page="atlas"] { --accent: var(--atlas); }
 
 /* ---------------------------------------------------------------- base */
 * { box-sizing: border-box; }
@@ -211,6 +214,7 @@ h1, h2, h3, h4 { font-family: var(--display); }
 .crewmate.c-useful   { color: var(--useful); }
 .crewmate.c-unknowns { color: var(--unknowns); }
 .crewmate.c-nightfall { color: var(--nightfall); }
+.crewmate.c-atlas { color: var(--atlas); }
 
 .crewmate.float { animation: bob 5.5s ease-in-out infinite; }
 @keyframes bob {
@@ -581,6 +585,7 @@ tbody tr:hover { background: color-mix(in srgb, var(--accent) 5%, transparent); 
 .mod-card.useful   { --accent: var(--useful); }
 .mod-card.unknowns { --accent: var(--unknowns); }
 .mod-card.nightfall { --accent: var(--nightfall); }
+.mod-card.atlas { --accent: var(--atlas); }
 .mod-card::after {
   content: ""; position: absolute; inset: auto 0 0 0; height: 4px;
   background: var(--accent); opacity: .85;

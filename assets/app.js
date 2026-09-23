@@ -83,6 +83,7 @@
           ${link("useful.html", "nav_useful")}
           ${link("unknowns.html", "nav_unknowns")}
           ${link("nightfall.html", "nav_nightfall")}
+          ${link("atlas.html", "nav_atlas")}
         </nav>
         <div class="topbar-actions">
           <div class="lang-switch" role="group" aria-label="Language">
@@ -294,6 +295,7 @@
       { mod: "useful", de: "Mod-Abgleich: fehlende Mods des Hosts per Klick nachladen", en: "Mod sync: fetch the host's missing mods with one click" },
       { mod: "useful", de: "25 Sprachen für TOR und die ganze Mod-Familie", en: "25 languages for TOR and the whole mod family" },
       { mod: "nightfall", de: "Ich-Perspektive, sobald sich der Werwolf verwandelt", en: "First person the moment the werewolf transforms" },
+      { mod: "atlas", de: "Zwei neue Karten: Vesper-Museum und Forststation", en: "Two new maps: Vesper Museum and Forest Station" },
     ];
     const hl = highlights
       .map(
@@ -310,6 +312,7 @@
           <span class="crewmate c-useful float"></span>
           <span class="crewmate c-unknowns float"></span>
           <span class="crewmate c-nightfall float"></span>
+          <span class="crewmate c-atlas float"></span>
         </div>
         <p class="kicker">${t("home_hero_kicker")}</p>
         <h1>${heroWords(t("home_hero_title"))}</h1>
@@ -322,6 +325,7 @@
         ${card(USEFUL)}
         ${card(UNKNOWNS)}
         ${card(NIGHTFALL)}
+        ${card(ATLAS)}
       </div>
 
       <h2 class="center">${t("home_combined")}</h2>
@@ -543,6 +547,7 @@
     else if (page === "useful") renderModPage(USEFUL);
     else if (page === "unknowns") renderModPage(UNKNOWNS);
     else if (page === "nightfall") renderModPage(NIGHTFALL);
+    else if (page === "atlas") renderModPage(ATLAS);
     else if (page === "test" && window.TORTEST) TORTEST.render(); // hidden board, see wireSecretDoor
     wireBackTop();
     wireUcScramble();
