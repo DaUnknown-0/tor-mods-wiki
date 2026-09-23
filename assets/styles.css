@@ -670,11 +670,11 @@ html.fx-reveal .rv {
 html.fx-reveal .rv.rv-in { opacity: 1; translate: 0 0; }
 
 /* ---------------------------------------------------------- scroll choreography
- * scroll.js paints the background canvas and feeds --hp (hero exit, 0..1),
+ * bg3d.js renders the 3D background (#bg3d); scroll.js feeds --hp (hero exit, 0..1),
  * --sp (per heading / mod row, 0 below the fold .. 1 in view) and --rp
  * (read progress). The motion only applies with FX on; without it (or under
  * reduced motion) the vars are unset and everything sits at rest. */
-#bgfx { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+#bg3d { position: fixed; inset: 0; width: 100% !important; height: 100% !important; z-index: -1; pointer-events: none; display: block; }
 
 .strip { background: var(--hero-bg); }
 html[data-fx="on"] .hero { background: var(--bg); }
