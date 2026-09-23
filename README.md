@@ -12,20 +12,26 @@ A static, wiki-style site for five companion mods for *The Other Roles*:
 - Bilingual **English / German** (default English; choice saved in `localStorage`).
 - **Dark / light theme** toggle (dark = "lights out"; follows the system preference
   on first visit, choice saved in `localStorage`).
-- **Station-map design**: the page is laid out like an Among Us map seen from above.
-  Floor plates as background, sections as rooms with a wall, entries and cards as
-  consoles, buttons as physical keys that press down, cel-shaded CSS/SVG crewmates.
-- **Overdrive FX mode** (sparkle key top right, on by default), driven by the
-  `TORFX` engine in `assets/fx.js`: task-bar scroll meter under the top beam,
-  crew wandering behind the page (click one...), light tilt on the mod rooms,
-  staggered scroll reveals, accent glow on lit consoles.
-  Respects `prefers-reduced-motion`.
+- **Release-page design**: a cinematic, framed hero per page with a live Among Us
+  scene drawn in a `<canvas>` by `assets/hero.js` (planet horizon with the Skeld,
+  dice, a station under repair, a nebula, a moonlit ridge, the Atlas landscape),
+  film grain, collage strips from the Atlas map textures, a big serif title and a
+  numbered table of contents. Below it a calm editorial reading column on warm
+  off-white: serif body text, thin rules, numbered sections, a dash rail at the
+  left edge that tracks the current section. Dark mode keeps the same layout.
+  The scenes pause when off-screen or the tab is hidden, render a single frame
+  under `prefers-reduced-motion`, and use a lower resolution on phones.
+- **FX mode** (sparkle key top right, on by default), driven by `TORFX` in
+  `assets/fx.js`: pointer parallax and extras in the hero scenes, animated grain,
+  scroll reveals. Respects `prefers-reduced-motion`.
+- **Atlas map viewer**: both maps as tabs (the in-game logos), click for a
+  full-size pan/zoom view (mouse, wheel, touch and pinch).
 - **Theme switch as circular reveal** (View Transitions API, graceful fallback).
 - Each change is a **clickable accordion** — click the title to read the explanation.
 - **Live search** filters every feature on a mod page (press `/` to focus it).
 - Sticky **section sidebar** with scroll-spy, **expand/collapse all**, back-to-top.
-- No build step — pure HTML/CSS/JS. Self-hosted fonts: Chakra Petch (display),
-  Rubik (body), JetBrains Mono (labels/code).
+- No build step, pure HTML/CSS/JS. Fonts from Google Fonts: Fraunces (display),
+  Source Serif 4 (body), IBM Plex Sans and IBM Plex Mono (UI labels, code).
 
 ## Editing content
 
