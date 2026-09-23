@@ -2,7 +2,8 @@
  * TOR Mods Wiki: TORFX, the optional effects layer
  * The editorial design keeps the effects quiet: with FX on, the hero scene
  * reacts to the pointer and gets its animated film grain and extras (see
- * hero.js), entries and rows fade in on scroll, and the section rail at the
+ * hero.js), entries fade in on scroll (headings and mod rows move with the
+ * scroll itself, see scroll.js), and the section rail at the
  * left edge grows a soft trail. With FX off, the hero still drifts on its own
  * and everything else is static.
  * Loaded before app.js; app.js calls TORFX.start()/stop()/refresh().
@@ -30,7 +31,7 @@
 
   function observeAll() {
     if (!io) return;
-    const els = doc.querySelectorAll(".entry, .mod-row, .hl, .test-item, .doc-section > h2, .intro-block, .map-viewer");
+    const els = doc.querySelectorAll(".entry, .hl, .test-item, .intro-block, .map-viewer");
     const counts = new Map();
     els.forEach((el) => {
       if (el.dataset.rvDone || el.classList.contains("rv")) return;

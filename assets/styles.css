@@ -669,6 +669,59 @@ html.fx-reveal .rv {
 }
 html.fx-reveal .rv.rv-in { opacity: 1; translate: 0 0; }
 
+/* ---------------------------------------------------------- scroll choreography
+ * scroll.js paints the background canvas and feeds --hp (hero exit, 0..1),
+ * --sp (per heading / mod row, 0 below the fold .. 1 in view) and --rp
+ * (read progress). The motion only applies with FX on; without it (or under
+ * reduced motion) the vars are unset and everything sits at rest. */
+#bgfx { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+
+.strip { background: var(--hero-bg); }
+html[data-fx="on"] .hero { background: var(--bg); }
+html[data-fx="on"] .hero-frame {
+  transform: scale(calc(1 - var(--hp, 0) * .08));
+  transform-origin: 50% 100%;
+  border-radius: calc(var(--hp, 0) * 26px);
+}
+.hero-frame::before {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: #000; opacity: calc(var(--hp, 0) * .55);
+}
+html[data-fx="on"] .strip-l { transform: translateX(calc(var(--hp, 0) * -70%)); opacity: calc(1 - var(--hp, 0) * .9); }
+html[data-fx="on"] .strip-r { transform: translateX(calc(var(--hp, 0) * 70%)); opacity: calc(1 - var(--hp, 0) * .9); }
+html[data-fx="on"] .hero::before { transform: translateX(calc(var(--hp, 0) * -70%)); }
+html[data-fx="on"] .hero::after { transform: translateX(calc(var(--hp, 0) * 70%)) scaleX(-1); }
+
+/* read progress along the bottom edge of the frosted topbar */
+#topbar::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px;
+  background: var(--accent); transform-origin: 0 50%;
+  transform: scaleX(var(--rp, 0)); opacity: 0; transition: opacity .3s var(--ease);
+}
+body.scrolled #topbar::after { opacity: .9; }
+
+/* section headings rise in, the accent rule under them grows with the scroll */
+.doc-section > h2::after {
+  content: ""; display: block; width: 56px; height: 2px; margin-top: 16px;
+  background: var(--accent); transform-origin: 0 50%;
+}
+html[data-fx="on"] .doc-section > h2 {
+  opacity: calc(.12 + var(--sp, 1) * .88);
+  translate: 0 calc((1 - var(--sp, 1)) * 26px);
+}
+html[data-fx="on"] .doc-section > h2::before { letter-spacing: calc(.12em + (1 - var(--sp, 1)) * .5em); }
+html[data-fx="on"] .doc-section > h2::after { transform: scaleX(var(--sp, 1)); }
+
+/* home: mod rows slide in, their crewmate tumbles into place */
+html[data-fx="on"] .mod-row {
+  opacity: calc(.1 + var(--sp, 1) * .9);
+  translate: calc((1 - var(--sp, 1)) * 40px) 0;
+}
+html[data-fx="on"] .mod-row .mod-mark .crewmate {
+  rotate: calc((1 - var(--sp, 1)) * -160deg);
+  scale: calc(.4 + var(--sp, 1) * .6);
+}
+
 /* -------------------------------------- theme switch: circular reveal */
 ::view-transition-old(root),
 ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
