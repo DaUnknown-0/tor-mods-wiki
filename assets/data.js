@@ -3717,11 +3717,17 @@ const NIGHTFALL = {
   ]
 };
 
+/** Bildreihe fuer Atlas-Eintraege: [[datei in assets/img, Bildunterschrift], ...]. */
+function shots(list) {
+  return "<div class='shots'>" + list.map(([src, cap]) =>
+    `<figure><img src="assets/img/${src}" loading="lazy" alt="${cap}"><figcaption>${cap}</figcaption></figure>`).join("") + "</div>";
+}
+
 const ATLAS = {
   key: "atlas",
   name: "Unknown's Atlas",
   fullName: { en: "Unknown's Atlas: new maps for Among Us", de: "Unknown's Atlas: neue Karten für Among Us" },
-  version: "0.3.0.1",
+  version: "0.3.0.3",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/UnknownsAtlas",
   download: "https://github.com/DaUnknown-0/UnknownsAtlas/releases",
@@ -3730,8 +3736,8 @@ const ATLAS = {
     de: "Zwei brandneue Karten: das Vesper-Museum nach Feierabend und die Forststation Nadelkamm. Auswählbar neben den Vanilla-Karten, im Freeplay und in der Lobby."
   },
   intro: {
-    en: "Unknown's Atlas is a standalone BepInEx plugin. Its maps are built on top of the Skeld: every task, vent, door, camera and sabotage of the Skeld is moved to its new place, and only the scenery is new. That is why everything works online without extra network code, and why the maps currently need <strong>every player</strong> to have Atlas installed. <strong>Test version:</strong> both maps are playable but still being polished.",
-    de: "Unknown's Atlas ist ein eigenständiges BepInEx-Plugin. Seine Karten sitzen auf der Skeld: jede Aufgabe, jeder Vent, jede Tür, jede Kamera und jede Sabotage der Skeld wird an ihren neuen Platz gesetzt, neu ist nur die Kulisse. Deshalb funktioniert online alles ohne eigenen Netzcode, und deshalb brauchen derzeit <strong>alle Spieler</strong> Atlas. <strong>Testversion:</strong> beide Karten sind spielbar, werden aber noch poliert."
+    en: "Unknown's Atlas is a standalone BepInEx plugin. Its maps are built on top of the Skeld: every task, vent, door, camera and sabotage of the Skeld is moved to its new place. On top come new scenery, a minigame for every task, map-specific sabotages with their own repairs, and living maps with weather, lightning and laser barriers. Tasks and sabotages keep the Skeld rules, so everything works online like vanilla; the maps need <strong>every player</strong> to have Atlas installed. <strong>Test version:</strong> both maps are playable but still being polished.",
+    de: "Unknown's Atlas ist ein eigenständiges BepInEx-Plugin. Seine Karten sitzen auf der Skeld: jede Aufgabe, jeder Vent, jede Tür, jede Kamera und jede Sabotage der Skeld wird an ihren neuen Platz gesetzt. Dazu kommen neue Kulisse, ein Minispiel für jede Aufgabe, eigene Sabotagen mit eigenen Reparaturen und lebendige Karten mit Wetter, Blitzen und Laserschranken. Aufgaben und Sabotagen behalten die Regeln der Skeld, online läuft also alles wie in Vanilla; die Karten brauchen <strong>alle Spieler</strong> mit Atlas. <strong>Testversion:</strong> beide Karten sind spielbar, werden aber noch poliert."
   },
   install: {
     en: "<ol><li>Download <code>UnknownsAtlas.dll</code> from the latest release.</li><li>Put it into <code>BepInEx\\plugins</code> next to your other mods (Reactor is required, The Other Roles is optional).</li><li>Start the game. In <strong>Freeplay</strong> the new maps appear below the vanilla maps; in a <strong>lobby</strong> the host picks them in the map selection of the game settings.</li></ol>",
@@ -3752,8 +3758,8 @@ const ATLAS = {
           title: { en: "Vesper Museum", de: "Vesper-Museum" },
           summary: { en: "A natural history and technology museum after closing time: dinosaur rotunda, gallery, planetarium, machine hall and more.", de: "Ein Museum für Naturkunde und Technik nach Feierabend: Dinosaurier-Rotunde, Galerie, Planetarium, Technikhalle und mehr." },
           body: {
-            en: "<p>The night shift (the crew) tidies up while the impostors pose as staff. 14 halls around a central rotunda with a T. rex skeleton; showcases block movement but not sight, while partition walls and shelves block both. Fire shutters (the doors) can be seen through.</p>" + tbl(["Sabotage", "In the museum"], [["Reactor", "Burglar alarm: two hand scanners at the same time"], ["Oxygen", "Extinguishing gas: two abort keypads"], ["Lights", "Fuse box in the utilities room"], ["Comms", "Telephone switchboard"], ["Doors", "Fire shutters, see-through"]]),
-            de: "<p>Die Nachtschicht (die Crew) räumt auf, während sich die Impostor als Personal ausgeben. 14 Säle rund um eine Rotunde mit T.-Rex-Skelett; Vitrinen sperren den Weg, aber nicht die Sicht, Stellwände und Regale sperren beides. Durch die Brandschutz-Rollgitter (die Türen) sieht man hindurch.</p>" + tbl(["Sabotage", "Im Museum"], [["Reaktor", "Einbruchalarm: zwei Handscanner gleichzeitig"], ["Sauerstoff", "Löschgas: zwei Abbruch-Keypads"], ["Licht", "Sicherungskasten in der Haustechnik"], ["Comms", "Telefonzentrale"], ["Türen", "Brandschutz-Rollgitter, durchsichtig"]])
+            en: "<p>The night shift (the crew) tidies up while the impostors pose as staff. 14 halls around a central rotunda with a T. rex skeleton; showcases block movement but not sight, while partition walls and shelves block both. Fire shutters (the doors) can be seen through.</p>" + tbl(["Sabotage", "In the museum"], [["Reactor", "Security Alarm: two hand scanners at the same time"], ["Oxygen", "Climate Failure: two sensor keypads"], ["Lights", "Replace the Fuses: fuse box in the utilities room"], ["Comms", "Restore the CCTV: picture hold knobs"], ["Doors", "Fire shutters, see-through; also during other sabotages"]]),
+            de: "<p>Die Nachtschicht (die Crew) räumt auf, während sich die Impostor als Personal ausgeben. 14 Säle rund um eine Rotunde mit T.-Rex-Skelett; Vitrinen sperren den Weg, aber nicht die Sicht, Stellwände und Regale sperren beides. Durch die Brandschutz-Rollgitter (die Türen) sieht man hindurch.</p>" + tbl(["Sabotage", "Im Museum"], [["Reaktor", "Security Alarm: zwei Handscanner gleichzeitig"], ["Sauerstoff", "Climate Failure: zwei Sensor-Tastenfelder"], ["Licht", "Replace the Fuses: Sicherungskasten in der Haustechnik"], ["Comms", "Restore the CCTV: Bildfang-Knöpfe"], ["Türen", "Brandschutz-Rollgitter, durchsichtig; auch während anderer Sabotagen"]])
           }
         },
         {
@@ -3761,8 +3767,201 @@ const ATLAS = {
           title: { en: "Forest Station", de: "Forststation" },
           summary: { en: "A remote forestry and research station: log cabins with doors, grassy clearings and forest paths.", de: "Eine abgelegene Forst- und Forschungsstation: Blockhütten mit Türen, Lichtungen und Waldwege." },
           body: {
-            en: "<p>Eight walk-in log cabins (mess hall, field station, lab, sawmill, storehouse, boathouse, ranger office, generator shed) and six clearings (lookout rock, radio mast, water tower, hunting stand, pump station, creek dock), connected by wide forest paths. The dense forest is the wall. The mess hall bell calls the meeting.</p>" + tbl(["Sabotage", "In the forest"], [["Reactor", "Wildfire alarm: water tower and lookout rock"], ["Oxygen", "Water supply: field lab and creek dock"], ["Lights", "Fuse cabinet in the generator shed"], ["Comms", "Radio set at the mast"], ["Doors", "Cabin doors"]]),
-            de: "<p>Acht begehbare Blockhütten (Messe, Feldstation, Labor, Sägewerk, Lagerhaus, Bootshaus, Försterstube, Generatorschuppen) und sechs Lichtungen (Aussichtsfels, Funkmast, Wasserturm, Hochsitz, Pumpstation, Bachsteg), verbunden durch breite Waldwege. Der dichte Wald ist die Wand. Die Glocke in der Messe ruft das Meeting.</p>" + tbl(["Sabotage", "Im Wald"], [["Reaktor", "Waldbrand-Alarm: Wasserturm und Aussichtsfels"], ["Sauerstoff", "Wasserversorgung: Labor und Bachsteg"], ["Licht", "Sicherungsschrank im Generatorschuppen"], ["Comms", "Funkgerät am Mast"], ["Türen", "Hüttentüren"]])
+            en: "<p>Eight walk-in log cabins (mess hall, field station, lab, sawmill, storehouse, boathouse, ranger office, generator shed) and six clearings (lookout rock, radio mast, water tower, hunting stand, pump station, creek dock), connected by wide forest paths. The dense forest is the wall. The mess hall bell calls the meeting.</p>" + tbl(["Sabotage", "In the forest"], [["Reactor", "Forest Fire: water tower and lookout rock"], ["Oxygen", "Water Supply Failure: field lab and creek dock"], ["Lights", "Reset the Breakers: generator shed"], ["Comms", "Realign the Radio Mast"], ["Doors", "Cabin doors; also during other sabotages"]]),
+            de: "<p>Acht begehbare Blockhütten (Messe, Feldstation, Labor, Sägewerk, Lagerhaus, Bootshaus, Försterstube, Generatorschuppen) und sechs Lichtungen (Aussichtsfels, Funkmast, Wasserturm, Hochsitz, Pumpstation, Bachsteg), verbunden durch breite Waldwege. Der dichte Wald ist die Wand. Die Glocke in der Messe ruft das Meeting.</p>" + tbl(["Sabotage", "Im Wald"], [["Reaktor", "Forest Fire: Wasserturm und Aussichtsfels"], ["Sauerstoff", "Water Supply Failure: Labor und Bachsteg"], ["Licht", "Reset the Breakers: Generatorschuppen"], ["Comms", "Realign the Radio Mast"], ["Türen", "Hüttentüren; auch während anderer Sabotagen"]])
+          }
+        }
+      ]
+    },
+    {
+      id: "tasks",
+      title: { en: "Minigames", de: "Minispiele" },
+      intro: { en: "Every map task has its own minigame. Underneath it rides on one Skeld task, so task bar, TOR's task options and the crew task win stay exactly as in vanilla.", de: "Jede Karten-Aufgabe hat ein eigenes Minispiel. Darunter steckt jeweils eine Skeld-Aufgabe, deshalb bleiben Taskleiste, TORs Aufgaben-Optionen und der Crew-Aufgabensieg genau wie in Vanilla." },
+      entries: [
+        {
+          id: "tasks-museum",
+          title: { en: "Museum tasks", de: "Aufgaben im Museum" },
+          summary: { en: "17 minigames from the till to the tomb lock. Authenticity X-Ray stays the vanilla scan, because others watch it.", de: "17 Minispiele von der Kasse bis zum Grabschloss. Der Echtheits-Röntgenscan bleibt der Vanilla-Scan, weil andere zusehen." },
+          body: {
+            en: tbl(["Task", "What you do"], [
+              ["Repair Showcase Lighting", "Turn light-guide tiles until all three showcase spots glow; new solvable layout each step."],
+              ["Close Out the Till", "Drag coins and notes into the tray until the receipt total matches. One too many and the change flap returns everything."],
+              ["Stabilise Climate Control", "Keep three drifting gauges in the green band for 3 seconds."],
+              ["Trace a Constellation", "Connect the stars of the reference card in one stroke; a decoy star starts over."],
+              ["Dust the Skeleton", "Wipe the dust off the T. rex."],
+              ["Restore Exhibit Power", "Replace the blown fuse, then throw the hall switch."],
+              ["Arm the Vault Showcase", "Turn the mirrors until the laser hits all four receivers."],
+              ["Focus the Dome Projector", "Coarse and fine focus ring."],
+              ["Hieroglyph Sequence", "Press ten cartouches in the order of the legend."],
+              ["Sync the Audio Guide", "Pick the track that matches the exhibit, then dock the device."],
+              ["Align the Flywheel", "Hold the sluggish speed in the green band."],
+              ["Chase the Moths", "Catch 12 moths with the torch."],
+              ["Empty the Bins", "Sort paper, glass and the rest, then hold the container lever."],
+              ["Stoke the Steam Engine", "Fill the can to the line without overflowing, then pour it into the boiler."],
+              ["Pigment Analysis", "Start the 60-second analysis, come back, pick the anomaly."],
+              ["Tomb Lock", "Three coupled hieroglyph rings: turning one also turns the next."]
+            ]),
+            de: tbl(["Aufgabe", "Was du tust"], [
+              ["Repair Showcase Lighting", "Lichtleiter-Kacheln drehen, bis alle drei Vitrinenspots leuchten; jede Stufe ein neues, lösbares Muster."],
+              ["Close Out the Till", "Münzen und Scheine in die Schale ziehen, bis die Bon-Summe stimmt. Einer zu viel, und die Wechselklappe gibt alles zurück."],
+              ["Stabilise Climate Control", "Drei driftende Anzeigen 3 Sekunden lang im grünen Band halten."],
+              ["Trace a Constellation", "Die Sterne der Vorlage in einem Zug verbinden; ein Köderstern setzt zurück."],
+              ["Dust the Skeleton", "Den Staub vom T. rex wischen."],
+              ["Restore Exhibit Power", "Die durchgebrannte Sicherung tauschen, dann den Saalschalter umlegen."],
+              ["Arm the Vault Showcase", "Spiegel drehen, bis der Laser alle vier Empfänger trifft."],
+              ["Focus the Dome Projector", "Grob- und Feinfokus-Ring."],
+              ["Hieroglyph Sequence", "Zehn Kartuschen in der Reihenfolge der Legende drücken."],
+              ["Sync the Audio Guide", "Die passende Spur zum Exponat wählen, dann das Gerät andocken."],
+              ["Align the Flywheel", "Die träge Drehzahl im grünen Band halten."],
+              ["Chase the Moths", "12 Motten mit der Taschenlampe fangen."],
+              ["Empty the Bins", "Papier, Glas und Rest sortieren, dann den Container-Hebel halten."],
+              ["Stoke the Steam Engine", "Die Kanne bis zum Strich füllen, ohne überzulaufen, dann in den Kessel gießen."],
+              ["Pigment Analysis", "Die 60-Sekunden-Analyse starten, zurückkommen, die Auffälligkeit wählen."],
+              ["Tomb Lock", "Drei gekoppelte Hieroglyphenringe: wer einen dreht, dreht den nächsten mit."]
+            ])
+          }
+        },
+        {
+          id: "tasks-forest",
+          title: { en: "Forest tasks", de: "Aufgaben im Wald" },
+          summary: { en: "17 minigames from the time card to the wildlife census. Tick Check stays the vanilla scan.", de: "17 Minispiele von der Stempelkarte bis zur Wildzählung. Der Zeckencheck bleibt der Vanilla-Scan." },
+          body: {
+            en: tbl(["Task", "What you do"], [
+              ["Splice Field Cable", "Connect three wires to the matching clamps and screw them tight."],
+              ["Punch the Time Card", "Take your own card and punch it exactly on the full hour."],
+              ["Tune the Generator", "Choke into the green field, then pull the cord; a wrong choke floods it."],
+              ["Plot the Patrol Route", "Drag the marker along the trail through every flag."],
+              ["Route Generator Power", "Plug the cable into the socket of the target area, then flip the toggle."],
+              ["Light the Dock Lanterns", "Strike a match and light four lanterns before a gust blows it out."],
+              ["Focus the Binoculars", "Pan to the deer, then focus."],
+              ["Open the Valves", "Open five wheels in number order; a wrong one vents steam and closes all."],
+              ["Collect Trail Cam Footage", "Find the photo with the animal, then insert the SD card."],
+              ["Wildlife Census", "Count 12 deer and boars; clicking an owl costs two."],
+              ["Water Sample Analysis", "Start the 60-second analysis, come back, pick the anomaly."],
+              ["Prime the Pump", "Pump the handle in a steady rhythm; too fast means overpressure."],
+              ["More", "Clear the Intake Grate, Align the Saw Blade, Trim the Outboard, Haul the Compost, Refuel the Machines."]
+            ]),
+            de: tbl(["Aufgabe", "Was du tust"], [
+              ["Splice Field Cable", "Drei Drähte an die passenden Klemmen und festschrauben."],
+              ["Punch the Time Card", "Die eigene Karte nehmen und genau zur vollen Stunde stempeln."],
+              ["Tune the Generator", "Choke ins grüne Feld, dann am Seil ziehen; falscher Choke säuft ab."],
+              ["Plot the Patrol Route", "Die Markierung den Pfad entlang durch alle Fähnchen ziehen."],
+              ["Route Generator Power", "Das Kabel in die Buchse des Zielbereichs, dann den Kippschalter."],
+              ["Light the Dock Lanterns", "Ein Streichholz anreißen und vier Laternen anzünden, bevor eine Böe es ausbläst."],
+              ["Focus the Binoculars", "Zum Reh schwenken, dann scharfstellen."],
+              ["Open the Valves", "Fünf Räder in Zahlenreihenfolge öffnen; ein falsches lässt Dampf ab und schließt alle."],
+              ["Collect Trail Cam Footage", "Das Foto mit dem Tier finden, dann die SD-Karte einstecken."],
+              ["Wildlife Census", "12 Rehe und Wildschweine zählen; eine angeklickte Eule kostet zwei."],
+              ["Water Sample Analysis", "Die 60-Sekunden-Analyse starten, zurückkommen, die Auffälligkeit wählen."],
+              ["Prime the Pump", "Den Schwengel im gleichmäßigen Takt pumpen; zu schnell gibt Überdruck."],
+              ["Weitere", "Clear the Intake Grate, Align the Saw Blade, Trim the Outboard, Haul the Compost, Refuel the Machines."]
+            ])
+          }
+        }
+      ]
+    },
+    {
+      id: "sabotages",
+      title: { en: "Sabotages", de: "Sabotagen" },
+      intro: { en: "Own names, own repairs, same rules: underneath they are the Skeld reactor, oxygen, lights and comms, so timers, the critical win and TOR's options behave as before.", de: "Eigene Namen, eigene Reparaturen, gleiche Regeln: darunter stecken Reaktor, Sauerstoff, Licht und Comms der Skeld, Timer, kritischer Sieg und TORs Optionen verhalten sich wie gewohnt." },
+      entries: [
+        {
+          id: "sab-museum",
+          title: { en: "Museum sabotages", de: "Sabotagen im Museum" },
+          summary: { en: "Security Alarm, Climate Failure, Replace the Fuses, Restore the CCTV.", de: "Security Alarm, Climate Failure, Replace the Fuses, Restore the CCTV." },
+          body: {
+            en: tbl(["Sabotage", "Skeld system", "Repair"], [
+              ["Security Alarm", "Reactor", "Keep your hand on the scanner at both consoles at the same time; letting go interrupts it."],
+              ["Climate Failure", "Oxygen", "Type the sensor reset code into a shuffled keypad, at both consoles."],
+              ["Replace the Fuses", "Lights", "Drag the spare into every blown fuse slot."],
+              ["Restore the CCTV", "Comms", "Turn the horizontal and vertical hold knobs until the picture is stable."]
+            ]) + shots([["atlas_sab_alarm.webp", "Security Alarm"], ["atlas_sab_climatefail.webp", "Climate Failure"], ["atlas_sab_fusebox.webp", "Replace the Fuses"], ["atlas_sab_cctv.webp", "Restore the CCTV"]]),
+            de: tbl(["Sabotage", "Skeld-System", "Reparatur"], [
+              ["Security Alarm", "Reaktor", "An beiden Konsolen gleichzeitig die Hand auf dem Scanner halten; Loslassen unterbricht."],
+              ["Climate Failure", "Sauerstoff", "Den Sensor-Reset-Code in ein gemischtes Tastenfeld tippen, an beiden Konsolen."],
+              ["Replace the Fuses", "Licht", "Die Ersatzsicherung in jeden durchgebrannten Platz ziehen."],
+              ["Restore the CCTV", "Comms", "Horizontal- und Vertikal-Knopf drehen, bis das Bild steht."]
+            ]) + shots([["atlas_sab_alarm.webp", "Security Alarm"], ["atlas_sab_climatefail.webp", "Climate Failure"], ["atlas_sab_fusebox.webp", "Replace the Fuses"], ["atlas_sab_cctv.webp", "Restore the CCTV"]])
+          }
+        },
+        {
+          id: "sab-forest",
+          title: { en: "Forest sabotages", de: "Sabotagen im Wald" },
+          summary: { en: "Forest Fire, Water Supply Failure, Reset the Breakers, Realign the Radio Mast.", de: "Forest Fire, Water Supply Failure, Reset the Breakers, Realign the Radio Mast." },
+          body: {
+            en: tbl(["Sabotage", "Skeld system", "Repair"], [
+              ["Forest Fire", "Reactor", "Keep the hose on the moving flame at both consoles at the same time."],
+              ["Water Supply Failure", "Oxygen", "Set four valves to the pattern on your console's plan, at both consoles."],
+              ["Reset the Breakers", "Lights", "Flip every breaker back to ON."],
+              ["Realign the Radio Mast", "Comms", "Turn azimuth and frequency until the signal locks."]
+            ]) + shots([["atlas_sab_fire.webp", "Forest Fire"], ["atlas_sab_waterworks.webp", "Water Supply Failure"], ["atlas_sab_breakers.webp", "Reset the Breakers"], ["atlas_sab_antenna.webp", "Realign the Radio Mast"]]),
+            de: tbl(["Sabotage", "Skeld-System", "Reparatur"], [
+              ["Forest Fire", "Reaktor", "An beiden Konsolen gleichzeitig den Schlauch auf der wandernden Flamme halten."],
+              ["Water Supply Failure", "Sauerstoff", "Vier Ventile nach dem Plan der eigenen Konsole stellen, an beiden Konsolen."],
+              ["Reset the Breakers", "Licht", "Alle Schutzschalter wieder auf ON."],
+              ["Realign the Radio Mast", "Comms", "Azimut und Frequenz drehen, bis das Signal steht."]
+            ]) + shots([["atlas_sab_fire.webp", "Forest Fire"], ["atlas_sab_waterworks.webp", "Water Supply Failure"], ["atlas_sab_breakers.webp", "Reset the Breakers"], ["atlas_sab_antenna.webp", "Realign the Radio Mast"]])
+          }
+        },
+        {
+          id: "sab-doors",
+          title: { en: "Doors during sabotages", de: "Türen während Sabotagen" },
+          summary: { en: "Doors can be closed while another sabotage runs, like on Polus and the Airship.", de: "Türen lassen sich schließen, während eine andere Sabotage läuft, wie auf Polus und dem Airship." },
+          body: {
+            en: "<p>The Skeld locks the door buttons as long as a sabotage is active, and closed doors block new sabotages. The Atlas maps are technically the Skeld, so both rules are lifted there: Impostors can combine doors with any other sabotage.</p>",
+            de: "<p>Die Skeld sperrt die Türknöpfe, solange eine Sabotage läuft, und geschlossene Türen blockieren neue Sabotagen. Die Atlas-Karten sind technisch die Skeld, deshalb sind dort beide Regeln aufgehoben: Impostor können Türen mit jeder anderen Sabotage kombinieren.</p>"
+          }
+        }
+      ]
+    },
+    {
+      id: "world",
+      title: { en: "Living maps", de: "Lebendige Karten" },
+      intro: { en: "Weather, lightning, fallen trees and laser barriers. The host decides and sends it to everyone.", de: "Wetter, Blitze, umgestürzte Bäume und Laserschranken. Der Host entscheidet und schickt es an alle." },
+      entries: [
+        {
+          id: "weather",
+          title: { en: "Weather (forest)", de: "Wetter (Wald)" },
+          summary: { en: "Rain, fog and storms come and go; rain buys time against the Forest Fire.", de: "Regen, Nebel und Sturm kommen und gehen; Regen verschafft Zeit gegen den Waldbrand." },
+          body: {
+            en: "<p>Every round starts clear. After 40 to 70 seconds rain, fog or a storm moves in for a while and clears again. Fog and storms shorten everyone's view. <strong>Rain and storms slow the Forest Fire countdown to half speed</strong> and visibly shrink the flames, so a fire during a downpour gives the crew twice the time.</p>",
+            de: "<p>Jede Runde beginnt klar. Nach 40 bis 70 Sekunden zieht Regen, Nebel oder Sturm auf und verzieht sich wieder. Nebel und Sturm verkürzen die Sicht aller Spieler. <strong>Regen und Sturm lassen den Waldbrand-Countdown halb so schnell laufen</strong> und die Flammen sichtbar kleiner werden, ein Brand im Regen gibt der Crew also doppelt so viel Zeit.</p>"
+          }
+        },
+        {
+          id: "lightning",
+          title: { en: "Lightning and Forest Fire", de: "Blitz und Waldbrand" },
+          summary: { en: "A strike can set the forest on fire, even on top of a lights or comms sabotage.", de: "Ein Einschlag kann den Wald in Brand setzen, auch zusätzlich zu einer Licht- oder Comms-Sabotage." },
+          body: {
+            en: "<p>In a storm lightning strikes every few seconds: a flash, a bolt, thunder that arrives later the further away it hit. A strike can start a <strong>Forest Fire</strong> even while the lights or comms are sabotaged, so two sabotages run at the same time. It never starts one while another critical sabotage is active. While the fire burns, flames and smoke fill the reactor area.</p>" + shots([["atlas_world_firestorm.webp", "Forest Fire and breakers at once"], ["atlas_world_fire.webp", "Forest Fire"]]),
+            de: "<p>Im Sturm schlagen alle paar Sekunden Blitze ein: ein Aufleuchten, ein Blitz, Donner, der umso später kommt, je weiter weg er einschlug. Ein Einschlag kann einen <strong>Waldbrand</strong> auslösen, auch während Licht oder Comms sabotiert sind, dann laufen zwei Sabotagen gleichzeitig. Neben einer anderen kritischen Sabotage zündet er nie. Solange es brennt, stehen Flammen und Rauch im Reaktorbereich.</p>" + shots([["atlas_world_firestorm.webp", "Waldbrand und Schutzschalter zugleich"], ["atlas_world_fire.webp", "Waldbrand"]])
+          }
+        },
+        {
+          id: "trees",
+          title: { en: "Fallen Trees (forest)", de: "Sturmholz (Wald)" },
+          summary: { en: "Trees fall across paths; click and saw them through, or wait 45 seconds.", de: "Bäume fallen quer über Wege; anklicken und durchsägen, oder 45 Sekunden warten." },
+          body: {
+            en: "<p>Lightning, or an Impostor through the tree button on the sabotage map, throws up to three trees across forest paths. A tree blocks the path. Walk up to it, click it and saw it through in a short minigame; otherwise it disappears after 45 seconds. Impostors can use it to cut off escape routes or split the crew.</p>" + shots([["atlas_world_trees.webp", "A fallen tree across the path"]]),
+            de: "<p>Ein Blitz, oder ein Impostor über den Baum-Knopf auf der Sabotage-Karte, wirft bis zu drei Bäume quer über Waldwege. Ein Baum sperrt den Weg. Hingehen, anklicken und in einem kurzen Minispiel durchsägen; sonst verschwindet er nach 45 Sekunden. Impostor schneiden damit Fluchtwege ab oder trennen die Crew.</p>" + shots([["atlas_world_trees.webp", "Ein umgestürzter Baum über dem Weg"]])
+          }
+        },
+        {
+          id: "lasers",
+          title: { en: "Laser barriers (museum)", de: "Laserschranken (Museum)" },
+          summary: { en: "Every second passage has a laser barrier; each crossing lands in the log on the cameras.", de: "Jeder zweite Durchgang hat eine Laserschranke; jeder Durchgang landet im Protokoll an den Kameras." },
+          body: {
+            en: "<p>Thin red beams run across every second passage. Walking through makes the beam flash and adds an entry to the <strong>laser log</strong> under the security cameras: the last four crossings with room and seconds ago. It does not say who, but it tells you where someone just went.</p><p class='note'>In 0.3.0.3 the log is drawn behind the camera screen; the next test version fixes that.</p>" + shots([["atlas_world_laser.webp", "Laser barrier in a passage"]]),
+            de: "<p>Dünne rote Strahlen laufen quer durch jeden zweiten Durchgang. Wer hindurchgeht, lässt den Strahl aufleuchten und erzeugt einen Eintrag im <strong>Laserprotokoll</strong> unter den Überwachungskameras: die letzten vier Durchgänge mit Raum und Sekunden. Es verrät nicht wer, aber wo gerade jemand langging.</p><p class='note'>In 0.3.0.3 liegt das Protokoll hinter dem Kamerabild; die nächste Testversion behebt das.</p>" + shots([["atlas_world_laser.webp", "Laserschranke in einem Durchgang"]])
+          }
+        },
+        {
+          id: "sound",
+          title: { en: "Sound and mood", de: "Klang und Stimmung" },
+          summary: { en: "Ambient sound generated in code, a weather tint and rain on screen.", de: "Im Code erzeugter Umgebungsklang, Wetter-Tönung und Regen im Bild." },
+          body: {
+            en: "<p>The forest has wind, crickets, an owl and snapping twigs; the museum has ventilation, mains hum, a ticking clock and creaking floors. Rain, thunder and a crackling fire join in when they happen. All of it is generated in code instead of shipped as audio files, and it fades out during meetings and ejections. On screen, the forest night is slightly blue, and rain, fog and storms tint the picture.</p>",
+            de: "<p>Im Wald gibt es Wind, Grillen, einen Kauz und knackende Zweige; im Museum Lüftung, Netzbrummen, eine tickende Uhr und knarzende Dielen. Regen, Donner und knisterndes Feuer kommen dazu, wenn sie passieren. Alles wird im Code erzeugt statt als Audiodatei mitgeliefert und blendet in Meetings und beim Rauswurf aus. Im Bild ist die Waldnacht leicht blau, Regen, Nebel und Sturm tönen das Bild.</p>"
           }
         }
       ]
