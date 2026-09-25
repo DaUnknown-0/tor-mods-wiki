@@ -12,8 +12,8 @@
  *   test       the home field with crewmates and rocks
  * Over every page stands the emblem: a point cloud in the shape of the chapter
  * being read (a knife for an Impostor role, the rotunda for the maps) that
- * flies over into the next shape when the section changes, while the
- * background picks up a faint tint of that chapter. The cloud gives way around
+ * flies over into the next shape and colour when the section changes. The
+ * page background itself stays plain. The cloud gives way around
  * the pointer; a click on an empty part of the page sends a ring and a wave
  * through dust and cloud and turns the emblem into the next shape.
  * The engine owns the renderer, theme colours, dust, the scroll spring (the
@@ -102,7 +102,7 @@ function boot() {
   const streakMat = new THREE.LineBasicMaterial({ transparent: true, depthWrite: false, fog: true });
 
   let W = 1, H = 1, mob = innerWidth < 760, narrow = false, dark = false, sMin = 0.62;
-  const ink = new THREE.Color(), bg = new THREE.Color(), bgNow = new THREE.Color(), accent = new THREE.Color(), accentTarget = new THREE.Color();
+  const ink = new THREE.Color(), bg = new THREE.Color(), accent = new THREE.Color(), accentTarget = new THREE.Color();
 
   function applyTheme() {
     dark = root.dataset.theme === "dark";
@@ -110,9 +110,8 @@ function boot() {
     ink.copy(cssColor(doc.body, "--ink", dark ? "#f1ece1" : "#191816"));
     accentTarget.copy(cssColor(doc.body, "--accent", "#c8323f"));
     accent.copy(accentTarget);
-    bgNow.copy(bg);
-    renderer.setClearColor(bgNow, 1);
-    scene.fog.color.copy(bgNow);
+    renderer.setClearColor(bg, 1);
+    scene.fog.color.copy(bg);
     const a = (dark ? 0.42 : 0.3) * (narrow ? 0.45 : 1);
     for (const m of mats) {
       const k = m.userData.k, kind = m.userData.kind;
@@ -666,8 +665,8 @@ function boot() {
    * knife for an Impostor role, a shield for the shield features, the rotunda
    * for the maps. When the section in the middle of the screen changes, the
    * points fly over into the next shape and take on the chapter colour (on
-   * Unknown's the team colour of the role), and the page background takes a
-   * faint tint of it. The cloud gives way around the pointer; a click on an
+   * Unknown's the team colour of the role); the page background stays plain.
+   * The cloud gives way around the pointer; a click on an
    * empty part of the page sends a shock wave through it and turns it into the
    * next shape. A small caption in the gutter names the figure like a label. */
   const TONE_HI = new THREE.Color(), TONE_INK = new THREE.Color();
@@ -1281,7 +1280,7 @@ function boot() {
   /* ------------------------------------------------------ motion */
   let lastScroll = scrollY, px = 0, py = 0, last = 0, raf = 0, dirty = true, idleGap = 0;
   let pointerOn = false, pointerAt = -1e9, chapterAt = -1e9, chapterScroll = NaN;
-  const ndcP = new THREE.Vector2(), rayc = new THREE.Raycaster(), tintTarget = new THREE.Color();
+  const ndcP = new THREE.Vector2(), rayc = new THREE.Raycaster();
   const K = 0.01;                                     // world units per scrolled pixel
   E.camY = moving() ? -scrollY * K : 0;
   E.camZ = moving() ? -scrollY * K * 1.6 : 0;
@@ -1349,12 +1348,6 @@ function boot() {
     updateRipples(E.dt || 1);
     pokeT = live ? Math.min(1, pokeT + dt / 1.1) : 1;
 
-    // the background leans towards the chapter colour (not above the first chapter: the hero frame is --bg)
-    const tint = chapterIdx >= 0 ? (dark ? 0.05 : 0.045) : 0;
-    tintTarget.copy(bg).lerp(emblem.color, tint);
-    bgNow.lerp(tintTarget, live ? Math.min(1, dt * 2) : 1);
-    renderer.setClearColor(bgNow, 1);
-    scene.fog.color.copy(bgNow);
     updateDust();
 
     const want = window.TORSCROLL && TORSCROLL.accent ? TORSCROLL.accent() : null;
@@ -1362,8 +1355,7 @@ function boot() {
     accent.lerp(accentTarget, Math.min(1, dt * 3));
     for (const m of mats) if (m.userData.kind === "accent") m.color.copy(accent);
 
-    const hot = emblem.busy() || pokeT < 1 || ripples.some((r) => r.visible) || nowMs - pointerAt < 1200
-      || Math.abs(bgNow.r - tintTarget.r) + Math.abs(bgNow.g - tintTarget.g) + Math.abs(bgNow.b - tintTarget.b) > 0.002;
+    const hot = emblem.busy() || pokeT < 1 || ripples.some((r) => r.visible) || nowMs - pointerAt < 1200;
     return hot || E.speed > 4 || Math.abs(target - E.camY) > 0.002;
   }
 
