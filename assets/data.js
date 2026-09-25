@@ -163,7 +163,7 @@ const CHANCE = {
   key: "chance",
   name: "Chance Modifier",
   fullName: { en: "TOR — Unknown Chaos (Chance Modifier)", de: "TOR — Unknown Chaos (Chance Modifier)" },
-  version: "1.2.20",
+  version: "1.2.22",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/TOR-Chance",
   download: "https://github.com/DaUnknown-0/TOR-Chance/releases/latest",
@@ -395,7 +395,7 @@ const USEFUL = {
   key: "useful",
   name: "Forgotten Fixes",
   fullName: { en: "TOR - Forgotten Fixes", de: "TOR - Forgotten Fixes" },
-  version: "1.4.3",
+  version: "1.4.7.9",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/Useful-TOR-stuff",
   download: "https://github.com/DaUnknown-0/Useful-TOR-stuff/releases/latest",
@@ -1201,6 +1201,86 @@ const USEFUL = {
       ]
     },
     {
+      id: "early-death",
+      title: { en: "Early-death shield", de: "Frühtod-Schild" },
+      intro: { en: "A pink shield for players who get killed much earlier than the rest of the lobby, and statistics everyone can look at.", de: "Ein pinkes Schild für Spieler, die viel früher sterben als der Rest der Lobby, und eine Statistik, die jeder ansehen kann." },
+      entries: [
+        {
+          id: "early-death-core",
+          title: { en: "How the shield works", de: "So funktioniert das Schild" },
+          summary: { en: "Every client records how much of each round a player survives. Players far below the lobby average cannot be killed before the first meeting.", de: "Jeder Client zeichnet auf, wie viel jeder Runde ein Spieler überlebt. Wer weit unter dem Lobby-Schnitt liegt, kann vor dem ersten Meeting nicht getötet werden." },
+          body: {
+            en: "<p>Per round the survived share of the playing time is recorded (meetings not counted), over the last 20 rounds per player. Only kills by someone else count: kills, guesses, bombs, arson and witch exiles; other deaths leave the round out. The host compares every player with the average of all qualified players in the lobby; whoever is below the threshold gets the pink shield for the next round, the same protection as the newcomer shield. Shielded rounds keep counting, so the shield regulates itself instead of sticking forever. The host can force the shield on or off per player; these decisions are saved.</p>" + tbl(["Option", "Default", "What it does"], [
+              ["Protect Players Who Often Die Early", "Off", "Turns the shield on."],
+              ["Tell The Killer Why The Kill Failed", "On", "The killer sees a short explanation."],
+              ["Shield During The First Meeting", "Ends Before The Meeting", "Or it also blocks votes, guesses or both."],
+              ["Shield Below % Of The Lobby Average", "60%", "40% to 80%."],
+              ["Minimum Recorded Rounds", "5", "Fewer rounds and a player is not compared yet."],
+              ["Maximum Shielded Players", "1", "Up to 3 per round."]
+            ]),
+            de: "<p>Pro Runde wird der überlebte Anteil der Spielzeit aufgezeichnet (Meetings nicht mitgezählt), über die letzten 20 Runden je Spieler. Es zählen nur Tode durch andere: Kills, Guesses, Bomben, Brandstiftung und Witch-Exiles; andere Tode lassen die Runde aus. Der Host vergleicht jeden Spieler mit dem Schnitt aller qualifizierten Spieler der Lobby; wer unter der Schwelle liegt, bekommt für die nächste Runde das pinke Schild, derselbe Schutz wie beim Neulings-Schild. Geschützte Runden zählen weiter mit, das Schild regelt sich also selbst, statt ewig zu bleiben. Der Host kann das Schild pro Spieler erzwingen oder ausschließen; diese Entscheidungen werden gespeichert.</p>" + tbl(["Option", "Standard", "Funktion"], [
+              ["Protect Players Who Often Die Early", "Off", "Schaltet das Schild ein."],
+              ["Tell The Killer Why The Kill Failed", "On", "Der Killer sieht eine kurze Erklärung."],
+              ["Shield During The First Meeting", "Ends Before The Meeting", "Oder es sperrt auch Stimmen, Guesses oder beides."],
+              ["Shield Below % Of The Lobby Average", "60%", "40% bis 80%."],
+              ["Minimum Recorded Rounds", "5", "Mit weniger Runden wird ein Spieler noch nicht verglichen."],
+              ["Maximum Shielded Players", "1", "Bis zu 3 pro Runde."]
+            ])
+          }
+        },
+        {
+          id: "early-death-stats",
+          title: { en: "Statistics for everyone", de: "Statistik für alle" },
+          summary: { en: "In the lobby every player can see everyone's numbers, their own and the lobby average included, plus how each compares.", de: "In der Lobby kann jeder die Zahlen aller sehen, seine eigenen und den Lobby-Schnitt eingeschlossen, samt Vergleich." },
+          body: {
+            en: "<p>Players who are not the host get an <strong>Early-death stats</strong> button in the lower left. It lists every player with recorded rounds, survived share and percentage of the lobby average, the average and the threshold, and one sentence just for you (\"You survive 62% of a round, that is 125% of the lobby average\"); your own row is highlighted. The numbers are the host's, because only the host's records decide the shield: the host sends them whenever they change and when someone opens the view. Host decisions are shown openly as <em>forced by host</em> or <em>excluded by host</em>, the same as in the host's own panel, which now also shows the percentage of the average.</p>",
+            de: "<p>Wer nicht Host ist, bekommt unten links einen Knopf <strong>Frühtod-Statistik</strong>. Er listet jeden Spieler mit aufgezeichneten Runden, überlebtem Anteil und Prozent vom Lobby-Schnitt, dazu Schnitt und Schwelle und einen Satz nur für dich (\"Du überlebst 62% einer Runde, das sind 125% vom Lobby-Schnitt\"); deine Zeile ist hervorgehoben. Es sind die Zahlen des Hosts, weil nur seine Aufzeichnung über das Schild entscheidet: Der Host schickt sie, sobald sie sich ändern und wenn jemand die Ansicht öffnet. Host-Entscheidungen stehen offen als <em>forced by host</em> bzw. <em>excluded by host</em> da, genau wie im Host-Panel, das jetzt ebenfalls das Verhältnis zum Schnitt zeigt.</p>"
+          }
+        }
+      ]
+    },
+    {
+      id: "submerged",
+      title: { en: "Submerged", de: "Submerged" },
+      intro: { en: "The Submerged map (its own mod, v2025.1.30) runs with TOR and the mod family. A full test on the map found three problems, fixed here.", de: "Die Karte Submerged (eigener Mod, v2025.1.30) läuft mit TOR und der Mod-Familie. Ein Gesamttest auf der Karte hat drei Fehler gefunden, die hier behoben sind." },
+      entries: [
+        {
+          id: "submerged-fixes",
+          title: { en: "Fixes on Submerged", de: "Fixes auf Submerged" },
+          summary: { en: "Oxygen sabotage works with Sabotage Tuning, the Engineer's remote O2 repair no longer throws, and Mod Sync knows Submerged.", de: "Die Sauerstoff-Sabotage funktioniert mit Sabotage Tuning, die Engineer-Fernreparatur bei O2 wirft keinen Fehler mehr, und Mod-Sync kennt Submerged." },
+          body: {
+            en: "<ul><li><strong>Oxygen did nothing:</strong> Sabotage Tuning recognised the sabotage buttons by their room number, and Submerged uses its own. The button looked ready during its cooldown and the click was dropped silently. Buttons are now recognised by what they do, on every modded map, and Submerged's own oxygen system counts as an active sabotage with the set Oxygen Duration.</li><li><strong>Engineer:</strong> TOR's remote oxygen repair on Submerged threw an error on every use and on every client; it is replaced by the same logic with the right data type.</li><li><strong>Mod Sync</strong> can install Submerged, pinned to v2025.1.30, the version that works with TOR.</li><li>A self test (<code>[Diagnostics] Submerged Self Test</code>, off by default) checks all of this on the map.</li></ul>",
+            de: "<ul><li><strong>O2 tat nichts:</strong> Sabotage Tuning erkannte die Sabotage-Knöpfe an ihrer Raumnummer, und Submerged nutzt eigene. Der Knopf sah während seines Cooldowns bereit aus, der Klick wurde still verworfen. Knöpfe werden jetzt an ihrer Funktion erkannt, auf jeder Modkarte, und das eigene Sauerstoff-System von Submerged zählt als aktive Sabotage mit der eingestellten Oxygen Duration.</li><li><strong>Engineer:</strong> TORs Fernreparatur bei O2 auf Submerged warf bei jedem Einsatz und auf jedem Client einen Fehler; sie ist durch denselben Ablauf mit dem richtigen Datentyp ersetzt.</li><li><strong>Mod-Sync</strong> kann Submerged installieren, festgelegt auf v2025.1.30, die Version, die mit TOR läuft.</li><li>Ein Selbsttest (<code>[Diagnostics] Submerged Self Test</code>, standardmäßig aus) prüft das alles auf der Karte.</li></ul>"
+          }
+        }
+      ]
+    },
+    {
+      id: "stability",
+      title: { en: "Memory and crash diagnostics", de: "Speicher und Absturz-Diagnose" },
+      intro: { en: "Less memory in the lobby, and tools to track down rare hard crashes.", de: "Weniger Speicher in der Lobby und Werkzeuge, um seltene harte Abstürze aufzuspüren." },
+      entries: [
+        {
+          id: "hat-textures",
+          title: { en: "Lighter hat textures", de: "Leichtere Hut-Texturen" },
+          summary: { en: "TOR's 1032 hats used about 600 MB per player; compressed they need 27 MB.", de: "TORs 1032 Hüte belegten etwa 600 MB pro Spieler; komprimiert brauchen sie 27 MB." },
+          body: {
+            en: "<p>TOR loads every custom hat uncompressed and keeps a CPU copy of each. Forgotten Fixes compresses them when they are loaded and drops the copy: measured in the lobby, the game went from 1251 to 646 MB. Among Us is a 32-bit process, so this leaves much more room before it runs out of memory.</p>",
+            de: "<p>TOR lädt jeden eigenen Hut unkomprimiert und behält von jedem eine CPU-Kopie. Forgotten Fixes komprimiert sie beim Laden und wirft die Kopie weg: In der Lobby gemessen sank das Spiel von 1251 auf 646 MB. Among Us ist ein 32-Bit-Prozess, das lässt also deutlich mehr Luft, bevor der Speicher ausgeht.</p>"
+          }
+        },
+        {
+          id: "crash-diagnostics",
+          title: { en: "Crash diagnostics", de: "Absturz-Diagnose" },
+          summary: { en: "Crash logs survive a restart, a memory heartbeat, optional crash dumps and a Perf HUD on F10.", de: "Absturz-Logs überleben den Neustart, ein Speicher-Herzschlag, optionale Absturz-Dumps und ein Perf-HUD auf F10." },
+          body: {
+            en: "<ul><li>The BepInEx log is appended instead of overwritten, so the lines before a hard crash are still there after the restart.</li><li>A memory heartbeat logs Unity's counters and, at scene changes, the largest textures, clips and meshes.</li><li><code>[CrashDiagnostics] WriteCrashDumps</code> lets Windows write a crash dump; <code>FullCrashDumps</code> writes a full one (about 1.5 GB, only the newest two kept), from which a crash in generated code can be traced to its method.</li><li>The detour watchdog only reports dropped patches now and no longer repairs them while the game runs; the repairs had caused hard crashes.</li><li><strong>Perf HUD (F10):</strong> frame time tail and allocation rate, with a comparison line in the log.</li></ul>",
+            de: "<ul><li>Das BepInEx-Log wird angehängt statt überschrieben, die Zeilen vor einem harten Absturz sind also nach dem Neustart noch da.</li><li>Ein Speicher-Herzschlag loggt Unitys Zähler und bei Szenenwechseln die größten Texturen, Clips und Meshes.</li><li><code>[CrashDiagnostics] WriteCrashDumps</code> lässt Windows einen Absturz-Dump schreiben; <code>FullCrashDumps</code> einen vollständigen (etwa 1,5 GB, nur die neuesten zwei bleiben), aus dem sich ein Absturz in erzeugtem Code seiner Methode zuordnen lässt.</li><li>Der Detour-Watchdog meldet ausgefallene Patches nur noch und repariert sie nicht mehr im laufenden Spiel; die Reparaturen hatten harte Abstürze ausgelöst.</li><li><strong>Perf-HUD (F10):</strong> Frametime-Ausreißer und Allokationsrate, mit einer Vergleichszeile im Log.</li></ul>"
+          }
+        }
+      ]
+    },
+    {
       id: "modsync",
       title: { en: "Mod sync", de: "Mod-Abgleich" },
       intro: {
@@ -1216,8 +1296,8 @@ const USEFUL = {
             de: "Ein Lobby-Button erscheint, wenn der Host Mods hat, die dir fehlen (oder neuere Versionen); ein Klick installiert alles Unkritische, Einzelklicks den Rest."
           },
           body: {
-            en: "<p>Every client with the mod reports its installed companion mods (missing / active / disabled, exact version) in the lobby. Non-hosts compare their inventory against the <strong>host's</strong> and get a button in the lower left, only when there is something actionable: install what is missing, upgrade what is older, a hint when a mod is merely disabled, and an info line for things you have that the host lacks. A collect button runs all uncritical actions in one go; after downloads a restart applies them. The catalog currently covers all five family mods (Forgotten Fixes, Chance, Unknown's Collection, TOR - Hostfix, Nightfall).</p>",
-            de: "<p>Jeder Client mit dem Mod meldet in der Lobby seine installierten Begleit-Mods (fehlend / aktiv / deaktiviert, exakte Version). Nicht-Hosts vergleichen ihr Inventar mit dem des <strong>Hosts</strong> und bekommen unten links einen Button, nur wenn es etwas zu tun gibt: Fehlendes installieren, Älteres aktualisieren, ein Hinweis, wenn ein Mod nur deaktiviert ist, und eine Info-Zeile für Dinge, die du hast und der Host nicht. Ein Sammel-Button führt alle unkritischen Aktionen in einem Rutsch aus; nach Downloads übernimmt ein Neustart sie. Der Katalog deckt aktuell alle fünf Familien-Mods ab (Forgotten Fixes, Chance, Unknown's Collection, TOR - Hostfix, Nightfall).</p>"
+            en: "<p>Every client with the mod reports its installed companion mods (missing / active / disabled, exact version) in the lobby. Non-hosts compare their inventory against the <strong>host's</strong> and get a button in the lower left, only when there is something actionable: install what is missing, upgrade what is older, a hint when a mod is merely disabled, and an info line for things you have that the host lacks. A collect button runs all uncritical actions in one go; after downloads a restart applies them. The catalog covers the family mods (Forgotten Fixes, Chance, Unknown's Collection, TOR - Hostfix, Nightfall, Unknown's Atlas) and Submerged, pinned to v2025.1.30.</p>",
+            de: "<p>Jeder Client mit dem Mod meldet in der Lobby seine installierten Begleit-Mods (fehlend / aktiv / deaktiviert, exakte Version). Nicht-Hosts vergleichen ihr Inventar mit dem des <strong>Hosts</strong> und bekommen unten links einen Button, nur wenn es etwas zu tun gibt: Fehlendes installieren, Älteres aktualisieren, ein Hinweis, wenn ein Mod nur deaktiviert ist, und eine Info-Zeile für Dinge, die du hast und der Host nicht. Ein Sammel-Button führt alle unkritischen Aktionen in einem Rutsch aus; nach Downloads übernimmt ein Neustart sie. Der Katalog deckt die Familien-Mods ab (Forgotten Fixes, Chance, Unknown's Collection, TOR - Hostfix, Nightfall, Unknown's Atlas) und Submerged, festgelegt auf v2025.1.30.</p>"
           }
         },
         {
@@ -1390,7 +1470,7 @@ const UNKNOWNS = {
   key: "unknowns",
   name: "Unknown's Collection",
   fullName: { en: "Unknown's Collection — custom roles for TOR", de: "Unknown's Collection — eigene Rollen für TOR" },
-  version: "1.2.2",
+  version: "1.2.6.3",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/UnknownsCollection",
   download: "https://github.com/DaUnknown-0/UnknownsCollection/releases/latest",
@@ -3095,14 +3175,14 @@ const UNKNOWNS = {
         },
         {
           id: "void-animation",
-          title: { en: "The exile screen", de: "Der Exile-Bildschirm" },
+          title: { en: "The exile scene", de: "Die Rauswurf-Szene" },
           summary: {
-            en: "The plain skip screen, with one difference: the line reads \"The vote vanished into the void.\" in void purple, with a light glitch (magenta and deep-purple ghost copies, short jolts, flickering characters).",
-            de: "Der normale Skip-Bildschirm, mit einem Unterschied: Die Zeile lautet \"Die Stimme verschwand im Nichts.\" in Void-Violett, mit leichtem Glitch (Geisterkopien in Magenta und Dunkelviolett, kurze Ruckler, flackernde Zeichen)."
+            en: "Since 1.2.6.1 a full scene: the Void drifts into a violet nothing, the ballots fly through them into a rift that swallows them, and the Void drifts back. With the scene off, the skip screen shows the glitching line \"The vote vanished into the void.\"",
+            de: "Seit 1.2.6.1 eine ganze Szene: Der Void treibt in ein violettes Nichts, die Stimmzettel fliegen durch ihn hindurch in einen Riss, der sie verschluckt, und der Void treibt zurück. Ist die Szene aus, zeigt der Skip-Bildschirm die glitchende Zeile \"Die Stimme verschwand im Nichts.\"",
           },
           body: {
-            en: "<p>Purely cosmetic and driven on every client from a host message that arrives right before the vote result. No figure flies by: the vanilla \"No one was ejected\" typewriter line is kept and only re-textured in the void's colours, styled after Tower Defense Simulator's void theme. Two tinted copies of the text ride slightly offset behind it like chromatic aberration; every few hundred milliseconds a short burst shoves them apart, flickers the colour towards magenta and replaces a couple of the ghost characters with ASCII noise. The meeting then ends like a skipped vote.</p>",
-            de: "<p>Rein kosmetisch und auf jedem Client durch eine Host-Nachricht ausgelöst, die direkt vor dem Abstimmungsergebnis eintrifft. Es fliegt keine Figur vorbei: Die Vanilla-Schreibmaschinenzeile \"Niemand wurde rausgeworfen\" bleibt und wird nur in den Farben des Nichts eingefärbt, angelehnt an das Void-Thema von Tower Defense Simulator. Zwei getönte Kopien des Textes liegen leicht versetzt dahinter wie eine Farbverschiebung; alle paar hundert Millisekunden schiebt ein kurzer Ruck sie auseinander, lässt die Farbe Richtung Magenta flackern und ersetzt ein paar Zeichen der Geisterkopien durch ASCII-Rauschen. Das Meeting endet danach wie ein Skip.</p>"
+            en: "<p>The scene: the Void drifts into a violet nothing, a rift opens behind them, the ballots fly at them and straight through them (the Void glitches, half transparent, with interference stripes) into the rift, which swallows them and collapses. The Void stays, looks around and drifts back. The option <strong>Void Exile Scene</strong> chooses All Maps (default), Atlas Maps Only or Off. It uses the same scene engine as Unknown's Atlas, and Atlas keeps its own skip scene out of that ejection.</p><p>With the scene off: purely cosmetic and driven on every client from a host message that arrives right before the vote result. No figure flies by: the vanilla \"No one was ejected\" typewriter line is kept and only re-textured in the void's colours, styled after Tower Defense Simulator's void theme. Two tinted copies of the text ride slightly offset behind it like chromatic aberration; every few hundred milliseconds a short burst shoves them apart, flickers the colour towards magenta and replaces a couple of the ghost characters with ASCII noise. The meeting then ends like a skipped vote.</p>",
+            de: "<p>Die Szene: Der Void treibt in ein violettes Nichts, hinter ihm öffnet sich ein Riss, die Stimmzettel fliegen auf ihn zu und glatt durch ihn hindurch (der Void glitcht, halb durchsichtig, mit Störstreifen) in den Riss, der sie verschluckt und in sich zusammenfällt. Der Void bleibt, schaut sich um und treibt zurück. Die Option <strong>Void Exile Scene</strong> wählt All Maps (Standard), Atlas Maps Only oder Off. Sie nutzt dieselbe Szenen-Engine wie Unknown's Atlas, und Atlas hält seine eigene Skip-Szene aus diesem Rauswurf heraus.</p><p>Mit ausgeschalteter Szene: rein kosmetisch und auf jedem Client durch eine Host-Nachricht ausgelöst, die direkt vor dem Abstimmungsergebnis eintrifft. Es fliegt keine Figur vorbei: Die Vanilla-Schreibmaschinenzeile \"Niemand wurde rausgeworfen\" bleibt und wird nur in den Farben des Nichts eingefärbt, angelehnt an das Void-Thema von Tower Defense Simulator. Zwei getönte Kopien des Textes liegen leicht versetzt dahinter wie eine Farbverschiebung; alle paar hundert Millisekunden schiebt ein kurzer Ruck sie auseinander, lässt die Farbe Richtung Magenta flackern und ersetzt ein paar Zeichen der Geisterkopien durch ASCII-Rauschen. Das Meeting endet danach wie ein Skip.</p>"
           }
         },
         {
@@ -3116,12 +3196,14 @@ const UNKNOWNS = {
             en: tbl(["Option", "Default", "What it does"], [
               ["Void", "Off", "Spawn chance of the modifier (crew only)."],
               ["Void Minimum Players To Spawn", "5", "Not assigned below this lobby size."],
-              ["Void's Own Vote Counts", "Off", "Off: his vote is accepted but weighs nothing (the icon still shows where it landed)."]
+              ["Void's Own Vote Counts", "Off", "Off: his vote is accepted but weighs nothing (the icon still shows where it landed)."],
+              ["Void Exile Scene", "All Maps", "All Maps, Atlas Maps Only or Off (plain skip screen with the glitch line)."]
             ]),
             de: tbl(["Option", "Standard", "Funktion"], [
               ["Void", "Off", "Spawn-Chance des Modifiers (nur Crew)."],
               ["Void Minimum Players To Spawn", "5", "Wird unter dieser Lobby-Größe nicht vergeben."],
-              ["Void's Own Vote Counts", "Off", "Off: Seine Stimme wird angenommen, wiegt aber nichts (das Icon zeigt weiter, wo sie landete)."]
+              ["Void's Own Vote Counts", "Off", "Off: Seine Stimme wird angenommen, wiegt aber nichts (das Icon zeigt weiter, wo sie landete)."],
+              ["Void Exile Scene", "All Maps", "All Maps, Atlas Maps Only oder Off (normaler Skip-Bildschirm mit Glitch-Zeile)."]
             ])
           }
         }
@@ -3176,6 +3258,250 @@ const UNKNOWNS = {
               ["King", "Off", "Spawn-Chance der Rolle."],
               ["King Minimum Players To Spawn", "6", "Unter dieser Lobby-Größe wird die Rolle nicht vergeben."],
               ["King Is Always The VIP", "On", "Der King ist zusätzlich zu TORs ausgelosten VIPs ein VIP; hält TORs VIP-Rate auf 10–100 %."]
+            ])
+          }
+        }
+      ]
+    },
+    {
+      id: "necromancer",
+      title: { en: "The Necromancer (Neutral)", de: "The Necromancer (Neutral)" },
+      intro: {
+        en: "A neutral who raises fresh corpses into thralls and wins once enough of the living belong to him.",
+        de: "Ein Neutraler, der frische Leichen zu Thralls erweckt und gewinnt, sobald genug Lebende ihm gehören."
+      },
+      entries: [
+        {
+          id: "necromancer-how",
+          title: { en: "How it works", de: "So funktioniert es" },
+          summary: {
+            en: "Raise a fresh corpse (only between a kill and the next meeting). Thralls look like anyone else, but their vote weighs nothing and they cannot guess.",
+            de: "Eine frische Leiche erwecken (nur zwischen Kill und nächstem Meeting). Thralls sehen aus wie jeder andere, aber ihre Stimme wiegt nichts und sie können nicht guessen."
+          },
+          body: {
+            en: "<p>A body only exists between a kill and the next meeting, and only a fresh one can be raised (Corpse Freshness Window). A raised player, a thrall, walks, talks and plays like anyone else, keeps their role, and nobody else can tell. Their vote weighs nothing and they cannot guess; they do not hold up the meeting either (a thrall who does not vote skips automatically). Their tasks are taken away on the server, so they never block the crew's task win. The Necromancer wins at a meeting once more than two thirds (or more than half) of the living belong to him with at least the minimum number of thralls. If he dies or leaves, every thrall dies with him.</p>",
+            de: "<p>Eine Leiche gibt es nur zwischen einem Kill und dem nächsten Meeting, und nur eine frische lässt sich erwecken (Corpse Freshness Window). Ein Erweckter, ein Thrall, läuft, redet und spielt wie jeder andere, behält seine Rolle, und niemand sonst kann es erkennen. Seine Stimme wiegt nichts und er kann nicht guessen; das Meeting hält er auch nicht auf (ein Thrall, der nicht abstimmt, skippt automatisch). Seine Aufgaben werden auf dem Server entzogen, er blockiert also nie den Aufgabensieg der Crew. Der Necromancer gewinnt in einem Meeting, sobald mehr als zwei Drittel (oder mehr als die Hälfte) der Lebenden ihm gehören, mit mindestens der Mindestzahl Thralls. Stirbt er oder geht er, sterben alle Thralls mit ihm.</p>"
+          }
+        },
+        {
+          id: "necromancer-options",
+          title: { en: "Options", de: "Optionen" },
+          summary: {
+            en: "Raising, freshness window, win threshold, minimum thralls, vents, tasks.",
+            de: "Erwecken, Frische-Fenster, Siegschwelle, Mindest-Thralls, Vents, Aufgaben."
+          },
+          body: {
+            en: tbl(["Option", "Default", "What it does"], [
+              ["Necromancer", "Off", "Spawn chance (neutral)."],
+              ["Necromancer Minimum Players To Spawn", "7", "Not assigned below this lobby size."],
+              ["Raising Duration", "3 s", "How long raising takes."],
+              ["Raise Cooldown", "20 s", "Time between two raises."],
+              ["Corpse Freshness Window", "60 s", "Older bodies cannot be raised."],
+              ["Necromancer Win Threshold", "More Than Two Thirds", "Or more than half of the living."],
+              ["Minimum Thralls To Win", "2", "At least this many thralls."],
+              ["Necromancer Can Use Vents", "Off", ""],
+              ["Necromancer Has Tasks", "Off", "Fake tasks for cover."],
+              ["Necromancer And Poltergeist Exclude Each Other", "On", "Only one of the two per game."]
+            ]),
+            de: tbl(["Option", "Standard", "Funktion"], [
+              ["Necromancer", "Off", "Spawn-Chance (neutral)."],
+              ["Necromancer Minimum Players To Spawn", "7", "Wird unter dieser Lobby-Größe nicht vergeben."],
+              ["Raising Duration", "3 s", "Wie lange das Erwecken dauert."],
+              ["Raise Cooldown", "20 s", "Zeit zwischen zwei Erweckungen."],
+              ["Corpse Freshness Window", "60 s", "Ältere Leichen lassen sich nicht erwecken."],
+              ["Necromancer Win Threshold", "More Than Two Thirds", "Oder mehr als die Hälfte der Lebenden."],
+              ["Minimum Thralls To Win", "2", "Mindestens so viele Thralls."],
+              ["Necromancer Can Use Vents", "Off", ""],
+              ["Necromancer Has Tasks", "Off", "Fake-Tasks zur Tarnung."],
+              ["Necromancer And Poltergeist Exclude Each Other", "On", "Nur einer der beiden pro Spiel."]
+            ])
+          }
+        }
+      ]
+    },
+    {
+      id: "sleepwalker",
+      title: { en: "The Sleepwalker (Modifier)", de: "The Sleepwalker (Modifier)" },
+      intro: {
+        en: "Dozes off in the meeting and wakes up somewhere on the map instead of at the table.",
+        de: "Nickt im Meeting ein und wacht irgendwo auf der Karte auf statt am Tisch."
+      },
+      entries: [
+        {
+          id: "sleepwalker-how",
+          title: { en: "How it works", de: "So funktioniert es" },
+          summary: {
+            en: "After a meeting they wake up at a random reachable spot on the map, with no cue for anyone else.",
+            de: "Nach einem Meeting wacht er an einem zufälligen, erreichbaren Platz der Karte auf, ohne Hinweis für die anderen."
+          },
+          body: {
+            en: "<p>After an ejection the host picks a random spot for the Sleepwalker: inside a room, on floor that can actually be reached, at least the set distance away from the table. Only the Sleepwalker's own screen shows that they wake up there, with a short wake-up effect; everyone else gets no cue. Since 1.2.6.2 a reach grid flooded from every living player makes sure the spot is never behind a railing or outside the map. On Submerged the Sleepwalker stays at the table (two decks joined only by elevators).</p>",
+            de: "<p>Nach einem Rauswurf wählt der Host für den Sleepwalker einen zufälligen Platz: in einem Raum, auf wirklich erreichbarem Boden, mindestens den eingestellten Abstand vom Tisch entfernt. Nur beim Sleepwalker selbst erscheint, dass er dort aufwacht, mit einem kurzen Aufwach-Effekt; alle anderen bekommen keinen Hinweis. Seit 1.2.6.2 sorgt ein Erreichbarkeitsraster, das von jedem lebenden Spieler aus geflutet wird, dafür, dass der Platz nie hinter einem Geländer oder außerhalb der Karte liegt. Auf Submerged bleibt der Sleepwalker am Tisch (zwei Decks, nur per Aufzug verbunden).</p>"
+          }
+        },
+        {
+          id: "sleepwalker-options",
+          title: { en: "Options", de: "Optionen" },
+          summary: {
+            en: "Who can get it, chance per meeting, distance from the table, at game start.",
+            de: "Wer ihn bekommen kann, Chance pro Meeting, Abstand vom Tisch, zum Spielstart."
+          },
+          body: {
+            en: tbl(["Option", "Default", "What it does"], [
+              ["Sleepwalker", "Off", "Spawn chance of the modifier."],
+              ["Sleepwalker Minimum Players To Spawn", "5", "Not assigned below this lobby size."],
+              ["Sleepwalker Can Be", "Crew Only", "Crew Only, Crew & Impostor or Anyone."],
+              ["Wake-Up Chance Per Meeting", "100%", "How often it happens."],
+              ["Minimum Distance From The Table", "10", "How far from the meeting table."],
+              ["Also Sleepwalks At Game Start", "Off", "Also at the very start."]
+            ]),
+            de: tbl(["Option", "Standard", "Funktion"], [
+              ["Sleepwalker", "Off", "Spawn-Chance des Modifiers."],
+              ["Sleepwalker Minimum Players To Spawn", "5", "Wird unter dieser Lobby-Größe nicht vergeben."],
+              ["Sleepwalker Can Be", "Crew Only", "Crew Only, Crew & Impostor oder Anyone."],
+              ["Wake-Up Chance Per Meeting", "100%", "Wie oft es passiert."],
+              ["Minimum Distance From The Table", "10", "Wie weit vom Meeting-Tisch."],
+              ["Also Sleepwalks At Game Start", "Off", "Auch direkt zum Spielstart."]
+            ])
+          }
+        }
+      ]
+    },
+    {
+      id: "last-words",
+      title: { en: "Last Words (Modifier)", de: "Last Words (Modifier)" },
+      intro: {
+        en: "One sentence that survives its author.",
+        de: "Ein Satz, der seinen Verfasser überlebt."
+      },
+      entries: [
+        {
+          id: "last-words-how",
+          title: { en: "How it works", de: "So funktioniert es" },
+          summary: {
+            en: "Write one sentence with N; if you die, it shows up anonymously in the next meeting.",
+            de: "Mit N einen Satz schreiben; stirbst du, erscheint er anonym im nächsten Meeting."
+          },
+          body: {
+            en: "<p>During the round the carrier presses N and writes one sentence. If they die, it appears in the next meeting as an anonymous chat bubble named Last Words. If chat censoring is on, the receiving side censors it like normal chat.</p>",
+            de: "<p>Während der Runde drückt der Träger N und schreibt einen Satz. Stirbt er, erscheint der Satz im nächsten Meeting als anonyme Chatblase mit dem Namen Last Words. Ist die Chat-Zensur an, zensiert die Empfängerseite ihn wie normalen Chat.</p>"
+          }
+        },
+        {
+          id: "last-words-options",
+          title: { en: "Options", de: "Optionen" },
+          summary: {
+            en: "Who can get it and the maximum length.",
+            de: "Wer ihn bekommen kann und die Höchstlänge."
+          },
+          body: {
+            en: tbl(["Option", "Default", "What it does"], [
+              ["Last Words", "Off", "Spawn chance of the modifier."],
+              ["Last Words Minimum Players To Spawn", "5", "Not assigned below this lobby size."],
+              ["Last Words Can Be", "Crew Only", "Or Anyone."],
+              ["Last Words Maximum Length", "120", "Characters, 40 to 200."]
+            ]),
+            de: tbl(["Option", "Standard", "Funktion"], [
+              ["Last Words", "Off", "Spawn-Chance des Modifiers."],
+              ["Last Words Minimum Players To Spawn", "5", "Wird unter dieser Lobby-Größe nicht vergeben."],
+              ["Last Words Can Be", "Crew Only", "Oder Anyone."],
+              ["Last Words Maximum Length", "120", "Zeichen, 40 bis 200."]
+            ])
+          }
+        }
+      ]
+    },
+    {
+      id: "sixth-sense",
+      title: { en: "The Sixth Sense (Modifier)", de: "The Sixth Sense (Modifier)" },
+      intro: {
+        en: "A crew modifier that feels danger without knowing where it comes from.",
+        de: "Ein Crew-Modifier, der Gefahr spürt, ohne zu wissen, woher sie kommt."
+      },
+      entries: [
+        {
+          id: "sixth-sense-how",
+          title: { en: "How it works", de: "So funktioniert es" },
+          summary: {
+            en: "The screen edge pulses while a killer with a ready kill is near; never who or where.",
+            de: "Der Bildschirmrand pulsiert, solange ein Killer mit bereitem Kill in der Nähe ist; nie wer oder wo."
+          },
+          body: {
+            en: "<p>Whenever a killer whose kill is ready stands within range, the screen edge pulses like a heartbeat, stronger the closer they are. It never says who or where. Every killer's client reports when its own kill becomes ready, so it also works for the Jackal and the Sidekick if the option allows.</p>",
+            de: "<p>Steht ein Killer mit bereitem Kill in Reichweite, pulsiert der Bildschirmrand wie ein Herzschlag, stärker, je näher er ist. Es verrät nie wer oder wo. Der Client jedes Killers meldet, wann sein eigener Kill bereit ist, deshalb funktioniert es auch für Jackal und Sidekick, wenn die Option es erlaubt.</p>"
+          }
+        },
+        {
+          id: "sixth-sense-options",
+          title: { en: "Options", de: "Optionen" },
+          summary: {
+            en: "Range, neutral killers, pulse strength.",
+            de: "Reichweite, neutrale Killer, Pulsstärke."
+          },
+          body: {
+            en: tbl(["Option", "Default", "What it does"], [
+              ["Sixth Sense", "Off", "Spawn chance (crew only)."],
+              ["Sixth Sense Minimum Players To Spawn", "5", "Not assigned below this lobby size."],
+              ["Sixth Sense Range", "3", "Distance, 1 to 8."],
+              ["Sixth Sense Detects Jackal And Sidekick", "On", "Also counts neutral killers."],
+              ["Pulse Grows With Proximity", "On", "Stronger the closer the killer."]
+            ]),
+            de: tbl(["Option", "Standard", "Funktion"], [
+              ["Sixth Sense", "Off", "Spawn-Chance (nur Crew)."],
+              ["Sixth Sense Minimum Players To Spawn", "5", "Wird unter dieser Lobby-Größe nicht vergeben."],
+              ["Sixth Sense Range", "3", "Abstand, 1 bis 8."],
+              ["Sixth Sense Detects Jackal And Sidekick", "On", "Zählt auch neutrale Killer."],
+              ["Pulse Grows With Proximity", "On", "Stärker, je näher der Killer."]
+            ])
+          }
+        }
+      ]
+    },
+    {
+      id: "colorblind",
+      title: { en: "The Colorblind (Modifier)", de: "The Colorblind (Modifier)" },
+      intro: {
+        en: "Plays the round in black and white, the map included, like an old television.",
+        de: "Spielt die Runde in Schwarz-Weiß, die Karte eingeschlossen, wie ein alter Fernseher."
+      },
+      entries: [
+        {
+          id: "colorblind-how",
+          title: { en: "How it works", de: "So funktioniert es" },
+          summary: {
+            en: "Black and white screen, map included; the MedBay scan cures it.",
+            de: "Schwarz-weißer Bildschirm samt Karte; der MedBay-Scan heilt es."
+          },
+          body: {
+            en: "<p>The whole picture is drawn in black and white; menus and overlays stay untouched. Task minigames can stay in colour. The MedBay scan cures it: the host adds a Submit Scan task, and the scan shows a short diagnosis. One scan length applies to everyone, so a scan's duration gives nobody away.</p>",
+            de: "<p>Das ganze Bild wird in Schwarz-Weiß gezeichnet; Menüs und Overlays bleiben unberührt. Aufgaben-Minispiele können farbig bleiben. Der MedBay-Scan heilt es: Der Host fügt eine Submit-Scan-Aufgabe hinzu, und der Scan zeigt eine kurze Diagnose. Für alle gilt dieselbe Scan-Dauer, die Dauer eines Scans verrät also niemanden.</p>"
+          }
+        },
+        {
+          id: "colorblind-options",
+          title: { en: "Options", de: "Optionen" },
+          summary: {
+            en: "Who can get it, tasks in colour, the MedBay cure.",
+            de: "Wer ihn bekommen kann, farbige Aufgaben, die MedBay-Heilung."
+          },
+          body: {
+            en: tbl(["Option", "Default", "What it does"], [
+              ["Colorblind", "Off", "Spawn chance of the modifier."],
+              ["Colorblind Minimum Players To Spawn", "5", "Not assigned below this lobby size."],
+              ["Colorblind Can Be", "Crew Only", "Or Anyone."],
+              ["Colorblind Sees Tasks In Colour", "On", "Minigames stay in colour."],
+              ["MedBay Scan Cures The Colorblind", "On", "Adds a Submit Scan task that cures it."],
+              ["Neutral And Impostor Cure", "On", "Also for neutrals and impostors (as a fake task)."],
+              ["Cure Scan Length", "Long", "Normal, Long or Very Long, the same for everyone."]
+            ]),
+            de: tbl(["Option", "Standard", "Funktion"], [
+              ["Colorblind", "Off", "Spawn-Chance des Modifiers."],
+              ["Colorblind Minimum Players To Spawn", "5", "Wird unter dieser Lobby-Größe nicht vergeben."],
+              ["Colorblind Can Be", "Crew Only", "Oder Anyone."],
+              ["Colorblind Sees Tasks In Colour", "On", "Minispiele bleiben farbig."],
+              ["MedBay Scan Cures The Colorblind", "On", "Fügt eine Submit-Scan-Aufgabe hinzu, die heilt."],
+              ["Neutral And Impostor Cure", "On", "Auch für Neutrale und Impostor (als Fake-Task)."],
+              ["Cure Scan Length", "Long", "Normal, Long oder Very Long, für alle gleich."]
             ])
           }
         }
@@ -3404,7 +3730,7 @@ const NIGHTFALL = {
   key: "nightfall",
   name: "Nightfall",
   fullName: { en: "Nightfall — first person for Among Us", de: "Nightfall — Ich-Perspektive für Among Us" },
-  version: "0.3.1",
+  version: "0.3.2",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/Nightfall",
   download: "https://github.com/DaUnknown-0/Nightfall/releases/latest",
@@ -3727,39 +4053,39 @@ const ATLAS = {
   key: "atlas",
   name: "Unknown's Atlas",
   fullName: { en: "Unknown's Atlas: new maps for Among Us", de: "Unknown's Atlas: neue Karten für Among Us" },
-  version: "0.3.0.3",
+  version: "0.3.0.15",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/UnknownsAtlas",
   download: "https://github.com/DaUnknown-0/UnknownsAtlas/releases",
   tagline: {
-    en: "Two brand-new maps: the Vesper Museum after closing time and the Nadelkamm forest station. Pick them next to the vanilla maps, in Freeplay and in the lobby.",
-    de: "Zwei brandneue Karten: das Vesper-Museum nach Feierabend und die Forststation Nadelkamm. Auswählbar neben den Vanilla-Karten, im Freeplay und in der Lobby."
+    en: "Three brand-new maps: the Vesper Museum after closing time, the Nadelkamm forest station and the Moonlight Carnival. Pick them next to the vanilla maps, in Freeplay and in the lobby.",
+    de: "Drei brandneue Karten: das Vesper-Museum nach Feierabend, die Forststation Nadelkamm und der Moonlight Carnival. Auswählbar neben den Vanilla-Karten, im Freeplay und in der Lobby."
   },
   intro: {
-    en: "Unknown's Atlas is a standalone BepInEx plugin. Its maps are built on top of the Skeld: every task, vent, door, camera and sabotage of the Skeld is moved to its new place. On top come new scenery, a minigame for every task, map-specific sabotages with their own repairs, and living maps with weather, lightning and laser barriers. Tasks and sabotages keep the Skeld rules, so everything works online like vanilla; the maps need <strong>every player</strong> to have Atlas installed. <strong>Test version:</strong> both maps are playable but still being polished.",
-    de: "Unknown's Atlas ist ein eigenständiges BepInEx-Plugin. Seine Karten sitzen auf der Skeld: jede Aufgabe, jeder Vent, jede Tür, jede Kamera und jede Sabotage der Skeld wird an ihren neuen Platz gesetzt. Dazu kommen neue Kulisse, ein Minispiel für jede Aufgabe, eigene Sabotagen mit eigenen Reparaturen und lebendige Karten mit Wetter, Blitzen und Laserschranken. Aufgaben und Sabotagen behalten die Regeln der Skeld, online läuft also alles wie in Vanilla; die Karten brauchen <strong>alle Spieler</strong> mit Atlas. <strong>Testversion:</strong> beide Karten sind spielbar, werden aber noch poliert."
+    en: "Unknown's Atlas is a standalone BepInEx plugin. Its maps are built on top of the Skeld: every task, vent, door, camera and sabotage of the Skeld is moved to its new place. On top come new scenery, a minigame for every task, map-specific sabotages with their own repairs, and living maps with weather, lightning and laser barriers. Tasks and sabotages keep the Skeld rules, so everything works online like vanilla; the maps need <strong>every player</strong> to have Atlas installed. <strong>Test version:</strong> all three maps are playable but still being polished.",
+    de: "Unknown's Atlas ist ein eigenständiges BepInEx-Plugin. Seine Karten sitzen auf der Skeld: jede Aufgabe, jeder Vent, jede Tür, jede Kamera und jede Sabotage der Skeld wird an ihren neuen Platz gesetzt. Dazu kommen neue Kulisse, ein Minispiel für jede Aufgabe, eigene Sabotagen mit eigenen Reparaturen und lebendige Karten mit Wetter, Blitzen und Laserschranken. Aufgaben und Sabotagen behalten die Regeln der Skeld, online läuft also alles wie in Vanilla; die Karten brauchen <strong>alle Spieler</strong> mit Atlas. <strong>Testversion:</strong> alle drei Karten sind spielbar, werden aber noch poliert."
   },
   install: {
     en: "<ol><li>Download <code>UnknownsAtlas.dll</code> from the latest release.</li><li>Put it into <code>BepInEx\\plugins</code> next to your other mods (Reactor is required, The Other Roles is optional).</li><li>Start the game. In <strong>Freeplay</strong> the new maps appear below the vanilla maps; in a <strong>lobby</strong> the host picks them in the map selection of the game settings.</li></ol>",
     de: "<ol><li>Lade <code>UnknownsAtlas.dll</code> aus dem neuesten Release.</li><li>Leg sie nach <code>BepInEx\\plugins</code> zu deinen anderen Mods (Reactor wird benötigt, The Other Roles ist optional).</li><li>Starte das Spiel. Im <strong>Freeplay</strong> stehen die neuen Karten unter den Vanilla-Karten; in einer <strong>Lobby</strong> wählt der Host sie in der Kartenauswahl der Spieleinstellungen.</li></ol>"
   },
   deps: {
-    en: "<ul><li><strong>Reactor 2.3.1</strong> and BepInEx 6 (be.697), Among Us 2024.11.26</li><li><strong>All players</strong> need Atlas; players without it would see the Skeld.</li><li>Works alongside The Other Roles and the rest of the mod family.</li></ul>",
-    de: "<ul><li><strong>Reactor 2.3.1</strong> und BepInEx 6 (be.697), Among Us 2024.11.26</li><li><strong>Alle Spieler</strong> brauchen Atlas; wer es nicht hat, sähe die Skeld.</li><li>Läuft zusammen mit The Other Roles und dem Rest der Mod-Familie.</li></ul>"
+    en: "<ul><li><strong>Reactor 2.3.1</strong> and BepInEx 6 (be.697), Among Us 2024.11.26</li><li><strong>All players</strong> need Atlas. The lobby checks it: while a player is missing Atlas or runs another version, the host cannot start on an Atlas map and sees who it is.</li><li>Works alongside The Other Roles and the rest of the mod family.</li></ul>",
+    de: "<ul><li><strong>Reactor 2.3.1</strong> und BepInEx 6 (be.697), Among Us 2024.11.26</li><li><strong>Alle Spieler</strong> brauchen Atlas. Die Lobby prüft das: Solange jemandem Atlas fehlt oder er eine andere Version hat, kann der Host nicht auf einer Atlas-Karte starten und sieht, wer es ist.</li><li>Läuft zusammen mit The Other Roles und dem Rest der Mod-Familie.</li></ul>"
   },
   sections: [
     {
       id: "maps",
       title: { en: "The maps", de: "Die Karten" },
-      intro: { en: "Two maps, each with 14 areas, all Skeld tasks, three vent networks and the full set of sabotages.", de: "Zwei Karten mit je 14 Bereichen, allen Skeld-Aufgaben, drei Vent-Netzen und allen Sabotagen." },
+      intro: { en: "Three maps with all Skeld tasks, their own vent networks and the full set of sabotages. Since 0.3.0.14 all of them are about the size of Polus: from the spawn, the farthest point takes 14 to 15 seconds.", de: "Drei Karten mit allen Skeld-Aufgaben, eigenen Vent-Netzen und allen Sabotagen. Seit 0.3.0.14 sind alle etwa so groß wie Polus: Vom Spawn aus erreicht man den weitesten Punkt in 14 bis 15 Sekunden." },
       entries: [
         {
           id: "museum",
           title: { en: "Vesper Museum", de: "Vesper-Museum" },
           summary: { en: "A natural history and technology museum after closing time: dinosaur rotunda, gallery, planetarium, machine hall and more.", de: "Ein Museum für Naturkunde und Technik nach Feierabend: Dinosaurier-Rotunde, Galerie, Planetarium, Technikhalle und mehr." },
           body: {
-            en: "<p>The night shift (the crew) tidies up while the impostors pose as staff. 14 halls around a central rotunda with a T. rex skeleton; showcases block movement but not sight, while partition walls and shelves block both. Fire shutters (the doors) can be seen through.</p>" + tbl(["Sabotage", "In the museum"], [["Reactor", "Security Alarm: two hand scanners at the same time"], ["Oxygen", "Climate Failure: two sensor keypads"], ["Lights", "Replace the Fuses: fuse box in the utilities room"], ["Comms", "Restore the CCTV: picture hold knobs"], ["Doors", "Fire shutters, see-through; also during other sabotages"]]),
-            de: "<p>Die Nachtschicht (die Crew) räumt auf, während sich die Impostor als Personal ausgeben. 14 Säle rund um eine Rotunde mit T.-Rex-Skelett; Vitrinen sperren den Weg, aber nicht die Sicht, Stellwände und Regale sperren beides. Durch die Brandschutz-Rollgitter (die Türen) sieht man hindurch.</p>" + tbl(["Sabotage", "Im Museum"], [["Reaktor", "Security Alarm: zwei Handscanner gleichzeitig"], ["Sauerstoff", "Climate Failure: zwei Sensor-Tastenfelder"], ["Licht", "Replace the Fuses: Sicherungskasten in der Haustechnik"], ["Comms", "Restore the CCTV: Bildfang-Knöpfe"], ["Türen", "Brandschutz-Rollgitter, durchsichtig; auch während anderer Sabotagen"]])
+            en: "<p>The night shift (the crew) tidies up while the impostors pose as staff. 51 x 30 m around a central rotunda. Its T. rex stands on the podium like a real museum mount: the feet on the podium, neck and head reaching about 3.5 m out into the room. Showcases block movement but not sight, while partition walls and shelves block both. Fire shutters (the doors) can be seen through.</p>" + tbl(["Sabotage", "In the museum"], [["Reactor", "Security Alarm: two hand scanners at the same time"], ["Oxygen", "Climate Failure: two sensor keypads"], ["Critical, extra", "Rex Awake: music box and night light (see Sabotages)"], ["Lights", "Replace the Fuses: fuse box in the utilities room"], ["Comms", "Restore the CCTV: picture hold knobs"], ["Doors", "Fire shutters, see-through; also during other sabotages"]]),
+            de: "<p>Die Nachtschicht (die Crew) räumt auf, während sich die Impostor als Personal ausgeben. 51 x 30 m rund um eine Rotunde. Ihr T. rex steht auf dem Podest wie in einem echten Museum: die Füße auf dem Podest, Hals und Kopf ragen rund 3,5 m in den Raum. Vitrinen sperren den Weg, aber nicht die Sicht, Stellwände und Regale sperren beides. Durch die Brandschutz-Rollgitter (die Türen) sieht man hindurch.</p>" + tbl(["Sabotage", "Im Museum"], [["Reaktor", "Security Alarm: zwei Handscanner gleichzeitig"], ["Sauerstoff", "Climate Failure: zwei Sensor-Tastenfelder"], ["Kritisch, zusätzlich", "Rex Awake: Spieluhr und Nachtlicht (siehe Sabotagen)"], ["Licht", "Replace the Fuses: Sicherungskasten in der Haustechnik"], ["Comms", "Restore the CCTV: Bildfang-Knöpfe"], ["Türen", "Brandschutz-Rollgitter, durchsichtig; auch während anderer Sabotagen"]])
           }
         },
         {
@@ -3767,8 +4093,17 @@ const ATLAS = {
           title: { en: "Forest Station", de: "Forststation" },
           summary: { en: "A remote forestry and research station: log cabins with doors, grassy clearings and forest paths.", de: "Eine abgelegene Forst- und Forschungsstation: Blockhütten mit Türen, Lichtungen und Waldwege." },
           body: {
-            en: "<p>Eight walk-in log cabins (mess hall, field station, lab, sawmill, storehouse, boathouse, ranger office, generator shed) and six clearings (lookout rock, radio mast, water tower, hunting stand, pump station, creek dock), connected by wide forest paths. The dense forest is the wall. The mess hall bell calls the meeting.</p>" + tbl(["Sabotage", "In the forest"], [["Reactor", "Forest Fire: water tower and lookout rock"], ["Oxygen", "Water Supply Failure: field lab and creek dock"], ["Lights", "Reset the Breakers: generator shed"], ["Comms", "Realign the Radio Mast"], ["Doors", "Cabin doors; also during other sabotages"]]),
-            de: "<p>Acht begehbare Blockhütten (Messe, Feldstation, Labor, Sägewerk, Lagerhaus, Bootshaus, Försterstube, Generatorschuppen) und sechs Lichtungen (Aussichtsfels, Funkmast, Wasserturm, Hochsitz, Pumpstation, Bachsteg), verbunden durch breite Waldwege. Der dichte Wald ist die Wand. Die Glocke in der Messe ruft das Meeting.</p>" + tbl(["Sabotage", "Im Wald"], [["Reaktor", "Forest Fire: Wasserturm und Aussichtsfels"], ["Sauerstoff", "Water Supply Failure: Labor und Bachsteg"], ["Licht", "Reset the Breakers: Generatorschuppen"], ["Comms", "Realign the Radio Mast"], ["Türen", "Hüttentüren; auch während anderer Sabotagen"]])
+            en: "<p>52 x 34 m: eight walk-in log cabins (mess hall, field station, lab, sawmill, storehouse, boathouse, ranger office, generator shed) and clearings (lookout rock, radio mast, water works, hunting stand), connected by forest paths. The dense forest is the wall. The mess hall bell calls the meeting. You can climb the hunting stand to look out over the map (see Living maps).</p>" + tbl(["Sabotage", "In the forest"], [["Reactor", "Forest Fire: water tower and lookout rock"], ["Oxygen", "Water Supply Failure: field lab and creek dock"], ["Lights", "Reset the Breakers: generator shed"], ["Comms", "Realign the Radio Mast"], ["Doors", "Cabin doors; also during other sabotages"]]),
+            de: "<p>52 x 34 m: acht begehbare Blockhütten (Messe, Feldstation, Labor, Sägewerk, Lagerhaus, Bootshaus, Försterstube, Generatorschuppen) und Lichtungen (Aussichtsfels, Funkmast, Wasserwerk, Hochsitz), verbunden durch Waldwege. Der dichte Wald ist die Wand. Die Glocke in der Messe ruft das Meeting. Auf den Hochsitz kann man klettern und über die Karte schauen (siehe Lebendige Karten).</p>" + tbl(["Sabotage", "Im Wald"], [["Reaktor", "Forest Fire: Wasserturm und Aussichtsfels"], ["Sauerstoff", "Water Supply Failure: Labor und Bachsteg"], ["Licht", "Reset the Breakers: Generatorschuppen"], ["Comms", "Realign the Radio Mast"], ["Türen", "Hüttentüren; auch während anderer Sabotagen"]])
+          }
+        },
+        {
+          id: "carnival",
+          title: { en: "Moonlight Carnival", de: "Moonlight Carnival" },
+          summary: { en: "An amusement park after closing time: rides that keep running, one-way turnstiles and a pitch-dark ghost train.", de: "Ein Freizeitpark nach Ladenschluss: Fahrgeschäfte, die weiterlaufen, Einbahn-Drehkreuze und eine stockdunkle Geisterbahn." },
+          body: {
+            en: "<p>44 x 39 m, cheerful and a bit creepy. The 14 Skeld areas plus four attractions of its own: ghost train, hall of mirrors, log flume and main gate. The map is about distraction and paths that change: every half minute a ride starts and briefly blocks a way (see Living maps). The turnstiles at the main gate only let you through in one direction, and the ghost train is dark inside. Fourteen vents in three rings, lanterns along the paths that go out in a blackout while the neon signs keep glowing.</p>" + tbl(["Sabotage", "In the carnival"], [["Reactor", "Coaster Brake Failure: follow the moving brake at both consoles"], ["Oxygen", "Ammonia Leak: set the valves by plan, at both consoles"], ["Lights", "Park Blackout: replace the blown bulbs"], ["Comms", "Speaker Feedback: aim and gain until the sound is clean"], ["Extra", "Ride Override: an impostor starts a coaster run at once"]]),
+            de: "<p>44 x 39 m, heiter und ein bisschen gruselig. Die 14 Skeld-Bereiche plus vier eigene Attraktionen: Geisterbahn, Spiegelkabinett, Wildwasserbahn und Haupteingang. Die Karte lebt von Ablenkung und Wegen, die sich ändern: Etwa alle halbe Minute startet ein Fahrgeschäft und sperrt kurz einen Weg (siehe Lebendige Karten). Die Drehkreuze am Haupteingang lassen nur in eine Richtung durch, und in der Geisterbahn ist es dunkel. Vierzehn Vents in drei Ringen, Laternen an den Wegen, die bei einem Blackout ausgehen, während die Neonschilder weiterleuchten.</p>" + tbl(["Sabotage", "Im Park"], [["Reaktor", "Coaster Brake Failure: an beiden Konsolen der wandernden Bremse folgen"], ["Sauerstoff", "Ammonia Leak: Ventile nach Plan stellen, an beiden Konsolen"], ["Licht", "Park Blackout: durchgebrannte Glühbirnen tauschen"], ["Comms", "Speaker Feedback: Richtung und Pegel, bis der Ton sauber ist"], ["Zusätzlich", "Ride Override: ein Impostor startet sofort eine Achterbahnfahrt"]])
           }
         }
       ]
@@ -3857,6 +4192,52 @@ const ATLAS = {
               ["Weitere", "Clear the Intake Grate, Align the Saw Blade, Trim the Outboard, Haul the Compost, Refuel the Machines."]
             ])
           }
+        },
+        {
+          id: "tasks-carnival",
+          title: { en: "Carnival tasks", de: "Aufgaben im Park" },
+          summary: { en: "15 minigames from the light strings to the coaster brakes. Height Check stays the vanilla scan.", de: "15 Minispiele von den Lichterketten bis zu den Achterbahnbremsen. Der Größencheck bleibt der Vanilla-Scan." },
+          body: {
+            en: tbl(["Task", "What you do"], [
+              ["Fix the Light Strings", "Connect the wires of the light strings to their clamps."],
+              ["Badge Through the Turnstile", "Swipe your staff badge at the right speed."],
+              ["Balance the Carousel Motors", "Keep speed, organ and lights in the green band."],
+              ["Plan the Parade Route", "Drag the marker through every stop of the parade."],
+              ["Clean the Cotton Candy Machine", "Wipe the sugar off the machine."],
+              ["Power a Ride", "Plug the cable into the ride's socket, then flip the switch."],
+              ["Aim the Tower Spotlights", "Turn the mirrors until the beam hits every receiver."],
+              ["Spot the Runaway Balloon", "Pan the binoculars to the balloon and focus."],
+              ["Unlock the Ride Keys", "Press the keys in the order of the legend."],
+              ["Collect the Ride Photos", "Find the photo with the screamer, then insert the photo card."],
+              ["Tune the Ride Motors", "Carousel gear, then the bumper car motor: hold them in the green band."],
+              ["Shooting Gallery", "Hit the targets that pop up."],
+              ["More", "Clear the Popcorn Bins, Refuel the Ride Generators, Allergen Test, Pump the Coaster Brakes."]
+            ]),
+            de: tbl(["Aufgabe", "Was du tust"], [
+              ["Fix the Light Strings", "Die Drähte der Lichterketten an ihre Klemmen."],
+              ["Badge Through the Turnstile", "Den Mitarbeiterausweis im richtigen Tempo durchziehen."],
+              ["Balance the Carousel Motors", "Tempo, Orgel und Licht im grünen Band halten."],
+              ["Plan the Parade Route", "Die Markierung durch alle Stationen der Parade ziehen."],
+              ["Clean the Cotton Candy Machine", "Den Zucker von der Maschine wischen."],
+              ["Power a Ride", "Das Kabel in die Buchse des Fahrgeschäfts, dann den Schalter."],
+              ["Aim the Tower Spotlights", "Spiegel drehen, bis der Strahl alle Empfänger trifft."],
+              ["Spot the Runaway Balloon", "Mit dem Fernglas zum Ballon schwenken und scharfstellen."],
+              ["Unlock the Ride Keys", "Die Schlüssel in der Reihenfolge der Legende drücken."],
+              ["Collect the Ride Photos", "Das Foto mit dem Schreihals finden, dann die Fotokarte einstecken."],
+              ["Tune the Ride Motors", "Karussell-Getriebe, dann Autoscooter-Motor im grünen Band halten."],
+              ["Shooting Gallery", "Die auftauchenden Ziele treffen."],
+              ["Weitere", "Clear the Popcorn Bins, Refuel the Ride Generators, Allergen Test, Pump the Coaster Brakes."]
+            ])
+          }
+        },
+        {
+          id: "tasks-colorblind",
+          title: { en: "Colourblind symbols", de: "Farbenblind-Symbole" },
+          summary: { en: "The wire tasks of the forest and the carnival show a shape on every colour.", de: "Die Kabel-Aufgaben in Wald und Park zeigen auf jeder Farbe eine Form." },
+          body: {
+            en: "<p>Like the vanilla wire task, every wire and clamp in Splice Field Cable and Fix the Light Strings carries a symbol (triangle, square, circle, diamond, cross), so the task can be solved without telling the colours apart.</p>",
+            de: "<p>Wie beim Vanilla-Kabeltask trägt in Splice Field Cable und Fix the Light Strings jeder Draht und jede Klemme ein Symbol (Dreieck, Quadrat, Kreis, Raute, Kreuz), so lässt sich die Aufgabe lösen, ohne die Farben zu unterscheiden.</p>"
+          }
         }
       ]
     },
@@ -3901,6 +4282,36 @@ const ATLAS = {
               ["Reset the Breakers", "Licht", "Alle Schutzschalter wieder auf ON."],
               ["Realign the Radio Mast", "Comms", "Azimut und Frequenz drehen, bis das Signal steht."]
             ]) + shots([["atlas_sab_fire.webp", "Forest Fire"], ["atlas_sab_waterworks.webp", "Water Supply Failure"], ["atlas_sab_breakers.webp", "Reset the Breakers"], ["atlas_sab_antenna.webp", "Realign the Radio Mast"]])
+          }
+        },
+        {
+          id: "sab-rex",
+          title: { en: "Rex Awake (museum, extra critical sabotage)", de: "Rex Awake (Museum, zusätzliche kritische Sabotage)" },
+          summary: { en: "The impostors wake the T. rex. The crew has 50 seconds to put it back to sleep with a music box and a night light, or the impostors win.", de: "Die Impostor wecken den T. rex. Die Crew hat 50 Sekunden, ihn mit Spieluhr und Nachtlicht wieder einzuschläfern, sonst gewinnen die Impostor." },
+          body: {
+            en: "<p>A third critical sabotage next to Security Alarm and Climate Failure, started from the dino button in the Rotunda on the sabotage map. The skeleton comes alive: the head sways, the jaw snaps, the eye sockets glow red, and every 10 to 13 seconds it roars (it opens its jaw 1.6 seconds before). Red alarm like the reactor, red arrows to both stations, a <strong>Rex Awake!</strong> line with countdown and sleep progress in the task list, and the emergency button is locked.</p>" + tbl(["Station", "What you do"], [["Music box (Rotunda, in front of the podium)", "Turn the crank clockwise. The lullaby plays exactly as fast as you crank; only the green tempo zone (0.75 to 1.35 turns per second) counts."], ["Night light (Security Office)", "Keep the star projector's constellation inside the drifting target rings, at most 9 degrees off. A small live view of camera K1 shows how the Rex reacts."]]) + "<p>The sleep bar fills by <strong>+2 per second</strong> while one station is in time and <strong>+6 per second</strong> while both are; with nobody in time it drops by 1 per second. Each roar costs 6 points, knocks the crank back and throws the constellation off target. Alone it is deliberately impossible (about 67 seconds), two players need about 20 seconds plus the walk. Impostors can join in at the stations but can only help: wrong input counts as zero, and several players can use the same station. A reported body ends the sabotage like the reactor.</p>" + shots([["atlas_rex_awake.webp", "Rex Awake"], ["atlas_rex_music.webp", "The music box"], ["atlas_rex_light.webp", "The night light with camera K1"]]),
+            de: "<p>Eine dritte kritische Sabotage neben Security Alarm und Climate Failure, gestartet über den Dino-Knopf in der Rotunde auf der Sabotage-Karte. Das Skelett erwacht: Der Kopf pendelt, der Kiefer schnappt, die Augenhöhlen glühen rot, und alle 10 bis 13 Sekunden brüllt es (1,6 Sekunden vorher reißt es das Maul auf). Roter Alarm wie beim Reaktor, rote Pfeile zu beiden Stationen, eine Zeile <strong>Rex Awake!</strong> mit Countdown und Schlaffortschritt in der Aufgabenliste, und der Notfallknopf ist gesperrt.</p>" + tbl(["Station", "Was du tust"], [["Spieluhr (Rotunde, vor dem Podest)", "Die Kurbel im Uhrzeigersinn drehen. Das Wiegenlied spielt genau so schnell, wie du kurbelst; es zählt nur das grüne Tempofeld (0,75 bis 1,35 Umdrehungen pro Sekunde)."], ["Nachtlicht (Security Office)", "Das Sternbild des Projektors in den wandernden Zielringen halten, höchstens 9 Grad daneben. Ein kleines Livebild der Kamera K1 zeigt, wie der Rex reagiert."]]) + "<p>Der Schlafbalken füllt sich mit <strong>+2 pro Sekunde</strong>, solange eine Station im Takt ist, und mit <strong>+6 pro Sekunde</strong>, wenn beide es sind; ist niemand im Takt, fällt er um 1 pro Sekunde. Jedes Brüllen kostet 6 Punkte, lässt die Kurbel zurückschlagen und das Sternbild wegspringen. Allein ist es mit Absicht nicht zu schaffen (etwa 67 Sekunden), zu zweit dauert es etwa 20 Sekunden plus Laufweg. Impostor können an den Stationen mitmachen, aber nur helfen: Fehlbedienung zählt null, und mehrere Spieler können dieselbe Station bedienen. Eine gemeldete Leiche beendet die Sabotage wie beim Reaktor.</p>" + shots([["atlas_rex_awake.webp", "Rex Awake"], ["atlas_rex_music.webp", "Die Spieluhr"], ["atlas_rex_light.webp", "Das Nachtlicht mit Kamera K1"]])
+          }
+        },
+        {
+          id: "sab-carnival",
+          title: { en: "Carnival sabotages", de: "Sabotagen im Park" },
+          summary: { en: "Coaster Brake Failure, Ammonia Leak, Park Blackout, Speaker Feedback, plus the Ride Override button.", de: "Coaster Brake Failure, Ammonia Leak, Park Blackout, Speaker Feedback, dazu der Ride-Override-Knopf." },
+          body: {
+            en: tbl(["Sabotage", "Skeld system", "Repair"], [
+              ["Coaster Brake Failure", "Reactor", "Follow the moving brake at both consoles at the same time."],
+              ["Ammonia Leak", "Oxygen", "Set the valves to the plan of your console, at both consoles."],
+              ["Park Blackout", "Lights", "Replace every blown bulb. The lanterns go out, the neon signs stay on."],
+              ["Speaker Feedback", "Comms", "Turn aim and gain until the sound is clean."],
+              ["Ride Override", "Extra", "Button on the sabotage map: starts a coaster run at once, the level crossings close (30 s cooldown)."]
+            ]),
+            de: tbl(["Sabotage", "Skeld-System", "Reparatur"], [
+              ["Coaster Brake Failure", "Reaktor", "An beiden Konsolen gleichzeitig der wandernden Bremse folgen."],
+              ["Ammonia Leak", "Sauerstoff", "Die Ventile nach dem Plan der eigenen Konsole stellen, an beiden Konsolen."],
+              ["Park Blackout", "Licht", "Jede durchgebrannte Glühbirne tauschen. Die Laternen gehen aus, die Neonschilder bleiben an."],
+              ["Speaker Feedback", "Comms", "Richtung und Pegel drehen, bis der Ton sauber ist."],
+              ["Ride Override", "Zusätzlich", "Knopf auf der Sabotage-Karte: startet sofort eine Achterbahnfahrt, die Bahnübergänge schließen (30 s Abklingzeit)."]
+            ])
           }
         },
         {
@@ -3951,8 +4362,38 @@ const ATLAS = {
           title: { en: "Laser barriers (museum)", de: "Laserschranken (Museum)" },
           summary: { en: "Every second passage has a laser barrier; each crossing lands in the log on the cameras.", de: "Jeder zweite Durchgang hat eine Laserschranke; jeder Durchgang landet im Protokoll an den Kameras." },
           body: {
-            en: "<p>Thin red beams run across every second passage. Walking through makes the beam flash and adds an entry to the <strong>laser log</strong> under the security cameras: the last four crossings with room and seconds ago. It does not say who, but it tells you where someone just went.</p><p class='note'>In 0.3.0.3 the log is drawn behind the camera screen; the next test version fixes that.</p>" + shots([["atlas_world_laser.webp", "Laser barrier in a passage"]]),
-            de: "<p>Dünne rote Strahlen laufen quer durch jeden zweiten Durchgang. Wer hindurchgeht, lässt den Strahl aufleuchten und erzeugt einen Eintrag im <strong>Laserprotokoll</strong> unter den Überwachungskameras: die letzten vier Durchgänge mit Raum und Sekunden. Es verrät nicht wer, aber wo gerade jemand langging.</p><p class='note'>In 0.3.0.3 liegt das Protokoll hinter dem Kamerabild; die nächste Testversion behebt das.</p>" + shots([["atlas_world_laser.webp", "Laserschranke in einem Durchgang"]])
+            en: "<p>Thin red beams run across every second passage. Walking through makes the beam flash and adds an entry to the <strong>laser log</strong> under the security cameras: the last four crossings with room and seconds ago. It does not say who, but it tells you where someone just went.</p>" + shots([["atlas_world_laser.webp", "Laser barrier in a passage"]]),
+            de: "<p>Dünne rote Strahlen laufen quer durch jeden zweiten Durchgang. Wer hindurchgeht, lässt den Strahl aufleuchten und erzeugt einen Eintrag im <strong>Laserprotokoll</strong> unter den Überwachungskameras: die letzten vier Durchgänge mit Raum und Sekunden. Es verrät nicht wer, aber wo gerade jemand langging.</p>" + shots([["atlas_world_laser.webp", "Laserschranke in einem Durchgang"]])
+          }
+        },
+        {
+          id: "lookout",
+          title: { en: "The hunting stand (forest)", de: "Der Hochsitz (Wald)" },
+          summary: { en: "Climb the stand to look out over the map; climbing down brings everything back to normal.", de: "Auf den Hochsitz klettern und über die Karte schauen; runterklettern macht alles wieder normal." },
+          body: {
+            en: "<p>Next to the ladder the Use button shows its own icon and <strong>CLIMB</strong>, like the cameras; up there it says <strong>CLIMB DOWN</strong> (the E key and any movement key work too). Up there the camera zooms out and moves west, where the map is (east of the stand there is only forest), and your vision radius triples. Your crewmate stands inside the cabin, shrunk to the size of TOR's Mini, head in the window, and everyone sees you up there. You can still be killed as usual, because your real position stays at the foot of the ladder; a meeting, your death or a minigame brings you down at once. While you are up, the on-screen buttons get smaller, like TOR's zoom for ghosts.</p>" + shots([["atlas_lookout.webp", "The view from the hunting stand"]]),
+            de: "<p>Neben der Leiter zeigt der Use-Knopf ein eigenes Symbol und <strong>CLIMB</strong>, wie an den Kameras; oben steht dort <strong>CLIMB DOWN</strong> (die Taste E und jede Bewegungstaste gehen auch). Oben zoomt die Kamera heraus und rückt nach Westen, wo die Karte liegt (östlich des Hochsitzes ist nur Wald), und dein Sichtradius verdreifacht sich. Deine Figur steht in der Kabine, auf die Größe von TORs Mini verkleinert, den Kopf im Fenster, und alle sehen dich dort oben. Du bleibst normal killbar, weil deine echte Position am Fuß der Leiter bleibt; ein Meeting, dein Tod oder ein Minispiel holen dich sofort herunter. Solange du oben bist, werden die Knöpfe auf dem Bildschirm kleiner, wie bei TORs Zoom für Geister.</p>" + shots([["atlas_lookout.webp", "Der Blick vom Hochsitz"]])
+          }
+        },
+        {
+          id: "rides",
+          title: { en: "Rides (carnival)", de: "Fahrgeschäfte (Park)" },
+          summary: { en: "Every 22 to 38 seconds a ride starts and briefly blocks a path. A bell and blinking lamps warn two seconds before.", de: "Alle 22 bis 38 Sekunden startet ein Fahrgeschäft und sperrt kurz einen Weg. Glocke und blinkende Lampen warnen zwei Sekunden vorher." },
+          body: {
+            en: tbl(["Ride", "What happens"], [
+              ["Coaster Run", "The barriers at the three level crossings close for 6 seconds while the train goes round."],
+              ["Carousel Spin", "The carousel turns for 10 seconds; ropes block the north and west openings."],
+              ["Ghost Flash", "A car rides through the dark tunnel and the flash photographs everyone inside; the monitor at the north exit shows the photo until the next flash."],
+              ["Log Flume Drop", "A boat comes down the channel; the east bridge is wet and blocked for 4 seconds."],
+              ["Turnstile Jam", "Both turnstiles at the main gate jam for 5 seconds."]
+            ]) + "<p>Never during a meeting, an ejection or a critical sabotage. The turnstiles are one-way all the time (west only into the park, east only out), and the ghost train is dark inside.</p>" + shots([["atlas_ride_coaster.webp", "Coaster Run"], ["atlas_ride_carousel.webp", "Carousel Spin"], ["atlas_ride_ghost.webp", "Ghost Flash"], ["atlas_ride_flume.webp", "Log Flume Drop"]]),
+            de: tbl(["Fahrgeschäft", "Was passiert"], [
+              ["Coaster Run", "Die Schranken an den drei Bahnübergängen schließen 6 Sekunden, während der Zug seine Runde fährt."],
+              ["Carousel Spin", "Das Karussell dreht sich 10 Sekunden; Seile sperren die Nord- und Westöffnung."],
+              ["Ghost Flash", "Ein Wagen fährt durch den dunklen Tunnel, der Blitz fotografiert alle darin; der Monitor am Nordausgang zeigt das Foto bis zum nächsten Blitz."],
+              ["Log Flume Drop", "Ein Boot kommt den Kanal herunter; die Ostbrücke ist 4 Sekunden nass und gesperrt."],
+              ["Turnstile Jam", "Beide Drehkreuze am Haupteingang klemmen 5 Sekunden."]
+            ]) + "<p>Nie während eines Meetings, eines Rauswurfs oder einer kritischen Sabotage. Die Drehkreuze sind immer Einbahn (West nur in den Park hinein, Ost nur hinaus), und die Geisterbahn ist innen dunkel.</p>" + shots([["atlas_ride_coaster.webp", "Coaster Run"], ["atlas_ride_carousel.webp", "Carousel Spin"], ["atlas_ride_ghost.webp", "Ghost Flash"], ["atlas_ride_flume.webp", "Log Flume Drop"]])
           }
         },
         {
@@ -3967,6 +4408,30 @@ const ATLAS = {
       ]
     },
     {
+      id: "ejections",
+      title: { en: "Ejection scenes", de: "Rauswurf-Szenen" },
+      intro: { en: "Each map replaces the flight through space with its own short scenes, for ejections and for skipped votes.", de: "Jede Karte ersetzt den Flug durchs All durch eigene kurze Szenen, für Rauswürfe und für übersprungene Abstimmungen." },
+      entries: [
+        {
+          id: "eject-scenes",
+          title: { en: "Scenes per map", de: "Szenen je Karte" },
+          summary: { en: "Museum 4 + 2, forest 3 + 2, carnival 5 + 2 (ejection + skip). The host picks one at the start of every meeting, never the same twice in a row.", de: "Museum 4 + 2, Wald 3 + 2, Park 5 + 2 (Rauswurf + Skip). Der Host wählt zu Beginn jedes Meetings eine aus, nie zweimal dieselbe hintereinander." },
+          body: {
+            en: tbl(["Map", "Ejection", "Skip"], [
+              ["Vesper Museum", "Sarcophagus, trapdoor into the depot, T. rex, thrown out", "Empty showcase, night shift"],
+              ["Forest Station", "White water, dragged into the forest, off the hunting stand", "Quiet campfire, by the river"],
+              ["Moonlight Carnival", "Human cannonball, Ferris wheel, log flume, ghost train, loop", "Empty carousel, popcorn and cardboard clown"]
+            ]) + "<p>The scenes are data played by a small engine, with their sounds generated in code; the ejection text shows as usual. If Unknown's Collection plays its own scene for the Void, Atlas stays out of that ejection.</p>",
+            de: tbl(["Karte", "Rauswurf", "Skip"], [
+              ["Vesper-Museum", "Sarkophag, Falltür ins Depot, T. rex, hinausgeworfen", "Leere Vitrine, Nachtschicht"],
+              ["Forststation", "Wildwasser, in den Wald gezerrt, vom Hochsitz", "Stilles Lagerfeuer, am Fluss"],
+              ["Moonlight Carnival", "Menschenkanone, Riesenrad, Wildwasserbahn, Geisterbahn, Looping", "Leeres Karussell, Popcorn und Pappclown"]
+            ]) + "<p>Die Szenen sind Daten, die eine kleine Engine abspielt, ihre Klänge entstehen im Code; der Rauswurf-Text erscheint wie gewohnt. Spielt Unknown's Collection seine eigene Szene für den Void, hält sich Atlas bei diesem Rauswurf heraus.</p>"
+          }
+        }
+      ]
+    },
+    {
       id: "selection",
       title: { en: "Choosing a map", de: "Karte wählen" },
       intro: { en: "Next to the vanilla maps, no config file needed.", de: "Neben den Vanilla-Karten, ohne Config-Datei." },
@@ -3976,8 +4441,8 @@ const ATLAS = {
           title: { en: "Freeplay and lobby", de: "Freeplay und Lobby" },
           summary: { en: "Extra map buttons in the Freeplay menu and in the host's map picker; the host's choice is sent to everyone.", de: "Zusätzliche Kartenknöpfe im Freeplay-Menü und in der Kartenauswahl des Hosts; die Wahl des Hosts geht an alle." },
           body: {
-            en: "<p>In <strong>Freeplay</strong> the museum and forest buttons sit below the five vanilla maps. In a <strong>lobby</strong> the host finds them in the map picker of the game settings; picking a vanilla map switches back. The choice is sent to all players whenever it changes, when someone joins, every few seconds in the lobby and right before the game starts.</p>",
-            de: "<p>Im <strong>Freeplay</strong> stehen die Knöpfe für Museum und Wald unter den fünf Vanilla-Karten. In einer <strong>Lobby</strong> findet der Host sie in der Kartenauswahl der Spieleinstellungen; eine Vanilla-Karte schaltet zurück. Die Wahl geht an alle Spieler, sobald sie sich ändert, wenn jemand beitritt, alle paar Sekunden in der Lobby und direkt vor dem Spielstart.</p>"
+            en: "<p>In <strong>Freeplay</strong> the buttons of the three Atlas maps sit below the vanilla maps. In a <strong>lobby</strong> the host finds them in the map picker of the game settings; picking a vanilla map switches back. The choice is sent to all players whenever it changes, when someone joins, every few seconds in the lobby and right before the game starts. With Submerged installed, the lobby picker shows all maps.</p><p>Before the start every client reports its Atlas version. If someone is missing Atlas or runs another version, the host cannot start on an Atlas map and a warning above the start button names the player; after the build every client checks that its map really was built.</p>",
+            de: "<p>Im <strong>Freeplay</strong> stehen die Knöpfe der drei Atlas-Karten unter den Vanilla-Karten. In einer <strong>Lobby</strong> findet der Host sie in der Kartenauswahl der Spieleinstellungen; eine Vanilla-Karte schaltet zurück. Die Wahl geht an alle Spieler, sobald sie sich ändert, wenn jemand beitritt, alle paar Sekunden in der Lobby und direkt vor dem Spielstart. Mit installiertem Submerged zeigt die Lobby-Auswahl alle Karten.</p><p>Vor dem Start meldet jeder Client seine Atlas-Version. Fehlt jemandem Atlas oder hat er eine andere Version, kann der Host nicht auf einer Atlas-Karte starten, und eine Warnung über dem Startknopf nennt den Spieler; nach dem Bau prüft jeder Client, ob seine Karte wirklich gebaut wurde.</p>"
           }
         }
       ]

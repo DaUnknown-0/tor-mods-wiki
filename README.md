@@ -30,8 +30,11 @@ A static, wiki-style site for five companion mods for *The Other Roles*:
 - Each change is a **clickable accordion** — click the title to read the explanation.
 - **Live search** filters every feature on a mod page (press `/` to focus it).
 - Sticky **section sidebar** with scroll-spy, **expand/collapse all**, back-to-top.
-- No build step, pure HTML/CSS/JS. Fonts from Google Fonts: Fraunces (display),
-  Source Serif 4 (body), IBM Plex Sans and IBM Plex Mono (UI labels, code).
+- No build step, pure HTML/CSS/JS. Everything is self-hosted, so no page loads
+  anything from a third-party server: the fonts Fraunces (display), Source Serif 4
+  (body), IBM Plex Sans and IBM Plex Mono (UI labels, code) live in `assets/fonts/`
+  (Latin + Latin Extended, SIL Open Font License, see the `OFL-*.txt` files), and
+  three.js 0.169 for the 3D background in `assets/vendor/` (MIT).
 
 ## Editing content
 

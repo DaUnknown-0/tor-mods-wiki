@@ -1,5 +1,5 @@
 /* ============================================================================
- * TOR Mods Wiki: the 3D background (three.js, loaded as an ES module)
+ * TOR Mods Wiki: the 3D background (three.js 0.169, self-hosted in vendor/)
  * One engine, one scene per page, all drawn as fine wireframes in the side
  * gutters so the reading column stays clear:
  *   home       a field of crewmates and the other mods' motifs drifting past
@@ -10,6 +10,12 @@
  *   atlas      two dioramas (museum rotunda, forest cabin) that build up as
  *              you read and turn with the scroll
  *   test       the home field with crewmates and rocks
+ * Over every page stands the emblem: a point cloud in the shape of the chapter
+ * being read (a knife for an Impostor role, the rotunda for the maps) that
+ * flies over into the next shape when the section changes, while the
+ * background picks up a faint tint of that chapter. The cloud gives way around
+ * the pointer; a click on an empty part of the page sends a ring and a wave
+ * through dust and cloud and turns the emblem into the next shape.
  * The engine owns the renderer, theme colours, dust, the scroll spring (the
  * camera lags a little and settles), the scroll speed (spin-up, dust streaks,
  * camera roll) and the render loop (every frame while moving, ~30 fps at rest,
@@ -17,7 +23,7 @@
  * prefers-reduced-motion; otherwise one still frame. The accent colour comes
  * from scroll.js (TORSCROLL.accent(): on the home page the mod row in view).
  * ==========================================================================*/
-import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.min.js";
+import * as THREE from "./vendor/three.module.min.js";
 
 const doc = document;
 const root = doc.documentElement;
@@ -95,8 +101,8 @@ function boot() {
   };
   const streakMat = new THREE.LineBasicMaterial({ transparent: true, depthWrite: false, fog: true });
 
-  let W = 1, H = 1, mob = false, narrow = false, dark = false, sMin = 0.62;
-  const ink = new THREE.Color(), bg = new THREE.Color(), accent = new THREE.Color(), accentTarget = new THREE.Color();
+  let W = 1, H = 1, mob = innerWidth < 760, narrow = false, dark = false, sMin = 0.62;
+  const ink = new THREE.Color(), bg = new THREE.Color(), bgNow = new THREE.Color(), accent = new THREE.Color(), accentTarget = new THREE.Color();
 
   function applyTheme() {
     dark = root.dataset.theme === "dark";
@@ -104,8 +110,9 @@ function boot() {
     ink.copy(cssColor(doc.body, "--ink", dark ? "#f1ece1" : "#191816"));
     accentTarget.copy(cssColor(doc.body, "--accent", "#c8323f"));
     accent.copy(accentTarget);
-    renderer.setClearColor(bg, 1);
-    scene.fog.color.copy(bg);
+    bgNow.copy(bg);
+    renderer.setClearColor(bgNow, 1);
+    scene.fog.color.copy(bgNow);
     const a = (dark ? 0.42 : 0.3) * (narrow ? 0.45 : 1);
     for (const m of mats) {
       const k = m.userData.k, kind = m.userData.kind;
@@ -178,8 +185,8 @@ function boot() {
     g.userData.r = 0.9;
     return g;
   }
-  function gearGeo(radius, teeth, depth = 0.22) {
-    const s = new THREE.Shape(), r0 = radius - 0.13, r1 = radius + 0.05;
+  function gearSolid(radius, teeth, depth = 0.22, holeK = 0.28, tooth = 0.18) {
+    const s = new THREE.Shape(), r0 = radius - tooth * 0.72, r1 = radius + tooth * 0.28;
     for (let i = 0; i < teeth * 2; i++) {
       const a0 = (i / (teeth * 2)) * TAU, a1 = ((i + 1) / (teeth * 2)) * TAU;
       const r = i % 2 ? r0 : r1;
@@ -187,11 +194,12 @@ function boot() {
       else s.lineTo(Math.cos(a0) * r, Math.sin(a0) * r);
       s.lineTo(Math.cos(a1) * r, Math.sin(a1) * r);
     }
-    const hole = new THREE.Path(); hole.absarc(0, 0, radius * 0.28, 0, TAU, true); s.holes.push(hole);
+    const hole = new THREE.Path(); hole.absarc(0, 0, radius * holeK, 0, TAU, true); s.holes.push(hole);
     const geo = new THREE.ExtrudeGeometry(s, { depth, bevelEnabled: false, curveSegments: 12 });
     geo.translate(0, 0, -depth / 2);
-    return edges(geo, 25);
+    return geo;
   }
+  const gearGeo = (radius, teeth, depth) => edges(gearSolid(radius, teeth, depth), 25);
   function gear(radius = 0.6, mat) {
     const g = new THREE.Group();
     part(g, gearGeo(radius, Math.max(8, Math.round(radius * 16))), mat || (rand() < 0.5 ? M.acc : M.ink));
@@ -294,7 +302,8 @@ function boot() {
         for (let i = 0; i < n; i++) {
           const o = pick(bag)();
           const u = o.userData;
-          u.d = 7 + rand() * 17; u.side = i % 2 ? 1 : -1; u.su = rand(); u.by = (rand() - 0.5) * 2;
+          u.side = i % 3 ? -1 : 1; u.su = rand(); u.by = (rand() - 0.5) * 2;   // a third on the right: that is the emblem's side
+          u.d = u.side > 0 ? 17 + rand() * 7 : 7 + rand() * 17;
           u.par = 0.55 + (24 - u.d) / 24 * 0.7;
           u.spinV = new THREE.Vector3(rand() - 0.5, rand() - 0.5, rand() - 0.5).multiplyScalar(0.5);
           u.rot0 = new THREE.Euler(rand() * 6, rand() * 6, rand() * 6); u.bob = rand() * 6;
@@ -349,7 +358,7 @@ function boot() {
         for (let i = 0; i < n2; i++) {
           const d = dice(i % 3 === 0 ? M.ink : M.acc);
           const u = d.userData;
-          u.d = 8 + rand() * 12; u.su = rand(); u.by = (rand() - 0.5) * 2; u.par = 0.9 + rand() * 0.6;
+          u.d = 17 + rand() * 7; u.su = rand(); u.by = (rand() - 0.5) * 2; u.par = 0.9 + rand() * 0.6;
           u.sc = 0.6 + rand() * 0.6; d.scale.setScalar(u.sc);
           u.rv = new THREE.Vector3(rand() + 0.3, rand() + 0.3, rand() * 0.5);
           scene.add(d); dices.push(d);
@@ -369,7 +378,7 @@ function boot() {
         for (const o of dices) {
           const u = o.userData, span = E.hh(u.d) * 2 + 3;
           const y = E.camY + wrap(u.by * span * 0.5 - E.camY * u.par - E.t * 0.25 * u.par, span);
-          o.position.set(E.gx(-1, u.su, u.d, 0.6 * u.sc), y, -u.d);
+          o.position.set(E.gx(1, u.su, u.d, 0.6 * u.sc), y, -u.d);
           const k = E.spin * 2 + E.camY * 0.3;
           o.rotation.set(k * u.rv.x, k * u.rv.y, k * u.rv.z);
         }
@@ -409,7 +418,6 @@ function boot() {
     return {
       init() {
         train(-1, 13, [1.1, 0.6, 0.9, 0.5, 0.75], 0.4);
-        train(1, 16, [0.7, 1.2, 0.55, 0.85], -0.3);
         const n = mob ? 4 : 8;
         for (let i = 0; i < n; i++) {
           const b = new THREE.Group();
@@ -473,7 +481,6 @@ function boot() {
     }
     return {
       init() {
-        cloud(1, 12, 3.2, mob ? 1400 : 2600);
         if (!mob) cloud(-1, 18, 1.6, 900);
         const n = mob ? 4 : 8;
         for (let i = 0; i < n; i++) {
@@ -629,7 +636,7 @@ function boot() {
     }
     return {
       init() {
-        [[museum(), -1, 14, 0.2], [cabin(), 1, 16, -0.15]].forEach(([dio, side, d, yOff]) => {
+        [[museum(), -1, 14, 0.2]].forEach(([dio, side, d, yOff]) => {
           dio.g.userData = { side, d, yOff, grow: dio.grow };
           dio.grow.forEach((o, i) => { o.userData.sy = o.scale.y; o.userData.delay = i / dio.grow.length; });
           scene.add(dio.g); dios.push(dio.g);
@@ -654,6 +661,523 @@ function boot() {
     };
   };
 
+  /* ================================================================ emblem
+   * One point cloud per page that belongs to the chapter you are reading: a
+   * knife for an Impostor role, a shield for the shield features, the rotunda
+   * for the maps. When the section in the middle of the screen changes, the
+   * points fly over into the next shape and take on the chapter colour (on
+   * Unknown's the team colour of the role), and the page background takes a
+   * faint tint of it. The cloud gives way around the pointer; a click on an
+   * empty part of the page sends a shock wave through it and turns it into the
+   * next shape. A small caption in the gutter names the figure like a label. */
+  const TONE_HI = new THREE.Color(), TONE_INK = new THREE.Color();
+  const V = (a) => new THREE.Vector3(a[0], a[1], a[2]);
+  const HALF = Math.PI / 2;
+  function P(geo, tone = 0, w = 1, pos, rot, scl, keep) {
+    const m = new THREE.Matrix4().compose(V(pos || [0, 0, 0]),
+      new THREE.Quaternion().setFromEuler(new THREE.Euler(...(rot || [0, 0, 0]))), V(scl || [1, 1, 1]));
+    return { geo, tone, w, m, keep };
+  }
+  function tilt(parts, rot) {
+    const t = new THREE.Matrix4().makeRotationFromEuler(new THREE.Euler(...rot));
+    for (const p of parts) p.m.premultiply(t);
+    return parts;
+  }
+  function extrude(shape, depth, tone = 0, w = 1) {
+    const g = new THREE.ExtrudeGeometry(shape, { depth, bevelEnabled: false, curveSegments: 16 });
+    g.translate(0, 0, -depth / 2);
+    return P(g, tone, w);
+  }
+  const shapeOf = (pts) => { const s = new THREE.Shape(); pts.forEach(([x, y], i) => (i ? s.lineTo(x, y) : s.moveTo(x, y))); s.closePath(); return s; };
+  const Cyl = (r, h, seg = 12, open = false) => new THREE.CylinderGeometry(r, r, h, seg, 1, open);
+  const Box = (x, y, z) => new THREE.BoxGeometry(x, y, z);
+  const Torus = (r, t, rs, ts, arc) => new THREE.TorusGeometry(r, t, rs, ts, arc);
+
+  // tone: 0 = chapter colour, 1 = ink, 2 = highlight (visor blue, moonlight); w = point density
+  const SHAPES = {
+    crewmate: () => crewSolids().map((s) => P(s.geo, s.visor ? 2 : 0, s.visor ? 1.6 : 1, s.pos, null, s.scale)),
+    dice: () => {
+      const parts = [P(Box(1.2, 1.2, 1.2), 0, 1)];
+      const o = 0.3, f = 0.602;
+      const faces = [
+        [[0, 0]], [[-o, -o], [o, o]], [[-o, -o], [0, 0], [o, o]], [[-o, -o], [o, -o], [-o, o], [o, o]],
+        [[-o, -o], [o, -o], [0, 0], [-o, o], [o, o]], [[-o, -o], [o, -o], [-o, 0], [o, 0], [-o, o], [o, o]],
+      ];
+      const place = [
+        (a, b) => [[a, b, f], [0, 0, 0]], (a, b) => [[f, a, b], [0, HALF, 0]], (a, b) => [[a, f, b], [-HALF, 0, 0]],
+        (a, b) => [[-f, a, b], [0, -HALF, 0]], (a, b) => [[a, -f, b], [HALF, 0, 0]], (a, b) => [[a, b, -f], [0, Math.PI, 0]],
+      ];
+      faces.forEach((pips, i) => pips.forEach(([a, b]) => {
+        const [pos, rot] = place[i](a, b);
+        parts.push(P(new THREE.CircleGeometry(0.11, 12), 1, 6, pos, rot));
+      }));
+      return tilt(parts, [0.5, 0.6, 0]);
+    },
+    gear: () => [P(gearSolid(1, 12, 0.3, 0.62, 0.36), 0, 1), P(Cyl(0.2, 0.4, 16, true), 1, 1.5, null, [HALF, 0, 0]),
+      ...[0, 1, 2, 3, 4].map((i) => { const a = (i / 5) * TAU; return P(Box(0.5, 0.1, 0.12), 0, 1.5, [Math.cos(a) * 0.42, Math.sin(a) * 0.42, 0], [0, 0, a]); })],
+    wheel: () => {
+      const parts = [P(Torus(1, 0.06, 6, 64), 0, 1), P(Torus(0.68, 0.04, 6, 48), 1, 1),
+        P(new THREE.ConeGeometry(0.16, 0.34, 12), 0, 2, [0, 0, 0.17], [HALF, 0, 0])];
+      for (let i = 0; i < 18; i++) {
+        const a = (i / 18) * TAU;
+        parts.push(P(Box(0.32, 0.025, 0.025), 1, 2, [Math.cos(a) * 0.84, Math.sin(a) * 0.84, 0], [0, 0, a]));
+        if (i % 2 === 0) parts.push(P(new THREE.CircleGeometry(0.07, 8), 0, 3, [Math.cos(a + 0.17) * 0.84, Math.sin(a + 0.17) * 0.84, 0.02]));
+      }
+      return tilt(parts, [-0.9, 0, 0]);
+    },
+    knife: () => tilt([
+      extrude(shapeOf([[0, -0.13], [1.15, -0.13], [1.6, 0.12], [0, 0.22]]), 0.06, 2, 1.2),
+      P(Box(0.08, 0.55, 0.22), 1, 2, [-0.02, 0.04, 0]),
+      P(Box(0.75, 0.22, 0.16), 0, 1, [-0.43, 0.04, 0]),
+    ], [0, 0, 0.6]),
+    shield: () => {
+      const s = new THREE.Shape();
+      s.moveTo(0, 1.1); s.bezierCurveTo(0.45, 1.1, 0.85, 1.0, 0.9, 0.9); s.lineTo(0.9, 0.2);
+      s.bezierCurveTo(0.9, -0.5, 0.4, -0.9, 0, -1.15); s.bezierCurveTo(-0.4, -0.9, -0.9, -0.5, -0.9, 0.2);
+      s.lineTo(-0.9, 0.9); s.bezierCurveTo(-0.85, 1.0, -0.45, 1.1, 0, 1.1);
+      return [extrude(s, 0.2, 0, 1), P(Box(0.14, 1.3, 0.05), 1, 3, [0, 0, 0.12]), P(Box(1.0, 0.14, 0.05), 1, 3, [0, 0.3, 0.12])];
+    },
+    eye: () => {
+      const path = new THREE.CurvePath();
+      path.add(new THREE.QuadraticBezierCurve3(V([-1.25, 0, 0]), V([0, 1.1, 0]), V([1.25, 0, 0])));
+      path.add(new THREE.QuadraticBezierCurve3(V([1.25, 0, 0]), V([0, -1.1, 0]), V([-1.25, 0, 0])));
+      return [P(new THREE.TubeGeometry(path, 80, 0.045, 5, true), 1, 2),
+        P(Torus(0.44, 0.05, 6, 40), 0, 2), P(new THREE.RingGeometry(0.2, 0.44, 32, 2), 0, 0.7),
+        P(new THREE.CircleGeometry(0.2, 20), 1, 3)];
+    },
+    moon: () => [
+      P(new THREE.SphereGeometry(1, 32, 20), 2, 1, null, null, [1, 1, 0.3], (p) => Math.hypot(p.x - 0.52, p.y - 0.24) > 0.84),
+      P(new THREE.OctahedronGeometry(0.09), 0, 8, [0.72, 0.62, 0]), P(new THREE.OctahedronGeometry(0.06), 0, 8, [0.35, -0.2, 0]),
+    ],
+    ghost: () => {
+      const prof = [[0.001, 1.1], [0.35, 1.05], [0.6, 0.85], [0.72, 0.5], [0.75, 0], [0.78, -0.6], [0.82, -1.0]].map(([x, y]) => new THREE.Vector2(x, y));
+      return [P(new THREE.LatheGeometry(prof, 28), 0, 1, null, null, null, (p) => p.y > -0.8 + 0.16 * Math.sin(Math.atan2(p.z, p.x) * 6)),
+        P(new THREE.CircleGeometry(0.12, 12), 1, 6, [-0.22, 0.5, 0.7]), P(new THREE.CircleGeometry(0.12, 12), 1, 6, [0.22, 0.5, 0.7])];
+    },
+    skull: () => {
+      const sockets = [[-0.33, -0.02], [0.33, -0.02]];
+      return [P(new THREE.SphereGeometry(0.85, 28, 20), 0, 1, [0, 0.1, 0], null, [1, 0.95, 1.05],
+        (p) => !(p.z > 0.35 && (sockets.some(([x, y]) => Math.hypot(p.x - x, p.y - y) < 0.22) || (Math.abs(p.x) < 0.1 && p.y < -0.25 && p.y > -0.45)))),
+        ...sockets.map(([x, y]) => P(Torus(0.22, 0.025, 4, 24), 1, 3, [x, y, 0.72])),
+        P(Box(0.85, 0.32, 0.65), 0, 1, [0, -0.78, 0.15]),
+        ...[-0.24, -0.08, 0.08, 0.24].map((x) => P(Box(0.1, 0.2, 0.03), 1, 4, [x, -0.72, 0.49]))];
+    },
+    hourglass: () => [
+      P(new THREE.ConeGeometry(0.72, 0.95, 24, 1, true), 0, 1, [0, 0.5, 0], [Math.PI, 0, 0]),
+      P(new THREE.ConeGeometry(0.72, 0.95, 24, 1, true), 0, 1, [0, -0.5, 0]),
+      P(Cyl(0.88, 0.1, 28), 1, 1, [0, 1.03, 0]), P(Cyl(0.88, 0.1, 28), 1, 1, [0, -1.03, 0]),
+      ...[0, 1, 2].map((i) => P(Cyl(0.035, 2.0, 6), 1, 2, [Math.cos(i * TAU / 3) * 0.8, 0, Math.sin(i * TAU / 3) * 0.8])),
+      P(new THREE.ConeGeometry(0.5, 0.34, 20), 2, 3, [0, -0.8, 0]),
+    ],
+    bolt: () => [extrude(shapeOf([[0.25, 1.3], [-0.5, 0.02], [-0.04, 0.02], [-0.38, -1.3], [0.55, 0.22], [0.08, 0.22], [0.5, 1.3]]), 0.22, 0, 1)],
+    crown: () => {
+      const parts = [P(new THREE.CylinderGeometry(0.9, 0.82, 0.45, 36, 1, true), 0, 1)];
+      for (let i = 0; i < 5; i++) {
+        const a = (i / 5) * TAU;
+        parts.push(P(new THREE.ConeGeometry(0.2, 0.62, 10, 1, true), 0, 1, [Math.cos(a) * 0.86, 0.53, Math.sin(a) * 0.86]));
+        parts.push(P(new THREE.SphereGeometry(0.08, 8, 6), 2, 6, [Math.cos(a) * 0.86, 0.88, Math.sin(a) * 0.86]));
+        parts.push(P(new THREE.SphereGeometry(0.07, 8, 6), 1, 6, [Math.cos(a + 0.63) * 0.88, 0, Math.sin(a + 0.63) * 0.88]));
+      }
+      return tilt(parts, [0.35, 0, 0]);
+    },
+    dome: () => {
+      const parts = [P(new THREE.SphereGeometry(1, 28, 12, 0, TAU, 0, HALF), 0, 1, [0, 0.15, 0]),
+        P(Torus(0.99, 0.05, 4, 48), 1, 2, [0, 0.15, 0], [HALF, 0, 0]),
+        P(Cyl(1.18, 0.12, 36), 1, 1, [0, -0.7, 0]), P(Cyl(0.14, 0.24, 10), 0, 2, [0, 1.25, 0])];
+      for (let i = 0; i < 10; i++) { const a = (i / 10) * TAU; parts.push(P(Cyl(0.06, 0.8, 8), 1, 2, [Math.cos(a) * 0.95, -0.25, Math.sin(a) * 0.95])); }
+      return tilt(parts, [0.3, 0, 0]);
+    },
+    tree: () => [
+      P(new THREE.ConeGeometry(0.95, 0.9, 12), 0, 1, [0, -0.25, 0]), P(new THREE.ConeGeometry(0.72, 0.8, 12), 0, 1, [0, 0.3, 0]),
+      P(new THREE.ConeGeometry(0.48, 0.7, 12), 0, 1, [0, 0.8, 0]), P(Cyl(0.13, 0.5, 8), 1, 2, [0, -0.95, 0]),
+    ],
+    tower: () => {
+      const parts = [
+        P(Box(0.95, 0.6, 0.95), 0, 1, [0, 0.62, 0], null, null, (p) => !(p.z > 0.4 && Math.abs(p.x) < 0.32 && p.y > 0.6 && p.y < 0.85)),
+        P(new THREE.ConeGeometry(0.82, 0.45, 4, 1), 0, 1, [0, 1.15, 0], [0, Math.PI / 4, 0]),
+      ];
+      [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([x, z]) => parts.push(P(Cyl(0.04, 1.55, 6), 1, 2, [x * 0.4, -0.45, z * 0.4], [z * -0.06, 0, x * 0.06])));
+      [-0.18, 0.18].forEach((x) => parts.push(P(Cyl(0.025, 1.45, 5), 1, 2, [x, -0.45, 0.78], [-0.28, 0, 0])));
+      for (let i = 0; i < 6; i++) parts.push(P(Box(0.36, 0.03, 0.03), 1, 3, [0, -1.1 + i * 0.24, 0.96 - i * 0.068]));
+      return tilt(parts, [0.15, -0.5, 0]);
+    },
+    ferris: () => {
+      const parts = [P(Torus(1, 0.035, 5, 72), 0, 1.4), P(Cyl(0.1, 0.18, 10), 1, 2, null, [HALF, 0, 0])];
+      for (let i = 0; i < 12; i++) {
+        const a = (i / 12) * TAU, c = Math.cos(a), s = Math.sin(a);
+        parts.push(P(Box(0.9, 0.02, 0.02), 1, 2, [c * 0.5, s * 0.5, 0], [0, 0, a]));
+        parts.push(P(Box(0.15, 0.17, 0.15), 0, 3, [c, s - 0.13, 0]));
+      }
+      [-1, 1].forEach((x) => parts.push(P(Cyl(0.035, 1.45, 6), 1, 2, [x * 0.33, -0.62, 0], [0, 0, x * 0.45])));
+      return parts;
+    },
+    globe: () => [
+      P(new THREE.SphereGeometry(1, 24, 16), 0, 0.35), P(Torus(1.01, 0.02, 4, 64), 1, 3, null, [HALF, 0, 0]),
+      ...[0, 1, 2].map((i) => P(Torus(1.01, 0.02, 4, 64), 1, 2, null, [0, (i / 3) * Math.PI, 0])),
+      P(Torus(0.72, 0.018, 4, 48), 1, 2, [0, 0.69, 0], [HALF, 0, 0]),
+      P(Torus(0.72, 0.018, 4, 48), 1, 2, [0, -0.69, 0], [HALF, 0, 0]),
+    ],
+    sliders: () => [-0.6, 0, 0.6].flatMap((y, i) => [
+      P(Cyl(0.035, 2.1, 6), 1, 2, [0, y, 0], [0, 0, HALF]),
+      P(Cyl(0.17, 0.3, 18), 0, 2, [[-0.5, 0.45, -0.1][i], y, 0], [HALF, 0, 0]),
+    ]),
+    arrow: () => [
+      extrude(shapeOf([[-0.2, 1.1], [0.2, 1.1], [0.2, 0.05], [0.6, 0.05], [0, -0.6], [-0.6, 0.05], [-0.2, 0.05]]), 0.2, 0, 1),
+      P(Box(1.8, 0.1, 0.3), 1, 2, [0, -1.0, 0]), P(Box(0.1, 0.45, 0.3), 1, 2, [-0.85, -0.8, 0]), P(Box(0.1, 0.45, 0.3), 1, 2, [0.85, -0.8, 0]),
+    ],
+    plug: () => {
+      const cable = new THREE.CatmullRomCurve3([V([0, -0.45, 0]), V([0, -0.8, 0]), V([0.4, -1.1, 0]), V([0.9, -1.1, 0.1])]);
+      return tilt([P(Box(0.7, 0.8, 0.5), 0, 1),
+        P(Box(0.1, 0.5, 0.08), 2, 3, [-0.17, 0.64, 0]), P(Box(0.1, 0.5, 0.08), 2, 3, [0.17, 0.64, 0]),
+        P(new THREE.TubeGeometry(cable, 40, 0.06, 6), 1, 2)], [0, 0, -0.25]);
+    },
+    heart: () => {
+      const s = new THREE.Shape();
+      s.moveTo(0, -0.9); s.bezierCurveTo(-0.2, -0.6, -1.1, -0.2, -1.1, 0.35); s.bezierCurveTo(-1.1, 0.85, -0.55, 1.05, 0, 0.6);
+      s.bezierCurveTo(0.55, 1.05, 1.1, 0.85, 1.1, 0.35); s.bezierCurveTo(1.1, -0.2, 0.2, -0.6, 0, -0.9);
+      return [extrude(s, 0.35, 0, 1)];
+    },
+    bug: () => {
+      const parts = [P(new THREE.SphereGeometry(0.62, 22, 14), 0, 1, [0, 0, -0.1], null, [0.85, 0.5, 1.1]),
+        P(new THREE.SphereGeometry(0.3, 14, 10), 1, 1.5, [0, 0.02, 0.72]),
+        P(Box(0.02, 0.05, 1.3), 1, 4, [0, 0.31, -0.1])];
+      [-1, 1].forEach((x) => {
+        [-0.35, 0, 0.35].forEach((z) => parts.push(P(Cyl(0.02, 0.7, 5), 1, 3, [x * 0.62, -0.15, z], [0, 0, x * 1.1])));
+        parts.push(P(Cyl(0.015, 0.5, 5), 1, 3, [x * 0.14, 0.25, 1.05], [1.0, 0, x * -0.4]));
+        parts.push(P(new THREE.CircleGeometry(0.09, 10), 1, 5, [x * 0.24, 0.3, -0.25], [-HALF, 0, 0]));
+      });
+      return tilt(parts, [0.45, -0.6, 0]);
+    },
+    magnifier: () => [P(Torus(0.62, 0.08, 8, 48), 0, 1.4), P(new THREE.CircleGeometry(0.56, 28), 2, 0.25),
+      P(new THREE.CylinderGeometry(0.08, 0.11, 0.95, 10), 1, 1.5, [0.78, -0.78, 0], [0, 0, Math.PI / 4])],
+    target: () => [P(Torus(1, 0.03, 4, 64), 0, 2), P(Torus(0.6, 0.03, 4, 48), 0, 2), P(new THREE.CircleGeometry(0.12, 14), 1, 5),
+      ...[0, 1, 2, 3].map((i) => { const a = (i / 4) * TAU; return P(Box(0.55, 0.04, 0.04), 1, 3, [Math.cos(a), Math.sin(a), 0], [0, 0, a]); })],
+    portal: () => [P(Torus(1, 0.08, 8, 64), 1, 1.2),
+      P(new THREE.CircleGeometry(0.95, 64), 0, 3, null, null, null, (p) => {
+        const r = Math.hypot(p.x, p.y), s = TAU / 3;
+        return (((Math.atan2(p.y, p.x) + r * 5) % s) + s) % s < 0.55;
+      })],
+    flask: () => {
+      const prof = [[0.001, -1], [0.7, -0.95], [0.9, -0.55], [0.8, -0.1], [0.26, 0.3], [0.22, 0.9], [0.3, 1]].map(([x, y]) => new THREE.Vector2(x, y));
+      return [P(new THREE.LatheGeometry(prof, 28), 1, 0.6, null, null, null, (p) => p.y > -0.35),
+        P(new THREE.LatheGeometry(prof, 28), 0, 2, null, null, null, (p) => p.y <= -0.35),
+        P(new THREE.SphereGeometry(0.07, 8, 6), 0, 6, [0.05, 0.5, 0]), P(new THREE.SphereGeometry(0.05, 8, 6), 0, 6, [-0.05, 0.72, 0])];
+    },
+    crystal: () => [P(new THREE.OctahedronGeometry(1, 0), 0, 1, [0, 0.1, 0], null, [0.55, 1.1, 0.55]),
+      P(new THREE.OctahedronGeometry(0.5, 0), 2, 1.3, [0.55, -0.45, 0.1], [0, 0, -0.4], [0.5, 1, 0.5])],
+    lock: () => [P(Box(1.1, 0.85, 0.4), 0, 1, [0, -0.35, 0]),
+      P(Torus(0.36, 0.07, 8, 24, Math.PI), 1, 2, [0, 0.08, 0]),
+      P(Cyl(0.07, 0.3, 8), 1, 2, [-0.36, -0.02, 0]), P(Cyl(0.07, 0.3, 8), 1, 2, [0.36, -0.02, 0]),
+      P(new THREE.CircleGeometry(0.1, 12), 1, 6, [0, -0.28, 0.21]), P(Box(0.07, 0.22, 0.02), 1, 6, [0, -0.43, 0.21])],
+    clock: () => {
+      const parts = [P(Torus(1, 0.06, 6, 64), 0, 1.5), P(new THREE.CircleGeometry(0.95, 40), 0, 0.15),
+        P(Box(0.06, 0.55, 0.04), 1, 4, [0, 0.26, 0.03]), P(Box(0.42, 0.06, 0.04), 1, 4, [0.2, 0, 0.03], [0, 0, -0.5])];
+      for (let i = 0; i < 12; i++) {
+        const a = (i / 12) * TAU;
+        parts.push(P(Box(i % 3 ? 0.04 : 0.07, 0.16, 0.03), 1, 4, [Math.sin(a) * 0.8, Math.cos(a) * 0.8, 0.02], [0, 0, -a]));
+      }
+      return parts;
+    },
+  };
+  const SHAPE_NAMES = {
+    crewmate: ["Crewmate", "Crewmate"], dice: ["Die", "Würfel"], gear: ["Gear", "Zahnrad"], wheel: ["Roulette wheel", "Roulette"],
+    knife: ["Knife", "Messer"], shield: ["Shield", "Schild"], eye: ["Eye", "Auge"], moon: ["Moon", "Mond"], ghost: ["Ghost", "Geist"],
+    skull: ["Skull", "Schädel"], hourglass: ["Hourglass", "Sanduhr"], bolt: ["Lightning", "Blitz"], crown: ["Crown", "Krone"],
+    dome: ["Rotunda", "Rotunde"], tree: ["Pine", "Kiefer"], tower: ["Hunting stand", "Hochsitz"], ferris: ["Ferris wheel", "Riesenrad"],
+    globe: ["Globe", "Globus"], sliders: ["Sliders", "Regler"], arrow: ["Download", "Download"], plug: ["Plug", "Stecker"],
+    heart: ["Heart", "Herz"], bug: ["Beetle", "Käfer"], magnifier: ["Magnifier", "Lupe"], target: ["Crosshair", "Fadenkreuz"],
+    portal: ["Vortex", "Strudel"], flask: ["Poison", "Gift"], crystal: ["Crystal", "Kristall"], lock: ["Lock", "Schloss"], clock: ["Clock", "Uhr"],
+  };
+  // section id -> shape (first match wins); the rest falls back on the team in the title, then on the page's cycle
+  const SHAPE_RULES = [
+    [/tesla/, "bolt"], [/saboteur|sabotage/, "clock"], [/siphon/, "hourglass"], [/witness|sixth|stalker/, "eye"], [/poison/, "flask"],
+    [/illusion|colorblind|collector|uc-fx/, "crystal"], [/maniac|killcutscene/, "knife"], [/shade|poltergeist/, "ghost"],
+    [/manipulator|auditor|settings|webconfig|controls|tasks/, "sliders"], [/scout/, "magnifier"], [/beacon/, "tower"],
+    [/^bug$/, "bug"], [/bugfix|stability|manager|versioning|configuration/, "gear"], [/werewolf|sleepwalker|how-it-works/, "moon"],
+    [/hunter/, "target"], [/gambler|chance-modifier|assignment|roledraft/, "dice"], [/chaos/, "bolt"], [/void/, "portal"],
+    [/king|uc-hats/, "crown"], [/necromancer|last-words/, "skull"], [/lover/, "heart"], [/shield|early-death/, "shield"],
+    [/security|gate/, "lock"], [/modsync|requirements/, "plug"], [/localization|selection|submerged/, "globe"], [/install|download/, "arrow"],
+    [/^maps$|^mods$/, "dome"], [/eject|^crewmate$|follower|copycat|highlights/, "crewmate"], [/^impostor$/, "knife"], [/neutral/, "dice"],
+  ];
+  const PAGE_CYCLE = {
+    home: ["crewmate"], test: ["crewmate", "crystal"], chance: ["dice", "wheel", "lock"], useful: ["gear", "shield", "sliders", "plug"],
+    unknowns: ["crewmate", "knife", "crystal"], nightfall: ["moon", "tree", "eye"], atlas: ["dome", "tower", "ferris", "clock"],
+  };
+  const PAGE_RULES = { nightfall: [[/world/, "tree"]], atlas: [[/world/, "tower"], [/ejections/, "ferris"]] };
+  const HOME_SHAPE = { chance: "dice", useful: "gear", unknowns: "crewmate", nightfall: "moon", atlas: "dome" };
+  // team colours of Unknown's roles as [light, dark], plus the fallback shape of that team
+  const TEAM = [
+    [/impostor/i, ["#b8323c", "#ff6b6b"], "knife"], [/crew/i, ["#2f7fa8", "#6fc6ec"], "crewmate"], [/neutral/i, ["#a87a10", "#f2c14e"], "dice"],
+    [/ghost|geist/i, ["#6e52c4", "#b49cff"], "ghost"], [/modifier/i, ["#3b8c57", "#7ddc9b"], "crystal"],
+  ];
+
+  function sampleShape(parts, N) {
+    const tmp = new THREE.Vector3(), a = new THREE.Vector3(), b = new THREE.Vector3(), c = new THREE.Vector3();
+    const infos = parts.map((p) => {
+      const g = p.geo.index ? p.geo.toNonIndexed() : p.geo, pos = g.attributes.position, tri = pos.count / 3;
+      const cum = new Float32Array(tri); let total = 0;
+      for (let t = 0; t < tri; t++) {
+        a.fromBufferAttribute(pos, t * 3).applyMatrix4(p.m); b.fromBufferAttribute(pos, t * 3 + 1).applyMatrix4(p.m); c.fromBufferAttribute(pos, t * 3 + 2).applyMatrix4(p.m);
+        total += b.sub(a).cross(c.sub(a)).length() / 2; cum[t] = total;
+      }
+      return { p, pos, tri, cum, total, weight: total * p.w };
+    });
+    const sum = infos.reduce((s, i) => s + i.weight, 0);
+    const counts = infos.map((i) => Math.floor((N * i.weight) / sum));
+    let rest = N - counts.reduce((s, n) => s + n, 0);
+    for (let k = 0; rest > 0; k = (k + 1) % counts.length, rest--) counts[k]++;
+    const out = new Float32Array(N * 3), tone = new Uint8Array(N);
+    let n = 0;
+    infos.forEach((info, k) => {
+      let made = 0, tries = 0;
+      while (made < counts[k] && tries < counts[k] * 30) {
+        tries++;
+        const r = rand() * info.total;
+        let lo = 0, hi = info.tri - 1;
+        while (lo < hi) { const mid = (lo + hi) >> 1; if (info.cum[mid] < r) lo = mid + 1; else hi = mid; }
+        a.fromBufferAttribute(info.pos, lo * 3); b.fromBufferAttribute(info.pos, lo * 3 + 1); c.fromBufferAttribute(info.pos, lo * 3 + 2);
+        let u = rand(), v = rand();
+        if (u + v > 1) { u = 1 - u; v = 1 - v; }
+        tmp.set(0, 0, 0).addScaledVector(a, 1 - u - v).addScaledVector(b, u).addScaledVector(c, v).applyMatrix4(info.p.m);
+        if (info.p.keep && !info.p.keep(tmp)) continue;
+        out[n * 3] = tmp.x; out[n * 3 + 1] = tmp.y; out[n * 3 + 2] = tmp.z; tone[n] = info.p.tone; n++; made++;
+      }
+    });
+    // a part whose filter threw away too much: repeat points we already have
+    for (let i = n; i < N; i++) { const j = (rand() * n) | 0; out.copyWithin(i * 3, j * 3, j * 3 + 3); tone[i] = tone[j]; }
+    // centre on the bounding box, largest half-extent = 1
+    const box = new THREE.Box3().setFromArray(out), ctr = box.getCenter(new THREE.Vector3()), size = box.getSize(new THREE.Vector3());
+    const k = 2 / Math.max(size.x, size.y, size.z, 0.001);
+    for (let i = 0; i < N; i++) {
+      out[i * 3] = (out[i * 3] - ctr.x) * k; out[i * 3 + 1] = (out[i * 3 + 1] - ctr.y) * k; out[i * 3 + 2] = (out[i * 3 + 2] - ctr.z) * k;
+    }
+    // sorted by height, neighbours travel to neighbours: the morph reads as reshaping, not as a swarm
+    const order = [...Array(N).keys()].sort((i, j) => out[i * 3 + 1] - out[j * 3 + 1]);
+    const pos = new Float32Array(N * 3), tn = new Uint8Array(N);
+    order.forEach((src, dst) => { pos[dst * 3] = out[src * 3]; pos[dst * 3 + 1] = out[src * 3 + 1]; pos[dst * 3 + 2] = out[src * 3 + 2]; tn[dst] = tone[src]; });
+    return { pos, tone: tn };
+  }
+
+  const emblem = (() => {
+    const N = mob ? 1300 : 2600;
+    const cache = new Map();
+    const get = (k) => { if (!cache.has(k)) cache.set(k, sampleShape((SHAPES[k] || SHAPES.crewmate)(), N)); return cache.get(k); };
+    const from = new Float32Array(N * 3), cur = new Float32Array(N * 3), off = new Float32Array(N * 3), vel = new Float32Array(N * 3);
+    const swirl = new Float32Array(N * 3), dirs = new Float32Array(N * 3), delay = new Float32Array(N), fromTone = new Uint8Array(N);
+    const v = new THREE.Vector3();
+    for (let i = 0; i < N; i++) {
+      v.set(rand() - 0.5, rand() - 0.5, rand() - 0.5).normalize();
+      swirl[i * 3] = v.x * 0.9; swirl[i * 3 + 1] = v.y * 0.45; swirl[i * 3 + 2] = v.z * 0.9;
+      v.set(rand() - 0.5, rand() - 0.5, rand() - 0.5).normalize().multiplyScalar(0.3 + rand() * 0.7);
+      dirs[i * 3] = v.x; dirs[i * 3 + 1] = v.y; dirs[i * 3 + 2] = v.z;
+      delay[i] = rand() * 0.35 + (i / N) * 0.25;
+    }
+    const geo = new THREE.BufferGeometry(), colors = new Float32Array(N * 3);
+    geo.setAttribute("position", new THREE.BufferAttribute(cur, 3));
+    geo.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+    const mat = new THREE.PointsMaterial({ size: 2.3, sizeAttenuation: false, transparent: true, depthWrite: false, vertexColors: true, fog: false });
+    const pts = new THREE.Points(geo, mat);
+    pts.frustumCulled = false;
+    const group = new THREE.Group();
+    group.add(pts);
+    let key = "", target = null, morphT = 1, scatter = 0, override = null, overrideCh = -2;
+    const col = new THREE.Color(), colTarget = new THREE.Color(), tones = [col, TONE_INK, TONE_HI], ca = new THREE.Color();
+    const inv = new THREE.Matrix4(), ray = new THREE.Ray();
+    const conf = { chance: [-1, 12], nightfall: [1, 13], atlas: [1, 13] }[PAGE] || [1, 12];
+
+    function setShape(k, snap) {
+      if (k === key) return;
+      key = k; target = get(k);
+      if (snap) { cur.set(target.pos); from.set(target.pos); fromTone.set(target.tone); morphT = 1; return; }
+      // start from where the points are now (a morph can be interrupted by the next one)
+      for (let i = 0; i < N * 3; i++) from[i] = cur[i] - off[i];
+      morphT = 0;
+    }
+    function localRay(worldRay) {
+      group.updateMatrixWorld();
+      inv.copy(group.matrixWorld).invert();
+      ray.copy(worldRay).applyMatrix4(inv);
+      ray.direction.normalize();
+      return ray;
+    }
+    return {
+      group, side: conf[0], d: conf[1],
+      get key() { return key; },
+      color: col,
+      setShape,
+      setColor(c, snap) { colTarget.copy(c); if (snap) col.copy(c); },
+      // the chapter asks for a shape; a click override holds until the chapter changes
+      want(k, ch, snap) {
+        if (ch !== overrideCh) { overrideCh = ch; override = null; }
+        setShape(override || k, snap);
+      },
+      next() {
+        const cyc = PAGE_CYCLE[PAGE] || PAGE_CYCLE.home;
+        const list = cyc.concat(Object.keys(SHAPES).filter((s) => !cyc.includes(s)));
+        override = list[(list.indexOf(key) + 1) % list.length];
+        setShape(override);
+      },
+      burst(worldRay, strength) {
+        const r = localRay(worldRay);
+        for (let i = 0; i < N; i++) {
+          const j = i * 3;
+          const wx = cur[j] - r.origin.x, wy = cur[j + 1] - r.origin.y, wz = cur[j + 2] - r.origin.z;
+          const t = wx * r.direction.x + wy * r.direction.y + wz * r.direction.z;
+          const dx = wx - r.direction.x * t, dy = wy - r.direction.y * t, dz = wz - r.direction.z * t;
+          const dl = Math.sqrt(dx * dx + dy * dy + dz * dz) || 1, f = strength / (0.6 + dl * 1.6);
+          vel[j] += (dx / dl + dirs[j] * 0.6) * f;
+          vel[j + 1] += (dy / dl + dirs[j + 1] * 0.6) * f;
+          vel[j + 2] += (dz / dl + dirs[j + 2] * 0.6) * f;
+        }
+      },
+      busy() { return morphT < 1 || scatter > 0.03; },
+      update(dt, liveDt, pointerRay) {
+        col.lerp(colTarget, Math.min(1, dt * 2.5));
+        TONE_HI.set(key === "moon" ? (dark ? "#efe8cf" : "#8a8470") : (dark ? "#9fdcf5" : "#2f86ad"));
+        TONE_INK.copy(ink).lerp(bg, 0.42);
+        morphT = liveDt ? Math.min(1, morphT + liveDt / 1.5) : 1;
+        const wantS = clamp(E.speed * 0.00028, 0, 0.7);
+        scatter += (wantS - scatter) * Math.min(1, dt * (wantS > scatter ? 5 : 1.5));
+        const pr = pointerRay ? localRay(pointerRay) : null;
+        const R = 0.5, sdt = Math.min(liveDt, 0.033);
+        const tp = target.pos, tt = target.tone;
+        for (let i = 0; i < N; i++) {
+          const j = i * 3;
+          let e = clamp((morphT - delay[i]) / 0.4, 0, 1);
+          e = e * e * (3 - 2 * e);
+          const lift = Math.sin(e * Math.PI);
+          const x = from[j] + (tp[j] - from[j]) * e + swirl[j] * lift;
+          const y = from[j + 1] + (tp[j + 1] - from[j + 1]) * e + swirl[j + 1] * lift;
+          const z = from[j + 2] + (tp[j + 2] - from[j + 2]) * e + swirl[j + 2] * lift;
+          if (sdt > 0) {
+            // a damped spring back to rest; the pointer pushes points off its ray
+            let fx = -off[j] * 38 - vel[j] * 7, fy = -off[j + 1] * 38 - vel[j + 1] * 7, fz = -off[j + 2] * 38 - vel[j + 2] * 7;
+            if (pr) {
+              const wx = x + off[j] - pr.origin.x, wy = y + off[j + 1] - pr.origin.y, wz = z + off[j + 2] - pr.origin.z;
+              const t = wx * pr.direction.x + wy * pr.direction.y + wz * pr.direction.z;
+              const dx = wx - pr.direction.x * t, dy = wy - pr.direction.y * t, dz = wz - pr.direction.z * t;
+              const dl = Math.sqrt(dx * dx + dy * dy + dz * dz);
+              if (dl < R && dl > 1e-4) { const f = ((R - dl) / R) * 60 / dl; fx += dx * f; fy += dy * f; fz += dz * f; }
+            }
+            vel[j] += fx * sdt; vel[j + 1] += fy * sdt; vel[j + 2] += fz * sdt;
+            off[j] += vel[j] * sdt; off[j + 1] += vel[j + 1] * sdt; off[j + 2] += vel[j + 2] * sdt;
+          }
+          cur[j] = x + off[j] + dirs[j] * scatter;
+          cur[j + 1] = y + off[j + 1] + dirs[j + 1] * scatter;
+          cur[j + 2] = z + off[j + 2] + dirs[j + 2] * scatter;
+          ca.copy(tones[fromTone[i]]).lerp(tones[tt[i]], e);
+          colors[j] = ca.r; colors[j + 1] = ca.g; colors[j + 2] = ca.b;
+        }
+        if (morphT >= 1) { from.set(tp); fromTone.set(tt); }
+        geo.attributes.position.needsUpdate = true;
+        geo.attributes.color.needsUpdate = true;
+        mat.opacity = clamp((dark ? 0.8 : 0.66) * (narrow ? 0.34 : 1), 0, 1);
+      },
+    };
+  })();
+
+  /* ---- chapters: which section is being read, and what it asks for */
+  let chapterEls = [], chapterInfo = [], chapterIdx = -2;
+  function collectChapters() {
+    chapterEls = [...doc.querySelectorAll(PAGE === "home" ? ".mod-row" : ".doc-section")];
+    const cyc = PAGE_CYCLE[PAGE] || PAGE_CYCLE.home;
+    chapterInfo = chapterEls.map((el, i) => {
+      if (PAGE === "home") {
+        const k = Object.keys(HOME_SHAPE).find((m) => el.classList.contains(m));
+        return { shape: HOME_SHAPE[k] || "crewmate", team: null };
+      }
+      const id = el.id || "", h = el.querySelector("h2"), title = h ? h.textContent : "";
+      let shape = null, team = null;
+      for (const [re, s] of (PAGE_RULES[PAGE] || []).concat(SHAPE_RULES)) if (re.test(id)) { shape = s; break; }
+      if (PAGE === "unknowns") for (const tm of TEAM) if (tm[0].test(title)) { team = tm; break; }
+      if (!shape && team) shape = team[2];
+      if (!shape) shape = cyc[i % cyc.length];
+      return { shape, team: team ? team[1] : null };
+    });
+    chapterIdx = -2;
+  }
+  function currentChapter() {
+    const line = innerHeight * 0.45;
+    let idx = -1;
+    for (let i = 0; i < chapterEls.length; i++) {
+      if (chapterEls[i].getBoundingClientRect().top <= line) idx = i; else break;
+    }
+    return idx;
+  }
+  const chCol = new THREE.Color();
+  function chapterColor(idx) {
+    const info = chapterInfo[idx];
+    if (info && info.team) return chCol.set(info.team[dark ? 1 : 0]);
+    const want = window.TORSCROLL && TORSCROLL.accent ? TORSCROLL.accent() : null;
+    if (want) chCol.setRGB(want[0] / 255, want[1] / 255, want[2] / 255); else chCol.copy(accentTarget);
+    // neighbouring chapters drift a little apart in hue, so every section feels like its own room
+    if (PAGE !== "home" && idx >= 0) chCol.offsetHSL((((idx * 3) % 7) - 3) * 0.02, 0, 0);
+    return chCol;
+  }
+  function updateChapter(force, snap) {
+    const idx = currentChapter();
+    if (idx !== chapterIdx || force) {
+      chapterIdx = idx;
+      const info = chapterInfo[idx];
+      emblem.want(info ? info.shape : (PAGE_CYCLE[PAGE] || PAGE_CYCLE.home)[0], idx, snap);
+      updateCaption();
+    }
+    emblem.setColor(chapterColor(idx), snap);
+  }
+
+  /* ---- the caption under the emblem */
+  const cap = doc.createElement("div");
+  cap.id = "bg3d-cap";
+  cap.setAttribute("aria-hidden", "true");
+  cap.innerHTML = '<span class="n"></span><span class="h"></span>';
+  canvas.after(cap);
+  const HINT_KEY = "tormods-bg-poked";
+  let poked = false;
+  try { poked = localStorage.getItem(HINT_KEY) === "1"; } catch (e) { poked = false; }
+  function updateCaption() {
+    const de = (root.lang || "en").toLowerCase().startsWith("de");
+    const name = (SHAPE_NAMES[emblem.key] || ["", ""])[de ? 1 : 0];
+    const num = String(Math.max(0, chapterIdx + 1)).padStart(2, "0");
+    cap.firstChild.textContent = `Fig. ${num} · ${name}`;
+    cap.lastChild.textContent = poked ? "" : mqFine.matches
+      ? (de ? "Klick auf den Hintergrund" : "Click the background")
+      : (de ? "Tipp auf den Hintergrund" : "Tap the background");
+  }
+  const capV = new THREE.Vector3();
+  function placeCaption(show) {
+    if (!show || narrow) { cap.classList.remove("on"); return; }
+    capV.set(0, -1.22, 0).applyMatrix4(emblem.group.matrixWorld).project(camera);
+    const x = (capV.x * 0.5 + 0.5) * W, y = (-capV.y * 0.5 + 0.5) * H;
+    if (capV.z > 1 || y > H - 30 || y < 70) { cap.classList.remove("on"); return; }
+    cap.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) translateX(-50%)`;
+    cap.classList.add("on");
+  }
+
+  /* ---- a ring that spreads where the page was clicked */
+  const ripples = [];
+  const ringGeo = new THREE.RingGeometry(0.97, 1, 72, 1);
+  for (let i = 0; i < 4; i++) {
+    const r = new THREE.Mesh(ringGeo, new THREE.MeshBasicMaterial({ transparent: true, depthWrite: false, fog: false, side: THREE.DoubleSide }));
+    r.visible = false; r.userData.t = 1;
+    ripples.push(r);
+  }
+  function ripple(worldRay) {
+    const r = ripples.find((o) => o.userData.t >= 1) || ripples[0];
+    worldRay.at(9 / Math.max(0.2, -worldRay.direction.z), r.position);
+    r.quaternion.copy(camera.quaternion);
+    r.userData.t = 0; r.visible = true;
+    r.material.color.copy(emblem.color);
+  }
+  function updateRipples(dt) {
+    for (const r of ripples) {
+      if (r.userData.t >= 1) { r.visible = false; continue; }
+      r.userData.t = Math.min(1, r.userData.t + dt / 0.9);
+      const t = r.userData.t, e = 1 - Math.pow(1 - t, 3);
+      r.scale.setScalar(0.1 + e * 2.6);
+      r.material.opacity = (1 - t) * (dark ? 0.7 : 0.5);
+    }
+  }
+
   /* ------------------------------------------------------ dust (all pages) */
   const DUST = 1100, STREAKS = 220;
   const dustPos = new Float32Array(DUST * 3), dustBase = new Float32Array(DUST * 3);
@@ -671,9 +1195,13 @@ function boot() {
   for (let i = 0; i < DUST; i++) {
     dustBase[i * 3] = rand(); dustBase[i * 3 + 1] = rand(); dustBase[i * 3 + 2] = 3 + rand() * 26;
   }
+  let pokeT = 1;
+  const pokeN = new THREE.Vector2();
   function updateDust() {
     const zMode = PAGE === "nightfall";
     const streak = clamp(E.vel * 0.00022, -0.7, 0.7);
+    const hover = pointerOn && !zMode && mqFine.matches, wave = pokeT < 1 && !zMode;
+    const cx = camera.position.x, cy = camera.position.y;
     for (let i = 0; i < DUST; i++) {
       const d = dustBase[i * 3 + 2], side = i % 2 ? 1 : -1;
       const x = E.gx(side, dustBase[i * 3], d);
@@ -686,7 +1214,20 @@ function boot() {
         const span = E.hh(d) * 2.2;
         y = E.camY + wrap(dustBase[i * 3 + 1] * span - E.camY * (1.5 - d / 29), span);
         z = -d;
-        dustPos[i * 3] = x;
+        let xx = x;
+        if (hover || wave) {
+          const hw = E.hw(d), hh = E.hh(d);
+          if (hover) {
+            const dx = xx - (cx + ndcP.x * hw), dy = y - (cy + ndcP.y * hh), dl = Math.hypot(dx, dy), R = 0.12 * d;
+            if (dl < R && dl > 1e-4) { const f = (1 - dl / R) * 0.05 * d / dl; xx += dx * f; y += dy * f; }
+          }
+          if (wave) {
+            const dx = xx - (cx + pokeN.x * hw), dy = y - (cy + pokeN.y * hh), dl = Math.hypot(dx, dy) || 1;
+            const g = dl - pokeT * 0.9 * d, f = Math.exp(-(g * g) / (0.006 * d * d)) * (1 - pokeT) * 0.06 * d / dl;
+            xx += dx * f; y += dy * f;
+          }
+        }
+        dustPos[i * 3] = xx;
       }
       dustPos[i * 3 + 1] = y; dustPos[i * 3 + 2] = z;
       if (i < STREAKS) {
@@ -704,6 +1245,8 @@ function boot() {
 
   /* ------------------------------------------------------ layout */
   let active = null;
+  scene.add(emblem.group, ...ripples);
+  const keep = new Set([dust, streaks, emblem.group, ...ripples]);
   function measure() {
     const reading = doc.querySelector(".reading") || doc.querySelector(".layout");
     if (!reading) { sMin = 0.62; return; }
@@ -716,7 +1259,7 @@ function boot() {
   }
   function build() {
     // throw away the old scene objects (keep dust + streaks)
-    for (const o of [...scene.children]) if (o !== dust && o !== streaks) scene.remove(o);
+    for (const o of [...scene.children]) if (!keep.has(o)) scene.remove(o);
     active = (SCENES[PAGE] || SCENES.home)();
     const [fn, ff] = active.fog || [8, 34];
     scene.fog.near = fn; scene.fog.far = ff;
@@ -737,13 +1280,37 @@ function boot() {
 
   /* ------------------------------------------------------ motion */
   let lastScroll = scrollY, px = 0, py = 0, last = 0, raf = 0, dirty = true, idleGap = 0;
+  let pointerOn = false, pointerAt = -1e9, chapterAt = -1e9, chapterScroll = NaN;
+  const ndcP = new THREE.Vector2(), rayc = new THREE.Raycaster(), tintTarget = new THREE.Color();
   const K = 0.01;                                     // world units per scrolled pixel
   E.camY = moving() ? -scrollY * K : 0;
   E.camZ = moving() ? -scrollY * K * 1.6 : 0;
   addEventListener("pointermove", (e) => {
     if (!mqFine.matches) return;
     px = (e.clientX / innerWidth - 0.5) * 2; py = (e.clientY / innerHeight - 0.5) * 2;
+    ndcP.set(px, -py); pointerOn = true; pointerAt = performance.now();
+    kick();
   }, { passive: true });
+  doc.addEventListener("mouseout", (e) => { if (!e.relatedTarget) pointerOn = false; });
+
+  // a click on an empty part of the page: a ring, a wave through the dust, the emblem turns into the next shape
+  const QUIET = "a,button,input,textarea,select,summary,label,img,video,svg,p,li,td,th,h1,h2,h3,h4,pre,code,table,figure,"
+    + ".entry-head,.hero,#topbar,#sidebar,nav,footer,.lightbox,.map-view,[role=button],[contenteditable]";
+  doc.addEventListener("click", (e) => {
+    if (!moving() || e.button !== 0 || heroCovers()) return;
+    if (e.target.closest && e.target.closest(QUIET)) return;
+    const sel = getSelection && getSelection();
+    if (sel && String(sel).length) return;
+    pokeN.set((e.clientX / W) * 2 - 1, -(e.clientY / H) * 2 + 1);
+    rayc.setFromCamera(pokeN, camera);
+    emblem.burst(rayc.ray, 3.2);
+    ripple(rayc.ray);
+    pokeT = 0;
+    emblem.next();
+    if (!poked) { poked = true; try { localStorage.setItem(HINT_KEY, "1"); } catch (err) { /* storage blocked */ } }
+    updateCaption();
+    kick();
+  });
 
   function step(dt) {
     const live = moving();
@@ -767,6 +1334,27 @@ function boot() {
       camera.rotation.set(0, 0, clamp(E.vel * -0.000012, -0.05, 0.05));
     }
     active.update();
+
+    // which chapter is in view: re-read when the page moved, and now and then for late layout changes
+    const nowMs = performance.now();
+    if (scrollY !== chapterScroll || nowMs - chapterAt > 500) { chapterScroll = scrollY; chapterAt = nowMs; updateChapter(false, !live); }
+    const ed = emblem.d, cam = !!active.camera;
+    emblem.group.scale.setScalar(clamp(E.gw(ed) * 0.42, 0.45, 2.4));
+    emblem.group.position.set(E.gc(emblem.side, ed), (cam ? 0.2 : E.camY) - (narrow ? E.hh(ed) * 0.12 : 0), (cam ? E.camZ : 0) - ed);
+    emblem.group.rotation.set(0.12 + E.cpy * 0.12, emblem.side * -0.35 + Math.sin(E.t * 0.25) * 0.45 + E.cpx * 0.25, Math.sin(E.t * 0.3) * 0.04);
+    camera.updateMatrixWorld();
+    let pray = null;
+    if (pointerOn && live && mqFine.matches) { rayc.setFromCamera(ndcP, camera); pray = rayc.ray; }
+    emblem.update(dt, E.dt, pray);
+    updateRipples(E.dt || 1);
+    pokeT = live ? Math.min(1, pokeT + dt / 1.1) : 1;
+
+    // the background leans towards the chapter colour (not above the first chapter: the hero frame is --bg)
+    const tint = chapterIdx >= 0 ? (dark ? 0.05 : 0.045) : 0;
+    tintTarget.copy(bg).lerp(emblem.color, tint);
+    bgNow.lerp(tintTarget, live ? Math.min(1, dt * 2) : 1);
+    renderer.setClearColor(bgNow, 1);
+    scene.fog.color.copy(bgNow);
     updateDust();
 
     const want = window.TORSCROLL && TORSCROLL.accent ? TORSCROLL.accent() : null;
@@ -774,7 +1362,9 @@ function boot() {
     accent.lerp(accentTarget, Math.min(1, dt * 3));
     for (const m of mats) if (m.userData.kind === "accent") m.color.copy(accent);
 
-    return E.speed > 4 || Math.abs(target - E.camY) > 0.002;
+    const hot = emblem.busy() || pokeT < 1 || ripples.some((r) => r.visible) || nowMs - pointerAt < 1200
+      || Math.abs(bgNow.r - tintTarget.r) + Math.abs(bgNow.g - tintTarget.g) + Math.abs(bgNow.b - tintTarget.b) > 0.002;
+    return hot || E.speed > 4 || Math.abs(target - E.camY) > 0.002;
   }
 
   function heroCovers() {
@@ -787,10 +1377,12 @@ function boot() {
     last = now;
     const busy = step(dt);
     idleGap += dt;
-    if (!heroCovers() && (busy || dirty || idleGap > 1 / 30)) {
+    const covered = heroCovers();
+    if (!covered && (busy || dirty || idleGap > 1 / 30)) {
       renderer.render(scene, camera);
       idleGap = 0; dirty = false;
     }
+    placeCaption(!covered);
     if (moving() && !doc.hidden) raf = requestAnimationFrame(frame);
   }
   function kick() { if (!raf) { last = 0; raf = requestAnimationFrame(frame); } }
@@ -802,9 +1394,12 @@ function boot() {
   new MutationObserver(() => { applyTheme(); measure(); kick(); })
     .observe(root, { attributes: true, attributeFilter: ["data-theme", "data-fx"] });
   const content = doc.getElementById("content");
-  if (content) new MutationObserver(() => { measure(); dirty = true; kick(); }).observe(content, { childList: true });
-  addEventListener("load", () => { measure(); dirty = true; kick(); });
+  if (content) new MutationObserver(() => { measure(); collectChapters(); updateChapter(true, true); dirty = true; kick(); }).observe(content, { childList: true });
+  new MutationObserver(() => updateCaption()).observe(root, { attributes: true, attributeFilter: ["lang"] });
+  addEventListener("load", () => { measure(); collectChapters(); updateChapter(true, true); dirty = true; kick(); });
 
   resize();
+  collectChapters();
+  updateChapter(true, true);
   kick();
 }

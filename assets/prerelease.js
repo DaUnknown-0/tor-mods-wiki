@@ -41,6 +41,7 @@
     { key: "useful", name: "TOR - Forgotten Fixes" },
     { key: "chance", name: "Unknown Chaos" },
     { key: "nightfall", name: "Nightfall" },
+    { key: "atlas", name: "Unknown's Atlas" },
     { key: "tools", name: "Tools" },
   ];
 
@@ -532,6 +533,75 @@
       risk: {
         en: "Textures are now written without the tone curve, so surfaces above 75% brightness are lighter than before. That is the intended correction, but it is the most visible change in the batch.",
         de: "Texturen werden jetzt ohne Tone-Kurve geschrieben, Flächen über 75% Helligkeit sind also heller als vorher. Das ist die beabsichtigte Korrektur, aber die sichtbarste Änderung im Paket.",
+      },
+    },
+    /* ---------------- Batch 2026-09 ---------------- */
+    {
+      id: "uc-sleepwalker", mod: "unknowns",
+      title: { en: "Sleepwalker: waking up somewhere else", de: "Sleepwalker: woanders aufwachen" },
+      how: {
+        en: "Give a player the Sleepwalker modifier and hold a meeting. After the ejection they must wake up at the position the host picked, on every client at the same spot.",
+        de: "Einem Spieler den Sleepwalker-Modifier geben und ein Meeting abhalten. Nach dem Rauswurf muss er an der vom Host gewählten Position aufwachen, auf allen Clients an derselben Stelle.",
+      },
+      risk: {
+        en: "The snap runs in the wrap-up postfix; a position inside a wall or on another floor (Submerged) is the case to watch.",
+        de: "Der Snap läuft im WrapUp-Postfix; eine Position in einer Wand oder auf einem anderen Stockwerk (Submerged) ist der kritische Fall.",
+      },
+    },
+    {
+      id: "uc-lastwords", mod: "unknowns",
+      title: { en: "Last Words, Sixth Sense, Colorblind", de: "Last Words, Sixth Sense, Colorblind" },
+      how: {
+        en: "One round with all three modifiers. Last Words: the dead player's line appears in the next meeting. Sixth Sense: the warning fires when a killer is close. Colorblind: the screen turns grey for that player only.",
+        de: "Eine Runde mit allen drei Modifiern. Last Words: die Zeile des Toten erscheint im nächsten Meeting. Sixth Sense: die Warnung kommt, wenn ein Killer nah ist. Colorblind: der Bildschirm wird nur für diesen Spieler grau.",
+      },
+      risk: {
+        en: "The grey post effect uses a command buffer on the main camera; zoom (ghost zoom, hunting stand) must not break it.",
+        de: "Der Grau-Effekt hängt als CommandBuffer an der Main Camera; Zoom (Geister-Zoom, Hochsitz) darf ihn nicht kaputt machen.",
+      },
+    },
+    {
+      id: "ff-earlydeath-stats", mod: "useful",
+      title: { en: "Early-death shield: stats for everyone", de: "Frühtod-Schild: Statistik für alle" },
+      how: {
+        en: "Host with UTS and the shield on, a second player joins. The second player opens \"Early-death stats\" in the lobby: every player, their ratio to the lobby average, their own row highlighted, forced/excluded marks visible.",
+        de: "Host mit UTS und aktivem Schild, ein zweiter Spieler tritt bei. Der zweite Spieler öffnet in der Lobby \"Frühtod-Statistik\": alle Spieler, ihr Verhältnis zum Lobby-Schnitt, die eigene Zeile hervorgehoben, Markierungen für erzwungen/ausgeschlossen sichtbar.",
+      },
+      risk: {
+        en: "Only checked in freeplay with sample numbers so far. With an older host the view must say it is waiting.",
+        de: "Bisher nur im Freeplay mit Beispielzahlen geprüft. Mit älterem Host muss die Ansicht sagen, dass sie wartet.",
+      },
+    },
+    {
+      id: "atlas-rex", mod: "atlas",
+      title: { en: "Museum: Rex Awake sabotage", de: "Museum: Sabotage Rex Awake" },
+      how: {
+        en: "As Impostor, trigger Rex Awake on the Vesper Museum. Crew must calm the T. rex at the two consoles within 50 s; check the red flash, the arrows, the music and that Impostors can only help, not block.",
+        de: "Als Impostor Rex Awake im Vesper-Museum auslösen. Die Crew muss den T. rex an den zwei Konsolen innerhalb von 50 s beruhigen; roten Blitz, Pfeile, Musik prüfen und dass Impostor nur helfen, nicht blockieren können.",
+      },
+      risk: {
+        en: "Timeout win and the camera shake in the Rotunda are the parts not yet seen with several players.",
+        de: "Timeout-Sieg und das Kamerawackeln in der Rotunde sind die Teile, die noch nicht mit mehreren Spielern gesehen wurden.",
+      },
+    },
+    {
+      id: "atlas-lookout", mod: "atlas",
+      title: { en: "Forest: climbing the hunting stand", de: "Forststation: Hochsitz erklettern" },
+      how: {
+        en: "Climb the hunting stand with Use or E. The view zooms out and moves west, your figure stands small in the cabin, other players see you up there. Any movement key, a meeting or a kill brings you down.",
+        de: "Den Hochsitz mit Benutzen oder E erklettern. Die Sicht zoomt heraus und schiebt nach Westen, die Figur steht klein in der Kabine, andere Spieler sehen dich oben. Jede Bewegungstaste, ein Meeting oder ein Kill holt dich herunter.",
+      },
+      risk: {
+        en: "The shrunk figure on other clients and the zoom together with TOR's ghost zoom.",
+        de: "Die geschrumpfte Figur auf fremden Clients und der Zoom zusammen mit TORs Geister-Zoom.",
+      },
+    },
+    {
+      id: "atlas-carnival", mod: "atlas",
+      title: { en: "Moonlight Carnival: a full round", de: "Moonlight Carnival: eine ganze Runde" },
+      how: {
+        en: "Pick the Carnival in the lobby and play a round: all tasks once, both sabotages, a ride at the rides, and an ejection with the Carnival scene.",
+        de: "In der Lobby den Carnival wählen und eine Runde spielen: alle Tasks einmal, beide Sabotagen, eine Fahrt auf den Fahrgeschäften und ein Rauswurf mit der Carnival-Szene.",
       },
     },
   ];

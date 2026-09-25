@@ -679,6 +679,18 @@ html.fx-reveal .rv.rv-in { opacity: 1; translate: 0 0; }
  * (read progress). The motion only applies with FX on; without it (or under
  * reduced motion) the vars are unset and everything sits at rest. */
 #bg3d { position: fixed; inset: 0; width: 100% !important; height: 100% !important; z-index: -1; pointer-events: none; display: block; }
+/* the label under the emblem (bg3d.js places it every frame) */
+#bg3d-cap {
+  position: fixed; left: 0; top: 0; z-index: -1; pointer-events: none;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  font-family: var(--mono); font-size: .66rem; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--muted, var(--ink)); white-space: nowrap;
+  opacity: 0; transition: opacity .6s var(--ease);
+}
+#bg3d-cap.on { opacity: .75; }
+#bg3d-cap .h { letter-spacing: .08em; text-transform: none; font-size: .62rem; opacity: .7; }
+#bg3d-cap .h:empty { display: none; }
+html[data-fx="off"] #bg3d-cap { display: none; }
 
 .strip { background: var(--hero-bg); }
 html[data-fx="on"] .hero { background: var(--bg); }

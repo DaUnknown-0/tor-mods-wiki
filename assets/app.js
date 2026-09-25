@@ -14,8 +14,8 @@
 
   // small UI strings that only the shell needs (not part of data.js)
   const SHELL = {
-    en: { contents: "Contents", mods: "The mods", open_map: "Open the full map", close: "Close", zoom_in: "Zoom in", zoom_out: "Zoom out", reset: "Reset view", map_hint: "Click the map to open it full size. Drag to pan, scroll or pinch to zoom.", museum: "Vesper Museum", forest: "Forest Station", sections: "Sections", site: "Site", map_entry: "Read the map entry", all_sections: "All {n} sections" },
-    de: { contents: "Inhalt", mods: "Die Mods", open_map: "Ganze Karte öffnen", close: "Schließen", zoom_in: "Vergrößern", zoom_out: "Verkleinern", reset: "Ansicht zurücksetzen", map_hint: "Klick auf die Karte, um sie in voller Größe zu öffnen. Ziehen zum Verschieben, Scrollen oder Pinch zum Zoomen.", museum: "Vesper-Museum", forest: "Forststation", sections: "Abschnitte", site: "Seiten", map_entry: "Zum Karten-Eintrag", all_sections: "Alle {n} Abschnitte" }
+    en: { contents: "Contents", mods: "The mods", open_map: "Open the full map", close: "Close", zoom_in: "Zoom in", zoom_out: "Zoom out", reset: "Reset view", map_hint: "Click the map to open it full size. Drag to pan, scroll or pinch to zoom.", museum: "Vesper Museum", forest: "Forest Station", carnival: "Moonlight Carnival", sections: "Sections", site: "Site", map_entry: "Read the map entry", all_sections: "All {n} sections" },
+    de: { contents: "Inhalt", mods: "Die Mods", open_map: "Ganze Karte öffnen", close: "Schließen", zoom_in: "Vergrößern", zoom_out: "Verkleinern", reset: "Ansicht zurücksetzen", map_hint: "Klick auf die Karte, um sie in voller Größe zu öffnen. Ziehen zum Verschieben, Scrollen oder Pinch zum Zoomen.", museum: "Vesper-Museum", forest: "Forststation", carnival: "Moonlight Carnival", sections: "Abschnitte", site: "Seiten", map_entry: "Zum Karten-Eintrag", all_sections: "Alle {n} Abschnitte" }
   };
   const s = (key) => (SHELL[lang] && SHELL[lang][key]) || SHELL.en[key] || key;
 
@@ -318,11 +318,12 @@
   }
 
   /* ---------- Atlas map viewer ----------
-   * Both maps side by side as tabs (the in-game logos switch them), the stage
+   * All three maps as tabs (the in-game logos switch them), the stage
    * opens a pan/zoom lightbox. Works with mouse, wheel, touch and pinch. */
   const MAPS = [
-    { key: "museum", src: "assets/img/museum_preview.webp", logo: "assets/img/btn_museum.webp", w: 1800, h: 1269, entry: "#museum" },
-    { key: "forest", src: "assets/img/forest_preview.webp", logo: "assets/img/btn_wald.webp", w: 1280, h: 880, entry: "#forest" }
+    { key: "museum", src: "assets/img/museum_preview.webp", logo: "assets/img/btn_museum.webp", w: 1800, h: 1200, entry: "#museum" },
+    { key: "forest", src: "assets/img/forest_preview.webp", logo: "assets/img/btn_wald.webp", w: 1800, h: 1200, entry: "#forest" },
+    { key: "carnival", src: "assets/img/park_preview.webp", logo: "assets/img/btn_park.webp", w: 1600, h: 1420, entry: "#carnival" }
   ];
   function mapViewerHTML(mod) {
     if (mod.key !== "atlas") return "";
