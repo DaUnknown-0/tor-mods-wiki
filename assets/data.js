@@ -163,7 +163,7 @@ const CHANCE = {
   key: "chance",
   name: "Chance Modifier",
   fullName: { en: "TOR — Unknown Chaos (Chance Modifier)", de: "TOR — Unknown Chaos (Chance Modifier)" },
-  version: "1.2.23",
+  version: "1.2.23.1",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/TOR-Chance",
   download: "https://github.com/DaUnknown-0/TOR-Chance/releases/latest",
@@ -395,7 +395,7 @@ const USEFUL = {
   key: "useful",
   name: "Forgotten Fixes",
   fullName: { en: "TOR - Forgotten Fixes", de: "TOR - Forgotten Fixes" },
-  version: "1.4.12.2",
+  version: "1.4.12.3",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/Useful-TOR-stuff",
   download: "https://github.com/DaUnknown-0/Useful-TOR-stuff/releases/latest",
@@ -911,10 +911,10 @@ const USEFUL = {
           },
           body: {
             en: tbl(["Option", "Values", "What it does"], [
-              ["Bomber Can Cancel Bomb", "Off / On", "Bomber gets a cancel button (G) that removes the bomb at any time."]
+              ["Bomber Can Cancel Bomb", "Off / On", "Bomber gets a cancel button (G) that removes the bomb at any time. Only when every player has the mod: for anyone else a cancelled bomb would still explode."]
             ]) + "<p class='note'>Broadcast via RPC 252 to all clients.</p>",
             de: tbl(["Option", "Werte", "Funktion"], [
-              ["Bomber Can Cancel Bomb", "Off / On", "Bomber erhält einen Abbrechen-Button (G), der die Bombe jederzeit entfernt."]
+              ["Bomber Can Cancel Bomb", "Off / On", "Bomber erhält einen Abbrechen-Button (G), der die Bombe jederzeit entfernt. Nur wenn alle Spieler den Mod haben: bei allen anderen würde eine abgebrochene Bombe trotzdem explodieren."]
             ]) + "<p class='note'>Broadcast via RPC 252 an alle Clients.</p>"
           }
         },
@@ -1525,7 +1525,7 @@ const UNKNOWNS = {
   key: "unknowns",
   name: "Unknown's Collection",
   fullName: { en: "Unknown's Collection — custom roles for TOR", de: "Unknown's Collection — eigene Rollen für TOR" },
-  version: "1.2.8.3",
+  version: "1.2.8.5",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/UnknownsCollection",
   download: "https://github.com/DaUnknown-0/UnknownsCollection/releases/latest",
@@ -3188,7 +3188,7 @@ const UNKNOWNS = {
               ["Stalk Cone Width", "0.2", "Vanilla flashlight width (0.1–0.5); the clock treats it as the fraction of a full circle."],
               ["Target Sees The Stalk Meter", "Always", "Always / From 50% / Never."],
               ["Strike Cooldown", "10 s", "Cooldown of the kill button after 100% (5–60)."],
-              ["If The Target Dies Before 100%", "Stalker Becomes Pursuer", "Or: New Target, Progress Kept."],
+              ["If The Target Dies Before 100%", "Stalker Becomes Pursuer", "Or: New Target, Progress Kept. If TOR's Pursuer slot is already taken (a promoted Lawyer), the Stalker gets a new target instead, or the role ends."],
               ["Stalker Has Tasks", "Off", "Whether his tasks count for the crew."],
               ["Stalker Can Use Vents", "Off", "Vent access."]
             ]),
@@ -3200,7 +3200,7 @@ const UNKNOWNS = {
               ["Stalk Cone Width", "0,2", "Vanilla-Taschenlampenbreite (0,1–0,5); die Uhr wertet sie als Anteil eines Vollkreises."],
               ["Target Sees The Stalk Meter", "Always", "Always / From 50% / Never."],
               ["Strike Cooldown", "10 s", "Cooldown des Kill-Buttons nach 100% (5–60)."],
-              ["If The Target Dies Before 100%", "Stalker Becomes Pursuer", "Oder: New Target, Progress Kept."],
+              ["If The Target Dies Before 100%", "Stalker Becomes Pursuer", "Oder: New Target, Progress Kept. Ist TORs Pursuer-Platz schon belegt (beförderter Lawyer), bekommt der Stalker stattdessen ein neues Ziel oder die Rolle endet."],
               ["Stalker Has Tasks", "Off", "Ob seine Tasks für die Crew zählen."],
               ["Stalker Can Use Vents", "Off", "Vent-Zugang."]
             ])
@@ -3664,8 +3664,8 @@ const UNKNOWNS = {
             de: "Einen Spieler hypnotisieren; im nächsten Meeting geht seine Stimme dorthin, wo der Hypnotist sie haben will. Das Opfer merkt nichts."
           },
           body: {
-            en: "<p><strong>Hypnotize</strong> marks a player in kill range (cooldown, limited uses per game). In the next meeting the Hypnotist sees small buttons next to every player and next to Skip and picks where the victim's vote goes. That choice is independent of the Hypnotist's own vote. The victim votes normally and notices nothing.</p><p>The host rewrites the victim's vote before the votes are counted and the result screen is built, so the count and the display always match. The hypnosis ends with the meeting and breaks when the Hypnotist dies (option).</p><p><strong>Hypnotised Player Cannot Escape</strong> (on by default): a Skip is redirected as well, and a victim who does not vote at all gets the vote cast for the chosen target when the voting time runs out. Off: only real votes for players are redirected.</p><p><strong>Hypnotist Sees Through The Victim</strong>: while the hypnosis holds, the Hypnotist can watch the victim's surroundings in a round picture in the lower left, like a security camera that follows the victim. It covers the victim's own vision range (lights sabotage included); walls do not block it, as with the vanilla cameras. <strong>Peek</strong> (default) gives a PEEK button for 5 seconds (20 s cooldown), <strong>Until The Meeting</strong> keeps the picture open.</p>",
-            de: "<p><strong>Hypnotize</strong> markiert einen Spieler in Kill-Reichweite (Abklingzeit, begrenzte Anwendungen pro Spiel). Im nächsten Meeting sieht der Hypnotist kleine Knöpfe neben jedem Spieler und neben Skip und wählt, wohin die Stimme des Opfers geht. Diese Wahl ist unabhängig von seiner eigenen Stimme. Das Opfer stimmt ganz normal ab und merkt nichts.</p><p>Der Host schreibt die Stimme des Opfers um, bevor die Stimmen gezählt und das Ergebnisbild gebaut werden; Zählung und Anzeige stimmen also immer überein. Die Hypnose endet mit dem Meeting und bricht, wenn der Hypnotist stirbt (Option).</p><p><strong>Hypnotised Player Cannot Escape</strong> (standardmäßig an): auch ein Skip wird umgelenkt, und wer gar nicht abstimmt, bekommt beim Ablauf der Abstimmzeit seine Stimme für das gewählte Ziel abgegeben. Aus: nur echte Stimmen für Spieler werden umgelenkt.</p><p><strong>Hypnotist Sees Through The Victim</strong>: solange die Hypnose hält, kann der Hypnotist die Umgebung des Opfers in einem runden Bild unten links sehen, wie eine Überwachungskamera, die dem Opfer folgt. Es deckt die eigene Sichtweite des Opfers ab (Licht-Sabotage eingeschlossen); Wände verdecken es nicht, wie bei den Vanilla-Kameras. <strong>Peek</strong> (Standard) gibt einen Knopf SPÄHEN für 5 Sekunden (20 s Abklingzeit), <strong>Until The Meeting</strong> lässt das Bild offen.</p>"
+            en: "<p><strong>Hypnotize</strong> marks a player in kill range (cooldown, limited uses per game). In the next meeting the Hypnotist sees small buttons next to every player and next to Skip and picks where the victim's vote goes. That choice is independent of the Hypnotist's own vote. The victim votes normally and notices nothing.</p><p>The host rewrites the victim's vote before the votes are counted and the result screen is built, so the count and the display always match. The hypnosis ends with the meeting and breaks when the Hypnotist dies (option).</p><p><strong>Hypnotised Player Cannot Escape</strong> (on by default): a Skip is redirected as well, and a victim who does not vote at all gets the vote cast for the chosen target when the voting time runs out. Off: only real votes for players are redirected.</p><p>If the Hypnotist dies during the meeting (a wrong guess, or guessed), his buttons disappear and his pick no longer counts. As a Guesser his icons sit next to TOR's guess button, the same way TOR places the Swapper's.</p><p><strong>Hypnotist Sees Through The Victim</strong>: while the hypnosis holds, the Hypnotist can watch the victim's surroundings in a round picture in the lower left, like a security camera that follows the victim. It covers the victim's own vision range (lights sabotage included); walls do not block it, as with the vanilla cameras. <strong>Peek</strong> (default) gives a PEEK button for 5 seconds (20 s cooldown), <strong>Until The Meeting</strong> keeps the picture open.</p>",
+            de: "<p><strong>Hypnotize</strong> markiert einen Spieler in Kill-Reichweite (Abklingzeit, begrenzte Anwendungen pro Spiel). Im nächsten Meeting sieht der Hypnotist kleine Knöpfe neben jedem Spieler und neben Skip und wählt, wohin die Stimme des Opfers geht. Diese Wahl ist unabhängig von seiner eigenen Stimme. Das Opfer stimmt ganz normal ab und merkt nichts.</p><p>Der Host schreibt die Stimme des Opfers um, bevor die Stimmen gezählt und das Ergebnisbild gebaut werden; Zählung und Anzeige stimmen also immer überein. Die Hypnose endet mit dem Meeting und bricht, wenn der Hypnotist stirbt (Option).</p><p><strong>Hypnotised Player Cannot Escape</strong> (standardmäßig an): auch ein Skip wird umgelenkt, und wer gar nicht abstimmt, bekommt beim Ablauf der Abstimmzeit seine Stimme für das gewählte Ziel abgegeben. Aus: nur echte Stimmen für Spieler werden umgelenkt.</p><p>Stirbt der Hypnotist im Meeting (Fehlschuss oder geguesst), verschwinden seine Knöpfe und seine Wahl zählt nicht mehr. Als Guesser sitzen seine Icons neben TORs Guess-Knopf, so wie TOR es beim Swapper macht.</p><p><strong>Hypnotist Sees Through The Victim</strong>: solange die Hypnose hält, kann der Hypnotist die Umgebung des Opfers in einem runden Bild unten links sehen, wie eine Überwachungskamera, die dem Opfer folgt. Es deckt die eigene Sichtweite des Opfers ab (Licht-Sabotage eingeschlossen); Wände verdecken es nicht, wie bei den Vanilla-Kameras. <strong>Peek</strong> (Standard) gibt einen Knopf SPÄHEN für 5 Sekunden (20 s Abklingzeit), <strong>Until The Meeting</strong> lässt das Bild offen.</p>"
           }
         },
         {
@@ -4327,7 +4327,7 @@ const ATLAS = {
   key: "atlas",
   name: "Unknown's Atlas",
   fullName: { en: "Unknown's Atlas: new maps for Among Us", de: "Unknown's Atlas: neue Karten für Among Us" },
-  version: "0.3.0.19",
+  version: "0.3.0.20",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/UnknownsAtlas",
   download: "https://github.com/DaUnknown-0/UnknownsAtlas/releases",

@@ -684,6 +684,46 @@
         de: "Hau den Lukas, Kostüm, Riesenrad, Pendelwagen, Kanu und Planetariums-Show mit mindestens zwei Spielern: alle müssen dasselbe sehen, und es fährt immer nur einer.",
       },
     },
+    {
+      id: "uc-saboteur-defuse-guest", mod: "unknowns",
+      title: { en: "Saboteur: a guest defuses a console", de: "Saboteur: ein Gast entschärft eine Konsole" },
+      how: {
+        en: "A player who is NOT the host searches the sabotaged console and defuses it. Then a second crewmate finishes that console: he must survive, and the Saboteur's marker must be gone.",
+        de: "Ein Spieler, der NICHT Host ist, sucht die sabotierte Konsole und entschärft sie. Danach schließt ein zweiter Crewmate diese Konsole ab: er muss überleben, und die Markierung des Saboteurs muss weg sein.",
+      },
+    },
+    {
+      id: "uc-pelican-release", mod: "unknowns",
+      title: { en: "Pelican: released players get their role back", de: "Pelican: Befreite bekommen ihre Rolle zurück" },
+      how: {
+        en: "The Pelican swallows an Impostor, then the Pelican is killed. The released Impostor must be able to kill and vent again; a released crewmate's tasks must count.",
+        de: "Der Pelican verschluckt einen Impostor, danach wird der Pelican getötet. Der befreite Impostor muss wieder töten und venten können; die Aufgaben eines befreiten Crewmates müssen zählen.",
+      },
+    },
+    {
+      id: "uc-task-win-count", mod: "unknowns",
+      title: { en: "Task bar with UC neutrals and the Poltergeist", de: "Task-Leiste mit UC-Neutralen und Poltergeist" },
+      how: {
+        en: "A round with Bug or Collector plus the Poltergeist, ideally with a Lover pair. The task bar must not jump, and the crew must not win by tasks while real crew tasks are open.",
+        de: "Eine Runde mit Bug oder Collector und dem Poltergeist, am besten mit Lover-Paar. Die Task-Leiste darf nicht springen, und die Crew darf nicht per Tasks gewinnen, solange echte Crew-Tasks offen sind.",
+      },
+    },
+    {
+      id: "ff-multijester-win", mod: "useful",
+      title: { en: "Extra Jester wins", de: "Extra-Jester gewinnt" },
+      how: {
+        en: "Jester Quantity 2: the extra (non-TOR) Jester is voted out. The end screen must name him as the only winner (plus a Lawyer whose target he was).",
+        de: "Jester-Anzahl 2: der zusätzliche (Nicht-TOR-)Jester wird rausgewählt. Der Endbildschirm muss ihn als einzigen Sieger zeigen (plus einen Lawyer, dessen Ziel er war).",
+      },
+    },
+    {
+      id: "chance-spawn-rate", mod: "chance",
+      title: { en: "Chance spawn rate is honoured", de: "Chance-Spawnrate wird eingehalten" },
+      how: {
+        en: "Set Chance to 10 % and play several rounds: most rounds must have no Chance player.",
+        de: "Chance auf 10 % stellen und mehrere Runden spielen: die meisten Runden dürfen keinen Chance-Spieler haben.",
+      },
+    },
   ];
 
   /* ------------------------------------------------------------------ i18n */
