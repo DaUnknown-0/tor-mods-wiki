@@ -677,6 +677,38 @@
       },
     },
     {
+      id: "ff-replay-perspective", mod: "useful",
+      title: { en: "Replay: a player's perspective", de: "Rückblick: Perspektive eines Spielers" },
+      how: {
+        en: "As host after a real round with several players: pick players one by one. Compare with what they say they saw: who stood in their light, a kill they witnessed (banner: could see it), a vent, a lights sabotage (small circle), closed doors.",
+        de: "Als Host nach einer echten Runde mit mehreren Spielern: Spieler nacheinander wählen. Mit dem vergleichen, was sie gesehen haben wollen: wer in ihrem Licht stand, ein beobachteter Kill (Banner: konnte es sehen), ein Vent, eine Licht-Sabotage (kleiner Kreis), geschlossene Türen.",
+      },
+      risk: {
+        en: "Only checked in freeplay so far. Atlas maps and Submerged use a copy of the ship from the round end; memory use while the real map is open.",
+        de: "Bisher nur im Freeplay geprüft. Atlas-Karten und Submerged nutzen eine Kopie des Schiffs vom Rundenende; Speicherbedarf, solange die echte Karte offen ist.",
+      },
+    },
+    {
+      id: "uc-mixer", mod: "unknowns",
+      title: { en: "Mixer: mix, revenge, killer info", de: "Mixer: mixen, Rache, Killer-Info" },
+      how: {
+        en: "Mix a crewmate and an Impostor before a meeting. In the meeting the Impostor must be told and get the revenge buttons (click twice): try once right and once wrong in two rounds. After the meeting both must have a new role of their own team, and the Mixer must learn the Impostor's old role and have no mixes left.",
+        de: "Vor einem Meeting einen Crewmate und einen Impostor mixen. Im Meeting muss der Impostor es erfahren und die Rache-Knöpfe bekommen (zweimal klicken): in zwei Runden einmal richtig und einmal falsch probieren. Nach dem Meeting müssen beide eine neue Rolle ihres Teams haben, der Mixer die alte Rolle des Impostors kennen und keine Mixe mehr haben.",
+      },
+      risk: {
+        en: "The revenge guess was not tested in a real meeting yet; a mixed Guesser must keep his normal shots.",
+        de: "Der Rache-Guess ist noch nicht in einem echten Meeting getestet; ein gemixter Guesser muss seine normalen Schüsse behalten.",
+      },
+    },
+    {
+      id: "uc-hypnotist-sight", mod: "unknowns",
+      title: { en: "Hypnotist: the victim's real sight", de: "Hypnotist: echte Sicht des Opfers" },
+      how: {
+        en: "Peek through a victim standing near a wall with players behind it, once with lights on and once during a lights sabotage. Only what the victim can see may show; players behind walls or outside the light must be invisible.",
+        de: "Durch ein Opfer spähen, das an einer Wand steht, hinter der Spieler sind, einmal bei Licht und einmal bei Licht-Sabotage. Nur was das Opfer sehen kann, darf erscheinen; Spieler hinter Wänden oder außerhalb des Lichts müssen unsichtbar sein.",
+      },
+    },
+    {
       id: "atlas-attractions", mod: "atlas",
       title: { en: "Attractions with several players", de: "Attraktionen mit mehreren Spielern" },
       how: {
