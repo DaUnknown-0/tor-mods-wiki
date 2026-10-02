@@ -604,6 +604,86 @@
         de: "In der Lobby den Carnival wählen und eine Runde spielen: alle Tasks einmal, beide Sabotagen, eine Fahrt auf den Fahrgeschäften und ein Rauswurf mit der Carnival-Szene.",
       },
     },
+    {
+      id: "uc-paramedic", mod: "unknowns",
+      title: { en: "Paramedic: revive a fresh body", de: "Paramedic: frische Leiche wiederbeleben" },
+      how: {
+        en: "Kill someone and let the Paramedic reach the body within the window. The victim must stand up at the body with their tasks; after the window or after a meeting the button must stay grey.",
+        de: "Jemanden töten und den Paramedic im Fenster zur Leiche laufen lassen. Das Opfer muss an der Leiche mit seinen Aufgaben aufstehen; nach dem Fenster oder nach einem Meeting muss der Knopf grau bleiben.",
+      },
+      risk: {
+        en: "Revive as a guest (the host checks), and the killer hint.",
+        de: "Wiederbelebung als Gast (der Host prüft) und der Hinweis an den Killer.",
+      },
+    },
+    {
+      id: "uc-surveyor", mod: "unknowns",
+      title: { en: "Surveyor: room marks and head count", de: "Surveyor: Raummarkierungen und Kopfzahl" },
+      how: {
+        en: "Mark three rooms, let other players walk in and out, check the counts; then a Comms sabotage (must show ?) and a fourth mark (replaces the oldest).",
+        de: "Drei Räume markieren, andere Spieler hinein- und hinausgehen lassen, die Zahlen prüfen; dann eine Comms-Sabotage (muss ? zeigen) und eine vierte Markierung (ersetzt die älteste).",
+      },
+    },
+    {
+      id: "uc-hypnotist", mod: "unknowns",
+      title: { en: "Hypnotist: redirected vote", de: "Hypnotist: umgelenkte Stimme" },
+      how: {
+        en: "Hypnotise a player, call a meeting, pick a target with the small buttons. Check the result screen: the victim's vote must land on the target, also when the victim skips or does not vote at all.",
+        de: "Einen Spieler hypnotisieren, Meeting einberufen, mit den kleinen Knöpfen ein Ziel wählen. Im Ergebnisbild prüfen: die Stimme des Opfers muss beim Ziel landen, auch wenn das Opfer skippt oder gar nicht abstimmt.",
+      },
+      risk: {
+        en: "Interplay with TOR's own vote handling (Mayor, Swapper, Tiebreaker).",
+        de: "Zusammenspiel mit TORs eigener Stimmauswertung (Mayor, Swapper, Tiebreaker).",
+      },
+    },
+    {
+      id: "uc-skinwalker", mod: "unknowns",
+      title: { en: "Skinwalker: wear the victim", de: "Skinwalker: das Opfer tragen" },
+      how: {
+        en: "Kill, then Wear Skin at the body. Everybody must see the victim (name included), the body must be gone; Camouflage in between, then the skin must come back.",
+        de: "Töten, dann an der Leiche Wear Skin. Alle müssen das Opfer sehen (mit Namen), die Leiche muss weg sein; dazwischen Camouflage, danach muss die Haut zurückkommen.",
+      },
+    },
+    {
+      id: "uc-giant", mod: "unknowns",
+      title: { en: "Giant: size, speed, vision", de: "Giant: Größe, Tempo, Sicht" },
+      how: {
+        en: "Play a round as the Giant: bigger, slower, further vision for you; others see you big. Kill range and hitbox must feel normal.",
+        de: "Eine Runde als Giant spielen: größer, langsamer, weitere Sicht bei dir; andere sehen dich groß. Kill-Reichweite und Trefferfläche müssen sich normal anfühlen.",
+      },
+    },
+    {
+      id: "ff-session-stats", mod: "useful",
+      title: { en: "Session statistics and titles", de: "Session-Statistik und Titel" },
+      how: {
+        en: "Play a few rounds, then open Session stats as host and as guest (same numbers), check the pie charts and the titles tab; as host press Show titles to everyone.",
+        de: "Ein paar Runden spielen, dann Session stats als Host und als Gast öffnen (gleiche Zahlen), Kreisdiagramme und Titel-Reiter prüfen; als Host Show titles to everyone drücken.",
+      },
+    },
+    {
+      id: "ff-killfeed", mod: "useful",
+      title: { en: "Kill feed for ghosts", de: "Kill-Feed für Geister" },
+      how: {
+        en: "Turn the option on, die early and watch the feed; once with TOR's Ghosts See Roles on and once off.",
+        de: "Option einschalten, früh sterben und den Feed beobachten; einmal mit TORs Ghosts See Roles an und einmal aus.",
+      },
+    },
+    {
+      id: "ff-replay", mod: "useful",
+      title: { en: "Replay of the last round", de: "Rückblick auf die letzte Runde" },
+      how: {
+        en: "After a real round open Replay last round in the lobby, on a vanilla map and on an Atlas map; play, pause, speed, jump on the timeline.",
+        de: "Nach einer echten Runde in der Lobby Replay last round öffnen, auf einer Vanilla- und einer Atlas-Karte; Abspielen, Pause, Tempo, Sprung auf der Zeitleiste.",
+      },
+    },
+    {
+      id: "atlas-attractions", mod: "atlas",
+      title: { en: "Attractions with several players", de: "Attraktionen mit mehreren Spielern" },
+      how: {
+        en: "High striker, costume, Ferris wheel, shuttle car, canoe and the planetarium show with at least two players: everybody must see the same thing, and only one rider at a time.",
+        de: "Hau den Lukas, Kostüm, Riesenrad, Pendelwagen, Kanu und Planetariums-Show mit mindestens zwei Spielern: alle müssen dasselbe sehen, und es fährt immer nur einer.",
+      },
+    },
   ];
 
   /* ------------------------------------------------------------------ i18n */

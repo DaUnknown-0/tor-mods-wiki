@@ -163,7 +163,7 @@ const CHANCE = {
   key: "chance",
   name: "Chance Modifier",
   fullName: { en: "TOR — Unknown Chaos (Chance Modifier)", de: "TOR — Unknown Chaos (Chance Modifier)" },
-  version: "1.2.22",
+  version: "1.2.23",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/TOR-Chance",
   download: "https://github.com/DaUnknown-0/TOR-Chance/releases/latest",
@@ -395,7 +395,7 @@ const USEFUL = {
   key: "useful",
   name: "Forgotten Fixes",
   fullName: { en: "TOR - Forgotten Fixes", de: "TOR - Forgotten Fixes" },
-  version: "1.4.8",
+  version: "1.4.12.2",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/Useful-TOR-stuff",
   download: "https://github.com/DaUnknown-0/Useful-TOR-stuff/releases/latest",
@@ -1240,6 +1240,61 @@ const USEFUL = {
       ]
     },
     {
+      id: "evening",
+      title: { en: "Game evening: statistics, kill feed, replay", de: "Spieleabend: Statistik, Kill-Feed, Rückblick" },
+      intro: { en: "Numbers and titles for the whole evening, a kill feed for ghosts and a replay of the last round on the minimap.", de: "Zahlen und Titel für den ganzen Abend, ein Kill-Feed für Geister und ein Rückblick auf die letzte Runde auf der Minimap." },
+      entries: [
+        {
+          id: "session-stats",
+          title: { en: "Session statistics", de: "Session-Statistik" },
+          summary: { en: "A lobby panel for everyone with the host's numbers of this evening: rounds, wins, meetings survived, kills and three pie charts per player.", de: "Ein Lobby-Panel für alle mit den Zahlen des Hosts für diesen Abend: Runden, Siege, überlebte Meetings, Kills und drei Kreisdiagramme pro Spieler." },
+          body: {
+            en: "<p>In the lobby every player gets a <strong>Session stats</strong> button. On the left: every player with rounds, win rate, average meetings survived, average share of a round survived and kills. On the right: the clicked player (yourself by default) with wins per team, most played roles and three pie charts in player colours: <strong>How rounds ended</strong>, <strong>Killed by</strong> and <strong>Killed</strong>.</p><p>Like the early-death statistics it is host-authoritative: every client records, but only what the host sends is shown, so everybody sees the same numbers. A session ends after 120 minutes without a round (at most 24 hours). While this or any other Forgotten Fixes lobby panel is open, the host's Start button does nothing.</p>" + tbl(["Option", "Default", "What it does"], [
+              ["Session Statistics In The Lobby", "On", "Shows the button for everyone."]
+            ]),
+            de: "<p>In der Lobby bekommt jeder Spieler einen Knopf <strong>Session stats</strong>. Links: jeder Spieler mit Runden, Siegquote, Ø überlebten Meetings, Ø überlebtem Anteil einer Runde und Kills. Rechts: der angeklickte Spieler (standardmäßig du selbst) mit Siegen je Team, meistgespielten Rollen und drei Kreisdiagrammen in Spielerfarben: <strong>How rounds ended</strong>, <strong>Killed by</strong> und <strong>Killed</strong>.</p><p>Wie die Frühtod-Statistik ist sie host-autoritativ: jeder Client zeichnet auf, angezeigt wird nur, was der Host schickt, also sehen alle dieselben Zahlen. Eine Session endet nach 120 Minuten ohne Runde (höchstens 24 Stunden). Solange dieses oder ein anderes Lobby-Panel von Forgotten Fixes offen ist, tut der Start-Knopf des Hosts nichts.</p>" + tbl(["Option", "Standard", "Funktion"], [
+              ["Session Statistics In The Lobby", "On", "Zeigt den Knopf für alle."]
+            ])
+          }
+        },
+        {
+          id: "session-titles",
+          title: { en: "Titles of the evening", de: "Titel des Abends" },
+          summary: { en: "Nine titles, available after every round, and a host button that shows them to everyone at the end of the evening.", de: "Neun Titel, nach jeder Runde abrufbar, und ein Host-Knopf, der sie am Ende des Abends allen zeigt." },
+          body: {
+            en: "<p>The second tab of the statistics hands out titles: <strong>Serial Killer</strong>, <strong>Survivor</strong>, <strong>Lucky Charm</strong>, <strong>Unlucky</strong>, <strong>Chatterbox</strong>, <strong>Most Wanted</strong>, <strong>Nemesis</strong> (a killer and victim pair), <strong>Allrounder</strong> and <strong>Mastermind</strong>. A tie shares the title (at most three holders).</p><p><strong>End of the evening:</strong> in the titles tab the host has the button <strong>Show titles to everyone</strong>. It opens the titles panel with the heading 'End of the evening' for everybody in the lobby.</p>",
+            de: "<p>Der zweite Reiter der Statistik vergibt Titel: <strong>Serial Killer</strong>, <strong>Survivor</strong>, <strong>Lucky Charm</strong>, <strong>Unlucky</strong>, <strong>Chatterbox</strong>, <strong>Most Wanted</strong>, <strong>Nemesis</strong> (ein Killer-Opfer-Paar), <strong>Allrounder</strong> und <strong>Mastermind</strong>. Ein Gleichstand teilt den Titel (höchstens drei Halter).</p><p><strong>Ende des Abends:</strong> im Titel-Reiter hat der Host den Knopf <strong>Show titles to everyone</strong>. Er öffnet bei allen in der Lobby das Titel-Panel mit der Überschrift 'End of the evening'.</p>"
+          }
+        },
+        {
+          id: "ghost-killfeed",
+          title: { en: "Kill feed for ghosts", de: "Kill-Feed für Geister" },
+          summary: { en: "Dead players see every death of the round with killer, victim and, if TOR allows it, roles. Off by default.", de: "Tote sehen jeden Tod der Runde mit Killer, Opfer und, wenn TOR es erlaubt, Rollen. Standardmäßig aus." },
+          body: {
+            en: "<p>Dead players see <strong>Deaths this round</strong> on the right: killer and victim for every kind of death TOR records (kill, exile, guess, bomb, arson, witch curse, lover or lawyer, misfire, failed shift, disconnect). Newest on top, at most eight lines, hidden during meetings. Roles are only shown when TOR's 'Ghosts See Roles' is on: the feed never shows ghosts more than TOR itself does. Living players see nothing.</p>" + tbl(["Option", "Default", "What it does"], [
+              ["Kill Feed For Ghosts", "Off", "Turns the feed on."]
+            ]),
+            de: "<p>Tote sehen rechts <strong>Deaths this round</strong>: Killer und Opfer für jede Todesart, die TOR aufzeichnet (Kill, Rauswurf, Guess, Bombe, Brand, Hexenfluch, Lover oder Lawyer, Fehlschuss, missglückter Shift, Disconnect). Neueste oben, höchstens acht Zeilen, im Meeting ausgeblendet. Rollen erscheinen nur, wenn TORs 'Ghosts See Roles' an ist: der Feed zeigt Geistern nie mehr als TOR selbst. Lebende sehen nichts.</p>" + tbl(["Option", "Standard", "Funktion"], [
+              ["Kill Feed For Ghosts", "Off", "Schaltet den Feed ein."]
+            ])
+          }
+        },
+        {
+          id: "round-replay",
+          title: { en: "Replay of the last round", de: "Rückblick auf die letzte Runde" },
+          summary: { en: "After a round the lobby can play it back on the minimap: paths, vents, bodies, deaths and meetings.", de: "Nach einer Runde lässt sie sich in der Lobby auf der Minimap abspielen: Laufwege, Vents, Leichen, Tode und Meetings." },
+          body: {
+            en: "<p>After a round the lobby has the button <strong>Replay last round</strong>. It shows the minimap with every player's path (4 samples per second, meetings cut out), vent use, a red X at every body and a banner for every death with roles; meetings and deaths are marked on the timeline. Play, pause, 1x to 8x speed, click on the timeline to jump. Only the last round, recorded on your own client. Unknown's Atlas maps show their own floor plan.</p>" + tbl(["Option", "Default", "What it does"], [
+              ["Round Replay In The Lobby", "On", "Records the round and shows the button."]
+            ]),
+            de: "<p>Nach einer Runde gibt es in der Lobby den Knopf <strong>Replay last round</strong>. Er zeigt die Minimap mit den Laufwegen aller Spieler (4 Messpunkte pro Sekunde, Meetings herausgeschnitten), Vent-Nutzung, einem roten X an jeder Leiche und einem Banner zu jedem Tod mit Rollen; Meetings und Tode sind auf der Zeitleiste markiert. Abspielen, Pause, 1x bis 8x, Klick auf die Zeitleiste springt. Nur die letzte Runde, aufgezeichnet auf deinem eigenen Client. Karten von Unknown's Atlas zeigen ihren eigenen Grundriss.</p>" + tbl(["Option", "Standard", "Funktion"], [
+              ["Round Replay In The Lobby", "On", "Zeichnet die Runde auf und zeigt den Knopf."]
+            ])
+          }
+        }
+      ]
+    },
+    {
       id: "submerged",
       title: { en: "Submerged", de: "Submerged" },
       intro: { en: "The Submerged map (its own mod, v2025.1.30) runs with TOR and the mod family. A full test on the map found three problems, fixed here.", de: "Die Karte Submerged (eigener Mod, v2025.1.30) läuft mit TOR und der Mod-Familie. Ein Gesamttest auf der Karte hat drei Fehler gefunden, die hier behoben sind." },
@@ -1470,17 +1525,17 @@ const UNKNOWNS = {
   key: "unknowns",
   name: "Unknown's Collection",
   fullName: { en: "Unknown's Collection — custom roles for TOR", de: "Unknown's Collection — eigene Rollen für TOR" },
-  version: "1.2.7",
+  version: "1.2.8.2",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/UnknownsCollection",
   download: "https://github.com/DaUnknown-0/UnknownsCollection/releases/latest",
   tagline: {
-    en: "Brand-new custom roles for The Other Roles, layered on without touching TOR's source. Impostor: The Tesla, The Saboteur, The Silencer, The Poisoner, The Illusionist, The Maniac, The Shade, The Manipulator, The Werewolf & The Auditor. Crewmate: The Siphoner, The Witness, The Scout, The Beacon & The Hunter. Neutral: The Bug, The Follower, The Copycat, The Collector & The Pelican. Ghost: The Poltergeist. Modifier: The Gambler. Plus kill cutscenes, custom hats and a 26-language role guide.",
-    de: "Brandneue eigene Rollen für The Other Roles, aufgesetzt ohne Änderung an TORs Quellcode. Impostor: The Tesla, The Saboteur, The Silencer, The Poisoner, The Illusionist, The Maniac, The Shade, The Manipulator, The Werewolf & The Auditor. Crewmate: The Siphoner, The Witness, The Scout, The Beacon & The Hunter. Neutral: The Bug, The Follower, The Copycat, The Collector & The Pelican. Geist: The Poltergeist. Modifier: The Gambler. Dazu Kill-Cutscenes, eigene Hüte und ein Rollen-Guide in 26 Sprachen."
+    en: "Brand-new custom roles for The Other Roles, layered on without touching TOR's source. Impostor: The Tesla, The Saboteur, The Silencer, The Poisoner, The Illusionist, The Maniac, The Shade, The Manipulator, The Werewolf, The Auditor, The Hypnotist & The Skinwalker. Crewmate: The Siphoner, The Witness, The Scout, The Beacon, The Hunter, The King, The Paramedic & The Surveyor. Neutral: The Bug, The Follower, The Copycat, The Collector, The Pelican, The Necromancer & The Stalker. Ghost: The Poltergeist. Modifiers: The Gambler, Void, Sleepwalker, Last Words, Sixth Sense, Colorblind & The Giant. Plus kill cutscenes, custom hats and a 26-language role guide.",
+    de: "Brandneue eigene Rollen für The Other Roles, aufgesetzt ohne Änderung an TORs Quellcode. Impostor: The Tesla, The Saboteur, The Silencer, The Poisoner, The Illusionist, The Maniac, The Shade, The Manipulator, The Werewolf, The Auditor, The Hypnotist & The Skinwalker. Crewmate: The Siphoner, The Witness, The Scout, The Beacon, The Hunter, The King, The Paramedic & The Surveyor. Neutral: The Bug, The Follower, The Copycat, The Collector, The Pelican, The Necromancer & The Stalker. Geist: The Poltergeist. Modifier: The Gambler, Void, Sleepwalker, Last Words, Sixth Sense, Colorblind & The Giant. Dazu Kill-Cutscenes, eigene Hüte und ein Rollen-Guide in 26 Sprachen."
   },
   intro: {
-    en: "Unknown's Collection is a separate plugin that adds <strong>new roles</strong> to TOR 4.8.0 purely through Harmony patches — TOR's source is never modified, and the only hard dependency is The Other Roles. The roles are client-side, so the lobby can only be started when every player runs the same Unknown's Collection version. Current roles — Impostor: <strong>The Tesla</strong>, <strong>The Saboteur</strong>, <strong>The Silencer</strong>, <strong>The Poisoner</strong>, <strong>The Illusionist</strong>, <strong>The Maniac</strong>, <strong>The Shade</strong>, <strong>The Manipulator</strong>, <strong>The Werewolf</strong> and <strong>The Auditor</strong>; Crewmate: <strong>The Siphoner</strong>, <strong>The Witness</strong>, <strong>The Scout</strong>, <strong>The Beacon</strong> and <strong>The Hunter</strong> (a mid-round promotion in Werewolf rounds); Neutral: <strong>The Bug</strong>, <strong>The Follower</strong>, <strong>The Copycat</strong>, <strong>The Collector</strong> and <strong>The Pelican</strong>; plus <strong>The Poltergeist</strong> — a ghost role the first dead player rises into — and <strong>The Gambler</strong>, a crew modifier that bets on the round. All Impostor roles, the Collector, the Pelican and the Werewolf are pickable in TOR's Role Draft. Beyond roles, 1.2.0 adds custom kill cutscenes, three custom hats and a searchable role guide in 26 languages; since 1.0.1.60 every ability comes with dedicated particle effects and positional stereo sound.",
-    de: "Unknown's Collection ist ein eigenständiges Plugin, das TOR 4.8.0 <strong>neue Rollen</strong> rein über Harmony-Patches hinzufügt — TORs Quellcode wird nie verändert, einzige harte Abhängigkeit ist The Other Roles. Die Rollen sind client-seitig, daher kann die Lobby nur gestartet werden, wenn alle Spieler dieselbe Unknown's-Collection-Version haben. Aktuelle Rollen — Impostor: <strong>The Tesla</strong>, <strong>The Saboteur</strong>, <strong>The Silencer</strong>, <strong>The Poisoner</strong>, <strong>The Illusionist</strong>, <strong>The Maniac</strong>, <strong>The Shade</strong>, <strong>The Manipulator</strong>, <strong>The Werewolf</strong> und <strong>The Auditor</strong>; Crewmate: <strong>The Siphoner</strong>, <strong>The Witness</strong>, <strong>The Scout</strong>, <strong>The Beacon</strong> und <strong>The Hunter</strong> (eine Beförderung mitten in Werewolf-Runden); Neutral: <strong>The Bug</strong>, <strong>The Follower</strong>, <strong>The Copycat</strong>, <strong>The Collector</strong> und <strong>The Pelican</strong>; dazu <strong>The Poltergeist</strong> — eine Geist-Rolle, in die der erste Tote aufsteigt — und <strong>The Gambler</strong>, ein Crew-Modifier, der auf die Runde wettet. Alle Impostor-Rollen, der Collector, der Pelican und der Werewolf sind im Role Draft von TOR wählbar. Über Rollen hinaus bringt 1.2.0 eigene Kill-Cutscenes, drei eigene Hüte und einen durchsuchbaren Rollen-Guide in 26 Sprachen; seit 1.0.1.60 hat jede Fähigkeit eigene Partikeleffekte und positionalen Stereo-Sound."
+    en: "Unknown's Collection is a separate plugin that adds <strong>new roles</strong> to TOR 4.8.0 purely through Harmony patches — TOR's source is never modified, and the only hard dependency is The Other Roles. The roles are client-side, so the lobby can only be started when every player runs the same Unknown's Collection version. Current roles — Impostor: <strong>The Tesla</strong>, <strong>The Saboteur</strong>, <strong>The Silencer</strong>, <strong>The Poisoner</strong>, <strong>The Illusionist</strong>, <strong>The Maniac</strong>, <strong>The Shade</strong>, <strong>The Manipulator</strong>, <strong>The Werewolf</strong>, <strong>The Auditor</strong>, <strong>The Hypnotist</strong> and <strong>The Skinwalker</strong>; Crewmate: <strong>The Siphoner</strong>, <strong>The Witness</strong>, <strong>The Scout</strong>, <strong>The Beacon</strong>, <strong>The Hunter</strong> (a mid-round promotion in Werewolf rounds), <strong>The King</strong>, <strong>The Paramedic</strong> and <strong>The Surveyor</strong>; Neutral: <strong>The Bug</strong>, <strong>The Follower</strong>, <strong>The Copycat</strong>, <strong>The Collector</strong>, <strong>The Pelican</strong>, <strong>The Necromancer</strong> and <strong>The Stalker</strong>; plus <strong>The Poltergeist</strong> (a ghost role the first dead player rises into) and seven modifiers: <strong>The Gambler</strong>, <strong>Void</strong>, <strong>Sleepwalker</strong>, <strong>Last Words</strong>, <strong>Sixth Sense</strong>, <strong>Colorblind</strong> and <strong>The Giant</strong>. All Impostor roles, the Collector, the Pelican, the Werewolf, the Paramedic and the Surveyor are pickable in TOR's Role Draft. Beyond roles, 1.2.0 adds custom kill cutscenes, three custom hats and a searchable role guide in 26 languages; since 1.0.1.60 every ability comes with dedicated particle effects and positional stereo sound.",
+    de: "Unknown's Collection ist ein eigenständiges Plugin, das TOR 4.8.0 <strong>neue Rollen</strong> rein über Harmony-Patches hinzufügt — TORs Quellcode wird nie verändert, einzige harte Abhängigkeit ist The Other Roles. Die Rollen sind client-seitig, daher kann die Lobby nur gestartet werden, wenn alle Spieler dieselbe Unknown's-Collection-Version haben. Aktuelle Rollen — Impostor: <strong>The Tesla</strong>, <strong>The Saboteur</strong>, <strong>The Silencer</strong>, <strong>The Poisoner</strong>, <strong>The Illusionist</strong>, <strong>The Maniac</strong>, <strong>The Shade</strong>, <strong>The Manipulator</strong>, <strong>The Werewolf</strong>, <strong>The Auditor</strong>, <strong>The Hypnotist</strong> und <strong>The Skinwalker</strong>; Crewmate: <strong>The Siphoner</strong>, <strong>The Witness</strong>, <strong>The Scout</strong>, <strong>The Beacon</strong>, <strong>The Hunter</strong> (eine Beförderung mitten in Werewolf-Runden), <strong>The King</strong>, <strong>The Paramedic</strong> und <strong>The Surveyor</strong>; Neutral: <strong>The Bug</strong>, <strong>The Follower</strong>, <strong>The Copycat</strong>, <strong>The Collector</strong>, <strong>The Pelican</strong>, <strong>The Necromancer</strong> und <strong>The Stalker</strong>; dazu <strong>The Poltergeist</strong> (eine Geist-Rolle, in die der erste Tote aufsteigt) und sieben Modifier: <strong>The Gambler</strong>, <strong>Void</strong>, <strong>Sleepwalker</strong>, <strong>Last Words</strong>, <strong>Sixth Sense</strong>, <strong>Colorblind</strong> und <strong>The Giant</strong>. Alle Impostor-Rollen, der Collector, der Pelican, der Werewolf, der Paramedic und der Surveyor sind im Role Draft von TOR wählbar. Über Rollen hinaus bringt 1.2.0 eigene Kill-Cutscenes, drei eigene Hüte und einen durchsuchbaren Rollen-Guide in 26 Sprachen; seit 1.0.1.60 hat jede Fähigkeit eigene Partikeleffekte und positionalen Stereo-Sound."
   },
   install: {
     en: "<ol><li>Install <a href='https://github.com/TheOtherRolesAU/TheOtherRoles'>The Other Roles</a> into your Among Us BepInEx setup.</li><li>Download the latest <code>UnknownsCollection.dll</code> from the releases page.</li><li>Copy it into <code>&lt;Among Us&gt;/BepInEx/plugins/</code> (next to <code>TheOtherRoles.dll</code>).</li><li>Start the game. Every player who should see the role needs the mod — same version.</li></ol><p>A channel-aware in-game auto-updater checks GitHub and integrates with the Mod Manager (from Forgotten Fixes).</p>",
@@ -3508,6 +3563,223 @@ const UNKNOWNS = {
       ]
     },
     {
+      id: "paramedic",
+      title: { en: "The Paramedic (Crewmate)", de: "The Paramedic (Crewmate)" },
+      intro: {
+        en: "Brings a fresh victim back, if they get there fast enough.",
+        de: "Holt ein frisches Opfer zurück, wenn er schnell genug da ist."
+      },
+      entries: [
+        {
+          id: "paramedic-how",
+          title: { en: "How it works", de: "So funktioniert es" },
+          summary: {
+            en: "Reach a body within seconds of the kill and revive the victim on the spot. The host checks every revive.",
+            de: "Innerhalb weniger Sekunden nach dem Kill an der Leiche sein und das Opfer dort wiederbeleben. Der Host prüft jede Wiederbelebung."
+          },
+          body: {
+            en: "<p>Standing at a body that is still inside the revive window (default 10 seconds after the kill), the Paramedic gets a <strong>Revive</strong> button. The victim stands up where the body lay, alive again with their tasks; the body disappears. Revives per game are limited (default 1).</p><p>Every client stamps every murder; the Paramedic only asks, and the host checks with its own stamps: window, revives left, no meeting, body still there. Only kills leave bodies, so exiled and guessed players stay dead. Optionally the killer learns that somebody came back, but never who.</p>",
+            de: "<p>An einer Leiche, die noch im Wiederbelebungs-Fenster liegt (Standard 10 Sekunden nach dem Kill), bekommt der Paramedic einen Knopf <strong>Revive</strong>. Das Opfer steht dort auf, wo die Leiche lag, lebendig und mit seinen Aufgaben; die Leiche verschwindet. Die Wiederbelebungen pro Spiel sind begrenzt (Standard 1).</p><p>Jeder Client stempelt jeden Mord; der Paramedic fragt nur, der Host prüft mit seinen eigenen Stempeln: Fenster, verbleibende Wiederbelebungen, kein Meeting, Leiche noch da. Nur Kills hinterlassen Leichen, Rausgeworfene und Geguesste bleiben also tot. Auf Wunsch erfährt der Killer, dass jemand zurückgekehrt ist, aber nie wer.</p>"
+          }
+        },
+        {
+          id: "paramedic-options",
+          title: { en: "Options", de: "Optionen" },
+          summary: { en: "Window after the kill, revives per game, hint for the killer.", de: "Fenster nach dem Kill, Wiederbelebungen pro Spiel, Hinweis an den Killer." },
+          body: {
+            en: tbl(["Option", "Default", "What it does"], [
+              ["Paramedic", "Off", "Spawn chance (Crewmate)."],
+              ["Paramedic Minimum Players To Spawn", "6", "Not assigned below this lobby size."],
+              ["Revive Window After The Kill (s)", "10 s", "5 to 30 s."],
+              ["Paramedic Revives Per Game", "1", "1 to 3."],
+              ["The Killer Learns Someone Came Back", "On", "Without the name."]
+            ]),
+            de: tbl(["Option", "Standard", "Funktion"], [
+              ["Paramedic", "Off", "Spawn-Chance (Crewmate)."],
+              ["Paramedic Minimum Players To Spawn", "6", "Wird unter dieser Lobby-Größe nicht vergeben."],
+              ["Revive Window After The Kill (s)", "10 s", "5 bis 30 s."],
+              ["Paramedic Revives Per Game", "1", "1 bis 3."],
+              ["The Killer Learns Someone Came Back", "On", "Ohne den Namen."]
+            ])
+          }
+        }
+      ]
+    },
+    {
+      id: "surveyor",
+      title: { en: "The Surveyor (Crewmate)", de: "The Surveyor (Crewmate)" },
+      intro: {
+        en: "Keeps a head count of up to three rooms.",
+        de: "Zählt die Köpfe in bis zu drei Räumen."
+      },
+      entries: [
+        {
+          id: "surveyor-how",
+          title: { en: "How it works", de: "So funktioniert es" },
+          summary: {
+            en: "Mark rooms, then always see how many other living players are in each of them.",
+            de: "Räume markieren und danach immer sehen, wie viele andere lebende Spieler in jedem davon sind."
+          },
+          body: {
+            en: "<p>The Surveyor stands in a room and presses <strong>Mark</strong>. Up to three rooms can be marked; a fourth mark replaces the oldest. A line above the room name always shows how many other living players are in each marked room. During a Comms sabotage the counts show <strong>?</strong>. Only the Surveyor sees the line.</p><p>On Unknown's Atlas maps some room areas overlap; a player counts for the smallest room they stand in.</p>",
+            de: "<p>Der Surveyor stellt sich in einen Raum und drückt <strong>Mark</strong>. Bis zu drei Räume lassen sich markieren; eine vierte Markierung ersetzt die älteste. Eine Zeile über dem Raumnamen zeigt ständig, wie viele andere lebende Spieler in jedem markierten Raum sind. Bei einer Comms-Sabotage steht dort <strong>?</strong>. Nur der Surveyor sieht die Zeile.</p><p>Auf den Karten von Unknown's Atlas überlappen sich manche Raumflächen; ein Spieler zählt für den kleinsten Raum, in dem er steht.</p>"
+          }
+        },
+        {
+          id: "surveyor-options",
+          title: { en: "Options", de: "Optionen" },
+          summary: { en: "Number of rooms, cooldown, marks after a meeting.", de: "Anzahl Räume, Abklingzeit, Markierungen nach einem Meeting." },
+          body: {
+            en: tbl(["Option", "Default", "What it does"], [
+              ["Surveyor", "Off", "Spawn chance (Crewmate)."],
+              ["Surveyor Minimum Players To Spawn", "6", "Not assigned below this lobby size."],
+              ["Surveyor Marked Rooms", "3", "1 to 3."],
+              ["Surveyor Mark Cooldown", "15 s", "Time between two marks."],
+              ["Marks Stay After A Meeting", "On", "Off: every meeting clears the marks."]
+            ]),
+            de: tbl(["Option", "Standard", "Funktion"], [
+              ["Surveyor", "Off", "Spawn-Chance (Crewmate)."],
+              ["Surveyor Minimum Players To Spawn", "6", "Wird unter dieser Lobby-Größe nicht vergeben."],
+              ["Surveyor Marked Rooms", "3", "1 bis 3."],
+              ["Surveyor Mark Cooldown", "15 s", "Zeit zwischen zwei Markierungen."],
+              ["Marks Stay After A Meeting", "On", "Aus: jedes Meeting löscht die Markierungen."]
+            ])
+          }
+        }
+      ]
+    },
+    {
+      id: "hypnotist",
+      title: { en: "The Hypnotist (Impostor)", de: "The Hypnotist (Impostor)" },
+      intro: {
+        en: "Decides where someone else's vote goes.",
+        de: "Bestimmt, wohin die Stimme eines anderen geht."
+      },
+      entries: [
+        {
+          id: "hypnotist-how",
+          title: { en: "How it works", de: "So funktioniert es" },
+          summary: {
+            en: "Hypnotise a player; in the next meeting their vote goes where the Hypnotist wants. The victim notices nothing.",
+            de: "Einen Spieler hypnotisieren; im nächsten Meeting geht seine Stimme dorthin, wo der Hypnotist sie haben will. Das Opfer merkt nichts."
+          },
+          body: {
+            en: "<p><strong>Hypnotize</strong> marks a player in kill range (cooldown, limited uses per game). In the next meeting the Hypnotist sees small buttons next to every player and next to Skip and picks where the victim's vote goes. That choice is independent of the Hypnotist's own vote. The victim votes normally and notices nothing.</p><p>The host rewrites the victim's vote before the votes are counted and the result screen is built, so the count and the display always match. The hypnosis ends with the meeting and breaks when the Hypnotist dies (option).</p><p><strong>Hypnotised Player Cannot Escape</strong> (on by default): a Skip is redirected as well, and a victim who does not vote at all gets the vote cast for the chosen target when the voting time runs out. Off: only real votes for players are redirected.</p>",
+            de: "<p><strong>Hypnotize</strong> markiert einen Spieler in Kill-Reichweite (Abklingzeit, begrenzte Anwendungen pro Spiel). Im nächsten Meeting sieht der Hypnotist kleine Knöpfe neben jedem Spieler und neben Skip und wählt, wohin die Stimme des Opfers geht. Diese Wahl ist unabhängig von seiner eigenen Stimme. Das Opfer stimmt ganz normal ab und merkt nichts.</p><p>Der Host schreibt die Stimme des Opfers um, bevor die Stimmen gezählt und das Ergebnisbild gebaut werden; Zählung und Anzeige stimmen also immer überein. Die Hypnose endet mit dem Meeting und bricht, wenn der Hypnotist stirbt (Option).</p><p><strong>Hypnotised Player Cannot Escape</strong> (standardmäßig an): auch ein Skip wird umgelenkt, und wer gar nicht abstimmt, bekommt beim Ablauf der Abstimmzeit seine Stimme für das gewählte Ziel abgegeben. Aus: nur echte Stimmen für Spieler werden umgelenkt.</p>"
+          }
+        },
+        {
+          id: "hypnotist-options",
+          title: { en: "Options", de: "Optionen" },
+          summary: { en: "Cooldown, uses, no escape, break on death.", de: "Abklingzeit, Anwendungen, kein Entkommen, Bruch beim Tod." },
+          body: {
+            en: tbl(["Option", "Default", "What it does"], [
+              ["Hypnotist", "Off", "Spawn chance (Impostor)."],
+              ["Hypnotist Minimum Players To Spawn", "6", "Not assigned below this lobby size."],
+              ["Hypnotize Cooldown", "25 s", "10 to 60 s."],
+              ["Hypnoses Per Game", "2", "1 to 5."],
+              ["Hypnotised Player Cannot Escape", "On", "Skips and missing votes are redirected too."],
+              ["Hypnosis Breaks When The Hypnotist Dies", "On", "Off: the vote is still redirected."]
+            ]),
+            de: tbl(["Option", "Standard", "Funktion"], [
+              ["Hypnotist", "Off", "Spawn-Chance (Impostor)."],
+              ["Hypnotist Minimum Players To Spawn", "6", "Wird unter dieser Lobby-Größe nicht vergeben."],
+              ["Hypnotize Cooldown", "25 s", "10 bis 60 s."],
+              ["Hypnoses Per Game", "2", "1 bis 5."],
+              ["Hypnotised Player Cannot Escape", "On", "Auch Skips und fehlende Stimmen werden umgelenkt."],
+              ["Hypnosis Breaks When The Hypnotist Dies", "On", "Aus: die Stimme wird trotzdem umgelenkt."]
+            ])
+          }
+        }
+      ]
+    },
+    {
+      id: "skinwalker",
+      title: { en: "The Skinwalker (Impostor)", de: "The Skinwalker (Impostor)" },
+      intro: {
+        en: "Wears the victim and walks on as them.",
+        de: "Trägt das Opfer und läuft als es weiter."
+      },
+      entries: [
+        {
+          id: "skinwalker-how",
+          title: { en: "How it works", de: "So funktioniert es" },
+          summary: {
+            en: "Right after a kill, take the victim's skin: the body is gone and the Skinwalker looks like the victim for everybody.",
+            de: "Direkt nach einem Kill die Haut des Opfers nehmen: die Leiche ist weg und der Skinwalker sieht für alle aus wie das Opfer."
+          },
+          body: {
+            en: "<p>Within a few seconds of a kill (default 10) the Skinwalker can press <strong>Wear Skin</strong> at the fresh body. The body disappears and the Skinwalker looks like the victim for everybody, name included, until the next meeting or for 45 or 90 seconds (option). Nobody finds a body; the 'victim' keeps walking around.</p><p>Camouflage and the Fungle mushroom sabotage take precedence; afterwards the skin comes back. It ends when the Skinwalker dies.</p>",
+            de: "<p>Wenige Sekunden nach einem Kill (Standard 10) kann der Skinwalker an der frischen Leiche <strong>Wear Skin</strong> drücken. Die Leiche verschwindet und der Skinwalker sieht für alle aus wie das Opfer, Name eingeschlossen, bis zum nächsten Meeting oder für 45 bzw. 90 Sekunden (Option). Niemand findet eine Leiche; das 'Opfer' läuft weiter herum.</p><p>Camouflage und die Pilz-Sabotage der Fungle haben Vorrang, danach kommt die Haut zurück. Sie endet, wenn der Skinwalker stirbt.</p>"
+          }
+        },
+        {
+          id: "skinwalker-options",
+          title: { en: "Options", de: "Optionen" },
+          summary: { en: "Time to take the skin, how long it lasts.", de: "Zeit zum Nehmen der Haut, wie lange sie hält." },
+          body: {
+            en: tbl(["Option", "Default", "What it does"], [
+              ["Skinwalker", "Off", "Spawn chance (Impostor)."],
+              ["Skinwalker Minimum Players To Spawn", "6", "Not assigned below this lobby size."],
+              ["Time To Take The Skin After A Kill (s)", "10 s", "3 to 30 s."],
+              ["The Skin Lasts", "Until The Next Meeting", "Or 45 or 90 seconds."]
+            ]),
+            de: tbl(["Option", "Standard", "Funktion"], [
+              ["Skinwalker", "Off", "Spawn-Chance (Impostor)."],
+              ["Skinwalker Minimum Players To Spawn", "6", "Wird unter dieser Lobby-Größe nicht vergeben."],
+              ["Time To Take The Skin After A Kill (s)", "10 s", "3 bis 30 s."],
+              ["The Skin Lasts", "Until The Next Meeting", "Oder 45 bzw. 90 Sekunden."]
+            ])
+          }
+        }
+      ]
+    },
+    {
+      id: "giant",
+      title: { en: "The Giant (Modifier)", de: "The Giant (Modifier)" },
+      intro: {
+        en: "The counterpart of TOR's Mini: bigger, slower, sees further.",
+        de: "Das Gegenstück zu TORs Mini: größer, langsamer, sieht weiter."
+      },
+      entries: [
+        {
+          id: "giant-how",
+          title: { en: "How it works", de: "So funktioniert es" },
+          summary: {
+            en: "Drawn bigger, walks slower, sees further. The hitbox stays normal size.",
+            de: "Wird größer gezeichnet, läuft langsamer, sieht weiter. Die Trefferfläche bleibt normal groß."
+          },
+          body: {
+            en: "<p>The Giant is drawn bigger (default 1.3 times), walks slower (default 85 %) and sees further (default 125 %). The hitbox stays normal size, like TOR's Mini the other way round. During Camouflage and the mushroom sabotage the Giant has normal size; a Morphling or Skinwalker who looks like the Giant is drawn big.</p>",
+            de: "<p>Der Giant wird größer gezeichnet (Standard 1,3-fach), läuft langsamer (Standard 85 %) und sieht weiter (Standard 125 %). Die Trefferfläche bleibt normal groß, wie bei TORs Mini andersherum. Bei Camouflage und der Pilz-Sabotage hat der Giant normale Größe; ein Morphling oder Skinwalker im Aussehen des Giant wird groß gezeichnet.</p>"
+          }
+        },
+        {
+          id: "giant-options",
+          title: { en: "Options", de: "Optionen" },
+          summary: { en: "Who can be it, size, speed, vision.", de: "Wer ihn bekommen kann, Größe, Tempo, Sicht." },
+          body: {
+            en: tbl(["Option", "Default", "What it does"], [
+              ["Giant", "Off", "Spawn chance of the modifier."],
+              ["Giant Minimum Players To Spawn", "4", "Not assigned below this lobby size."],
+              ["Giant Can Be", "Anyone", "Crew Only, Crew & Impostor or Anyone."],
+              ["Giant Size", "1.3", "1.1 to 1.6."],
+              ["Giant Speed (%)", "85%", "60 to 100%."],
+              ["Giant Vision (%)", "125%", "100 to 175%."]
+            ]),
+            de: tbl(["Option", "Standard", "Funktion"], [
+              ["Giant", "Off", "Spawn-Chance des Modifiers."],
+              ["Giant Minimum Players To Spawn", "4", "Wird unter dieser Lobby-Größe nicht vergeben."],
+              ["Giant Can Be", "Anyone", "Crew Only, Crew & Impostor oder Anyone."],
+              ["Giant Size", "1.3", "1,1 bis 1,6."],
+              ["Giant Speed (%)", "85%", "60 bis 100 %."],
+              ["Giant Vision (%)", "125%", "100 bis 175 %."]
+            ])
+          }
+        }
+      ]
+    },
+    {
       id: "uc-killcutscenes",
       title: { en: "Kill cutscenes", de: "Kill-Cutscenes" },
       intro: {
@@ -3730,7 +4002,7 @@ const NIGHTFALL = {
   key: "nightfall",
   name: "Nightfall",
   fullName: { en: "Nightfall — first person for Among Us", de: "Nightfall — Ich-Perspektive für Among Us" },
-  version: "0.3.2",
+  version: "0.3.3",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/Nightfall",
   download: "https://github.com/DaUnknown-0/Nightfall/releases/latest",
@@ -4053,7 +4325,7 @@ const ATLAS = {
   key: "atlas",
   name: "Unknown's Atlas",
   fullName: { en: "Unknown's Atlas: new maps for Among Us", de: "Unknown's Atlas: neue Karten für Among Us" },
-  version: "0.3.0.15",
+  version: "0.3.0.19",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/UnknownsAtlas",
   download: "https://github.com/DaUnknown-0/UnknownsAtlas/releases",
@@ -4394,6 +4666,33 @@ const ATLAS = {
               ["Log Flume Drop", "Ein Boot kommt den Kanal herunter; die Ostbrücke ist 4 Sekunden nass und gesperrt."],
               ["Turnstile Jam", "Beide Drehkreuze am Haupteingang klemmen 5 Sekunden."]
             ]) + "<p>Nie während eines Meetings, eines Rauswurfs oder einer kritischen Sabotage. Die Drehkreuze sind immer Einbahn (West nur in den Park hinein, Ost nur hinaus), und die Geisterbahn ist innen dunkel.</p>" + shots([["atlas_ride_coaster.webp", "Coaster Run"], ["atlas_ride_carousel.webp", "Carousel Spin"], ["atlas_ride_ghost.webp", "Ghost Flash"], ["atlas_ride_flume.webp", "Log Flume Drop"]])
+          }
+        },
+        {
+          id: "attractions",
+          title: { en: "Attractions (since 0.3.0.19)", de: "Attraktionen (seit 0.3.0.19)" },
+          summary: { en: "Things to use on every map: a bell, a costume, a Ferris wheel, a shuttle car, a canoe, a planetarium show, a portrait that watches you and nightfall in the forest.", de: "Dinge zum Benutzen auf jeder Karte: eine Glocke, ein Kostüm, ein Riesenrad, ein Pendelwagen, ein Kanu, eine Planetariums-Show, ein Porträt, das dich ansieht, und die Dämmerung im Wald." },
+          body: {
+            en: tbl(["Attraction", "Map", "What happens"], [
+              ["High striker", "Carnival", "In the Shooting Gallery. A hit rings the bell across the whole map and blinks on the minimap for 4 seconds: a lure. 25 s cooldown for everyone."],
+              ["Mascot costume", "Carnival", "In the workshop. The mascot 'Moony' hides colour, hat and name until taken off or until the next meeting. One suit; everybody may wear it once per round."],
+              ["Ferris wheel", "Carnival", "Boarding south of the wheel. One turn (18 s) in the lower gondola; at the top you see three times as far. One rider at a time, cannot be cancelled, attackable at the boarding point."],
+              ["Shuttle car", "Carnival", "Between the Coaster Station and a platform north of the Ferris wheel. RIDE takes you along; CALL fetches the empty car. One rider, cannot be cancelled, a meeting puts the car at its destination."],
+              ["Canoe", "Forest", "On the creek down to the waterworks, same rules as the shuttle car."],
+              ["Planetarium show", "Museum", "Every 45 to 75 seconds: a gong, then 16 seconds of darkness with a turning starry sky. Whoever stands in the planetarium sees only 45 % as far. Never during meetings, critical sabotages or 'Rex awakens'."],
+              ["Portrait 'The Founder'", "Museum", "Its eyes follow you in the gallery. Pure creepiness: everybody only sees that the portrait looks at them."],
+              ["Nightfall", "Forest", "The round starts in the early evening and turns into night over six minutes: the screen gets deep blue, vision drops to 82 % and fireflies appear over the clearings."]
+            ]),
+            de: tbl(["Attraktion", "Karte", "Was passiert"], [
+              ["Hau den Lukas", "Park", "In der Shooting Gallery. Ein Treffer lässt die Glocke über die ganze Karte klingen und blinkt 4 Sekunden auf der Minimap: ein Lockmittel. 25 s Abklingzeit für alle."],
+              ["Maskottchen-Kostüm", "Park", "In der Werkstatt. Das Maskottchen 'Moony' verdeckt Farbe, Hut und Namen bis zum Ablegen oder zum nächsten Meeting. Ein Anzug; jeder darf ihn einmal pro Runde tragen."],
+              ["Riesenrad", "Park", "Einstieg südlich des Rads. Eine Runde (18 s) in der unteren Gondel; oben sieht man dreimal so weit. Ein Fahrgast zugleich, nicht abbrechbar, am Einstieg angreifbar."],
+              ["Pendelwagen", "Park", "Zwischen der Coaster Station und einem Bahnsteig nördlich des Riesenrads. RIDE fährt mit; CALL holt den leeren Wagen heran. Ein Fahrgast, nicht abbrechbar, ein Meeting setzt den Wagen ans Ziel."],
+              ["Kanu", "Wald", "Auf dem Bach bis zum Wasserwerk, gleiche Regeln wie der Pendelwagen."],
+              ["Planetariums-Show", "Museum", "Alle 45 bis 75 Sekunden: ein Gong, dann 16 Sekunden Dunkelheit mit kreisendem Sternenhimmel. Wer im Planetarium steht, sieht nur noch 45 % so weit. Nie während Meetings, kritischer Sabotagen oder 'Rex erwacht'."],
+              ["Porträt 'The Founder'", "Museum", "Seine Augen folgen dir in der Galerie. Reiner Grusel: jeder sieht nur, dass das Bild ihn selbst ansieht."],
+              ["Dämmerung", "Wald", "Die Runde beginnt am frühen Abend und wird über sechs Minuten Nacht: das Bild wird tiefblau, die Sicht sinkt auf 82 % und über den Lichtungen tauchen Glühwürmchen auf."]
+            ])
           }
         },
         {
