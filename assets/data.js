@@ -1525,7 +1525,7 @@ const UNKNOWNS = {
   key: "unknowns",
   name: "Unknown's Collection",
   fullName: { en: "Unknown's Collection — custom roles for TOR", de: "Unknown's Collection — eigene Rollen für TOR" },
-  version: "1.2.8.2",
+  version: "1.2.8.3",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/UnknownsCollection",
   download: "https://github.com/DaUnknown-0/UnknownsCollection/releases/latest",
@@ -3664,8 +3664,8 @@ const UNKNOWNS = {
             de: "Einen Spieler hypnotisieren; im nächsten Meeting geht seine Stimme dorthin, wo der Hypnotist sie haben will. Das Opfer merkt nichts."
           },
           body: {
-            en: "<p><strong>Hypnotize</strong> marks a player in kill range (cooldown, limited uses per game). In the next meeting the Hypnotist sees small buttons next to every player and next to Skip and picks where the victim's vote goes. That choice is independent of the Hypnotist's own vote. The victim votes normally and notices nothing.</p><p>The host rewrites the victim's vote before the votes are counted and the result screen is built, so the count and the display always match. The hypnosis ends with the meeting and breaks when the Hypnotist dies (option).</p><p><strong>Hypnotised Player Cannot Escape</strong> (on by default): a Skip is redirected as well, and a victim who does not vote at all gets the vote cast for the chosen target when the voting time runs out. Off: only real votes for players are redirected.</p>",
-            de: "<p><strong>Hypnotize</strong> markiert einen Spieler in Kill-Reichweite (Abklingzeit, begrenzte Anwendungen pro Spiel). Im nächsten Meeting sieht der Hypnotist kleine Knöpfe neben jedem Spieler und neben Skip und wählt, wohin die Stimme des Opfers geht. Diese Wahl ist unabhängig von seiner eigenen Stimme. Das Opfer stimmt ganz normal ab und merkt nichts.</p><p>Der Host schreibt die Stimme des Opfers um, bevor die Stimmen gezählt und das Ergebnisbild gebaut werden; Zählung und Anzeige stimmen also immer überein. Die Hypnose endet mit dem Meeting und bricht, wenn der Hypnotist stirbt (Option).</p><p><strong>Hypnotised Player Cannot Escape</strong> (standardmäßig an): auch ein Skip wird umgelenkt, und wer gar nicht abstimmt, bekommt beim Ablauf der Abstimmzeit seine Stimme für das gewählte Ziel abgegeben. Aus: nur echte Stimmen für Spieler werden umgelenkt.</p>"
+            en: "<p><strong>Hypnotize</strong> marks a player in kill range (cooldown, limited uses per game). In the next meeting the Hypnotist sees small buttons next to every player and next to Skip and picks where the victim's vote goes. That choice is independent of the Hypnotist's own vote. The victim votes normally and notices nothing.</p><p>The host rewrites the victim's vote before the votes are counted and the result screen is built, so the count and the display always match. The hypnosis ends with the meeting and breaks when the Hypnotist dies (option).</p><p><strong>Hypnotised Player Cannot Escape</strong> (on by default): a Skip is redirected as well, and a victim who does not vote at all gets the vote cast for the chosen target when the voting time runs out. Off: only real votes for players are redirected.</p><p><strong>Hypnotist Sees Through The Victim</strong>: while the hypnosis holds, the Hypnotist can watch the victim's surroundings in a round picture in the lower left, like a security camera that follows the victim. It covers the victim's own vision range (lights sabotage included); walls do not block it, as with the vanilla cameras. <strong>Peek</strong> (default) gives a PEEK button for 5 seconds (20 s cooldown), <strong>Until The Meeting</strong> keeps the picture open.</p>",
+            de: "<p><strong>Hypnotize</strong> markiert einen Spieler in Kill-Reichweite (Abklingzeit, begrenzte Anwendungen pro Spiel). Im nächsten Meeting sieht der Hypnotist kleine Knöpfe neben jedem Spieler und neben Skip und wählt, wohin die Stimme des Opfers geht. Diese Wahl ist unabhängig von seiner eigenen Stimme. Das Opfer stimmt ganz normal ab und merkt nichts.</p><p>Der Host schreibt die Stimme des Opfers um, bevor die Stimmen gezählt und das Ergebnisbild gebaut werden; Zählung und Anzeige stimmen also immer überein. Die Hypnose endet mit dem Meeting und bricht, wenn der Hypnotist stirbt (Option).</p><p><strong>Hypnotised Player Cannot Escape</strong> (standardmäßig an): auch ein Skip wird umgelenkt, und wer gar nicht abstimmt, bekommt beim Ablauf der Abstimmzeit seine Stimme für das gewählte Ziel abgegeben. Aus: nur echte Stimmen für Spieler werden umgelenkt.</p><p><strong>Hypnotist Sees Through The Victim</strong>: solange die Hypnose hält, kann der Hypnotist die Umgebung des Opfers in einem runden Bild unten links sehen, wie eine Überwachungskamera, die dem Opfer folgt. Es deckt die eigene Sichtweite des Opfers ab (Licht-Sabotage eingeschlossen); Wände verdecken es nicht, wie bei den Vanilla-Kameras. <strong>Peek</strong> (Standard) gibt einen Knopf SPÄHEN für 5 Sekunden (20 s Abklingzeit), <strong>Until The Meeting</strong> lässt das Bild offen.</p>"
           }
         },
         {
@@ -3679,7 +3679,8 @@ const UNKNOWNS = {
               ["Hypnotize Cooldown", "25 s", "10 to 60 s."],
               ["Hypnoses Per Game", "2", "1 to 5."],
               ["Hypnotised Player Cannot Escape", "On", "Skips and missing votes are redirected too."],
-              ["Hypnosis Breaks When The Hypnotist Dies", "On", "Off: the vote is still redirected."]
+              ["Hypnosis Breaks When The Hypnotist Dies", "On", "Off: the vote is still redirected."],
+              ["Hypnotist Sees Through The Victim", "Peek", "Off, Peek (5 s button) or Until The Meeting."]
             ]),
             de: tbl(["Option", "Standard", "Funktion"], [
               ["Hypnotist", "Off", "Spawn-Chance (Impostor)."],
@@ -3687,7 +3688,8 @@ const UNKNOWNS = {
               ["Hypnotize Cooldown", "25 s", "10 bis 60 s."],
               ["Hypnoses Per Game", "2", "1 bis 5."],
               ["Hypnotised Player Cannot Escape", "On", "Auch Skips und fehlende Stimmen werden umgelenkt."],
-              ["Hypnosis Breaks When The Hypnotist Dies", "On", "Aus: die Stimme wird trotzdem umgelenkt."]
+              ["Hypnosis Breaks When The Hypnotist Dies", "On", "Aus: die Stimme wird trotzdem umgelenkt."],
+              ["Hypnotist Sees Through The Victim", "Peek", "Off, Peek (Knopf für 5 s) oder Until The Meeting."]
             ])
           }
         }
