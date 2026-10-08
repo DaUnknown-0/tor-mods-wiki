@@ -3,9 +3,15 @@
  * ==========================================================================*/
 (function () {
   "use strict";
+  // localStorage can throw (blocked site data, private mode): never let that stop the script.
+  const store = {
+    get(k) { try { return localStorage.getItem(k); } catch { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch {} },
+    del(k) { try { localStorage.removeItem(k); } catch {} },
+  };
 
   const LANG_KEY = "tormods-lang";
-  let lang = localStorage.getItem(LANG_KEY) || "en";
+  let lang = store.get(LANG_KEY) || "en";
   if (lang !== "en" && lang !== "de") lang = "en";
 
   const page = document.body.dataset.page; // "home" | "chance" | "useful" | ...
@@ -30,7 +36,7 @@
   function toggleTheme(ev) {
     const next = document.documentElement.dataset.theme === "light" ? "dark" : "light";
     const commit = () => {
-      localStorage.setItem(THEME_KEY, next);
+      store.set(THEME_KEY, next);
       applyTheme(next);
     };
     // circular reveal from the toggle button; the global reduced-motion CSS
@@ -68,7 +74,7 @@
   }
   function toggleFx() {
     const next = !fxOn();
-    localStorage.setItem(FX_KEY, next ? "on" : "off");
+    store.set(FX_KEY, next ? "on" : "off");
     applyFx(next);
   }
 
@@ -180,7 +186,7 @@
   function setLang(next) {
     if (next === lang) return;
     lang = next;
-    localStorage.setItem(LANG_KEY, lang);
+    store.set(LANG_KEY, lang);
     document.documentElement.lang = lang;
     renderAll();
   }
@@ -837,7 +843,7 @@
     wireBackTop();
     wireUcScramble();
     if (window.TORHERO) TORHERO.mount();
-    applyFx(localStorage.getItem(FX_KEY) !== "off"); // effects are on by default
+    applyFx(store.get(FX_KEY) !== "off"); // effects are on by default
     if (window.TORFX) TORFX.refresh(); // re-observe the freshly rendered DOM
     if (window.__updateScrolled) window.__updateScrolled();
     // keep scroll position stable on language switch

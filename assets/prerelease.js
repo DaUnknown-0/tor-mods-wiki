@@ -24,6 +24,12 @@
  * ==========================================================================*/
 (function () {
   "use strict";
+  // localStorage can throw (blocked site data, private mode): never let that stop the script.
+  const store = {
+    get(k) { try { return localStorage.getItem(k); } catch { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch {} },
+    del(k) { try { localStorage.removeItem(k); } catch {} },
+  };
 
   const STORE_KEY = "tormods-test-state";
   const UNLOCK_KEY = "tormods-test-unlocked";
@@ -824,23 +830,23 @@
     },
   };
 
-  const lang = () => (localStorage.getItem(LANG_KEY) === "de" ? "de" : "en");
+  const lang = () => (store.get(LANG_KEY) === "de" ? "de" : "en");
   const t = (k) => S[lang()][k] || S.en[k] || k;
   const L = (o) => (o ? (o[lang()] != null ? o[lang()] : o.en) : "");
 
   /* ----------------------------------------------------------------- state */
   function load() {
     try {
-      return JSON.parse(localStorage.getItem(STORE_KEY) || "{}") || {};
+      return JSON.parse(store.get(STORE_KEY) || "{}") || {};
     } catch {
       return {};
     }
   }
   function save(state) {
-    localStorage.setItem(STORE_KEY, JSON.stringify(state));
+    store.set(STORE_KEY, JSON.stringify(state));
   }
   let state = load();
-  let unlocked = localStorage.getItem(UNLOCK_KEY) === "1";
+  let unlocked = store.get(UNLOCK_KEY) === "1";
 
   /* ------------------------------------------------------- password checks */
   // Compact SHA-256 - stands in where crypto.subtle is unavailable (file://).
@@ -1053,7 +1059,7 @@
     const relock = document.getElementById("tRelock");
     if (relock) relock.addEventListener("click", () => {
       unlocked = false;
-      localStorage.removeItem(UNLOCK_KEY);
+      store.del(UNLOCK_KEY);
       render();
     });
 
@@ -1127,7 +1133,7 @@
       const got = await sha256(input.value);
       if (got === expected) {
         unlocked = true;
-        localStorage.setItem(UNLOCK_KEY, "1");
+        store.set(UNLOCK_KEY, "1");
         closePanel();
         render();
       } else {
