@@ -163,7 +163,7 @@ const CHANCE = {
   key: "chance",
   name: "Chance Modifier",
   fullName: { en: "TOR — Unknown Chaos (Chance Modifier)", de: "TOR — Unknown Chaos (Chance Modifier)" },
-  version: "1.2.24",
+  version: "1.3.0",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/TOR-Chance",
   download: "https://github.com/DaUnknown-0/TOR-Chance/releases/latest",
@@ -395,7 +395,7 @@ const USEFUL = {
   key: "useful",
   name: "Forgotten Fixes",
   fullName: { en: "TOR - Forgotten Fixes", de: "TOR - Forgotten Fixes" },
-  version: "1.4.14",
+  version: "1.5.0",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/Useful-TOR-stuff",
   download: "https://github.com/DaUnknown-0/Useful-TOR-stuff/releases/latest",
@@ -987,28 +987,30 @@ const USEFUL = {
               + tbl(["Option", "Range", "What it does"], [
                 ["Sabotage Tuning", "Off / On", "Master toggle. While off, all of the below behaves like vanilla."],
                 ["Minimum Cooldown (Reduction Floor)", "0–30 s", "Global lower bound the per-use reduction can never push a cooldown below."],
-                ["Reactor/Meltdown · Oxygen · Communications · Lights · Airship Crash — Cooldown", "10–60 s", "Independent cooldown for each sabotage type."],
+                ["Reactor/Meltdown · Oxygen · Communications · Lights · Airship Crash · Mushroom Mixup (Fungle) — Cooldown", "10–60 s", "Independent cooldown for each sabotage type."],
                 ["… Cooldown Reduction per Use", "0–15 s", "Each use of a type lowers <em>that</em> type's cooldown by X seconds (floored at the minimum, reset every meeting)."]
               ])
               + "<p>Only the <strong>deadly</strong> sabotages additionally get a configurable duration — the others run until they are fixed:</p>"
               + tbl(["Option", "Range", "What it does"], [
                 ["Reactor/Meltdown Duration", "10–90 s", "Reactor fix time (also the Polus laboratory)."],
                 ["Oxygen Duration", "10–90 s", "Oxygen depletion time (Skeld)."],
-                ["Airship Crash Duration", "10–120 s", "Crash-course countdown on the Airship."]
+                ["Airship Crash Duration", "10–120 s", "Crash-course countdown on the Airship."],
+                ["Duration Overrides", "Off / On", "Own switch for the three durations above; off = vanilla durations."]
               ])
               + "<p class='note'>Map-aware: each option only applies where that sabotage exists (Reactor and the Polus laboratory are one type). The per-use reduction is counted globally for all impostors, not just whoever triggered it. Cooldowns are enforced client-side, so they require every impostor to run the mod; durations are host-authoritative and apply to all clients. Mutually exclusive with the Chance modifier's sabotage-cooldown override — while Sabotage Tuning is on, the Chance override stands down (Sabotage Tuning takes precedence).</p>",
             de: "<p>Ersetzt den einzelnen, geteilten Sabotage-Cooldown von Among Us durch einen <strong>unabhängigen Timer pro Sabotage-Typ</strong>. Solange keine Sabotage aktiv ist, zählt jeder Timer für sich herunter; endet eine Sabotage, werden alle Timer wieder auf ihr Maximum gesetzt. Der Master-Toggle ist standardmäßig aus, sodass alles vanilla bleibt, bis du ihn aktivierst.</p>"
               + tbl(["Option", "Bereich", "Funktion"], [
                 ["Sabotage Tuning", "Off / On", "Master-Toggle. Solange aus, verhält sich alles Folgende wie Vanilla."],
                 ["Minimum Cooldown (Reduction Floor)", "0–30 s", "Globale Untergrenze, unter die die Reduktion einen Cooldown nie drücken kann."],
-                ["Reactor/Meltdown · Oxygen · Communications · Lights · Airship Crash — Cooldown", "10–60 s", "Unabhängiger Cooldown für jeden Sabotage-Typ."],
+                ["Reactor/Meltdown · Oxygen · Communications · Lights · Airship Crash · Mushroom Mixup (Fungle) — Cooldown", "10–60 s", "Unabhängiger Cooldown für jeden Sabotage-Typ."],
                 ["… Cooldown Reduction per Use", "0–15 s", "Jede Nutzung eines Typs senkt <em>dessen</em> Cooldown um X Sekunden (begrenzt durch das Minimum, Reset in jedem Meeting)."]
               ])
               + "<p>Nur die <strong>tödlichen</strong> Sabotagen bekommen zusätzlich eine einstellbare Dauer — die übrigen laufen, bis sie repariert werden:</p>"
               + tbl(["Option", "Bereich", "Funktion"], [
                 ["Reactor/Meltdown Duration", "10–90 s", "Reaktor-Fixzeit (auch das Polus-Labor)."],
                 ["Oxygen Duration", "10–90 s", "Sauerstoff-Auslaufzeit (Skeld)."],
-                ["Airship Crash Duration", "10–120 s", "Absturz-Countdown auf der Airship."]
+                ["Airship Crash Duration", "10–120 s", "Absturz-Countdown auf der Airship."],
+                ["Duration Overrides", "Off / On", "Eigener Schalter für die drei Dauern oben; aus = Vanilla-Dauern."]
               ])
               + "<p class='note'>Map-bewusst: Jede Option greift nur dort, wo es die Sabotage gibt (Reaktor und Polus-Labor sind ein Typ). Die Reduktion je Nutzung wird global für alle Impostoren gezählt, nicht nur für den Auslöser. Cooldowns wirken client-seitig und setzen daher voraus, dass jeder Impostor den Mod hat; Dauern sind host-autoritativ und gelten für alle Clients. Schließt sich mit dem Sabotage-Cooldown-Override des Chance-Modifiers gegenseitig aus — solange Sabotage Tuning an ist, tritt der Chance-Override zurück (Sabotage Tuning hat Vorrang).</p>"
           }
@@ -1083,17 +1085,19 @@ const USEFUL = {
             de: "Der Host würfelt die Impostor-Anzahl einmal pro Spiel zwischen Min und Max; jede sichtbare Fläche zeigt das Maximum, die echte Zahl bleibt geheim."
           },
           body: {
-            en: "<p>With <em>Random Impostor Count</em> on, the host rolls the actual Impostor count once per game between the configured minimum and maximum (each 1–3), right before roles are assigned. Secrecy is the point: lobby and intro always display the <strong>maximum</strong>, and the intro team view is additionally obscured when a single Impostor plus a possible Spy would give the number away. Because TOR normally enables the Spy only with 2+ Impostors (which itself would leak the roll), the Spy stays in the pool whenever the configured maximum is at least 2. Two mutually exclusive Sidekick modes hook in when TOR's \"Jackal Can Create A Sidekick\" is on: <em>Sidekick Only Fills A Missing Impostor</em> guarantees the Jackal the button exactly when fewer Impostors spawned than the maximum, and <em>Chance That The Jackal Can Create A Sidekick</em> rolls a per-game percentage instead.</p>" + tbl(["Option", "Default", "What it does"], [
+            en: "<p>With <em>Random Impostor Count</em> on, the host rolls the actual Impostor count once per game between the configured minimum and maximum (each 1–5; above 3 only makes sense in lobbies above 15 players), right before roles are assigned. Secrecy is the point: lobby and intro always display the <strong>maximum</strong>, and the intro team view is additionally obscured when a single Impostor plus a possible Spy would give the number away. Because TOR normally enables the Spy only with 2+ Impostors (which itself would leak the roll), the Spy stays in the pool whenever the configured maximum is at least 2. Two mutually exclusive Sidekick modes hook in when TOR's \"Jackal Can Create A Sidekick\" is on: <em>Sidekick Only Fills A Missing Impostor</em> guarantees the Jackal the button exactly when fewer Impostors spawned than the maximum, and <em>Chance That The Jackal Can Create A Sidekick</em> rolls a per-game percentage instead.</p>" + tbl(["Option", "Default", "What it does"], [
               ["Random Impostor Count", "Off", "Enables the random roll."],
-              ["Minimum Impostors", "1", "Lower bound of the roll (1–3)."],
-              ["Maximum Impostors", "2", "Upper bound of the roll and the number everyone sees (1–3)."],
+              ["Minimum Impostors", "1", "Lower bound of the roll (1–5)."],
+              ["Maximum Impostors", "2", "Upper bound of the roll and the number everyone sees (1–5)."],
+              ["Allow More Impostors Than Vanilla", "Off", "Off: the roll stays inside the vanilla table for the lobby size (up to 6 players 1, up to 8 players 2, up to 15 players 3, up to 20 players 4, above 5), because the count is secret and the crew cannot price in more."],
               ["Sidekick Only Fills A Missing Impostor", "Off", "Jackal gets the Sidekick button exactly when Impostors < Max."],
               ["Chance That The Jackal Can Create A Sidekick", "100%", "Per-game rolled chance (0–100); 100% = pure TOR behaviour."]
             ]),
-            de: "<p>Mit <em>Random Impostor Count</em> würfelt der Host die tatsächliche Impostor-Anzahl einmal pro Spiel zwischen konfiguriertem Minimum und Maximum (je 1–3), direkt bevor die Rollen vergeben werden. Die Geheimhaltung ist der Kern: Lobby und Intro zeigen immer das <strong>Maximum</strong>, und die Intro-Team-Anzeige wird zusätzlich verschleiert, wenn ein einzelner Impostor plus möglicher Spy die Zahl verraten würde. Weil TOR den Spy normalerweise nur bei 2+ Impostoren aktiviert (was selbst schon den Wurf leaken würde), bleibt der Spy im Pool, sobald das konfigurierte Maximum mindestens 2 ist. Zwei sich ausschließende Sidekick-Modi greifen, wenn TORs \"Jackal Can Create A Sidekick\" an ist: <em>Sidekick Only Fills A Missing Impostor</em> garantiert dem Jackal den Button genau dann, wenn weniger Impostoren gespawnt sind als das Maximum, und <em>Chance That The Jackal Can Create A Sidekick</em> würfelt stattdessen eine Pro-Spiel-Prozentchance.</p>" + tbl(["Option", "Standard", "Funktion"], [
+            de: "<p>Mit <em>Random Impostor Count</em> würfelt der Host die tatsächliche Impostor-Anzahl einmal pro Spiel zwischen konfiguriertem Minimum und Maximum (je 1–5; über 3 nur in Lobbys über 15 Spielern sinnvoll), direkt bevor die Rollen vergeben werden. Die Geheimhaltung ist der Kern: Lobby und Intro zeigen immer das <strong>Maximum</strong>, und die Intro-Team-Anzeige wird zusätzlich verschleiert, wenn ein einzelner Impostor plus möglicher Spy die Zahl verraten würde. Weil TOR den Spy normalerweise nur bei 2+ Impostoren aktiviert (was selbst schon den Wurf leaken würde), bleibt der Spy im Pool, sobald das konfigurierte Maximum mindestens 2 ist. Zwei sich ausschließende Sidekick-Modi greifen, wenn TORs \"Jackal Can Create A Sidekick\" an ist: <em>Sidekick Only Fills A Missing Impostor</em> garantiert dem Jackal den Button genau dann, wenn weniger Impostoren gespawnt sind als das Maximum, und <em>Chance That The Jackal Can Create A Sidekick</em> würfelt stattdessen eine Pro-Spiel-Prozentchance.</p>" + tbl(["Option", "Standard", "Funktion"], [
               ["Random Impostor Count", "Off", "Aktiviert den Zufalls-Wurf."],
-              ["Minimum Impostors", "1", "Untergrenze des Wurfs (1–3)."],
-              ["Maximum Impostors", "2", "Obergrenze des Wurfs und die Zahl, die alle sehen (1–3)."],
+              ["Minimum Impostors", "1", "Untergrenze des Wurfs (1–5)."],
+              ["Maximum Impostors", "2", "Obergrenze des Wurfs und die Zahl, die alle sehen (1–5)."],
+              ["Allow More Impostors Than Vanilla", "Off", "Aus: der Wurf bleibt im Vanilla-Rahmen der Lobbygröße (bis 6 Spieler 1, bis 8 Spieler 2, bis 15 Spieler 3, bis 20 Spieler 4, darüber 5), weil die Zahl geheim ist und die Crew mehr nicht einplanen kann."],
               ["Sidekick Only Fills A Missing Impostor", "Off", "Jackal bekommt den Sidekick-Button genau dann, wenn Impostoren < Max."],
               ["Chance That The Jackal Can Create A Sidekick", "100%", "Pro Spiel gewürfelte Chance (0–100); 100% = pures TOR-Verhalten."]
             ])
@@ -1472,6 +1476,98 @@ const USEFUL = {
       ]
     },
     {
+      id: "lobby-ui",
+      title: { en: "Lobby menu, new look and Mod Manager", de: "Lobby-Menü, neuer Look und Mod Manager" },
+      intro: {
+        en: "One menu tile in the lobby, one theme for every panel, modpacks, a restart button and separate save files.",
+        de: "Eine Menü-Kachel in der Lobby, ein Design für alle Panels, Modpacks, ein Neustart-Knopf und eigene Speicherdateien."
+      },
+      entries: [
+        {
+          id: "ui-look",
+          title: { en: "A new look for every panel", de: "Neuer Look für alle Panels" },
+          summary: {
+            en: "Every screen shares one theme in the game's visual language.",
+            de: "Alle Fenster teilen ein Design in der Bildsprache des Spiels."
+          },
+          body: {
+            en: "<p>Every screen of Forgotten Fixes shares one theme that borrows the game's visual language without copying it: deep-blue cards with a thick pale outline and a hard drop shadow, slanted title tabs like the section headers of the game settings, capsule buttons, the game's own fonts and a red X to close. It applies to the lobby menu, both shields, session stats, round replay, Mod Sync, the password gate, the ghost kill feed and the Mod Manager; the browser settings editor uses the same palette. Escape closes every panel from the inside out.</p>",
+            de: "<p>Alle Fenster von Forgotten Fixes teilen ein Design, das die Bildsprache des Spiels aufnimmt, ohne sie zu kopieren: tiefblaue Karten mit dickem, hellem Rand und hartem Schatten, schräge Titelreiter wie die Abschnittsköpfe der Spieleinstellungen, Kapselknöpfe, die Schriften des Spiels und ein rotes X zum Schließen. Das gilt für das Lobby-Menü, beide Schilde, die Statistik, den Rückblick, den Mod-Abgleich, das Passwort-Gate, den Kill-Feed für Geister und den Mod Manager; der Einstellungs-Editor im Browser nutzt dieselbe Palette. Escape schließt jedes Panel von innen nach außen.</p>"
+          }
+        },
+        {
+          id: "lobby-menu",
+          title: { en: "The lobby menu", de: "Das Lobby-Menü" },
+          summary: {
+            en: "One tile in the bottom-left corner opens every lobby panel; Tab toggles it.",
+            de: "Eine Kachel unten links öffnet alle Lobby-Panels; Tab schaltet sie um."
+          },
+          body: {
+            en: "<p>The row of lobby buttons is gone. One tile in the bottom-left corner (the game's own corner tile with a menu glyph) opens a menu with every panel: Newcomer shield, Early-death shield, Session stats, Replay last round and, with Unknown's Collection, Change player colours. <strong>Tab</strong> opens and closes it (not while the chat is open). A counter on the tile shows the players the newcomer shield marks as new and, for the host, those who get the pink early-death shield next round. Player names in both shield panels open the session statistics for that player. The Mod Sync button for guests is a tile too, with a download arrow and a counter.</p>",
+            de: "<p>Die Reihe der Lobby-Knöpfe ist weg. Eine Kachel unten links (die Eckkachel des Spiels mit Menü-Symbol) öffnet ein Menü mit allen Panels: Newcomer-Schild, Frühtod-Schild, Session-Statistik, Rückblick auf die letzte Runde und mit Unknown's Collection die Farbvergabe. <strong>Tab</strong> öffnet und schließt es (nicht bei offenem Chat). Ein Zähler auf der Kachel zeigt die Spieler, die der Newcomer-Schild als neu markiert, und dem Host die, die nächste Runde den pinken Frühtod-Schild bekommen. Spielernamen in beiden Schild-Panels öffnen die Statistik dieses Spielers. Der Mod-Abgleich-Knopf für Gäste ist ebenfalls eine Kachel mit Download-Pfeil und Zähler.</p>"
+          }
+        },
+        {
+          id: "modpacks",
+          title: { en: "Mod Manager: all mods, modpacks, restart", de: "Mod Manager: alle Mods, Modpacks, Neustart" },
+          summary: {
+            en: "See every mod of the family, share your set-up as one line of text and restart straight from the game.",
+            de: "Alle Mods der Familie sehen, die eigene Zusammenstellung als eine Textzeile teilen und direkt aus dem Spiel neu starten."
+          },
+          body: {
+            en: "<p><strong>All mods</strong> lists every mod of this family with its state (running, switched off, not installed) and a download button for the newest release, or the newest prerelease with test versions on. <strong>Modpacks</strong> saves the current set-up as a pack, applies a pack (downloads the newest release of every mod in it, switches those on and the other family mods off) and copies a pack as a code such as <code>UTSPACK1:Modpack%201:1,3*,4</code>; a star marks the newest prerelease. Only catalog ids travel in a code, never URLs or file names. Packs live in <code>BepInEx/config/UTSModpacks.txt</code>; Mod Sync can save the host's set-up as a pack.</p><p><strong>Restart now</strong> appears in the Mod Manager and Mod Sync as soon as something waits for the next start. It remembers the lobby, closes the game and starts it again with all mods and the same launch settings. The MOD MANAGER button in the main menu shows a counter of available updates.</p>",
+            de: "<p><strong>All mods</strong> listet jede Mod der Familie mit ihrem Zustand (läuft, abgeschaltet, nicht installiert) und einem Download-Knopf für den neuesten Release, mit eingeschalteten Testversionen für den neuesten Prerelease. <strong>Modpacks</strong> speichert die aktuelle Zusammenstellung als Pack, wendet ein Pack an (lädt den neuesten Release jeder enthaltenen Mod, schaltet sie an und die übrigen Familien-Mods ab) und kopiert ein Pack als Code wie <code>UTSPACK1:Modpack%201:1,3*,4</code>; ein Stern steht für den neuesten Prerelease. In einem Code reisen nur Katalog-IDs, nie URLs oder Dateinamen. Packs liegen in <code>BepInEx/config/UTSModpacks.txt</code>; der Mod-Abgleich kann die Zusammenstellung des Hosts als Pack speichern.</p><p><strong>Restart now</strong> erscheint im Mod Manager und im Mod-Abgleich, sobald etwas auf den nächsten Start wartet. Es merkt sich die Lobby, schließt das Spiel und startet es mit allen Mods und denselben Starteinstellungen neu. Der MOD-MANAGER-Knopf im Hauptmenü zeigt einen Zähler verfügbarer Updates.</p>"
+          }
+        },
+        {
+          id: "savefiles",
+          title: { en: "Own save files for the modded game", de: "Eigene Speicherdateien für das gemoddete Spiel" },
+          summary: {
+            en: "settings.amogus_TOR and player.amogus_TOR keep the modded game's settings apart from a plain Among Us.",
+            de: "settings.amogus_TOR und player.amogus_TOR halten die Einstellungen des gemoddeten Spiels getrennt vom normalen Among Us."
+          },
+          body: {
+            en: "<p>A modded and a plain Among Us on the same computer used to share <code>settings.amogus</code> and <code>player.amogus</code>, so each picked up the other's host settings. With Forgotten Fixes the modded game uses its own <code>settings.amogus_TOR</code> and <code>player.amogus_TOR</code>, copied once from the plain files on the first start so name, cosmetics and settings carry over. The statistics file stays shared. Config option <em>SaveFiles / Separate</em> (on); switching it off goes back to the plain files.</p>",
+            de: "<p>Ein gemoddetes und ein normales Among Us auf demselben Rechner teilten sich <code>settings.amogus</code> und <code>player.amogus</code>, jedes übernahm die Host-Einstellungen des anderen. Mit Forgotten Fixes nutzt das gemoddete Spiel eigene Dateien <code>settings.amogus_TOR</code> und <code>player.amogus_TOR</code>, beim ersten Start einmal aus den normalen kopiert, damit Name, Kosmetik und Einstellungen mitkommen. Die Statistikdatei bleibt gemeinsam. Config-Option <em>SaveFiles / Separate</em> (an); abgeschaltet gelten wieder die normalen Dateien.</p>"
+          }
+        },
+        {
+          id: "colorblind-names",
+          title: { en: "Colour names for colourblind players", de: "Farbnamen für Farbenblinde" },
+          summary: {
+            en: "With the game's Colorblind Mode on, map dots and the Hacker's admin table carry colour names.",
+            de: "Mit dem Farbenblind-Modus des Spiels tragen Kartenpunkte und der Admin-Tisch des Hackers Farbnamen."
+          },
+          body: {
+            en: "<p>With the game's own Colorblind Mode switched on, the dots TOR shows on the map (ghosts see everyone, the Trapper's trapped players, the Snitch's evil players) carry the colour name underneath, and every tinted icon on the Hacker's admin table does too (\"Light\"/\"Dark\" in the light/dark mode). The Trapper's anonymous map stays anonymous. Only players who switched the mode on see a change.</p>",
+            de: "<p>Mit eingeschaltetem Farbenblind-Modus des Spiels tragen die Punkte, die TOR auf der Karte zeigt (Geister sehen alle, die gefangenen Spieler des Trappers, die bösen Spieler des Snitch), den Farbnamen darunter, ebenso jedes eingefärbte Symbol am Admin-Tisch des Hackers (\"Light\"/\"Dark\" im Hell/Dunkel-Modus). Die anonyme Karte des Trappers bleibt anonym. Nur wer den Modus selbst eingeschaltet hat, sieht eine Änderung.</p>"
+          }
+        }
+      ]
+    },
+    {
+      id: "big-lobbies",
+      title: { en: "Big lobbies", de: "Große Lobbys" },
+      intro: {
+        en: "More than 15 players: lobby size, meeting layout and Impostor count.",
+        de: "Mehr als 15 Spieler: Lobbygröße, Meeting-Raster und Impostor-Anzahl."
+      },
+      entries: [
+        {
+          id: "lobby-size",
+          title: { en: "Lobby size above 15 (experimental)", de: "Lobbygröße über 15 (experimentell)" },
+          summary: {
+            en: "Up to 25 players with /size; only the host needs the mod.",
+            de: "Bis 25 Spieler mit /size; nur der Host braucht den Mod."
+          },
+          body: {
+            en: "<p><em>Maximum Lobby Size (/size)</em> (option 1378, General tab, 15 to 25, default 15) raises the limit; then type <code>/size 20</code> in the chat. TOR still answers with its 15, our line \"Lobby size set to N (limit M)\" follows. Only the host needs this; the operators of the modded servers called 20 to 25 players unproblematic. If the game sets a smaller value again, it is restored at most every 10 s.</p><p>From 16 players on the <strong>meeting</strong> repacks its cards into as many columns as needed for five rows (4 columns up to 20 players, 5 up to 25), scaled to fit the panel; up to 15 nothing changes and nobody else needs the mod for it. Minimum and Maximum Impostors go up to 5 for such lobbies.</p>",
+            de: "<p><em>Maximum Lobby Size (/size)</em> (Option 1378, Reiter General, 15 bis 25, Standard 15) hebt das Limit; danach im Chat <code>/size 20</code> tippen. TOR antwortet weiter mit seinen 15, danach folgt unsere Zeile \"Lobby size set to N (limit M)\". Nur der Host braucht das; die Betreiber der Mod-Server nannten 20 bis 25 Spieler unproblematisch. Setzt das Spiel einen kleineren Wert zurück, wird er höchstens alle 10 s wiederhergestellt.</p><p>Ab 16 Spielern ordnet das <strong>Meeting</strong> die Karten in so viele Spalten um, wie für fünf Zeilen nötig sind (4 Spalten bis 20 Spieler, 5 bis 25), passend skaliert; bis 15 ändert sich nichts, und niemand sonst braucht dafür den Mod. Minimum und Maximum Impostors gehen für solche Lobbys bis 5.</p>"
+          }
+        }
+      ]
+    },
+    {
       id: "manager",
       title: { en: "Mod Manager & version handshake", de: "Mod Manager & Versions-Handshake" },
       entries: [
@@ -1525,7 +1621,7 @@ const UNKNOWNS = {
   key: "unknowns",
   name: "Unknown's Collection",
   fullName: { en: "Unknown's Collection — custom roles for TOR", de: "Unknown's Collection — eigene Rollen für TOR" },
-  version: "1.2.9",
+  version: "1.3.0",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/UnknownsCollection",
   download: "https://github.com/DaUnknown-0/UnknownsCollection/releases/latest",
@@ -1534,8 +1630,8 @@ const UNKNOWNS = {
     de: "Brandneue eigene Rollen für The Other Roles, aufgesetzt ohne Änderung an TORs Quellcode. Impostor: The Tesla, The Saboteur, The Silencer, The Poisoner, The Illusionist, The Maniac, The Shade, The Manipulator, The Werewolf, The Auditor, The Hypnotist & The Skinwalker. Crewmate: The Siphoner, The Witness, The Scout, The Beacon, The Hunter, The King, The Paramedic, The Surveyor & The Mixer. Neutral: The Bug, The Follower, The Copycat, The Collector, The Pelican, The Necromancer & The Stalker. Geist: The Poltergeist. Modifier: The Gambler, Void, Sleepwalker, Last Words, Sixth Sense, Colorblind & The Giant. Dazu Kill-Cutscenes, eigene Hüte und ein Rollen-Guide in 26 Sprachen."
   },
   intro: {
-    en: "Unknown's Collection is a separate plugin that adds <strong>new roles</strong> to TOR 4.8.0 purely through Harmony patches — TOR's source is never modified, and the only hard dependency is The Other Roles. The roles are client-side, so the lobby can only be started when every player runs the same Unknown's Collection version. Current roles — Impostor: <strong>The Tesla</strong>, <strong>The Saboteur</strong>, <strong>The Silencer</strong>, <strong>The Poisoner</strong>, <strong>The Illusionist</strong>, <strong>The Maniac</strong>, <strong>The Shade</strong>, <strong>The Manipulator</strong>, <strong>The Werewolf</strong>, <strong>The Auditor</strong>, <strong>The Hypnotist</strong> and <strong>The Skinwalker</strong>; Crewmate: <strong>The Siphoner</strong>, <strong>The Witness</strong>, <strong>The Scout</strong>, <strong>The Beacon</strong>, <strong>The Hunter</strong> (a mid-round promotion in Werewolf rounds), <strong>The King</strong>, <strong>The Paramedic</strong>, <strong>The Surveyor</strong> and <strong>The Mixer</strong>; Neutral: <strong>The Bug</strong>, <strong>The Follower</strong>, <strong>The Copycat</strong>, <strong>The Collector</strong>, <strong>The Pelican</strong>, <strong>The Necromancer</strong> and <strong>The Stalker</strong>; plus <strong>The Poltergeist</strong> (a ghost role the first dead player rises into) and seven modifiers: <strong>The Gambler</strong>, <strong>Void</strong>, <strong>Sleepwalker</strong>, <strong>Last Words</strong>, <strong>Sixth Sense</strong>, <strong>Colorblind</strong> and <strong>The Giant</strong>. All Impostor roles, the Collector, the Pelican, the Werewolf, the Paramedic, the Surveyor and the Mixer are pickable in TOR's Role Draft. Beyond roles, 1.2.0 adds custom kill cutscenes, three custom hats and a searchable role guide in 26 languages; since 1.0.1.60 every ability comes with dedicated particle effects and positional stereo sound.",
-    de: "Unknown's Collection ist ein eigenständiges Plugin, das TOR 4.8.0 <strong>neue Rollen</strong> rein über Harmony-Patches hinzufügt — TORs Quellcode wird nie verändert, einzige harte Abhängigkeit ist The Other Roles. Die Rollen sind client-seitig, daher kann die Lobby nur gestartet werden, wenn alle Spieler dieselbe Unknown's-Collection-Version haben. Aktuelle Rollen — Impostor: <strong>The Tesla</strong>, <strong>The Saboteur</strong>, <strong>The Silencer</strong>, <strong>The Poisoner</strong>, <strong>The Illusionist</strong>, <strong>The Maniac</strong>, <strong>The Shade</strong>, <strong>The Manipulator</strong>, <strong>The Werewolf</strong>, <strong>The Auditor</strong>, <strong>The Hypnotist</strong> und <strong>The Skinwalker</strong>; Crewmate: <strong>The Siphoner</strong>, <strong>The Witness</strong>, <strong>The Scout</strong>, <strong>The Beacon</strong>, <strong>The Hunter</strong> (eine Beförderung mitten in Werewolf-Runden), <strong>The King</strong>, <strong>The Paramedic</strong>, <strong>The Surveyor</strong> und <strong>The Mixer</strong>; Neutral: <strong>The Bug</strong>, <strong>The Follower</strong>, <strong>The Copycat</strong>, <strong>The Collector</strong>, <strong>The Pelican</strong>, <strong>The Necromancer</strong> und <strong>The Stalker</strong>; dazu <strong>The Poltergeist</strong> (eine Geist-Rolle, in die der erste Tote aufsteigt) und sieben Modifier: <strong>The Gambler</strong>, <strong>Void</strong>, <strong>Sleepwalker</strong>, <strong>Last Words</strong>, <strong>Sixth Sense</strong>, <strong>Colorblind</strong> und <strong>The Giant</strong>. Alle Impostor-Rollen, der Collector, der Pelican, der Werewolf, der Paramedic, der Surveyor und der Mixer sind im Role Draft von TOR wählbar. Über Rollen hinaus bringt 1.2.0 eigene Kill-Cutscenes, drei eigene Hüte und einen durchsuchbaren Rollen-Guide in 26 Sprachen; seit 1.0.1.60 hat jede Fähigkeit eigene Partikeleffekte und positionalen Stereo-Sound."
+    en: "Unknown's Collection is a separate plugin that adds <strong>new roles</strong> to TOR 4.8.0 purely through Harmony patches — TOR's source is never modified, and the only hard dependency is The Other Roles. The roles are client-side, so the lobby can only be started when every player runs the same Unknown's Collection version. Current roles — Impostor: <strong>The Tesla</strong>, <strong>The Saboteur</strong>, <strong>The Silencer</strong>, <strong>The Poisoner</strong>, <strong>The Illusionist</strong>, <strong>The Maniac</strong>, <strong>The Shade</strong>, <strong>The Manipulator</strong>, <strong>The Werewolf</strong>, <strong>The Auditor</strong>, <strong>The Hypnotist</strong>, <strong>The Skinwalker</strong> and <strong>The Faker</strong>; Crewmate: <strong>The Siphoner</strong>, <strong>The Witness</strong>, <strong>The Scout</strong>, <strong>The Beacon</strong>, <strong>The Hunter</strong> (a mid-round promotion in Werewolf rounds), <strong>The King</strong>, <strong>The Paramedic</strong>, <strong>The Surveyor</strong> and <strong>The Mixer</strong>; Neutral: <strong>The Bug</strong>, <strong>The Follower</strong>, <strong>The Copycat</strong>, <strong>The Collector</strong>, <strong>The Pelican</strong>, <strong>The Necromancer</strong> and <strong>The Stalker</strong>; plus <strong>The Poltergeist</strong> (a ghost role the first dead player rises into) and seven modifiers: <strong>The Gambler</strong>, <strong>Void</strong>, <strong>Sleepwalker</strong>, <strong>Last Words</strong>, <strong>Sixth Sense</strong>, <strong>Colorblind</strong> and <strong>The Giant</strong>. All Impostor roles, the Collector, the Pelican, the Werewolf, the Paramedic, the Surveyor and the Mixer are pickable in TOR's Role Draft. Beyond roles, 1.2.0 adds custom kill cutscenes, three custom hats and a searchable role guide in 26 languages; since 1.0.1.60 every ability comes with dedicated particle effects and positional stereo sound.",
+    de: "Unknown's Collection ist ein eigenständiges Plugin, das TOR 4.8.0 <strong>neue Rollen</strong> rein über Harmony-Patches hinzufügt — TORs Quellcode wird nie verändert, einzige harte Abhängigkeit ist The Other Roles. Die Rollen sind client-seitig, daher kann die Lobby nur gestartet werden, wenn alle Spieler dieselbe Unknown's-Collection-Version haben. Aktuelle Rollen — Impostor: <strong>The Tesla</strong>, <strong>The Saboteur</strong>, <strong>The Silencer</strong>, <strong>The Poisoner</strong>, <strong>The Illusionist</strong>, <strong>The Maniac</strong>, <strong>The Shade</strong>, <strong>The Manipulator</strong>, <strong>The Werewolf</strong>, <strong>The Auditor</strong>, <strong>The Hypnotist</strong>, <strong>The Skinwalker</strong> und <strong>The Faker</strong>; Crewmate: <strong>The Siphoner</strong>, <strong>The Witness</strong>, <strong>The Scout</strong>, <strong>The Beacon</strong>, <strong>The Hunter</strong> (eine Beförderung mitten in Werewolf-Runden), <strong>The King</strong>, <strong>The Paramedic</strong>, <strong>The Surveyor</strong> und <strong>The Mixer</strong>; Neutral: <strong>The Bug</strong>, <strong>The Follower</strong>, <strong>The Copycat</strong>, <strong>The Collector</strong>, <strong>The Pelican</strong>, <strong>The Necromancer</strong> und <strong>The Stalker</strong>; dazu <strong>The Poltergeist</strong> (eine Geist-Rolle, in die der erste Tote aufsteigt) und sieben Modifier: <strong>The Gambler</strong>, <strong>Void</strong>, <strong>Sleepwalker</strong>, <strong>Last Words</strong>, <strong>Sixth Sense</strong>, <strong>Colorblind</strong> und <strong>The Giant</strong>. Alle Impostor-Rollen, der Collector, der Pelican, der Werewolf, der Paramedic, der Surveyor und der Mixer sind im Role Draft von TOR wählbar. Über Rollen hinaus bringt 1.2.0 eigene Kill-Cutscenes, drei eigene Hüte und einen durchsuchbaren Rollen-Guide in 26 Sprachen; seit 1.0.1.60 hat jede Fähigkeit eigene Partikeleffekte und positionalen Stereo-Sound."
   },
   install: {
     en: "<ol><li>Install <a href='https://github.com/TheOtherRolesAU/TheOtherRoles'>The Other Roles</a> into your Among Us BepInEx setup.</li><li>Download the latest <code>UnknownsCollection.dll</code> from the releases page.</li><li>Copy it into <code>&lt;Among Us&gt;/BepInEx/plugins/</code> (next to <code>TheOtherRoles.dll</code>).</li><li>Start the game. Every player who should see the role needs the mod — same version.</li></ol><p>A channel-aware in-game auto-updater checks GitHub and integrates with the Mod Manager (from Forgotten Fixes).</p>",
@@ -3739,6 +3835,51 @@ const UNKNOWNS = {
       ]
     },
     {
+      id: "faker",
+      title: { en: "The Faker (Impostor)", de: "The Faker (Impostor)" },
+      intro: {
+        en: "Lays a fake body of a living player and forces a meeting with it.",
+        de: "Legt eine falsche Leiche eines lebenden Spielers und erzwingt damit ein Meeting."
+      },
+      entries: [
+        {
+          id: "faker-how",
+          title: { en: "How it works", de: "So funktioniert es" },
+          summary: {
+            en: "FAKE BODY lays the body of the chosen victim where the Faker stands; whoever reports it starts a normal meeting.",
+            de: "FAKE BODY legt die Leiche des gewählten Opfers dort ab, wo der Faker steht; wer sie meldet, startet ein normales Meeting."
+          },
+          body: {
+            en: "<p>The Faker has two buttons. <strong>FAKE BODY</strong> (F) lays a body of the chosen victim where he stands. The second button (H) picks the victim: it cycles through all living players, himself and fellow Impostors included, so the victim can be anywhere on the map and the Faker never has to walk up to anyone. The label shows the victim's name in their colour; a random victim is preselected at round start.</p><p>Whoever reports the fake body starts a normal meeting: the intro announces the victim as dead, then the meeting list shows the victim alive. The point is the forced meeting and the confusion, not a lasting lie. Only one fake body per player exists at a time. It vanishes after its lifetime, at the next meeting, or when the victim really dies. Cleaners clear it away without it counting for the Vulture.</p><p>The Faker cannot report his own fake body, unless the host allows it (in Freeplay it is always allowed, so a solo test works).</p>",
+            de: "<p>Der Faker hat zwei Knöpfe. <strong>FAKE BODY</strong> (F) legt eine Leiche des gewählten Opfers dort ab, wo er steht. Der zweite Knopf (H) wählt das Opfer: er geht alle lebenden Spieler durch, ihn selbst und die anderen Impostor eingeschlossen, damit das Opfer überall auf der Karte sein kann und der Faker zu niemandem hinlaufen muss. Die Beschriftung zeigt den Namen des Opfers in seiner Farbe; zum Rundenstart ist ein zufälliges Opfer vorgewählt.</p><p>Wer die falsche Leiche meldet, startet ein normales Meeting: das Intro nennt das Opfer tot, danach zeigt die Meeting-Liste es lebend. Es geht um das erzwungene Meeting und die Verwirrung, nicht um eine dauerhafte Lüge. Pro Spieler liegt immer nur eine falsche Leiche. Sie verschwindet nach ihrer Lebensdauer, beim nächsten Meeting oder wenn das Opfer wirklich stirbt. Cleaner räumen sie weg, ohne dass sie für den Vulture zählt.</p><p>Der Faker kann seine eigene falsche Leiche nicht melden, außer der Host erlaubt es (im Freeplay immer, damit ein Solotest funktioniert).</p>"
+          }
+        },
+        {
+          id: "faker-options",
+          title: { en: "Options", de: "Optionen" },
+          summary: { en: "Cooldown, number and lifetime of the fake bodies.", de: "Cooldown, Anzahl und Lebensdauer der falschen Leichen." },
+          body: {
+            en: tbl(["Option", "Default", "What it does"], [
+              ["Faker", "Off", "Spawn chance (Impostor)."],
+              ["Faker Minimum Players To Spawn", "6", "Not assigned below this lobby size."],
+              ["Fake Body Cooldown (s)", "30 s", "10 to 90 s."],
+              ["Fake Bodies Per Game", "2", "1 to 5."],
+              ["Fake Body Lifetime (s)", "40 s", "10 to 120 s."],
+              ["Faker Can Report His Own Fake Body", "Off", "Lifts the rule that he cannot report his own fake body."]
+            ]),
+            de: tbl(["Option", "Standard", "Funktion"], [
+              ["Faker", "Off", "Spawn-Chance (Impostor)."],
+              ["Faker Minimum Players To Spawn", "6", "Wird unter dieser Lobby-Größe nicht vergeben."],
+              ["Fake Body Cooldown (s)", "30 s", "10 bis 90 s."],
+              ["Fake Bodies Per Game", "2", "1 bis 5."],
+              ["Fake Body Lifetime (s)", "40 s", "10 bis 120 s."],
+              ["Faker Can Report His Own Fake Body", "Off", "Hebt die Regel auf, dass er seine eigene falsche Leiche nicht melden darf."]
+            ])
+          }
+        }
+      ]
+    },
+    {
       id: "skinwalker",
       title: { en: "The Skinwalker (Impostor)", de: "The Skinwalker (Impostor)" },
       intro: {
@@ -3858,14 +3999,24 @@ const UNKNOWNS = {
         },
         {
           id: "uc-killcutscenes-toggles",
-          title: { en: "Local toggles", de: "Lokale Toggles" },
+          title: { en: "Host options", de: "Host-Optionen" },
           summary: {
-            en: "Two local switches in the UC options popup: UC scenes default on, TOR scenes default off. Deliberately not host-synced, it is a per-player viewing preference.",
-            de: "Zwei lokale Schalter im UC-Options-Popup: UC-Szenen standardmäßig an, TOR-Szenen standardmäßig aus. Bewusst nicht host-synced, es ist eine Per-Spieler-Sichtpräferenz."
+            en: "The host decides for the whole lobby: UC scenes on, TOR scenes off by default, with one switch per role.",
+            de: "Der Host entscheidet für die ganze Lobby: UC-Szenen standardmäßig an, TOR-Szenen aus, mit einem Schalter je Rolle."
           },
           body: {
-            en: "<p>Both groups have their own toggle in the UC options popup: <em>UC kill animations</em> (default on) and <em>TOR kill animations</em> (default off). The toggles are local per player and deliberately not host-synced: whether you want to watch cutscenes changes nothing about the game state, so it stays your own choice. Note that the toggle must be enabled on the <em>viewer's</em> client; a victim with the toggle off simply gets the vanilla animation.</p>",
-            de: "<p>Beide Gruppen haben einen eigenen Schalter im UC-Options-Popup: <em>UC-Kill-Animationen</em> (standardmäßig an) und <em>TOR-Kill-Animationen</em> (standardmäßig aus). Die Schalter sind lokal pro Spieler und bewusst nicht host-synced: Ob du Cutscenes sehen willst, ändert nichts am Spielzustand, also bleibt es deine eigene Wahl. Der Schalter muss auf dem Client des <em>Zuschauers</em> an sein; ein Opfer mit abgeschaltetem Toggle bekommt einfach die Vanilla-Animation.</p>"
+            en: "<p>Since 1.3.0 the kill animations are host options in the TOR settings (General, block \"Unknown's Collection\") and apply to everybody in the lobby; the old local switches are gone. A scene plays when both its family and its role are on. Every scene has the red band of the vanilla kill overlay and a stage shake on every hit.</p>" + tbl(["Option", "Default", "What it does"], [
+              ["UC Role Kill Animations (1800)", "On", "Family switch for the UC scenes."],
+              ["1801-1808", "On", "Tesla, Saboteur Task Kill, Poisoner, Shade, Maniac Bomb, Werewolf, Monster Hunter, Pelican."],
+              ["TOR Role Kill Animations (1810)", "Off", "Family switch for the TOR scenes."],
+              ["1811-1820", "On", "Sheriff, Vampire, Warlock, Witch, Ninja, Bomber, Guesser, Thief, Jackal, Bounty Hunter."]
+            ]),
+            de: "<p>Seit 1.3.0 sind die Kill-Animationen Host-Optionen in den TOR-Einstellungen (General, Block \"Unknown's Collection\") und gelten für alle in der Lobby; die alten lokalen Schalter sind weg. Eine Szene läuft, wenn ihre Familie und ihre Rolle an sind. Jede Szene hat das rote Band des Vanilla-Kill-Overlays und bei jedem Treffer ein Wackeln der Bühne.</p>" + tbl(["Option", "Standard", "Funktion"], [
+              ["UC Role Kill Animations (1800)", "On", "Familienschalter für die UC-Szenen."],
+              ["1801-1808", "On", "Tesla, Saboteur Task Kill, Poisoner, Shade, Maniac Bomb, Werewolf, Monster Hunter, Pelican."],
+              ["TOR Role Kill Animations (1810)", "Off", "Familienschalter für die TOR-Szenen."],
+              ["1811-1820", "On", "Sheriff, Vampire, Warlock, Witch, Ninja, Bomber, Guesser, Thief, Jackal, Bounty Hunter."]
+            ])
           }
         }
       ]
@@ -4370,7 +4521,7 @@ const ATLAS = {
   key: "atlas",
   name: "Unknown's Atlas",
   fullName: { en: "Unknown's Atlas: new maps for Among Us", de: "Unknown's Atlas: neue Karten für Among Us" },
-  version: "0.3.0.21",
+  version: "1.0.0",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/UnknownsAtlas",
   download: "https://github.com/DaUnknown-0/UnknownsAtlas/releases",
@@ -4419,8 +4570,8 @@ const ATLAS = {
           title: { en: "Moonlight Carnival", de: "Moonlight Carnival" },
           summary: { en: "An amusement park after closing time: rides that keep running, one-way turnstiles and a pitch-dark ghost train.", de: "Ein Freizeitpark nach Ladenschluss: Fahrgeschäfte, die weiterlaufen, Einbahn-Drehkreuze und eine stockdunkle Geisterbahn." },
           body: {
-            en: "<p>44 x 39 m, cheerful and a bit creepy. The 14 Skeld areas plus four attractions of its own: ghost train, hall of mirrors, log flume and main gate. The map is about distraction and paths that change: every half minute a ride starts and briefly blocks a way (see Living maps). The turnstiles at the main gate only let you through in one direction, and the ghost train is dark inside. Fourteen vents in three rings, lanterns along the paths that go out in a blackout while the neon signs keep glowing.</p>" + tbl(["Sabotage", "In the carnival"], [["Reactor", "Coaster Brake Failure: follow the moving brake at both consoles"], ["Oxygen", "Ammonia Leak: set the valves by plan, at both consoles"], ["Lights", "Park Blackout: replace the blown bulbs"], ["Comms", "Speaker Feedback: aim and gain until the sound is clean"], ["Extra", "Ride Override: an impostor starts a coaster run at once"]]),
-            de: "<p>44 x 39 m, heiter und ein bisschen gruselig. Die 14 Skeld-Bereiche plus vier eigene Attraktionen: Geisterbahn, Spiegelkabinett, Wildwasserbahn und Haupteingang. Die Karte lebt von Ablenkung und Wegen, die sich ändern: Etwa alle halbe Minute startet ein Fahrgeschäft und sperrt kurz einen Weg (siehe Lebendige Karten). Die Drehkreuze am Haupteingang lassen nur in eine Richtung durch, und in der Geisterbahn ist es dunkel. Vierzehn Vents in drei Ringen, Laternen an den Wegen, die bei einem Blackout ausgehen, während die Neonschilder weiterleuchten.</p>" + tbl(["Sabotage", "Im Park"], [["Reaktor", "Coaster Brake Failure: an beiden Konsolen der wandernden Bremse folgen"], ["Sauerstoff", "Ammonia Leak: Ventile nach Plan stellen, an beiden Konsolen"], ["Licht", "Park Blackout: durchgebrannte Glühbirnen tauschen"], ["Comms", "Speaker Feedback: Richtung und Pegel, bis der Ton sauber ist"], ["Zusätzlich", "Ride Override: ein Impostor startet sofort eine Achterbahnfahrt"]])
+            en: "<p>44 x 39 m, cheerful and a bit creepy. The 14 Skeld areas plus four attractions of its own: ghost train, hall of mirrors, log flume and main gate. The map is about distraction and paths that change: every half minute a ride starts and briefly blocks a way (see Living maps). The turnstiles at the main gate only let you through in one direction, and the ghost train is dark inside. At night the park hums: wind, buzzing neon signs and a distant barrel organ. Fourteen vents in three rings, lanterns along the paths that go out in a blackout while the neon signs keep glowing.</p>" + tbl(["Sabotage", "In the carnival"], [["Reactor", "Coaster Brake Failure: follow the moving brake at both consoles"], ["Oxygen", "Ammonia Leak: set the valves by plan, at both consoles"], ["Lights", "Park Blackout: replace the blown bulbs"], ["Comms", "Speaker Feedback: aim and gain until the sound is clean"], ["Extra", "Ride Override: an impostor starts a coaster run at once"]]),
+            de: "<p>44 x 39 m, heiter und ein bisschen gruselig. Die 14 Skeld-Bereiche plus vier eigene Attraktionen: Geisterbahn, Spiegelkabinett, Wildwasserbahn und Haupteingang. Die Karte lebt von Ablenkung und Wegen, die sich ändern: Etwa alle halbe Minute startet ein Fahrgeschäft und sperrt kurz einen Weg (siehe Lebendige Karten). Die Drehkreuze am Haupteingang lassen nur in eine Richtung durch, und in der Geisterbahn ist es dunkel. Nachts summt der Park: Wind, brummende Leuchtreklamen und eine ferne Drehorgel. Vierzehn Vents in drei Ringen, Laternen an den Wegen, die bei einem Blackout ausgehen, während die Neonschilder weiterleuchten.</p>" + tbl(["Sabotage", "Im Park"], [["Reaktor", "Coaster Brake Failure: an beiden Konsolen der wandernden Bremse folgen"], ["Sauerstoff", "Ammonia Leak: Ventile nach Plan stellen, an beiden Konsolen"], ["Licht", "Park Blackout: durchgebrannte Glühbirnen tauschen"], ["Comms", "Speaker Feedback: Richtung und Pegel, bis der Ton sauber ist"], ["Zusätzlich", "Ride Override: ein Impostor startet sofort eine Achterbahnfahrt"]])
           }
         }
       ]
@@ -4675,12 +4826,21 @@ const ATLAS = {
           }
         },
         {
+          id: "barriers",
+          title: { en: "Barriers never trap you", de: "Sperren schließen niemanden ein" },
+          summary: { en: "If a barrier closes while you stand in it, you come out on the side you came from.", de: "Schließt sich eine Sperre, während du darin stehst, kommst du auf der Seite heraus, von der du kamst." },
+          body: {
+            en: "<p>Level crossings, the carousel rope, the flume bridge, jammed turnstiles and fallen trees block the way while they are closed. If one closes while you stand right in it, you are set back to the side you came from instead of being pushed out somewhere. Every player's own game takes care of its own player, so this works for everybody.</p>",
+            de: "<p>Bahnübergänge, das Karussellseil, die Wildwasser-Brücke, klemmende Drehkreuze und umgestürzte Bäume sperren den Weg, solange sie zu sind. Schließt sich eine, während du genau darin stehst, wirst du auf die Seite zurückgesetzt, von der du kamst, statt irgendwohin geschoben zu werden. Jedes Spiel kümmert sich um den eigenen Spieler, so gilt das für alle.</p>"
+          }
+        },
+        {
           id: "lasers",
           title: { en: "Laser barriers (museum)", de: "Laserschranken (Museum)" },
           summary: { en: "Every second passage has a laser barrier; each crossing lands in the log on the cameras.", de: "Jeder zweite Durchgang hat eine Laserschranke; jeder Durchgang landet im Protokoll an den Kameras." },
           body: {
-            en: "<p>Thin red beams run across every second passage. Walking through makes the beam flash and adds an entry to the <strong>laser log</strong> under the security cameras: the last four crossings with room and seconds ago. It does not say who, but it tells you where someone just went.</p>" + shots([["atlas_world_laser.webp", "Laser barrier in a passage"]]),
-            de: "<p>Dünne rote Strahlen laufen quer durch jeden zweiten Durchgang. Wer hindurchgeht, lässt den Strahl aufleuchten und erzeugt einen Eintrag im <strong>Laserprotokoll</strong> unter den Überwachungskameras: die letzten vier Durchgänge mit Raum und Sekunden. Es verrät nicht wer, aber wo gerade jemand langging.</p>" + shots([["atlas_world_laser.webp", "Laserschranke in einem Durchgang"]])
+            en: "<p>Thin red beams run across every second passage. Walking through makes the beam flash and adds an entry to the <strong>laser log</strong> under the security cameras: the last four crossings with room and seconds ago. It does not say who, but it tells you where someone just went. Out in the museum the beam follows your sight like the floor, and its flash only shows when the barrier is in your own view, so a flash behind a wall gives nothing away.</p>" + shots([["atlas_world_laser.webp", "Laser barrier in a passage"]]),
+            de: "<p>Dünne rote Strahlen laufen quer durch jeden zweiten Durchgang. Wer hindurchgeht, lässt den Strahl aufleuchten und erzeugt einen Eintrag im <strong>Laserprotokoll</strong> unter den Überwachungskameras: die letzten vier Durchgänge mit Raum und Sekunden. Es verrät nicht wer, aber wo gerade jemand langging. Im Museum folgt der Strahl der Sicht wie der Boden, und sein Aufleuchten sieht nur, wer die Schranke selbst im Blick hat; ein Blitz hinter einer Wand verrät also nichts.</p>" + shots([["atlas_world_laser.webp", "Laserschranke in einem Durchgang"]])
           }
         },
         {
