@@ -159,6 +159,20 @@ body.scrolled #topbar {
 }
 .brand .crewmate { --size: 15px; color: currentColor; opacity: .9; }
 .brand:hover .crewmate { color: var(--crew-red); }
+/* Unknown's Collective mark next to the wordmark: dark-ground art over the hero, light-ground art once the
+ * frosted bar turns light (light theme + scrolled); the bare icon takes over on phones */
+.brand-collective {
+  display: flex; align-items: center; margin-left: -8px; padding-left: 18px; position: relative;
+  text-decoration: none; opacity: .96;
+}
+.brand-collective::before {
+  content: ""; position: absolute; left: 0; top: 50%; height: 26px; transform: translateY(-50%);
+  border-left: 1px solid currentColor; opacity: .22;
+}
+.brand-collective img { display: block; height: 38px; width: auto; }
+.brand-collective .lg-light, .brand-collective .lg-icon { display: none; }
+html[data-theme="light"] body.scrolled .brand-collective .lg-dark { display: none; }
+html[data-theme="light"] body.scrolled .brand-collective .lg-light { display: block; }
 
 .topnav { display: flex; gap: 4px; margin-left: 8px; }
 .nav-link {
@@ -625,6 +639,10 @@ tbody tr:hover td { background: color-mix(in srgb, var(--accent) 6%, transparent
   .rail { display: none; }
   body[data-page="home"] .menu-toggle, body[data-page="test"] .menu-toggle { display: inline-flex; }
   body[data-page="home"] #sidebar, body[data-page="test"] #sidebar { display: block; }
+}
+@media (max-width: 720px) {
+  .brand-collective .lg-quer, html[data-theme="light"] body.scrolled .brand-collective .lg-light { display: none; }
+  .brand-collective .lg-icon { display: block; width: 32px; height: 32px; }
 }
 @media (max-width: 900px) {
   .topnav { display: none; }

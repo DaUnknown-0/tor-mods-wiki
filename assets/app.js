@@ -90,6 +90,11 @@
           <span class="crewmate" aria-hidden="true"></span>
           <span class="brand-text">TOR&nbsp;Mods</span>
         </a>
+        <a class="brand-collective" href="index.html" aria-label="Unknown's Collective" title="Unknown's Collective">
+          <img class="lg-quer lg-dark" src="assets/brand/logo-quer-dark.png" alt="Unknown's Collective" height="38" />
+          <img class="lg-quer lg-light" src="assets/brand/logo-quer-light.png" alt="" aria-hidden="true" height="38" />
+          <img class="lg-icon" src="assets/brand/icon-64.png" alt="" aria-hidden="true" width="32" height="32" />
+        </a>
         <nav class="topnav">
           ${link("index.html", "nav_home")}
           ${link("chance.html", "nav_chance")}
