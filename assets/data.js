@@ -397,7 +397,7 @@ const USEFUL = {
   key: "useful",
   name: "Forgotten Fixes",
   fullName: { en: "TOR - Forgotten Fixes", de: "TOR - Forgotten Fixes" },
-  version: "1.7.4",
+  version: "1.7.5",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/Useful-TOR-stuff",
   download: "https://github.com/DaUnknown-0/Useful-TOR-stuff/releases/latest",
@@ -1812,8 +1812,8 @@ const USEFUL = {
             de: "Eigene Haustiere des Mods erscheinen neben denen des Spiels, in deiner Spielerfarbe, und neue können ohne Mod-Update dazukommen. Beim Streicheln knuddelt dein Crewmate das Haustier."
           },
           body: {
-            en: "<p>Forgotten Fixes adds its own pets next to the game's pets, the same way The Other Roles adds its hats. For everyone there is the <strong>Vampire Bat</strong>: it stands as a mini crewmate dressed as a bat and flies after you as a bat. Also for everyone: the <strong>Mini Xenomorph</strong> and the <strong>Mini Shepherd</strong>, in fixed colours. Pets stand and walk with their own animation and follow you like any pet.</p><p><strong>Cuddling (1.7.4):</strong> when you pet your pet, your crewmate kneels down, picks it up, cuddles and rocks it, puts it back down and stands up again (about 3 seconds). It works with every pet, the game's own included, in your colour (Morphling and Camouflage too). The hat stays on and follows the head, skin and visor cosmetics are hidden for that moment. Walking ends it at once. Everybody with 1.7.4 sees it for every player; older versions see the normal petting.</p><p><strong>Reactions (1.7.4):</strong> an online pet can bring its own animation for being petted. The Mini Xenomorph, the Mini Shepherd and the Vampire Bat have one.</p><p><strong>Player colour (1.7.1):</strong> a pet can carry a colour mask that is tinted in its owner's colour, the same way costumes do it. The Vampire Bat uses it: the mini crewmate and the flying bat take your colour, cape and ears stay violet. The colour follows what you show right now (Morphling, Camouflage).</p><p><strong>New pets without a mod update:</strong> the pet list is read online at start, on every lobby join (at most once a minute) and when the mod's author types <code>/loadpets</code> (that also makes everyone in the lobby reload). A pet can be locked to certain players; a locked pet does not show up in anybody else's pet tab, and a saved choice falls back to no pet.</p><p><strong>Pets from other mods (1.7.1):</strong> another mod can hand its own pets to the pet tab (AppDomain key <code>UTSPets.External</code>, same layout as the online pet list). Players without that mod see the game pet the pet is built on, usually a mini crewmate.</p>",
-            de: "<p>Forgotten Fixes ergänzt eigene Haustiere neben denen des Spiels, so wie The Other Roles seine Hüte ergänzt. Für alle gibt es die <strong>Vampire Bat</strong>: Sie steht als Mini-Crewmate in Fledermaus-Verkleidung da und fliegt dir als Fledermaus hinterher. Ebenfalls für alle: der <strong>Mini Xenomorph</strong> und der <strong>Mini Shepherd</strong>, in festen Farben. Haustiere stehen und laufen mit eigener Animation und folgen dir wie jedes Haustier.</p><p><strong>Kuscheln (1.7.4):</strong> Streichelst du dein Haustier, kniet sich dein Crewmate hin, nimmt es hoch, knuddelt und wiegt es, setzt es wieder ab und steht auf (etwa 3 Sekunden). Das geht mit jedem Haustier, auch denen des Spiels, in deiner Farbe (auch mit Morphling und Camouflage). Der Hut bleibt auf und folgt dem Kopf, Skin und Visier-Kosmetik sind so lange ausgeblendet. Loslaufen beendet es sofort. Alle mit 1.7.4 sehen es bei jedem Spieler; ältere Versionen sehen das normale Streicheln.</p><p><strong>Reaktionen (1.7.4):</strong> Ein Online-Haustier kann eine eigene Animation fürs Gestreicheltwerden mitbringen. Mini Xenomorph, Mini Shepherd und Vampire Bat haben eine.</p><p><strong>Spielerfarbe (1.7.1):</strong> Ein Haustier kann eine Farbmaske tragen, die in der Farbe seines Besitzers eingefärbt wird, so wie bei den Kostümen. Die Vampire Bat nutzt sie: Mini-Crewmate und fliegende Fledermaus haben deine Farbe, Umhang und Ohren bleiben violett. Die Farbe folgt dem, was du gerade zeigst (Morphling, Camouflage).</p><p><strong>Neue Haustiere ohne Mod-Update:</strong> Die Haustier-Liste wird beim Start online gelesen, bei jedem Lobby-Beitritt (höchstens einmal pro Minute) und wenn der Autor des Mods <code>/loadpets</code> tippt (das lässt auch alle in der Lobby neu laden). Ein Haustier kann an bestimmte Spieler gebunden sein; ein gesperrtes Haustier erscheint im Haustier-Reiter aller anderen nicht, und eine gespeicherte Wahl fällt auf kein Haustier zurück.</p><p><strong>Haustiere aus anderen Mods (1.7.1):</strong> Eine andere Mod kann eigene Haustiere an den Haustier-Reiter übergeben (AppDomain-Schlüssel <code>UTSPets.External</code>, gleiches Format wie die Online-Liste). Spieler ohne diese Mod sehen das Spiel-Haustier, auf dem es aufbaut, meist einen Mini-Crewmate.</p>"
+            en: "<p>Forgotten Fixes adds its own pets next to the game's pets, the same way The Other Roles adds its hats. For everyone there is the <strong>Vampire Bat</strong>: it stands as a mini crewmate dressed as a bat and flies after you as a bat. Also for everyone: the <strong>Mini Xenomorph</strong> and the <strong>Mini Shepherd</strong>, in fixed colours. Pets stand and walk with their own animation and follow you like any pet.</p><p><strong>Cuddling (1.7.4):</strong> when you pet your pet, your crewmate kneels down, picks it up, cuddles and rocks it, puts it back down and stands up again (about 3 seconds). It works with every pet, the game's own included, in your colour (Morphling and Camouflage too). The hat stays on and follows the head, skin and visor cosmetics are hidden for that moment. Walking ends it at once. Everybody with 1.7.4 sees it for every player; older versions see the normal petting. Since 1.7.5 the <strong>Pet Cuddle</strong> switch on the Unknown's Collection page of TOR's Mod Options (or <code>[Pets] PetCuddle</code>) chooses between cuddling and the normal petting on your own screen.</p><p><strong>Reactions (1.7.4):</strong> an online pet can bring its own animation for being petted. The Mini Xenomorph, the Mini Shepherd and the Vampire Bat have one.</p><p><strong>Player colour (1.7.1):</strong> a pet can carry a colour mask that is tinted in its owner's colour, the same way costumes do it. The Vampire Bat uses it: the mini crewmate and the flying bat take your colour, cape and ears stay violet. The colour follows what you show right now (Morphling, Camouflage).</p><p><strong>New pets without a mod update:</strong> the pet list is read online at start, on every lobby join (at most once a minute) and when the mod's author types <code>/loadpets</code> (that also makes everyone in the lobby reload). A pet can be locked to certain players; a locked pet does not show up in anybody else's pet tab, and a saved choice falls back to no pet.</p><p><strong>Pets from other mods (1.7.1):</strong> another mod can hand its own pets to the pet tab (AppDomain key <code>UTSPets.External</code>, same layout as the online pet list). Players without that mod see the game pet the pet is built on, usually a mini crewmate.</p>",
+            de: "<p>Forgotten Fixes ergänzt eigene Haustiere neben denen des Spiels, so wie The Other Roles seine Hüte ergänzt. Für alle gibt es die <strong>Vampire Bat</strong>: Sie steht als Mini-Crewmate in Fledermaus-Verkleidung da und fliegt dir als Fledermaus hinterher. Ebenfalls für alle: der <strong>Mini Xenomorph</strong> und der <strong>Mini Shepherd</strong>, in festen Farben. Haustiere stehen und laufen mit eigener Animation und folgen dir wie jedes Haustier.</p><p><strong>Kuscheln (1.7.4):</strong> Streichelst du dein Haustier, kniet sich dein Crewmate hin, nimmt es hoch, knuddelt und wiegt es, setzt es wieder ab und steht auf (etwa 3 Sekunden). Das geht mit jedem Haustier, auch denen des Spiels, in deiner Farbe (auch mit Morphling und Camouflage). Der Hut bleibt auf und folgt dem Kopf, Skin und Visier-Kosmetik sind so lange ausgeblendet. Loslaufen beendet es sofort. Alle mit 1.7.4 sehen es bei jedem Spieler; ältere Versionen sehen das normale Streicheln. Seit 1.7.5 wählt der Schalter <strong>Pet Cuddle</strong> auf der Unknown's-Collection-Seite in TORs Mod Options (oder <code>[Pets] PetCuddle</code>) für den eigenen Bildschirm zwischen Kuscheln und normalem Streicheln.</p><p><strong>Reaktionen (1.7.4):</strong> Ein Online-Haustier kann eine eigene Animation fürs Gestreicheltwerden mitbringen. Mini Xenomorph, Mini Shepherd und Vampire Bat haben eine.</p><p><strong>Spielerfarbe (1.7.1):</strong> Ein Haustier kann eine Farbmaske tragen, die in der Farbe seines Besitzers eingefärbt wird, so wie bei den Kostümen. Die Vampire Bat nutzt sie: Mini-Crewmate und fliegende Fledermaus haben deine Farbe, Umhang und Ohren bleiben violett. Die Farbe folgt dem, was du gerade zeigst (Morphling, Camouflage).</p><p><strong>Neue Haustiere ohne Mod-Update:</strong> Die Haustier-Liste wird beim Start online gelesen, bei jedem Lobby-Beitritt (höchstens einmal pro Minute) und wenn der Autor des Mods <code>/loadpets</code> tippt (das lässt auch alle in der Lobby neu laden). Ein Haustier kann an bestimmte Spieler gebunden sein; ein gesperrtes Haustier erscheint im Haustier-Reiter aller anderen nicht, und eine gespeicherte Wahl fällt auf kein Haustier zurück.</p><p><strong>Haustiere aus anderen Mods (1.7.1):</strong> Eine andere Mod kann eigene Haustiere an den Haustier-Reiter übergeben (AppDomain-Schlüssel <code>UTSPets.External</code>, gleiches Format wie die Online-Liste). Spieler ohne diese Mod sehen das Spiel-Haustier, auf dem es aufbaut, meist einen Mini-Crewmate.</p>"
           }
         },
         {
@@ -1954,7 +1954,7 @@ const UNKNOWNS = {
   key: "unknowns",
   name: "Unknown's Collection",
   fullName: { en: "Unknown's Collection — custom roles for TOR", de: "Unknown's Collection — eigene Rollen für TOR" },
-  version: "1.5.0",
+  version: "1.5.1",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/UnknownsCollection",
   download: "https://github.com/DaUnknown-0/UnknownsCollection/releases/latest",
@@ -2502,6 +2502,18 @@ const UNKNOWNS = {
           }
         },
         {
+          id: "maniac-meeting",
+          title: { en: "Defusing in a meeting (1.5.1)", de: "Entschärfen im Meeting (1.5.1)" },
+          summary: {
+            en: "Whoever carries a bomb when a meeting starts gets a defuse minigame; failing it means death at the meeting's end.",
+            de: "Wer beim Meetingbeginn eine Bombe trägt, bekommt ein Entschärf-Minispiel; wer scheitert, stirbt am Ende des Meetings."
+          },
+          body: {
+            en: "<p>A meeting no longer simply removes the bomb. A few seconds after it starts, the carrier (even one who has not noticed the bomb yet) gets a defuse panel that only they see, while the meeting buttons take no clicks:</p><ul><li><strong>Wires:</strong> five coloured wires, a serial number and a manual with one condition and two rules. Cut the wire the manual points at; a wrong wire costs 5 seconds.</li><li><strong>Needle, twice:</strong> stop a sweeping needle in the green zone (Space, E or a click). The second time the zone is smaller and the needle faster; a miss costs 3 seconds.</li></ul><p>Defused, the bomb is gone. Out of time, or the voting ends first, and the bomb goes off when the meeting ends: the carrier dies without a body, counted as the Maniac's kill. A carrier who is voted out anyway does not die twice. The time is <em>Maniac Defuse Time</em>, shortened to what is left of the voting time; with less than 10 seconds left there is no minigame.</p>",
+            de: "<p>Ein Meeting entfernt die Bombe nicht mehr einfach. Ein paar Sekunden nach Beginn bekommt der Träger (auch einer, der die Bombe noch nicht bemerkt hat) ein Entschärf-Fenster, das nur er sieht; die Meeting-Knöpfe nehmen solange keine Klicks an:</p><ul><li><strong>Drähte:</strong> fünf farbige Drähte, eine Seriennummer und eine Anleitung mit einer Bedingung und zwei Regeln. Schneide den Draht durch, auf den die Anleitung zeigt; ein falscher kostet 5 Sekunden.</li><li><strong>Zeiger, zweimal:</strong> den wandernden Zeiger im grünen Feld stoppen (Leertaste, E oder Klick). Beim zweiten Mal ist das Feld kleiner und der Zeiger schneller; daneben kostet 3 Sekunden.</li></ul><p>Entschärft ist die Bombe weg. Läuft die Zeit ab oder endet das Voting vorher, geht sie am Ende des Meetings hoch: der Träger stirbt ohne Leiche, gezählt als Kill des Maniac. Wer ohnehin rausgewählt wird, stirbt nicht doppelt. Die Zeit ist <em>Maniac Defuse Time</em>, gekürzt auf die restliche Votingzeit; bei weniger als 10 Sekunden gibt es kein Minispiel.</p>"
+          }
+        },
+        {
           id: "maniac-options",
           title: { en: "Options (Impostor tab)", de: "Optionen (Impostor-Tab)" },
           summary: {
@@ -2515,7 +2527,9 @@ const UNKNOWNS = {
               ["Maniac Bomb Cooldown", "25 s", "Cooldown between planting bombs."],
               ["Maniac Unaware Delay", "5 s", "How long the carrier stays unaware after being planted on."],
               ["Maniac Pass Window", "4 s", "Time the aware carrier has to pass the bomb on."],
-              ["Maniac Explosion Range", "2.0", "Range in world units within which the explosion kills."]
+              ["Maniac Explosion Range", "2.0", "Range in world units within which the explosion kills."],
+              ["Maniac Bomb Defuse In Meetings", "On", "A carried bomb turns into a defuse minigame in a meeting (1.5.1). Off: the bomb simply vanishes."],
+              ["Maniac Defuse Time", "30 s", "Time for the defuse minigame (15 to 60 s), shortened to the voting time left."]
             ]),
             de: tbl(["Option", "Standard", "Funktion"], [
               ["Maniac", "Off", "Spawn-Chance der Rolle."],
@@ -2523,7 +2537,9 @@ const UNKNOWNS = {
               ["Maniac Bomb Cooldown", "25 s", "Cooldown zwischen dem Pflanzen von Bomben."],
               ["Maniac Unaware Delay", "5 s", "Wie lange der Träger nichts von der Bombe merkt."],
               ["Maniac Pass Window", "4 s", "Zeit, die der informierte Träger hat, um die Bombe weiterzugeben."],
-              ["Maniac Explosion Range", "2,0", "Reichweite in Welteinheiten, innerhalb derer die Explosion tötet."]
+              ["Maniac Explosion Range", "2,0", "Reichweite in Welteinheiten, innerhalb derer die Explosion tötet."],
+              ["Maniac Bomb Defuse In Meetings", "On", "Eine getragene Bombe wird im Meeting zum Entschärf-Minispiel (1.5.1). Aus: die Bombe verschwindet einfach."],
+              ["Maniac Defuse Time", "30 s", "Zeit für das Entschärf-Minispiel (15 bis 60 s), gekürzt auf die restliche Votingzeit."]
             ])
           }
         }
@@ -2816,20 +2832,36 @@ const UNKNOWNS = {
           }
         },
         {
+          id: "bug-crash",
+          title: { en: "System Crash (1.5.1)", de: "Systemabsturz (1.5.1)" },
+          summary: {
+            en: "Once per game the Bug can crash the next meeting: glitch, blue screen, reboot code. Who fails votes Skip.",
+            de: "Einmal pro Spiel kann der Bug das nächste Meeting abstürzen lassen: Glitch, Bluescreen, Neustart-Code. Wer scheitert, stimmt Skip."
+          },
+          body: {
+            en: "<p>The Bug gets a <strong>CRASH</strong> button, usable once per game. It arms the next meeting; nobody learns who did it. A few seconds into that meeting the screen of every living player tears apart, a blue screen follows for three seconds, and then a BIOS asks for a six character recovery code that flickers and briefly swaps characters. Type it before the time runs out (letters and digits, Backspace deletes, a wrong code starts over).</p><p>Whoever does not make it votes <strong>Skip</strong> in that meeting as soon as the voting opens (unless they have voted already); talking is still allowed. If too little voting time is left for the whole show, the crash waits for the next meeting.</p>",
+            de: "<p>Der Bug bekommt einen Knopf <strong>CRASH</strong>, einmal pro Spiel. Er legt den Absturz für das nächste Meeting; niemand erfährt, wer es war. Ein paar Sekunden nach Beginn dieses Meetings zerreißt bei allen Lebenden der Bildschirm, drei Sekunden lang folgt ein Bluescreen, dann verlangt ein BIOS einen sechsstelligen Wiederherstellungscode, der flackert und kurz Zeichen vertauscht. Er muss rechtzeitig abgetippt werden (Buchstaben und Ziffern, Rücktaste löscht, ein falscher Code fängt von vorn an).</p><p>Wer es nicht schafft, stimmt in diesem Meeting <strong>Skip</strong>, sobald das Voting offen ist (außer er hat schon gestimmt); reden darf er weiter. Reicht die restliche Votingzeit nicht für den ganzen Ablauf, wartet der Absturz auf das nächste Meeting.</p>"
+          }
+        },
+        {
           id: "bug-options",
           title: { en: "Options (Neutral tab)", de: "Optionen (Neutral-Tab)" },
           summary: {
-            en: "Spawn rate, min players.",
-            de: "Spawnrate, Min-Spieler."
+            en: "Spawn rate, min players, System Crash.",
+            de: "Spawnrate, Min-Spieler, Systemabsturz."
           },
           body: {
             en: tbl(["Option", "Default", "What it does"], [
               ["Bug", "Off", "Spawn chance for the role."],
-              ["Bug Minimum Players To Spawn", "6", "The role isn't assigned below this lobby size."]
+              ["Bug Minimum Players To Spawn", "6", "The role isn't assigned below this lobby size."],
+              ["Bug System Crash", "On", "The Bug's CRASH button, once per game (1.5.1)."],
+              ["Bug Reboot Time", "10 s", "Time to type the reboot code (6 to 20 s)."]
             ]),
             de: tbl(["Option", "Standard", "Funktion"], [
               ["Bug", "Off", "Spawn-Chance der Rolle."],
-              ["Bug Minimum Players To Spawn", "6", "Die Rolle wird unter dieser Lobby-Größe nicht vergeben."]
+              ["Bug Minimum Players To Spawn", "6", "Die Rolle wird unter dieser Lobby-Größe nicht vergeben."],
+              ["Bug System Crash", "On", "Der Knopf CRASH des Bug, einmal pro Spiel (1.5.1)."],
+              ["Bug Reboot Time", "10 s", "Zeit zum Abtippen des Neustart-Codes (6 bis 20 s)."]
             ])
           }
         }
@@ -4926,7 +4958,7 @@ const ATLAS = {
   key: "atlas",
   name: "Unknown's Atlas",
   fullName: { en: "Unknown's Atlas: new maps for Among Us", de: "Unknown's Atlas: neue Karten für Among Us" },
-  version: "1.1.5",
+  version: "1.1.6",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/UnknownsAtlas",
   download: "https://github.com/DaUnknown-0/UnknownsAtlas/releases",
