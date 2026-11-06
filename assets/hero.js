@@ -835,9 +835,263 @@
     return s;
   }
 
+  /* --------------------------------- haunted manor on the hill (Halloween) */
+  function ManorScene() {
+    const rand = mulberry(131);
+    let stars, bg, layers, clouds, bats, motes, W, H, q0;
+    let windows = [], pumpkins = [], ghost = null;
+    const s = {};
+    s.init = (w, h, q) => {
+      q0 = q;
+      stars = makeStars(rand, Math.round(q.stars * 0.45), 0.08);
+      clouds = [];
+      for (let i = 0; i < (q.mob ? 4 : 7); i++) clouds.push({ x: rand() * 1.4 - 0.2, y: 0.1 + rand() * 0.3, w: 0.16 + rand() * 0.26, h: 0.025 + rand() * 0.04, a: 0.1 + rand() * 0.12, v: 0.005 + rand() * 0.01 });
+      bats = [];
+      for (let i = 0; i < (q.mob ? 7 : 14); i++) bats.push({ x: rand() * 1.4 - 0.4, y: 0.12 + rand() * 0.3, v: 0.025 + rand() * 0.035, ph: rand() * TAU, s: 0.6 + rand() * 0.8, wob: 0.01 + rand() * 0.03 });
+      motes = [];
+      for (let i = 0; i < (q.mob ? 10 : 24); i++) motes.push({ x: rand(), y: 0.7 + rand() * 0.28, ph: rand() * TAU, sp: 0.3 + rand() * 0.7, r: 0.8 + rand() * 1.1 });
+    };
+
+    // manor silhouette on the far ridge; window rects are kept for the flicker
+    function manor(c, cx, by, u, col, rec) {
+      c.fillStyle = col;
+      const R = (x0, y0, x1, y1) => c.fillRect(cx + x0 * u, by - y1 * u, (x1 - x0) * u, (y1 - y0) * u);
+      const poly = (pts) => { c.beginPath(); c.moveTo(cx + pts[0][0] * u, by - pts[0][1] * u); for (let i = 1; i < pts.length; i++) c.lineTo(cx + pts[i][0] * u, by - pts[i][1] * u); c.closePath(); c.fill(); };
+      R(-125, -6, 125, 112);                                                  // hall
+      poly([[-138, 110], [-96, 168], [96, 168], [138, 110]]);                 // roof
+      poly([[-44, 150], [0, 214], [44, 150]]);                                // front gable
+      R(-178, -6, -122, 196); poly([[-186, 194], [-150, 292], [-114, 194]]);  // left tower + spire
+      R(118, -6, 168, 160); poly([[112, 158], [143, 236], [174, 158]]);       // right tower + spire
+      c.fillRect(cx - 151 * u, by - 318 * u, 2 * u, 28 * u);                  // weather vane
+      c.fillRect(cx - 158 * u, by - 312 * u, 16 * u, 2 * u);
+      R(-82, 150, -66, 196); R(58, 150, 74, 188);                             // chimneys
+      R(-210, -6, -178, 70); poly([[-216, 68], [-194, 98], [-172, 68]]);      // little wing
+      // windows: [x0, y0, x1, y1] in manor units, arched tops
+      const win = [[-104, 22, -84, 62], [-62, 22, -42, 62], [42, 22, 62, 62], [84, 22, 104, 62],
+                   [-104, 76, -84, 102], [-62, 76, -42, 102], [42, 76, 62, 102], [84, 76, 104, 102],
+                   [-11, 150, 11, 182], [-160, 120, -140, 156], [-160, 60, -140, 96], [134, 96, 152, 130], [-202, 24, -188, 50]];
+      if (rec === false) return;
+      for (const k of win) windows.push({ x: cx + k[0] * u, y: by - k[3] * u, w: (k[2] - k[0]) * u, h: (k[3] - k[1]) * u, ph: rand() * TAU, sp: 0.6 + rand() * 2.2, lit: rand() < 0.78, warm: rand() < 0.8 });
+      // door
+      windows.push({ x: cx - 13 * u, y: by - 44 * u, w: 26 * u, h: 44 * u, ph: rand() * TAU, sp: 0.4, lit: true, warm: true, door: true });
+    }
+
+    function deadTree(c, x, y, len, ang, wdt, depth, rnd) {
+      if (depth === 0 || len < 2) return;
+      const ex = x + Math.cos(ang) * len, ey = y + Math.sin(ang) * len;
+      c.lineWidth = wdt; c.beginPath(); c.moveTo(x, y);
+      c.quadraticCurveTo((x + ex) / 2 + (rnd() - 0.5) * len * 0.3, (y + ey) / 2, ex, ey); c.stroke();
+      const n = depth > 3 ? 2 : 2 + (rnd() < 0.4 ? 1 : 0);
+      for (let i = 0; i < n; i++) deadTree(c, ex, ey, len * (0.62 + rnd() * 0.18), ang + (rnd() - 0.5) * 1.3, wdt * 0.68, depth - 1, rnd);
+    }
+
+    function tomb(c, x, y, sz, kind) {
+      c.beginPath();
+      if (kind === 0) {                                                       // rounded headstone
+        c.moveTo(x - sz * 0.4, y); c.lineTo(x - sz * 0.4, y - sz * 0.75);
+        c.arc(x, y - sz * 0.75, sz * 0.4, Math.PI, 0); c.lineTo(x + sz * 0.4, y); c.closePath(); c.fill();
+      } else if (kind === 1) {                                                // cross
+        c.fillRect(x - sz * 0.08, y - sz * 1.2, sz * 0.16, sz * 1.2); c.fillRect(x - sz * 0.38, y - sz * 0.92, sz * 0.76, sz * 0.15);
+      } else {                                                                // obelisk
+        c.moveTo(x - sz * 0.22, y); c.lineTo(x - sz * 0.14, y - sz * 1.3); c.lineTo(x, y - sz * 1.5); c.lineTo(x + sz * 0.14, y - sz * 1.3); c.lineTo(x + sz * 0.22, y); c.closePath(); c.fill();
+      }
+    }
+
+    s.build = (w, h) => {
+      W = w; H = h; windows = []; pumpkins = [];
+      bg = offscreen(w * 1.08, h * 1.08);
+      let c = bg.getContext("2d"), bw = bg.width, bh = bg.height;
+      const sky = c.createLinearGradient(0, 0, 0, bh);
+      sky.addColorStop(0, "#05030b"); sky.addColorStop(0.45, "#140a24"); sky.addColorStop(0.62, "#341636"); sky.addColorStop(1, "#5e2434");
+      c.fillStyle = sky; c.fillRect(0, 0, bw, bh);
+      // harvest moon
+      const portrait = bh > bw;
+      const mx = bw * (portrait ? 0.8 : 0.66), my = bh * (portrait ? 0.14 : 0.26), mr = clamp(bw * (portrait ? 0.1 : 0.085), 30, 140);
+      const halo = c.createRadialGradient(mx, my, mr * 0.8, mx, my, mr * 5.5);
+      halo.addColorStop(0, "rgba(255,190,110,.32)"); halo.addColorStop(0.3, "rgba(240,120,70,.12)"); halo.addColorStop(1, "rgba(0,0,0,0)");
+      c.fillStyle = halo; c.fillRect(0, 0, bw, bh);
+      const disc = c.createRadialGradient(mx - mr * 0.3, my - mr * 0.3, mr * 0.15, mx, my, mr);
+      disc.addColorStop(0, "#ffe9b8"); disc.addColorStop(0.7, "#f2b765"); disc.addColorStop(1, "#d98a45");
+      c.fillStyle = disc; c.beginPath(); c.arc(mx, my, mr, 0, TAU); c.fill();
+      for (const k of [[-0.35, -0.2, 0.2], [0.25, 0.12, 0.26], [-0.08, 0.45, 0.13], [0.42, -0.38, 0.11], [-0.5, 0.3, 0.1]]) {
+        const g = c.createRadialGradient(mx + k[0] * mr, my + k[1] * mr, 0, mx + k[0] * mr, my + k[1] * mr, k[2] * mr);
+        g.addColorStop(0, "rgba(170,90,40,.3)"); g.addColorStop(1, "rgba(170,90,40,0)");
+        c.fillStyle = g; c.beginPath(); c.arc(mx + k[0] * mr, my + k[1] * mr, k[2] * mr, 0, TAU); c.fill();
+      }
+      layers = [];
+      const spec = [
+        { base: 0.6, amp: 0.05, col: "#0c0714", d: 0.35, seed: 4, kind: "manor" },
+        { base: 0.74, amp: 0.05, col: "#100818", d: 0.6, seed: 5, kind: "graves" },
+        { base: 0.87, amp: 0.05, col: "#05030a", d: 1.0, seed: 6, kind: "near" }
+      ];
+      for (const sp of spec) {
+        const lc = offscreen(w * 1.16, h * 1.16);
+        const lctx = lc.getContext("2d");
+        const lw = lc.width, lh = lc.height;
+        const f = fbm(mulberry(sp.seed * 19), 3);
+        const ridge = (x) => lh * (sp.base + (f(x / lw * 5) - 0.5) * sp.amp * 2);
+        lctx.fillStyle = sp.col; lctx.beginPath(); lctx.moveTo(0, lh);
+        for (let x = 0; x <= lw; x += 4) lctx.lineTo(x, ridge(x));
+        lctx.lineTo(lw, lh); lctx.closePath(); lctx.fill();
+        if (sp.kind === "manor") {
+          lctx.strokeStyle = "rgba(150,80,100,.35)"; lctx.lineWidth = 1.5; lctx.beginPath();
+          for (let x = 0; x <= lw; x += 4) lctx.lineTo(x, ridge(x)); lctx.stroke();
+        }
+        const r2 = mulberry(sp.seed * 37);
+        const u = Math.min(lw, lh * 1.9) / 1000;
+        if (sp.kind === "manor") {
+          const cx = lw * (portrait ? 0.5 : 0.42);
+          const by = Math.min(ridge(cx - 120 * u), ridge(cx), ridge(cx + 120 * u)) + 6 * u;
+          lctx.beginPath(); lctx.ellipse(cx - 20 * u, by + 60 * u, 330 * u, 64 * u, 0, 0, TAU); lctx.fill();   // knoll under the house
+          lctx.fillRect(cx - 330 * u, by + 60 * u, 660 * u, lh - by);
+          manor(lctx, cx + 2.4 * u, by - 1.2 * u, u * 0.9, "#6a3a52", false);   // moonlit rim towards the moon
+          manor(lctx, cx, by, u * 0.9, sp.col);
+          for (const wv of windows) wv.layer = 0;
+          lctx.strokeStyle = sp.col; lctx.lineCap = "round";
+          for (const tx of [0.08, 0.2, 0.74, 0.88]) deadTree(lctx, lw * tx, ridge(lw * tx) + 3, 34 * u, -Math.PI / 2, 5 * u, 5, r2);
+        } else if (sp.kind === "graves") {
+          lctx.fillStyle = sp.col;
+          for (let x = lw * 0.04; x < lw; x += (26 + r2() * 46) * u) {
+            const y = ridge(x) + 4 * u, sz = (16 + r2() * 14) * u;
+            lctx.save(); lctx.translate(x, y); lctx.rotate((r2() - 0.5) * 0.18); tomb(lctx, 0, 0, sz, Math.floor(r2() * 3)); lctx.restore();
+          }
+          lctx.strokeStyle = sp.col; lctx.lineWidth = 2 * u;                     // iron fence
+          const fy = (x) => ridge(x) + 14 * u;
+          for (let x = lw * 0.55; x < lw * 0.98; x += 9 * u) {
+            lctx.beginPath(); lctx.moveTo(x, fy(x)); lctx.lineTo(x, fy(x) - 26 * u); lctx.stroke();
+            lctx.beginPath(); lctx.moveTo(x - 2.5 * u, fy(x) - 24 * u); lctx.lineTo(x, fy(x) - 31 * u); lctx.lineTo(x + 2.5 * u, fy(x) - 24 * u); lctx.fill();
+          }
+          lctx.beginPath(); for (let x = lw * 0.55; x < lw * 0.98; x += 4) lctx.lineTo(x, fy(x) - 20 * u); lctx.stroke();
+        } else {
+          lctx.strokeStyle = sp.col; lctx.lineCap = "round";
+          const tx = lw * (portrait ? 0.1 : 0.14);
+          deadTree(lctx, tx, ridge(tx) + 6, 70 * u, -Math.PI / 2 - 0.08, 14 * u, 7, r2);
+          for (let x = 0; x < lw; x += 5 + r2() * 7) {                          // grass tufts
+            const y = ridge(x) + 2, gh = (5 + r2() * 12) * u;
+            lctx.lineWidth = 1.4 * u; lctx.beginPath(); lctx.moveTo(x, y); lctx.lineTo(x + (r2() - 0.5) * 6 * u, y - gh); lctx.stroke();
+          }
+          const n = portrait ? 3 : 5;
+          for (let i = 0; i < n; i++) {
+            const px = lw * (0.3 + i * (0.6 / n) + (r2() - 0.5) * 0.05);
+            pumpkins.push({ x: px, y: ridge(px) + 2 * u, s: (28 + r2() * 16) * u, ph: r2() * TAU, face: Math.floor(r2() * 3) });
+          }
+        }
+        layers.push({ c: lc, d: sp.d, ridge, sp });
+      }
+      // ghost floats over the graves
+      const gl = layers[1];
+      ghost = { x: (portrait ? 0.62 : 0.56) * gl.c.width, ridge: gl.ridge, size: clamp(h * 0.11, 46, 110) };
+      const fog = offscreen(w * 1.16, h * 0.22);
+      const fc = fog.getContext("2d");
+      const fg = fc.createLinearGradient(0, 0, 0, fog.height);
+      fg.addColorStop(0, "rgba(150,120,190,0)"); fg.addColorStop(0.5, "rgba(150,120,190,.18)"); fg.addColorStop(1, "rgba(150,120,190,0)");
+      fc.fillStyle = fg; fc.fillRect(0, 0, fog.width, fog.height);
+      layers.fog = fog;
+    };
+
+    function drawBat(ctx, x, y, sz, flap) {
+      const wy = Math.sin(flap) * sz * 0.7;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.quadraticCurveTo(x - sz * 0.6, y - sz * 0.2 - wy, x - sz * 1.4, y - wy * 1.1);
+      ctx.quadraticCurveTo(x - sz * 0.9, y - wy * 0.4 + sz * 0.15, x - sz * 0.75, y + sz * 0.25 - wy * 0.2);
+      ctx.quadraticCurveTo(x - sz * 0.4, y + sz * 0.1, x, y + sz * 0.3);
+      ctx.quadraticCurveTo(x + sz * 0.4, y + sz * 0.1, x + sz * 0.75, y + sz * 0.25 - wy * 0.2);
+      ctx.quadraticCurveTo(x + sz * 0.9, y - wy * 0.4 + sz * 0.15, x + sz * 1.4, y - wy * 1.1);
+      ctx.quadraticCurveTo(x + sz * 0.6, y - sz * 0.2 - wy, x, y);
+      ctx.fill();
+      ctx.beginPath(); ctx.ellipse(x, y + sz * 0.12, sz * 0.18, sz * 0.26, 0, 0, TAU); ctx.fill();
+    }
+
+    function drawPumpkin(ctx, x, y, sz, t, ph, face) {
+      const fl = 0.75 + 0.25 * Math.sin(t * 7 + ph) * Math.sin(t * 3.1 + ph * 2);
+      const g = ctx.createRadialGradient(x, y - sz * 0.45, 0, x, y - sz * 0.45, sz * 2.4);
+      g.addColorStop(0, "rgba(255,150,50," + (0.32 * fl) + ")"); g.addColorStop(1, "rgba(255,120,40,0)");
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y - sz * 0.45, sz * 2.4, 0, TAU); ctx.fill();
+      for (const k of [-0.42, 0.42, 0]) {                                      // ribs
+        ctx.fillStyle = k === 0 ? "#c4601c" : "#a54d16";
+        ctx.beginPath(); ctx.ellipse(x + k * sz, y - sz * 0.45, sz * (k === 0 ? 0.5 : 0.42), sz * 0.45, 0, 0, TAU); ctx.fill();
+      }
+      ctx.fillStyle = "#2c3a14"; ctx.fillRect(x - sz * 0.06, y - sz * 1.02, sz * 0.12, sz * 0.18);
+      ctx.fillStyle = "rgba(255," + Math.round(200 + 40 * fl) + ",110," + (0.75 + 0.25 * fl) + ")";
+      ctx.beginPath(); ctx.moveTo(x - sz * 0.32, y - sz * 0.62); ctx.lineTo(x - sz * 0.12, y - sz * 0.62); ctx.lineTo(x - sz * 0.22, y - sz * 0.8); ctx.closePath(); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(x + sz * 0.12, y - sz * 0.62); ctx.lineTo(x + sz * 0.32, y - sz * 0.62); ctx.lineTo(x + sz * 0.22, y - sz * 0.8); ctx.closePath(); ctx.fill();
+      ctx.beginPath();
+      if (face === 0) { ctx.moveTo(x - sz * 0.34, y - sz * 0.36); ctx.quadraticCurveTo(x, y - sz * 0.1, x + sz * 0.34, y - sz * 0.36); ctx.quadraticCurveTo(x, y - sz * 0.24, x - sz * 0.34, y - sz * 0.36); }
+      else if (face === 1) { for (let i = 0; i <= 6; i++) ctx.lineTo(x + (i / 6 - 0.5) * sz * 0.7, y - sz * (i % 2 ? 0.22 : 0.34)); ctx.lineTo(x + sz * 0.35, y - sz * 0.4); ctx.lineTo(x - sz * 0.35, y - sz * 0.4); }
+      else { ctx.ellipse(x, y - sz * 0.3, sz * 0.12, sz * 0.09, 0, 0, TAU); }
+      ctx.closePath(); ctx.fill();
+    }
+
+    s.draw = (ctx, w, h, t, dt, px, py) => {
+      ctx.drawImage(bg, -w * 0.04 + px * 0.2, -h * 0.04 + py * 0.2);
+      drawStars(ctx, stars, w, h * 0.6, t, px * 0.4, py * 0.4);
+      for (const cl of clouds) {
+        cl.x += cl.v * dt; if (cl.x > 1.3) cl.x = -0.35;
+        const cx = cl.x * w + px * 0.3, cy = cl.y * h + py * 0.3, cw = cl.w * w, ch = cl.h * h;
+        const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, cw);
+        g.addColorStop(0, "rgba(60,30,60," + (cl.a * 2.2) + ")"); g.addColorStop(0.6, "rgba(60,30,60," + cl.a + ")"); g.addColorStop(1, "rgba(60,30,60,0)");
+        ctx.save(); ctx.translate(cx, cy); ctx.scale(1, ch / cw); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(0, 0, cw, 0, TAU); ctx.fill(); ctx.restore();
+      }
+      // bats in front of the moon, behind the manor
+      ctx.fillStyle = "#07040c";
+      for (const b of bats) {
+        b.x += b.v * dt; if (b.x > 1.25) { b.x = -0.3; b.y = 0.1 + Math.random() * 0.32; }
+        const bx = b.x * w + px * 0.5, by = (b.y + Math.sin(t * 1.3 + b.ph) * b.wob) * h + py * 0.5;
+        drawBat(ctx, bx, by, clamp(h * 0.012, 5, 13) * b.s, t * 13 * (0.8 + b.s * 0.3) + b.ph);
+      }
+      const off = (d) => [-w * 0.08 + px * d, -h * 0.08 + py * d];
+      let o = off(layers[0].d);
+      ctx.drawImage(layers[0].c, o[0], o[1]);
+      for (const wv of windows) {                                                // flickering windows
+        if (!wv.lit) continue;
+        const fl = clamp(0.7 + 0.3 * Math.sin(t * wv.sp + wv.ph) + (Math.sin(t * 17 + wv.ph * 3) > 0.96 ? -0.5 : 0), 0.15, 1);
+        const x = wv.x + o[0], y = wv.y + o[1];
+        const col = wv.warm ? "255,190,90" : "150,220,170";
+        const g = ctx.createRadialGradient(x + wv.w / 2, y + wv.h / 2, 0, x + wv.w / 2, y + wv.h / 2, wv.h * 1.6);
+        g.addColorStop(0, "rgba(" + col + "," + (0.35 * fl) + ")"); g.addColorStop(1, "rgba(" + col + ",0)");
+        ctx.fillStyle = g; ctx.fillRect(x - wv.h, y - wv.h, wv.w + wv.h * 2, wv.h * 3);
+        ctx.fillStyle = "rgba(" + col + "," + (0.55 + 0.4 * fl) + ")";
+        ctx.beginPath(); ctx.moveTo(x, y + wv.h); ctx.lineTo(x, y + wv.w / 2); ctx.arc(x + wv.w / 2, y + wv.w / 2, wv.w / 2, Math.PI, 0); ctx.lineTo(x + wv.w, y + wv.h); ctx.closePath(); ctx.fill();
+        if (!wv.door) { ctx.fillStyle = "rgba(20,10,24,.8)"; ctx.fillRect(x + wv.w / 2 - 0.6, y + wv.w * 0.3, 1.2, wv.h - wv.w * 0.3); ctx.fillRect(x, y + wv.h * 0.55, wv.w, 1.2); }
+      }
+      o = off(layers[1].d);
+      ctx.drawImage(layers.fog, -w * 0.08 + px * 0.5 - Math.sin(t * 0.08) * 26, h * 0.56 + py * 0.5);
+      ctx.drawImage(layers[1].c, o[0], o[1]);
+      // the ghost of Hollowmere over the graves
+      if (ghost) {
+        const gx = ghost.x + o[0] + Math.sin(t * 0.35) * ghost.size * 0.6;
+        const gy = ghost.ridge(ghost.x) + o[1] - ghost.size * 1.55 + Math.sin(t * 1.1) * ghost.size * 0.08;
+        const a = 0.42 + 0.14 * Math.sin(t * 0.9);
+        const g = ctx.createRadialGradient(gx + ghost.size * 0.55, gy + ghost.size * 0.6, 0, gx + ghost.size * 0.55, gy + ghost.size * 0.6, ghost.size * 1.4);
+        g.addColorStop(0, "rgba(190,215,255," + (a * 0.45) + ")"); g.addColorStop(1, "rgba(190,215,255,0)");
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(gx + ghost.size * 0.55, gy + ghost.size * 0.6, ghost.size * 1.4, 0, TAU); ctx.fill();
+        ctx.save(); ctx.globalAlpha = a;
+        drawCrew(ctx, gx, gy, ghost.size, { fill: "#dfe8ff", visor: "rgba(40,50,90,.85)", rim: "rgba(255,255,255,.7)", rimW: 1.2, glint: "rgba(255,255,255,.8)", rot: Math.sin(t * 0.7) * 0.05 });
+        ctx.restore();
+      }
+      ctx.drawImage(layers.fog, -w * 0.08 + px * 0.8 + Math.sin(t * 0.11) * 30, h * 0.75 + py * 0.8);
+      o = off(layers[2].d);
+      ctx.drawImage(layers[2].c, o[0], o[1]);
+      for (const p of pumpkins) drawPumpkin(ctx, p.x + o[0], p.y + o[1], p.s, t, p.ph, p.face);
+      // drifting embers
+      for (const m of motes) {
+        const mx = (m.x + Math.sin(t * m.sp * 0.3 + m.ph) * 0.03) * w + px * 0.9;
+        const my = (m.y - ((t * m.sp * 0.02 + m.ph) % 0.3)) * h + py * 0.9;
+        const a = Math.max(0, Math.sin(t * m.sp * 1.5 + m.ph));
+        if (a < 0.05) continue;
+        const g = ctx.createRadialGradient(mx, my, 0, mx, my, m.r * 4);
+        g.addColorStop(0, "rgba(255,170,80," + (a * 0.85) + ")"); g.addColorStop(1, "rgba(255,120,40,0)");
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(mx, my, m.r * 4, 0, TAU); ctx.fill();
+      }
+    };
+    return s;
+  }
+
   const SCENES = {
     home: () => SpaceScene("home"), test: () => SpaceScene("test"),
-    chance: DiceScene, useful: StationScene, unknowns: NebulaScene, nightfall: MoonScene, atlas: AtlasScene
+    chance: DiceScene, useful: StationScene, unknowns: NebulaScene, nightfall: MoonScene, atlas: AtlasScene,
+    halloween: ManorScene
   };
 
   /* ================================================================ engine */

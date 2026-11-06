@@ -12,6 +12,7 @@ const UI = {
     nav_unknowns: "Unknown's Collection",
     nav_nightfall: "Nightfall",
     nav_atlas: "Atlas",
+    nav_halloween: "Halloween",
     search_placeholder: "Search features…",
     search_none: "No entries match your search.",
     on_this_page: "On this page",
@@ -24,7 +25,7 @@ const UI = {
     download: "Download latest",
     back_top: "Back to top",
     home_hero_kicker: "Companion mods for The Other Roles",
-    home_hero_title: "Five mods. One wiki.",
+    home_hero_title: "Six mods. One wiki.",
     home_hero_sub: "Randomized chaos, a pile of quality-of-life fixes, brand-new custom roles, a first-person view and new maps for The Other Roles 4.8.0. Click any feature to read what it does.",
     home_explore: "Explore the mods",
     home_combined: "Combined feature highlights",
@@ -43,6 +44,7 @@ const UI = {
     nav_unknowns: "Unknown's Collection",
     nav_nightfall: "Nightfall",
     nav_atlas: "Atlas",
+    nav_halloween: "Halloween",
     search_placeholder: "Features durchsuchen…",
     search_none: "Keine Einträge passen zu deiner Suche.",
     on_this_page: "Auf dieser Seite",
@@ -55,7 +57,7 @@ const UI = {
     download: "Neueste Version laden",
     back_top: "Nach oben",
     home_hero_kicker: "Begleit-Mods für The Other Roles",
-    home_hero_title: "Fünf Mods. Ein Wiki.",
+    home_hero_title: "Sechs Mods. Ein Wiki.",
     home_hero_sub: "Zufalls-Chaos, ein Haufen Komfort-Fixes, brandneue eigene Rollen, eine Ich-Perspektive und neue Karten für The Other Roles 4.8.0. Klick auf ein Feature, um zu lesen, was es macht.",
     home_explore: "Mods erkunden",
     home_combined: "Kombinierte Feature-Highlights",
@@ -5541,4 +5543,1168 @@ const ATLAS = {
   ]
 };
 
-const MODS = { chance: CHANCE, useful: USEFUL, unknowns: UNKNOWNS, nightfall: NIGHTFALL, atlas: ATLAS };
+/* ----- option rows of Unknown's Halloween: [name, id, default, en, de], one source for both languages ----- */
+function hwOptTbl(lang, rows) {
+  const head = lang === "de" ? ["Option", "ID", "Standard", "Werte und Wirkung"] : ["Option", "ID", "Default", "Values and effect"];
+  return tbl(head, rows.map(r => [r[0], String(r[1]), r[2], lang === "de" ? r[4] : r[3]]));
+}
+
+const HW_OPTS_ROLES = [
+  ["Xenomorph", 1785, "0%", "Spawn chance of the role (Neutral tab), 0% to 100%.", "Spawn-Chance der Rolle (Neutral-Reiter), 0 % bis 100 %."],
+  ["Xenomorph Minimum Players To Spawn", 1786, "7", "4 to 15 players.", "4 bis 15 Spieler."],
+  ["Transformation Duration", 1787, "20 s", "5 to 60 s, in steps of 2.5 s.", "5 bis 60 s, in Schritten von 2,5 s."],
+  ["Transformation Cooldown", 1788, "30 s", "10 to 90 s, in steps of 2.5 s.", "10 bis 90 s, in Schritten von 2,5 s."],
+  ["Xenomorph Kill Cooldown", 1789, "10 s", "2.5 to 45 s, in steps of 2.5 s.", "2,5 bis 45 s, in Schritten von 2,5 s."],
+  ["Xenomorph Speed While Transformed", 1790, "1x", "1x, 1.1x, 1.2x, 1.3x, 1.4x or 1.5x.", "1x, 1,1x, 1,2x, 1,3x, 1,4x oder 1,5x."],
+  ["Xenomorph Can Use Vents While Transformed", 1791, "On", "Vents in creature form.", "Venten in Kreaturform."],
+  ["Jackal And Xenomorph Exclude Each Other", 1792, "On", "No Jackal and Xenomorph in the same round.", "Kein Jackal und Xenomorph in derselben Runde."],
+  ["Banshee", 1983, "0%", "Spawn chance of the role (Crewmate tab), 0% to 100%.", "Spawn-Chance der Rolle (Crewmate-Reiter), 0 % bis 100 %."],
+  ["Banshee Scream Cooldown", 1984, "30 s", "10 to 90 s, in steps of 2.5 s.", "10 bis 90 s, in Schritten von 2,5 s."],
+  ["Banshee Number Of Screams", 1985, "2", "1 to 10 screams per game.", "1 bis 10 Schreie pro Spiel."],
+  ["Banshee Scream Reveals For", 1986, "2 s", "1, 1.5, 2, 2.5, 3 or 4 s.", "1, 1,5, 2, 2,5, 3 oder 4 s."],
+  ["Scaredy-Cat", 2060, "0%", "Spawn chance of the modifier (Modifier tab), 0% to 100%.", "Spawn-Chance des Modifiers (Modifier-Reiter), 0 % bis 100 %."],
+  ["Scaredy-Cat Mark Shows For", 2061, "4 s", "2, 3, 4, 5, 6 or 8 s.", "2, 3, 4, 5, 6 oder 8 s."],
+  ["Scaredy-Cat Scream Cooldown", 2062, "10 s", "0, 5, 10, 15, 20 or 30 s.", "0, 5, 10, 15, 20 oder 30 s."],
+  ["Phantom Parade", 2070, "Off", "Switch for the sabotage (Impostor tab).", "Schalter für die Sabotage (Impostor-Reiter)."],
+  ["Phantom Parade Duration", 2071, "30 s", "20, 25, 30 or 40 s.", "20, 25, 30 oder 40 s."],
+  ["Phantom Parade Cooldown", 2072, "60 s", "30, 45, 60, 90, 120 or 180 s.", "30, 45, 60, 90, 120 oder 180 s."],
+  ["Phantom Parade Uses Per Game", 2073, "1", "1, 2, 3 or Unlimited.", "1, 2, 3 oder Unlimited."]
+];
+
+const HW_OPTS_MODES = [
+  ["Masquerade Ball", 1980, "Off", "Switch for the game mode.", "Schalter für den Spielmodus."],
+  ["Masquerade: Same Color For All", 1981, "On", "The colours disappear too, so only the costume tells players apart.", "Auch die Farben verschwinden, nur das Kostüm unterscheidet die Spieler."],
+  ["Zombie Outbreak", 2040, "Off", "Switch for the game mode.", "Schalter für den Spielmodus."],
+  ["Players Per Start Zombie", 2041, "6", "4 to 10.", "4 bis 10."],
+  ["Zombie Outbreak Round Time", 2042, "4 min", "2, 3, 4, 5, 6 or 8 min.", "2, 3, 4, 5, 6 oder 8 min."],
+  ["Infect Cooldown", 2043, "15 s", "5 to 30 s, in steps of 5 s.", "5 bis 30 s, in Schritten von 5 s."],
+  ["Zombie Speed", 2044, "85%", "70% to 100%, in steps of 5%.", "70 % bis 100 %, in Schritten von 5 %."],
+  ["Time Until A Bitten Player Turns", 2045, "3 s", "1 to 5 s.", "1 bis 5 s."],
+  ["Zombies Can Use Vents", 2046, "Off", "Vents for zombies.", "Vents für Zombies."],
+  ["Sole Survivor", 2050, "Off", "Switch for the finale.", "Schalter für das Finale."],
+  ["Sole Survivor: Last Survivors", 2051, "1-2", "1 or 1-2 crewmates left.", "1 oder 1-2 verbleibende Crewmates."],
+  ["Sole Survivor: Dead Crew Tasks Needed", 2052, "50%", "Not Counted, 50%, 75% or 100% of the dead crew's tasks.", "Not Counted, 50 %, 75 % oder 100 % der Aufgaben der toten Crew."],
+  ["Sole Survivor: Escape Time", 2053, "60 s", "30, 45, 60, 90 or 120 s.", "30, 45, 60, 90 oder 120 s."],
+  ["Sole Survivor: Killer Freeze", 2054, "5 s", "3, 5, 8 or 10 s.", "3, 5, 8 oder 10 s."],
+  ["Sole Survivor: Survivor Speed", 2055, "110%", "100%, 110%, 120% or 130%.", "100 %, 110 %, 120 % oder 130 %."],
+  ["Haunted Mirrors", 2065, "Off", "Switch for the mirrors.", "Schalter für die Spiegel."],
+  ["Mirrors Fog After A Reflection", 2066, "10 s", "Off, 5, 10 or 15 s.", "Off, 5, 10 oder 15 s."],
+  ["Haunted Mirrors On Atlas Maps", 2067, "On", "Two mirrors on the other Atlas maps.", "Zwei Spiegel auf den übrigen Atlas-Karten."]
+];
+
+const HW_OPTS_KILL = [
+  ["Halloween Costume Kill Animations", 1793, "On", "Master switch for all costume kill scenes.", "Hauptschalter für alle Kostüm-Kill-Szenen."]
+].concat([
+  ["Freddy", 1970], ["Jason", 1971], ["Xenomorph", 1972], ["Ghostface", 1973], ["Thing", 1974], ["Predator", 1975], ["Sadako", 1976],
+  ["Spider", 1977], ["Pumpkin Head", 1978], ["Reaper", 1979], ["Vampire", 1944], ["Medusa", 1945], ["Weeping Angel", 1946]
+].map(([n, id]) => ["Kill Animation: " + n, id, "On", "Switch for the scene of this costume (a child of the master switch).", "Schalter für die Szene dieses Kostüms (Kind des Hauptschalters)."]));
+
+const HW_OPTS_LOOK = [
+  ["Halloween Look (Meeting, End Screen)", 2100, "On", "Meeting room, exile lines, end screen and the Candy Bowl ejection.", "Meetingraum, Rauswurfzeilen, Endbildschirm und der Süßigkeitenschüssel-Rauswurf."],
+  ["Costume Ghosts", 2101, "On", "Costume props on the ghosts of the dead.", "Kostüm-Requisiten auf den Geistern der Toten."],
+  ["Guesser Spell Sound", 2102, "On", "The spell clip at every Guesser shot.", "Der Zauber-Clip bei jedem Guesser-Schuss."],
+  ["Halloween Titles Of The Evening", 2120, "On", "Five titles in the session statistics (needs Forgotten Fixes).", "Fünf Titel in der Session-Statistik (braucht Forgotten Fixes)."],
+  ["Halloween Tasks", 2140, "On", "Task skins for five vanilla tasks.", "Aufgaben-Skins für fünf Vanilla-Aufgaben."],
+  ["Haunted Tasks", 2141, "Off", "Off, 10%, 20% or 30% of opened tasks are haunted.", "Off, 10 %, 20 % oder 30 % der geöffneten Aufgaben spuken."]
+];
+
+const HW_OPTS_HOLLOW = [
+  ["Hollowmere Manor Size", 1960, "Small", "Small or Large. Takes effect with the next round.", "Small oder Large. Gilt ab der nächsten Runde."],
+  ["Secret Passages", 1962, "On", "The four passages.", "Die vier Geheimgänge."],
+  ["Secret Passage Cooldown", 1963, "10 s", "0 to 30 s, in steps of 5 s.", "0 bis 30 s, in Schritten von 5 s."],
+  ["Midnight Clock", 1964, "90 s", "Interval: 90, 60, 120, 180 s or Off.", "Intervall: 90, 60, 120, 180 s oder Off."],
+  ["Clock Shuts Doors For", 1965, "4 s", "0 to 10 s.", "0 bis 10 s."],
+  ["Portraits Look At Last Body", 1966, "On", "The portraits turn to the last reported body.", "Die Porträts drehen sich zur zuletzt gemeldeten Leiche."],
+  ["Dark Room Vision", 1967, "50%", "Vision in dark rooms: 50%, 40%, 60%, 70% or Off.", "Sicht in dunklen Räumen: 50 %, 40 %, 60 %, 70 % oder Off."],
+  ["Candle Burn Time", 1968, "60 s", "20 to 120 s, in steps of 10 s.", "20 bis 120 s, in Schritten von 10 s."],
+  ["Impostor Blow-Out Cooldown", 1969, "30 s", "30, 20, 45, 60 s or Off.", "30, 20, 45, 60 s oder Off."],
+  ["Weeping Angels Attack", 1951, "On", "Whether the angels kill. Off: only the poses change.", "Ob die Engel töten. Off: Nur die Posen wechseln."],
+  ["Angel Breakout Sabotage", 1953, "On", "Wrath meter and the 45-second crisis (a child of Weeping Angels Attack).", "Zornpegel und 45-Sekunden-Krise (Kind von Weeping Angels Attack)."],
+  ["Weeping Angels Behaviour", 1955, "Gaze", "Gaze, Awaken or Stages.", "Gaze, Awaken oder Stages."],
+  ["Summoning Circle", 1954, "Easy", "Easy, Hard or Off.", "Easy, Hard oder Off."],
+  ["Summoning Without Reading", 1957, "Instant Kill", "Instant Kill or No Kill.", "Instant Kill oder No Kill."],
+  ["Hide In The Portable Toilet", 1956, "On", "Hiding place at the Crew Camp (Large).", "Versteck am Crew Camp (Large)."],
+  ["Hiding Time", 1958, "20 s", "10, 15, 20, 30, 45, 60 s or Unlimited.", "10, 15, 20, 30, 45, 60 s oder Unlimited."],
+  ["Hiding Cooldown", 1959, "30 s", "0 to 60 s, in steps of 5 s.", "0 bis 60 s, in Schritten von 5 s."],
+  ["Radio Microphone", 2160, "Selected Players", "Selected Players, Everyone or Off.", "Selected Players, Everyone oder Off."]
+];
+
+const HW_OPTS_RAVEN = [
+  ["Ravenhollow Fog", 1990, "Light", "Light, Thick or Off.", "Light, Thick oder Off."],
+  ["Miasma Vision", 1991, "75%", "Vision during the Oxygen sabotage: 75%, 60%, 90% or Off.", "Sicht während der Sauerstoff-Sabotage: 75 %, 60 %, 90 % oder Off."],
+  ["Death Knell Dims Vision", 1992, "On", "Every stroke of the bell dims the sight briefly.", "Jeder Glockenschlag drückt die Sicht kurz."]
+];
+
+/* ============================================================================
+ * UNKNOWN'S HALLOWEEN
+ * ==========================================================================*/
+const HALLOWEEN = {
+  key: "halloween",
+  name: "Unknown's Halloween",
+  fullName: { en: "Unknown's Halloween: costumes, kill scenes, candy and haunted maps", de: "Unknown's Halloween: Kostüme, Kill-Szenen, Süßigkeiten und Spukkarten" },
+  version: "1.1.0",
+  allClients: true,
+  repo: "https://github.com/DaUnknown-0/UnknownsHalloween",
+  download: "https://github.com/DaUnknown-0/UnknownsHalloween/releases/latest",
+  tagline: {
+    en: "Full-body costume hats with their own kill scenes, the Xenomorph, Trick or Treat with 43 candy effects, Halloween game modes and omens, and two haunted maps for Unknown's Atlas: Hollowmere Manor and Ravenhollow Cemetery.",
+    de: "Ganzkörper-Kostüme mit eigenen Kill-Szenen, der Xenomorph, Trick or Treat mit 43 Süßigkeiten-Effekten, Halloween-Spielmodi und Omen sowie zwei Spukkarten für Unknown's Atlas: Hollowmere Manor und Ravenhollow Cemetery."
+  },
+  intro: {
+    en: "Unknown's Halloween is an add-on for Unknown's Collection and runs on its infrastructure: RPC channel, option tabs, Role Draft and Guesser. It brings costume hats with frame-by-frame kill scenes, the roles <strong>Xenomorph</strong> and <strong>Banshee</strong>, the modifier <strong>Scaredy-Cat</strong>, <strong>Trick or Treat</strong>, the game modes <strong>Masquerade Ball</strong>, <strong>Zombie Outbreak</strong> and <strong>Sole Survivor</strong>, omens, haunted mirrors, the Phantom Parade sabotage, a Halloween look for meetings and the end screen, and the maps <strong>Hollowmere Manor</strong> and <strong>Ravenhollow Cemetery</strong> for Unknown's Atlas. The large pictures are not part of the DLL: they are downloaded in the background as asset packages. <strong>Everybody in a lobby needs the same version.</strong> The lobby checks it as soon as a feature with a gameplay effect is switched on, and the host cannot start while somebody is missing the mod or runs another version. Purely cosmetic parts (costumes, Halloween look, task skins) simply stay invisible for players without the mod.",
+    de: "Unknown's Halloween ist ein Add-on für Unknown's Collection und läuft auf dessen Infrastruktur: RPC-Kanal, Options-Reiter, Role Draft und Guesser. Es bringt Kostüm-Hüte mit Kill-Szenen Bild für Bild, die Rollen <strong>Xenomorph</strong> und <strong>Banshee</strong>, den Modifier <strong>Scaredy-Cat</strong>, <strong>Trick or Treat</strong>, die Spielmodi <strong>Masquerade Ball</strong>, <strong>Zombie Outbreak</strong> und <strong>Sole Survivor</strong>, Omen, Spukspiegel, die Phantom-Parade-Sabotage, eine Halloween-Optik für Meetings und Endbildschirm sowie die Karten <strong>Hollowmere Manor</strong> und <strong>Ravenhollow Cemetery</strong> für Unknown's Atlas. Die großen Bilder gehören nicht zur DLL: Sie werden als Asset-Pakete im Hintergrund heruntergeladen. <strong>Alle in einer Lobby brauchen dieselbe Version.</strong> Die Lobby prüft das, sobald ein Feature mit Spielwirkung eingeschaltet ist, und der Host kann nicht starten, solange jemandem die Mod fehlt oder er eine andere Version hat. Rein kosmetische Teile (Kostüme, Halloween-Optik, Aufgaben-Skins) bleiben für Spieler ohne die Mod einfach unsichtbar."
+  },
+  install: {
+    en: "<ol><li>Install The Other Roles and Unknown's Collection, and Unknown's Atlas if you want the two maps.</li><li>Download <code>UnknownsHalloween.dll</code> from the latest release and put it into <code>BepInEx\\plugins</code> next to <code>UnknownsCollection.dll</code>.</li><li>Start the game. On the first start the asset packages are downloaded in the background into <code>BepInEx\\halloween-assets</code> (about 280 MB). Costumes and maps show up in the hat shop and the map picker as soon as their packages are complete.</li><li>Every player in the lobby needs the same version.</li></ol><p>An in-game updater on the main menu checks GitHub for new releases, and the mod is listed in the Mod Manager of Forgotten Fixes. The master switch is <code>Enabled</code> in <code>BepInEx\\config\\com.daunknown.unknownshalloween.cfg</code>.</p>",
+    de: "<ol><li>Installiere The Other Roles und Unknown's Collection, dazu Unknown's Atlas, wenn du die beiden Karten willst.</li><li>Lade <code>UnknownsHalloween.dll</code> aus dem neuesten Release und leg sie nach <code>BepInEx\\plugins</code> neben <code>UnknownsCollection.dll</code>.</li><li>Starte das Spiel. Beim ersten Start werden die Asset-Pakete im Hintergrund nach <code>BepInEx\\halloween-assets</code> geladen (rund 280 MB). Kostüme und Karten erscheinen im Hutladen und in der Kartenauswahl, sobald ihre Pakete vollständig sind.</li><li>Jeder Spieler in der Lobby braucht dieselbe Version.</li></ol><p>Ein In-Game-Updater im Hauptmenü sucht auf GitHub nach neuen Releases, und die Mod steht im Mod Manager von Forgotten Fixes. Der Hauptschalter ist <code>Enabled</code> in <code>BepInEx\\config\\com.daunknown.unknownshalloween.cfg</code>.</p>"
+  },
+  deps: {
+    en: "<ul><li><strong>The Other Roles 4.8.0</strong> (hard dependency), Among Us 2024.11.26, BepInEx 6.0.0-be.697 and Reactor 2.3.1</li><li><strong>Unknown's Collection</strong> (hard dependency: RPC channel, options, Role Draft, Guesser). Tested with 1.5.0.</li><li><strong>Unknown's Atlas</strong> (optional, needed for the two maps). Hollowmere Manor needs 1.0.3.12 or newer, the task Feed the Plant needs 1.1.2. Without Atlas the maps simply do not appear and everything else works as before.</li><li><strong>TOR - Forgotten Fixes</strong> (optional): lobby menu entries for Trick or Treat, Omens and the lobby games (without it Trick or Treat and Omens get a small button in the lobby corner and the lobby games have no entry), the music manager, the titles in the session statistics, the Mod Manager and the Round Replay. Tested with 1.7.0.</li><li><strong>All players</strong> need the same Unknown's Halloween version. The lobby checks it for every feature with a gameplay effect (see Version check).</li><li>An internet connection on the first start, for the asset packages.</li></ul>",
+    de: "<ul><li><strong>The Other Roles 4.8.0</strong> (harte Abhängigkeit), Among Us 2024.11.26, BepInEx 6.0.0-be.697 und Reactor 2.3.1</li><li><strong>Unknown's Collection</strong> (harte Abhängigkeit: RPC-Kanal, Optionen, Role Draft, Guesser). Getestet mit 1.5.0.</li><li><strong>Unknown's Atlas</strong> (optional, nötig für die beiden Karten). Hollowmere Manor braucht 1.0.3.12 oder neuer, die Aufgabe Feed the Plant braucht 1.1.2. Ohne Atlas erscheinen die Karten schlicht nicht, alles andere läuft wie gewohnt.</li><li><strong>TOR - Forgotten Fixes</strong> (optional): Lobby-Menü-Einträge für Trick or Treat, Omens und die Lobby-Spiele (ohne Forgotten Fixes bekommen Trick or Treat und Omens einen kleinen Knopf in der Lobby-Ecke und die Lobby-Spiele keinen Eintrag), der Musik-Manager, die Titel in der Session-Statistik, der Mod Manager und der Round Replay. Getestet mit 1.7.0.</li><li><strong>Alle Spieler</strong> brauchen dieselbe Unknown's-Halloween-Version. Die Lobby prüft das für jedes Feature mit Spielwirkung (siehe Versionsabgleich).</li><li>Beim ersten Start eine Internetverbindung, für die Asset-Pakete.</li></ul>"
+  },
+  sections: [
+    /* ---------------------------------------------------------------- costumes */
+    {
+      id: "costumes",
+      title: { en: "Costumes", de: "Kostüme" },
+      intro: {
+        en: "Costume hats are full-body hats: the picture is the whole figure, or a costume painted directly onto the crewmate's own run animation. You pick them in the hat shop like any other hat. The player colour shows on every costume (on the highlights of the figure). Costumes are cosmetic; their pictures come as asset packages.",
+        de: "Kostüm-Hüte sind Ganzkörper-Hüte: Das Bild ist die ganze Figur oder ein Kostüm, das direkt auf die Laufanimation des Crewmates gemalt ist. Du wählst sie im Hutladen wie jeden anderen Hut. Die Spielerfarbe ist an jedem Kostüm zu sehen (an den Akzenten der Figur). Kostüme sind rein kosmetisch; ihre Bilder kommen als Asset-Pakete."
+      },
+      entries: [
+        {
+          id: "costumes-builtin",
+          title: { en: "Built-in costumes", de: "Eingebaute Kostüme" },
+          summary: {
+            en: "Eighteen costume hats plus the Halloween Corpse. Each has an idle loop, a walk loop, a back layer and a ladder pose.",
+            de: "Achtzehn Kostüm-Hüte plus der Halloween Corpse. Jeder hat eine Steh- und eine Laufanimation, eine Rückenebene und eine Leiterpose."
+          },
+          body: {
+            en: "<p>The walk loop of most costumes follows the twelve sprites of the crewmate's own run cycle. Costumes with a kill scene appear in the table below; the others use the normal kill.</p>" + tbl(["Costume", "Look", "Kill scene"], [
+              ["Halloween Freddy", "Full figure, player colour on the head.", "Yes"],
+              ["Halloween Jason", "Full figure, player colour on the head.", "Yes, two"],
+              ["Halloween Xenomorph", "Player colour on tail spikes, ribs and the dome reflection. Also worn by the transformed Xenomorph role.", "Yes, two"],
+              ["Halloween Ghostface", "Player colour on hood rim and cloth folds.", "Yes"],
+              ["Halloween Thing", "A head that opens; player colour on the highlights.", "Yes"],
+              ["Halloween Predator", "Player colour on the highlights.", "Yes"],
+              ["Halloween Sadako", "Player colour on the highlights.", "Yes"],
+              ["Halloween Spider", "Knitted spider hood. The crewmate keeps its idle pose while its eight legs step on their own and are worked out live every frame.", "Yes"],
+              ["Halloween Pumpkin Head", "Lantern head; player colour on the scarf.", "Yes"],
+              ["Halloween Reaper", "Hooded, floats instead of walking, scythe.", "Yes"],
+              ["Halloween Vampire", "Cape; player colour in the cape lining, the collar and the medallion band.", "Yes"],
+              ["Halloween Medusa", "An overlay: snake crown and chiton over the real crewmate. Player colour in the sash and the snakes' tongues.", "Yes"],
+              ["Halloween Weeping Angel", "Stone crewmate with wings. It weeps and peeks through a cracked visor, flies with wing beats when it moves (the first walk frames are the take-off, landing plays them backwards). Visor and cracks glow in the player colour.", "Yes, four"],
+              ["Halloween BVB Fan", "A football fan outfit on the real body.", "No"],
+              ["Halloween Sam, Halloween Dean, Halloween Castiel", "Hair and clothes on the real body. Visor, colour and face of the player stay visible.", "No"],
+              ["Halloween Angel Ghost", "A floating ghost figure that replaces the body. Also the ghost costume of the lobby game Boo!.", "No"]
+            ]),
+            de: "<p>Die Laufanimation der meisten Kostüme folgt den zwölf Sprites des Laufzyklus des Crewmates. Kostüme mit Kill-Szene stehen in der Tabelle unten, die übrigen nutzen den normalen Kill.</p>" + tbl(["Kostüm", "Aussehen", "Kill-Szene"], [
+              ["Halloween Freddy", "Ganze Figur, Spielerfarbe am Kopf.", "Ja"],
+              ["Halloween Jason", "Ganze Figur, Spielerfarbe am Kopf.", "Ja, zwei"],
+              ["Halloween Xenomorph", "Spielerfarbe an Schwanzstacheln, Rippen und der Kuppel-Spiegelung. Trägt auch die verwandelte Xenomorph-Rolle.", "Ja, zwei"],
+              ["Halloween Ghostface", "Spielerfarbe an Kapuzenrand und Stofffalten.", "Ja"],
+              ["Halloween Thing", "Ein Kopf, der sich öffnet; Spielerfarbe an den Akzenten.", "Ja"],
+              ["Halloween Predator", "Spielerfarbe an den Akzenten.", "Ja"],
+              ["Halloween Sadako", "Spielerfarbe an den Akzenten.", "Ja"],
+              ["Halloween Spider", "Gestrickte Spinnenkapuze. Der Crewmate behält seine Standpose, während seine acht Beine von allein Schritte machen und jedes Bild live berechnet werden.", "Ja"],
+              ["Halloween Pumpkin Head", "Laternenkopf; Spielerfarbe am Schal.", "Ja"],
+              ["Halloween Reaper", "Mit Kapuze, schwebt statt zu laufen, Sense.", "Ja"],
+              ["Halloween Vampire", "Umhang; Spielerfarbe im Umhangfutter, am Kragen und am Medaillon-Band.", "Ja"],
+              ["Halloween Medusa", "Eine Auflage: Schlangenkrone und Chiton über dem echten Crewmate. Spielerfarbe in der Schärpe und an den Schlangenzungen.", "Ja"],
+              ["Halloween Weeping Angel", "Steinerner Crewmate mit Flügeln. Er weint und späht durch ein gesprungenes Visier, fliegt mit Flügelschlägen, wenn er sich bewegt (die ersten Laufbilder sind der Start, die Landung spielt sie rückwärts). Visier und Risse leuchten in der Spielerfarbe.", "Ja, vier"],
+              ["Halloween BVB Fan", "Ein Fußballfan-Outfit auf dem echten Körper.", "Nein"],
+              ["Halloween Sam, Halloween Dean, Halloween Castiel", "Haare und Kleidung auf dem echten Körper. Visier, Farbe und Gesicht des Spielers bleiben sichtbar.", "Nein"],
+              ["Halloween Angel Ghost", "Eine schwebende Geisterfigur, die den Körper ersetzt. Auch das Geisterkostüm des Lobby-Spiels Boo!.", "Nein"]
+            ])
+          }
+        },
+        {
+          id: "costume-corpse",
+          title: { en: "Halloween Corpse", de: "Halloween Corpse" },
+          summary: {
+            en: "The wearer looks like the game's own corpse: the lower half with the bone sticking out, in the wearer's colours.",
+            de: "Der Träger sieht aus wie die Leiche des Spiels: die untere Hälfte mit dem herausragenden Knochen, in den Farben des Trägers."
+          },
+          body: {
+            en: "<p>The corpse sits at the size and spot of a real corpse. Body, skin and visor are hidden while it is worn and come back when it is taken off. The costume walks on its own leg stumps (twelve walking frames, a little hop per step) and faces the way it walks. Ghosts, players on ladders, in vents, on the moving platform and in horse or long mode show the normal crewmate. Players without the mod see the corpse picture as a normal hat.</p><p>Zombie Outbreak uses this costume for every zombie.</p>",
+            de: "<p>Die Leiche sitzt in Größe und Position einer echten Leiche. Körper, Haut und Visier sind versteckt, solange sie getragen wird, und kommen zurück, wenn man sie ablegt. Das Kostüm läuft auf seinen eigenen Beinstümpfen (zwölf Laufbilder, ein kleiner Hüpfer pro Schritt) und blickt in Laufrichtung. Geister, Spieler auf Leitern, in Vents, auf der Plattform und im Horse- oder Long-Modus zeigen den normalen Crewmate. Spieler ohne die Mod sehen das Leichenbild als normalen Hut.</p><p>Zombie Outbreak nutzt dieses Kostüm für jeden Zombie.</p>"
+          }
+        },
+        {
+          id: "costumes-online",
+          title: { en: "Online costumes and live updates", de: "Online-Kostüme und Live-Updates" },
+          summary: {
+            en: "New costumes arrive without a mod update: a costume list and picture packages are loaded from the asset repository.",
+            de: "Neue Kostüme kommen ohne Mod-Update: Eine Kostümliste und Bildpakete werden aus dem Asset-Repository geladen."
+          },
+          body: {
+            en: "<p>Since 1.0.2 the mod loads a costume list from the asset repository when the game starts and downloads a picture package for every costume on it (size and SHA-256 are verified). As soon as a package is complete, its costume appears in the hat shop. The list is checked again every time you join a lobby (at most once a minute), so new or updated costumes show up without a restart. Without internet the last downloaded list is used. Online costumes have no host option of their own, and a costume may have fewer than 16 standing pictures.</p><ul><li><strong>Halloween Vampire Bat</strong> (the first online costume, 1.0.2): a hood with little fangs and glowing eyes and a long wing cape. When you start walking you turn into a bat in a puff of purple smoke and fly; when you stop, you land and turn back. The body is in your player colour.</li><li><strong>Halloween Witch, Mummy, Zombie, Skeleton, Plague Doctor and Sheet Ghost</strong> (1.1.0): each standing and walking, painted directly onto the game's own run animation, with your player colour on dress, suit, coat and so on. They also reach players on 1.0.2 and 1.0.3 through the online list.</li></ul><p><strong>Live updates (1.0.3).</strong> The list can also carry packages that replace files of built-in costumes (the newest package wins); the affected hats are rebuilt right away, without a restart. It can also change the data of built-in costumes, including kill scene frame counts and flashes. The original values are remembered, so removing a tweak restores them.</p><p><code>/loadcostumes</code> reloads the costume list for everybody in the lobby at once. Only the mod author can use it; every client checks the sender itself.</p>",
+            de: "<p>Seit 1.0.2 lädt die Mod beim Spielstart eine Kostümliste aus dem Asset-Repository und holt für jedes Kostüm darauf ein Bildpaket (Größe und SHA-256 werden geprüft). Sobald ein Paket vollständig ist, erscheint sein Kostüm im Hutladen. Die Liste wird bei jedem Betreten einer Lobby erneut geprüft (höchstens einmal pro Minute), neue oder geänderte Kostüme erscheinen also ohne Neustart. Ohne Internet gilt die zuletzt geladene Liste. Online-Kostüme haben keine eigene Host-Option, und ein Kostüm darf weniger als 16 Stehbilder haben.</p><ul><li><strong>Halloween Vampire Bat</strong> (das erste Online-Kostüm, 1.0.2): eine Kapuze mit kleinen Fangzähnen und leuchtenden Augen und ein langer Flügelumhang. Wenn du losläufst, verwandelst du dich in einer lila Rauchwolke in eine Fledermaus und fliegst; bleibst du stehen, landest du und verwandelst dich zurück. Der Körper hat deine Spielerfarbe.</li><li><strong>Halloween Witch, Mummy, Zombie, Skeleton, Plague Doctor und Sheet Ghost</strong> (1.1.0): jeweils stehend und laufend, direkt auf die Laufanimation des Spiels gemalt, mit deiner Spielerfarbe an Kleid, Anzug, Mantel und so weiter. Sie erreichen über die Online-Liste auch Spieler auf 1.0.2 und 1.0.3.</li></ul><p><strong>Live-Updates (1.0.3).</strong> Die Liste kann auch Pakete enthalten, die Dateien eingebauter Kostüme ersetzen (das neueste Paket gewinnt); die betroffenen Hüte werden sofort neu gebaut, ohne Neustart. Sie kann außerdem die Daten eingebauter Kostüme ändern, auch Bildzahlen und Blitze der Kill-Szenen. Die Originalwerte werden gemerkt, ein entfernter Eingriff stellt sie also wieder her.</p><p><code>/loadcostumes</code> lädt die Kostümliste für alle in der Lobby auf einmal neu. Nur der Mod-Autor kann das; jeder Client prüft den Absender selbst.</p>"
+          }
+        }
+      ]
+    },
+    /* ---------------------------------------------------------------- kill scenes */
+    {
+      id: "kill-scenes",
+      title: { en: "Kill scenes", de: "Kill-Szenen" },
+      intro: {
+        en: "Whoever kills while wearing a costume plays the costume's own cutscene on the victim's screen: a frame-by-frame scene with a red flash on the hits. The sound is the vanilla kill stinger.",
+        de: "Wer in einem Kostüm tötet, spielt auf dem Bildschirm des Opfers die Cutscene des Kostüms ab: eine Szene Bild für Bild mit rotem Blitz bei den Treffern. Der Ton ist der Kill-Stinger des Spiels."
+      },
+      entries: [
+        {
+          id: "kill-rules",
+          title: { en: "When a scene plays", de: "Wann eine Szene läuft" },
+          summary: {
+            en: "Only when the killer wears the costume in the outfit that is drawn right now, on a normal field kill, and only if the host has the scenes on.",
+            de: "Nur wenn der Killer das Kostüm im aktuell gezeichneten Outfit trägt, bei einem normalen Feld-Kill, und nur wenn der Host die Szenen eingeschaltet hat."
+          },
+          body: {
+            en: "<ul><li>A scene counts only on a normal field kill that no role cutscene of Unknown's Collection has already claimed.</li><li>The scene goes by what is actually drawn, not by the stored outfit. Under <em>Camouflage</em> and during the mushroom sabotage no costume counts at all; a morphed killer shows the scene of the costume they are copying. A camouflaged killer therefore does not give themselves away.</li><li>Some costumes have several scenes and one is drawn at random per kill: Jason (slash or lift), Xenomorph (tail stab or bite) and the Weeping Angel (four scenes).</li><li>The host switches the scenes with <strong>Halloween Costume Kill Animations</strong> (ID 1793, default On) and each costume with its own switch below it, see Host options.</li><li>The red flash is softened by the local switch <em>Reduce Flashes</em>.</li></ul>",
+            de: "<ul><li>Eine Szene zählt nur bei einem normalen Feld-Kill, den noch keine Rollen-Cutscene von Unknown's Collection beansprucht hat.</li><li>Die Szene richtet sich nach dem, was tatsächlich gezeichnet wird, nicht nach dem gespeicherten Outfit. Unter <em>Camouflage</em> und während der Pilz-Sabotage zählt gar kein Kostüm; ein gemorphter Killer zeigt die Szene des Kostüms, das er kopiert. Ein getarnter Killer verrät sich also nicht.</li><li>Einige Kostüme haben mehrere Szenen, pro Kill wird eine zufällig gezogen: Jason (Hieb oder Hochheben), Xenomorph (Schwanzstich oder Biss) und der Weeping Angel (vier Szenen).</li><li>Der Host schaltet die Szenen mit <strong>Halloween Costume Kill Animations</strong> (ID 1793, Standard On) und jedes Kostüm mit einem eigenen Schalter darunter, siehe Host-Optionen.</li><li>Der rote Blitz wird durch den lokalen Schalter <em>Reduce Flashes</em> gedämpft.</li></ul>"
+          }
+        },
+        {
+          id: "kill-list",
+          title: { en: "The scenes", de: "Die Szenen" },
+          summary: {
+            en: "What happens to the victim in each costume's scene.",
+            de: "Was dem Opfer in der Szene jedes Kostüms passiert."
+          },
+          body: {
+            en: tbl(["Costume", "Scene"], [
+              ["Halloween Freddy", "One frame-by-frame scene."],
+              ["Halloween Jason", "Two scenes: a diagonal machete slash, or he grabs the victim, lifts them and throws them down."],
+              ["Halloween Xenomorph", "Two scenes: a tail stab, or the inner jaw bites through the visor."],
+              ["Halloween Ghostface", "Drags the victim down by the backpack, stabs three times, takes a selfie with the dying crewmate and pulls the knife out."],
+              ["Halloween Thing", "The head opens, tentacles pull the victim in, gulp, burp."],
+              ["Halloween Predator", "Wrist blades."],
+              ["Halloween Sadako", "She climbs out of a CRT television."],
+              ["Halloween Spider", "Abseils behind the victim, wraps a cocoon from the feet up, bites, the cocoon tips over. The killer's own crewmate shows under the costume in the killer's colour."],
+              ["Halloween Pumpkin Head", "The glow jumps over to the victim and goes out."],
+              ["Halloween Reaper", "One swing with the scythe held beside the hood, the soul rises."],
+              ["Halloween Vampire", "The cape closes over the victim, bats rise."],
+              ["Halloween Medusa", "Her gaze turns the victim to a grey stone statue, step by step. The statue stays up for a moment."],
+              ["Halloween Weeping Angel", "Four scenes, one per angel shape of Hollowmere Manor."],
+              ["The Demon", "No costume: shown to the victim of the pentagram demon on Hollowmere Manor and Ravenhollow Cemetery."]
+            ]) + "<p>Halloween Corpse, BVB Fan, Sam, Dean, Castiel, Angel Ghost and all online costumes have no scene of their own.</p>",
+            de: tbl(["Kostüm", "Szene"], [
+              ["Halloween Freddy", "Eine Szene Bild für Bild."],
+              ["Halloween Jason", "Zwei Szenen: ein diagonaler Machetenhieb, oder er packt das Opfer, hebt es hoch und wirft es zu Boden."],
+              ["Halloween Xenomorph", "Zwei Szenen: ein Schwanzstich, oder der Innenkiefer beißt durchs Visier."],
+              ["Halloween Ghostface", "Zieht das Opfer am Rucksack zu Boden, sticht dreimal zu, macht ein Selfie mit dem sterbenden Crewmate und zieht das Messer heraus."],
+              ["Halloween Thing", "Der Kopf öffnet sich, Tentakel ziehen das Opfer hinein, Schlucken, Rülpsen."],
+              ["Halloween Predator", "Handgelenkklingen."],
+              ["Halloween Sadako", "Sie klettert aus einem Röhrenfernseher."],
+              ["Halloween Spider", "Seilt sich hinter dem Opfer ab, wickelt einen Kokon von den Füßen aufwärts, beißt zu, der Kokon kippt um. Der eigene Crewmate des Killers ist unter dem Kostüm in der Farbe des Killers zu sehen."],
+              ["Halloween Pumpkin Head", "Das Leuchten springt auf das Opfer über und erlischt."],
+              ["Halloween Reaper", "Ein Hieb mit der Sense neben der Kapuze, die Seele steigt auf."],
+              ["Halloween Vampire", "Der Umhang schließt sich über dem Opfer, Fledermäuse steigen auf."],
+              ["Halloween Medusa", "Ihr Blick macht das Opfer Schritt für Schritt zu einer grauen Steinstatue. Die Statue bleibt einen Moment stehen."],
+              ["Halloween Weeping Angel", "Vier Szenen, eine pro Engelsgestalt von Hollowmere Manor."],
+              ["The Demon", "Kein Kostüm: wird dem Opfer des Pentagramm-Dämons auf Hollowmere Manor und Ravenhollow Cemetery gezeigt."]
+            ]) + "<p>Halloween Corpse, BVB Fan, Sam, Dean, Castiel, Angel Ghost und alle Online-Kostüme haben keine eigene Szene.</p>"
+          }
+        }
+      ]
+    },
+    /* ---------------------------------------------------------------- roles */
+    {
+      id: "roles",
+      title: { en: "Roles and modifier", de: "Rollen und Modifier" },
+      intro: {
+        en: "Two roles and one modifier, all host-authoritative. They register themselves with Unknown's Collection, so they show up in the Role Draft and as guessable roles for the Guesser.",
+        de: "Zwei Rollen und ein Modifier, alle host-autoritativ. Sie melden sich selbst bei Unknown's Collection an, erscheinen also im Role Draft und als ratbare Rollen für den Guesser."
+      },
+      entries: [
+        {
+          id: "xenomorph",
+          title: { en: "Xenomorph (Neutral, killer)", de: "Xenomorph (Neutral, Killer)" },
+          summary: {
+            en: "Looks like a Crewmate, transforms on a button for a set time, then kills, can move faster, sees like an Impostor and may vent. Wins like the Jackal, alone.",
+            de: "Sieht aus wie ein Crewmate, verwandelt sich auf Knopfdruck für eine feste Zeit, tötet dann, kann schneller sein, sieht wie ein Impostor und darf venten. Gewinnt wie der Jackal, allein."
+          },
+          body: {
+            en: "<p>As a human the Xenomorph looks like any Crewmate and cannot kill. The button <strong>TRANSFORM</strong> (F) turns him into the creature for <em>Transformation Duration</em>; <strong>REVERT</strong> (F, not within the first second) ends the form early. In creature form:</p><ul><li>the <strong>KILL</strong> button (Q) works, with its own cooldown;</li><li>he can move faster (<em>Xenomorph Speed While Transformed</em>, 1x to 1.5x, default 1x);</li><li>he sees like an Impostor and a lights sabotage does not reduce it;</li><li>he may use vents (<em>Xenomorph Can Use Vents While Transformed</em>);</li><li>the costume covers him completely and his name tag is blanked for everybody but himself and the dead: everyone knows <em>what</em> is coming, but not <em>who</em>.</li></ul><p>The form ends on its timer, when a meeting starts or when he dies; the button then goes on cooldown. While the role is switched on, the Halloween Xenomorph costume cannot be worn as an ordinary hat.</p><p><strong>Winning.</strong> Like the Jackal: alive, no Impostor and no other killing team left, and at least as many Xenomorphs (there is only one) as everybody else together. There is no reinforcement, no egg and no sidekick. While a Xenomorph is alive, the host swallows the wins that would otherwise end the round by vote, disconnect or kill parity for the crew, the Impostors or the Jackal team. Task wins and sabotage wins still go through: the crew can out-task him, and a meltdown still kills everybody.</p><p><strong>Spawning.</strong> Needs at least <em>Xenomorph Minimum Players To Spawn</em> players, respects TOR's Maximum Neutral Roles, and by default never shares a round with a Jackal (<em>Jackal And Xenomorph Exclude Each Other</em>: with a Jackal in the round he is not rolled, and the draft does not offer him once a Jackal has been picked). Options are in the Neutral tab, see Host options.</p>",
+            de: "<p>Als Mensch sieht der Xenomorph aus wie jeder Crewmate und kann nicht töten. Der Knopf <strong>TRANSFORM</strong> (F) verwandelt ihn für <em>Transformation Duration</em> in die Kreatur; <strong>REVERT</strong> (F, nicht in der ersten Sekunde) beendet die Form vorzeitig. In Kreaturform:</p><ul><li>der <strong>KILL</strong>-Knopf (Q) funktioniert, mit eigener Abklingzeit;</li><li>er kann sich schneller bewegen (<em>Xenomorph Speed While Transformed</em>, 1x bis 1,5x, Standard 1x);</li><li>er sieht wie ein Impostor und eine Licht-Sabotage mindert das nicht;</li><li>er darf venten (<em>Xenomorph Can Use Vents While Transformed</em>);</li><li>das Kostüm verdeckt ihn komplett und sein Namensschild ist für alle außer ihm selbst und den Toten leer: Alle wissen, <em>was</em> kommt, aber nicht <em>wer</em>.</li></ul><p>Die Form endet mit ihrem Timer, beim Meeting-Start oder mit seinem Tod; der Knopf geht dann auf Abklingzeit. Solange die Rolle eingeschaltet ist, lässt sich das Kostüm Halloween Xenomorph nicht als gewöhnlicher Hut tragen.</p><p><strong>Gewinnen.</strong> Wie der Jackal: am Leben, kein Impostor und kein anderes Killer-Team übrig, und mindestens so viele Xenomorphs (es gibt einen) wie alle anderen zusammen. Es gibt keine Verstärkung, kein Ei und keinen Sidekick. Solange ein Xenomorph lebt, schluckt der Host die Siege, die die Runde sonst per Abstimmung, Disconnect oder Kill-Gleichstand für Crew, Impostoren oder das Jackal-Team beenden würden. Aufgaben- und Sabotage-Siege gehen weiter durch: Die Crew kann ihn überrennen, und eine Kernschmelze tötet weiter alle.</p><p><strong>Spawn.</strong> Braucht mindestens <em>Xenomorph Minimum Players To Spawn</em> Spieler, beachtet TORs Maximum Neutral Roles und teilt sich standardmäßig nie eine Runde mit einem Jackal (<em>Jackal And Xenomorph Exclude Each Other</em>: Ist ein Jackal in der Runde, wird er nicht gewürfelt, und der Draft bietet ihn nicht an, sobald ein Jackal gewählt wurde). Die Optionen stehen im Neutral-Reiter, siehe Host-Optionen.</p>"
+          }
+        },
+        {
+          id: "banshee",
+          title: { en: "Banshee (Crewmate)", de: "Banshee (Crewmate)" },
+          summary: {
+            en: "Her scream shows every player, for a moment, where every living player is, the Banshee herself included.",
+            de: "Ihr Schrei zeigt allen Spielern für einen Moment, wo jeder lebende Spieler ist, die Banshee selbst eingeschlossen."
+          },
+          body: {
+            en: "<p>The button <strong>SCREAM</strong> (F) is an omen for everybody: for <em>Banshee Scream Reveals For</em> every player, crew and Impostors alike, sees a marker over each living player (through walls and the shadow) and an arrow at the screen edge for those out of sight. The number of screams per game and the cooldown between them are set by the host.</p><p>The scream is double-edged. It can expose an Impostor walking away from a body, but it also tells the Impostors where the lonely crewmates are, and where the Banshee stands. Phantoms of the Phantom Parade are not players and are not marked.</p>",
+            de: "<p>Der Knopf <strong>SCREAM</strong> (F) ist ein Omen für alle: Für <em>Banshee Scream Reveals For</em> sieht jeder Spieler, Crew wie Impostoren, einen Marker über jedem lebenden Spieler (durch Wände und den Schatten) und am Bildschirmrand einen Pfeil für alle, die außer Sicht sind. Die Zahl der Schreie pro Spiel und die Abklingzeit dazwischen stellt der Host ein.</p><p>Der Schrei ist zweischneidig. Er kann einen Impostor entlarven, der sich von einer Leiche entfernt, verrät den Impostoren aber auch, wo die einsamen Crewmates sind, und wo die Banshee steht. Phantome der Phantom Parade sind keine Spieler und werden nicht markiert.</p>"
+          }
+        },
+        {
+          id: "scaredy-cat",
+          title: { en: "Scaredy-Cat (modifier, crew only)", de: "Scaredy-Cat (Modifier, nur Crew)" },
+          summary: {
+            en: "Screams on his own when he sees a body. Everybody reads <em>Someone screams in &lt;room&gt;!</em>, without a name.",
+            de: "Schreit von allein, wenn er eine Leiche sieht. Alle lesen <em>Someone screams in &lt;Raum&gt;!</em>, ohne Namen."
+          },
+          body: {
+            en: "<p>When the Scaredy-Cat sees a body (it lies inside his light radius and no shadow wall is in between), he screams on his own. A big exclamation mark pops up over him, visible only to those who have him in sight, and everybody reads <em>Someone screams in &lt;room&gt;!</em>. He does not have to report, but the body is given away all the same.</p><p>Crew only (an Impostor would give his own kill away), never together with another modifier. The host checks every scream before telling everybody: the sender must be the living carrier, no meeting may run, the body must exist and lie within his light radius, every body counts once, and the cooldown between two screams applies. Options are in the Modifier tab.</p>",
+            de: "<p>Sieht der Scaredy-Cat eine Leiche (sie liegt in seinem Lichtradius und keine Schattenwand ist dazwischen), schreit er von allein. Ein großes Ausrufezeichen erscheint über ihm, sichtbar nur für alle, die ihn im Blick haben, und alle lesen <em>Someone screams in &lt;Raum&gt;!</em>. Er muss nicht melden, aber die Leiche ist trotzdem verraten.</p><p>Nur Crew (ein Impostor würde seinen eigenen Kill verraten), nie zusammen mit einem anderen Modifier. Der Host prüft jeden Schrei, bevor er allen Bescheid sagt: Der Absender muss der lebende Träger sein, es darf kein Meeting laufen, die Leiche muss existieren und in seinem Lichtradius liegen, jede Leiche zählt einmal, und die Abklingzeit zwischen zwei Schreien gilt. Die Optionen stehen im Modifier-Reiter.</p>"
+          }
+        }
+      ]
+    },
+    /* ---------------------------------------------------------------- trick or treat */
+    {
+      id: "treats",
+      title: { en: "Trick or Treat", de: "Trick or Treat" },
+      intro: {
+        en: "Candies on the map, in the spirit of the candy event of Roblox DOORS: twelve kinds, forty-three effects, drawn anew every round.",
+        de: "Süßigkeiten auf der Karte, im Geist des Süßigkeiten-Events von Roblox DOORS: zwölf Sorten, dreiundvierzig Effekte, jede Runde neu ausgelost."
+      },
+      entries: [
+        {
+          id: "treats-how",
+          title: { en: "How it works", de: "So funktioniert es" },
+          summary: {
+            en: "The host scatters candies at the start of the round and after every meeting. Eat one with the Use button and find out what it does.",
+            de: "Der Host verteilt Süßigkeiten zum Rundenstart und nach jedem Meeting. Iss eine mit dem Use-Knopf und finde heraus, was sie bewirkt."
+          },
+          body: {
+            en: "<p>Trick or Treat is off by default and set up by the host in its own menu (the entry <em>Trick or Treat</em> in the lobby menu of Forgotten Fixes; without Forgotten Fixes there is a small button in the bottom-left lobby corner). At the start of the round and after every meeting the host scatters candies over random spots of the current map that players can actually reach; the old ones are gone. You eat a candy with the Use button next to it. There is no limit per player. Ghosts cannot eat, and running effects end with the death of the eater.</p><ul><li>There are 12 candy kinds: Pumpkin Caramel, Spider Lolly, Bat Gummy, Eyeball Gum, Tombstone Truffle, Witch Licorice, Ghost Floss, Moon Drop, Bone Biscuit, Sour Worm, Candy Apple and Zombie Tooth. Which kind does what is drawn anew by the host every round, with one seed for everybody.</li><li>Only the eater learns the effect: a card at the top of the screen names the kind and the effect with a short line, and a small list of the running effects stays on the left edge.</li><li>Impostors eat too and get their own version of some effects.</li><li>Timed effects end when a meeting starts. Round effects end with the x-th meeting after eating (<em>Round Effects Last</em>, 1 to 3 meetings, default 1).</li><li>The Harvest omen doubles the number of candies.</li></ul><p>Every player needs Unknown's Halloween: the host cannot start while Trick or Treat is on and somebody is missing the mod.</p>",
+            de: "<p>Trick or Treat ist standardmäßig aus und wird vom Host in einem eigenen Menü eingestellt (der Eintrag <em>Trick or Treat</em> im Lobby-Menü von Forgotten Fixes; ohne Forgotten Fixes gibt es einen kleinen Knopf in der Lobby-Ecke unten links). Zum Rundenstart und nach jedem Meeting verteilt der Host Süßigkeiten auf zufällige Stellen der aktuellen Karte, die Spieler wirklich erreichen können; die alten sind weg. Eine Süßigkeit isst du mit dem Use-Knopf direkt daneben. Pro Spieler gibt es kein Limit. Geister können nicht essen, und laufende Effekte enden mit dem Tod des Essers.</p><ul><li>Es gibt 12 Sorten: Pumpkin Caramel, Spider Lolly, Bat Gummy, Eyeball Gum, Tombstone Truffle, Witch Licorice, Ghost Floss, Moon Drop, Bone Biscuit, Sour Worm, Candy Apple und Zombie Tooth. Welche Sorte was bewirkt, lost der Host jede Runde neu aus, mit einem Seed für alle.</li><li>Nur der Esser erfährt den Effekt: Eine Karte oben am Bildschirm nennt Sorte und Effekt mit einer kurzen Zeile, und eine kleine Liste der laufenden Effekte bleibt am linken Rand.</li><li>Impostoren essen auch und bekommen bei einigen Effekten eine eigene Version.</li><li>Zeitliche Effekte enden, wenn ein Meeting beginnt. Rundeneffekte enden mit dem x-ten Meeting nach dem Essen (<em>Round Effects Last</em>, 1 bis 3 Meetings, Standard 1).</li><li>Das Omen Harvest verdoppelt die Zahl der Süßigkeiten.</li></ul><p>Jeder Spieler braucht Unknown's Halloween: Der Host kann nicht starten, solange Trick or Treat an ist und jemandem die Mod fehlt.</p>"
+          }
+        },
+        {
+          id: "treats-cabinets",
+          title: { en: "Cabinets and the candy bag", de: "Schränke und Süßigkeiten-Tüte" },
+          summary: {
+            en: "On the own maps candies hide in cabinets you search for two seconds. The candy bag holds two candies for later.",
+            de: "Auf den eigenen Karten verstecken sich die Süßigkeiten in Schränken, die du zwei Sekunden lang durchsuchst. Die Tüte hält zwei Süßigkeiten für später."
+          },
+          body: {
+            en: "<p>On the own maps (Vesper Museum, Forest Station, Moonlight Carnival and Polaris Express of Unknown's Atlas, plus Hollowmere Manor and Ravenhollow Cemetery) the candies hide in cabinets. The host places twice as many cabinets as candies once per round, against the walls of the rooms; they never block a path. The Use button says <strong>SEARCH</strong>: hold it (or E) for two seconds without moving. Moving, letting go, a meeting or death breaks it off. Then the cabinet stands open for everybody, and a candy inside is eaten. On the vanilla maps candies lie on the floor, only on spots players can reach and never right next to consoles, the emergency button or vents.</p><p><strong>Candy bag</strong> (default on). The Use button <strong>TAKE</strong>s a candy into your bag instead of eating it; the bag holds two. A <strong>BAG</strong> button opens a card with what you carry, and a click on a candy eats it. The Use button never eats from the bag, so it no longer fights with consoles and the emergency button. Candies from cabinets go into the bag as well. While the bag card or the Omens menu is open, you stand still and every game button outside it is off.</p>",
+            de: "<p>Auf den eigenen Karten (Vesper-Museum, Forststation, Moonlight Carnival und Polaris Express von Unknown's Atlas sowie Hollowmere Manor und Ravenhollow Cemetery) verstecken sich die Süßigkeiten in Schränken. Der Host stellt einmal pro Runde doppelt so viele Schränke wie Süßigkeiten an die Wände der Räume; sie versperren nie einen Weg. Der Use-Knopf sagt <strong>SEARCH</strong>: Halte ihn (oder E) zwei Sekunden lang, ohne dich zu bewegen. Bewegen, Loslassen, ein Meeting oder der Tod brechen es ab. Dann steht der Schrank für alle offen, und eine Süßigkeit darin wird gegessen. Auf den Vanilla-Karten liegen die Süßigkeiten auf dem Boden, nur an Stellen, die Spieler erreichen können, und nie direkt neben Konsolen, dem Notfallknopf oder Vents.</p><p><strong>Süßigkeiten-Tüte</strong> (Standard an). Der Use-Knopf <strong>TAKE</strong> steckt eine Süßigkeit in deine Tüte, statt sie zu essen; die Tüte fasst zwei. Ein <strong>BAG</strong>-Knopf öffnet eine Karte mit dem, was du trägst, und ein Klick auf eine Süßigkeit isst sie. Der Use-Knopf isst nie aus der Tüte, er streitet also nicht mehr mit Konsolen und Notfallknopf. Süßigkeiten aus Schränken wandern ebenfalls in die Tüte. Solange die Tütenkarte oder das Omen-Menü offen ist, stehst du still und jeder Spielknopf außerhalb ist aus.</p>"
+          }
+        },
+        {
+          id: "treats-tricks",
+          title: { en: "Trick Candy and Sugar Shock", de: "Trick Candy und Zuckerschock" },
+          summary: {
+            en: "Impostors can lay one trap candy between two meetings. The third candy in a row brings a Sugar Crash.",
+            de: "Impostoren können zwischen zwei Meetings eine Fallen-Süßigkeit auslegen. Die dritte Süßigkeit in Folge bringt einen Sugar Crash."
+          },
+          body: {
+            en: "<p><strong>Trick Candy</strong> (default on). Every Impostor can lay one candy between two meetings with the <strong>TRICK</strong> button. It looks like any other kind and always hinders, whoever eats it. Only the host knows which candies are tricks.</p><p><strong>Sugar Shock</strong> (default on). The third candy one player eats between two meetings adds a Sugar Crash on top.</p>",
+            de: "<p><strong>Trick Candy</strong> (Standard an). Jeder Impostor kann zwischen zwei Meetings mit dem <strong>TRICK</strong>-Knopf eine Süßigkeit auslegen. Sie sieht aus wie jede andere Sorte und behindert immer, egal wer sie isst. Nur der Host weiß, welche Süßigkeiten Tricks sind.</p><p><strong>Zuckerschock</strong> (Standard an). Die dritte Süßigkeit, die ein Spieler zwischen zwei Meetings isst, bringt obendrauf einen Sugar Crash.</p>"
+          }
+        },
+        {
+          id: "treats-bonbon",
+          title: { en: "Midnight Bonbon", de: "Midnight Bonbon" },
+          summary: {
+            en: "The deadly candy: always looks the same, exactly one per scatter, kills whoever eats it at once.",
+            de: "Die tödliche Süßigkeit: sieht immer gleich aus, genau eine pro Verteilung, tötet sofort, wer sie isst."
+          },
+          body: {
+            en: "<p>With <em>Deadly Candy</em> on (default), exactly one <strong>Midnight Bonbon</strong> lies among every scatter. It always looks the same and kills whoever eats it at once. No shield helps (Medic, Iron Taffy, Hard Candy, Armored, Time Master), Impostors die too, and the body can be reported. Kill feeds and the Medium name the Midnight Bonbon instead of showing a self-kill.</p>",
+            de: "<p>Mit <em>Deadly Candy</em> an (Standard) liegt in jeder Verteilung genau ein <strong>Midnight Bonbon</strong>. Es sieht immer gleich aus und tötet sofort, wer es isst. Kein Schild hilft (Medic, Iron Taffy, Hard Candy, Armored, Time Master), Impostoren sterben auch, und die Leiche kann gemeldet werden. Kill-Feeds und das Medium nennen das Midnight Bonbon, statt einen Selbstkill zu zeigen.</p>"
+          }
+        },
+        {
+          id: "treats-helpful",
+          title: { en: "Effects that help (16)", de: "Effekte, die helfen (16)" },
+          summary: {
+            en: "Green on the card: speed, vision, shields, tasks and tools. Impostor versions in brackets where they differ.",
+            de: "Grün auf der Karte: Tempo, Sicht, Schilde, Aufgaben und Werkzeuge. Impostor-Versionen in Klammern, wo sie abweichen."
+          },
+          body: {
+            en: tbl(["Effect", "What it does"], [
+              ["Iron Taffy", "The next kill on you fails, round effect. (Impostor: the next Sheriff shot at you fails.)"],
+              ["Sugar Rush", "40% faster for 5 s."],
+              ["Cinnamon Stick", "8% faster, round effect."],
+              ["Night Owl", "20% more vision, round effect."],
+              ["Shortcut Caramel", "One of your tasks is done. (Impostor: your kill cooldown drops by 2.5 s, once.)"],
+              ["Prize Inside", "An open task step finishes itself. (Impostor: the sabotage cooldown is back to 0.)"],
+              ["Guiding Mint", "For 20 s an arrow points to the nearest body."],
+              ["Lucky Lolly", "You get one more emergency meeting. Rare: it is in the pot with a 30% chance per round."],
+              ["Echo Drop", "For 10 s you see players within 6 m through walls."],
+              ["Double Dip", "Your vote counts twice in the next meeting."],
+              ["Candy Corn Compass", "For 15 s an arrow points to the nearest living player."],
+              ["Peek-a-Pop", "You see the admin map for 5 s."],
+              ["Sticky Toffee", "Whoever kills you is stuck for 5 s afterwards, round effect."],
+              ["Vent Mint", "You may use a vent once, round effect. (Impostor: two vents are linked for you.)"],
+              ["Fizz Pop", "For 15 s you see everyone's footprints."],
+              ["Homing Humbug", "A button takes you back to the meeting spot once, round effect."]
+            ]),
+            de: tbl(["Effekt", "Was er bewirkt"], [
+              ["Iron Taffy", "Der nächste Kill gegen dich scheitert, Rundeneffekt. (Impostor: Der nächste Sheriff-Schuss auf dich scheitert.)"],
+              ["Sugar Rush", "5 s lang 40 % schneller."],
+              ["Cinnamon Stick", "8 % schneller, Rundeneffekt."],
+              ["Night Owl", "20 % mehr Sicht, Rundeneffekt."],
+              ["Shortcut Caramel", "Eine deiner Aufgaben ist erledigt. (Impostor: Deine Kill-Abklingzeit sinkt einmal um 2,5 s.)"],
+              ["Prize Inside", "Ein offener Aufgabenschritt erledigt sich selbst. (Impostor: Die Sabotage-Abklingzeit steht auf 0.)"],
+              ["Guiding Mint", "20 s lang zeigt ein Pfeil zur nächsten Leiche."],
+              ["Lucky Lolly", "Du hast einen Notfallknopf mehr. Selten: Sie liegt nur mit 30 % Chance pro Runde im Topf."],
+              ["Echo Drop", "10 s lang siehst du Spieler im Umkreis von 6 m durch Wände."],
+              ["Double Dip", "Deine Stimme zählt im nächsten Meeting doppelt."],
+              ["Candy Corn Compass", "15 s lang zeigt ein Pfeil zum nächsten lebenden Spieler."],
+              ["Peek-a-Pop", "5 s lang siehst du die Admin-Karte."],
+              ["Sticky Toffee", "Wer dich tötet, klebt danach 5 s lang fest, Rundeneffekt."],
+              ["Vent Mint", "Du darfst einmal venten, Rundeneffekt. (Impostor: Zwei Vents sind für dich verbunden.)"],
+              ["Fizz Pop", "15 s lang siehst du die Fußspuren aller Spieler."],
+              ["Homing Humbug", "Ein Knopf bringt dich einmal zurück zum Treffpunkt, Rundeneffekt."]
+            ])
+          }
+        },
+        {
+          id: "treats-hindering",
+          title: { en: "Effects that hinder (15)", de: "Effekte, die behindern (15)" },
+          summary: {
+            en: "Red on the card: slowdowns, blindness, noise and give-aways.",
+            de: "Rot auf der Karte: Verlangsamung, Blindheit, Lärm und Verräter-Effekte."
+          },
+          body: {
+            en: tbl(["Effect", "What it does"], [
+              ["Rock Candy", "30% slower for 30 s."],
+              ["Fog Fudge", "25% less vision for 60 s."],
+              ["Extra Chore", "You get one more task. (Impostor: your kill cooldown grows by 2.5 s, once.)"],
+              ["Hiccups", "60 s of hiccups. Players nearby can hear them."],
+              ["Lights Out", "Your lights go out for 10 s. Only yours."],
+              ["Earmuffs", "No game sounds for you for 60 s."],
+              ["Jinkies", "Your sight blurs for 20 s."],
+              ["Butterfingers", "You cannot open tasks for 30 s. (Impostor: no venting and no kill for 30 s.)"],
+              ["Glowing", "You glow for 60 s, even in the dark."],
+              ["Crow Company", "Crows circle above you for 30 s. Everyone sees them."],
+              ["Gobstopper", "Your emergency button is gone, round effect."],
+              ["Tattletale Taffy", "The Impostors see you for 10 s, and the next meeting tells everyone where you were."],
+              ["Brain Freeze", "Frozen for 3 s."],
+              ["Reverse Gummy", "Your controls are reversed for 10 s."],
+              ["Wrapper Trail", "For 30 s you leave a trail of candy wrappers."]
+            ]),
+            de: tbl(["Effekt", "Was er bewirkt"], [
+              ["Rock Candy", "30 s lang 30 % langsamer."],
+              ["Fog Fudge", "60 s lang 25 % weniger Sicht."],
+              ["Extra Chore", "Du hast eine Aufgabe mehr. (Impostor: Deine Kill-Abklingzeit wächst einmal um 2,5 s.)"],
+              ["Hiccups", "60 s Schluckauf. Wer in der Nähe ist, hört ihn."],
+              ["Lights Out", "10 s lang gehen deine Lichter aus. Nur deine."],
+              ["Earmuffs", "60 s lang hörst du keine Spielgeräusche."],
+              ["Jinkies", "20 s lang verschwimmt deine Sicht."],
+              ["Butterfingers", "30 s lang kannst du keine Aufgaben öffnen. (Impostor: 30 s lang kein Venten und kein Kill.)"],
+              ["Glowing", "60 s lang leuchtest du, auch im Dunkeln."],
+              ["Crow Company", "30 s lang kreisen Krähen über dir. Alle sehen sie."],
+              ["Gobstopper", "Dein Notfallknopf ist weg, Rundeneffekt."],
+              ["Tattletale Taffy", "Die Impostoren sehen dich 10 s lang, und das nächste Meeting verrät allen, wo du warst."],
+              ["Brain Freeze", "3 s lang eingefroren."],
+              ["Reverse Gummy", "10 s lang ist deine Steuerung vertauscht."],
+              ["Wrapper Trail", "30 s lang hinterlässt du eine Spur aus Bonbonpapier."]
+            ])
+          }
+        },
+        {
+          id: "treats-odd",
+          title: { en: "Odd effects (12)", de: "Seltsame Effekte (12)" },
+          summary: {
+            en: "Purple on the card: trade-offs, copies and disguises. Volatile Starlight and Copycat Caramel show the real effect in brackets.",
+            de: "Lila auf der Karte: Tauschgeschäfte, Kopien und Verkleidungen. Volatile Starlight und Copycat Caramel zeigen den echten Effekt in Klammern."
+          },
+          body: {
+            en: tbl(["Effect", "What it does"], [
+              ["Hard Candy", "10% slower, but armored against one kill, round effect."],
+              ["Brittle", "15% faster and 20% less vision, round effect."],
+              ["Nausea", "Your view sways for 20 s, but you are 20% faster."],
+              ["Regurgitate", "The effect of your last candy is gone."],
+              ["Volatile Starlight", "Stands in for a random other effect. The card names the stand-in and shows the real effect in brackets."],
+              ["Nothing?", "Nothing happens. Or does it?"],
+              ["Swap Sweet", "For 30 s you look like another player to everyone."],
+              ["Shrink Sherbet", "You are smaller and 5% faster, round effect."],
+              ["Big Bite", "You are bigger and 5% slower, round effect."],
+              ["Sugar Crash", "30% faster for 20 s, then 30% slower for 20 s."],
+              ["Copycat Caramel", "Copies the effect somebody else ate last (a random one if there is none). The card shows the real effect in brackets."],
+              ["Ghostly Gum", "You are half see-through for everyone for 20 s."]
+            ]),
+            de: tbl(["Effekt", "Was er bewirkt"], [
+              ["Hard Candy", "10 % langsamer, dafür gegen einen Kill gepanzert, Rundeneffekt."],
+              ["Brittle", "15 % schneller und 20 % weniger Sicht, Rundeneffekt."],
+              ["Nausea", "20 s lang schwankt dein Bild, dafür bist du 20 % schneller."],
+              ["Regurgitate", "Die Wirkung deiner letzten Süßigkeit ist weg."],
+              ["Volatile Starlight", "Steht für einen zufälligen anderen Effekt. Die Karte nennt den Stellvertreter und zeigt den echten Effekt in Klammern."],
+              ["Nothing?", "Nichts passiert. Oder doch?"],
+              ["Swap Sweet", "30 s lang siehst du für alle aus wie ein anderer Spieler."],
+              ["Shrink Sherbet", "Du bist kleiner und 5 % schneller, Rundeneffekt."],
+              ["Big Bite", "Du bist größer und 5 % langsamer, Rundeneffekt."],
+              ["Sugar Crash", "20 s lang 30 % schneller, dann 20 s lang 30 % langsamer."],
+              ["Copycat Caramel", "Kopiert den Effekt, den zuletzt jemand anderes gegessen hat (einen zufälligen, wenn es keinen gibt). Die Karte zeigt den echten Effekt in Klammern."],
+              ["Ghostly Gum", "20 s lang bist du für alle halb durchsichtig."]
+            ])
+          }
+        }
+      ]
+    },
+    /* ---------------------------------------------------------------- modes and events */
+    {
+      id: "modes",
+      title: { en: "Modes and night events", de: "Modi und Nachtereignisse" },
+      intro: {
+        en: "Game modes, omens and extra mechanics for Halloween night. Everything here is off by default, and the lobby checks that every player has the mod while one of them is on.",
+        de: "Spielmodi, Omen und zusätzliche Mechaniken für die Halloween-Nacht. Alles hier ist standardmäßig aus, und die Lobby prüft, dass jeder Spieler die Mod hat, solange eines davon an ist."
+      },
+      entries: [
+        {
+          id: "masquerade",
+          title: { en: "Masquerade Ball", de: "Masquerade Ball" },
+          summary: {
+            en: "At the start and after every meeting everybody gets a random costume and loses their name. In meetings everybody shows up as themselves.",
+            de: "Zum Start und nach jedem Meeting bekommt jeder ein zufälliges Kostüm und verliert den Namen. In Meetings erscheint jeder als er selbst."
+          },
+          body: {
+            en: "<p>At the start of the round and after every meeting each living player gets one of the Halloween costumes at random and the name tag disappears. With <em>Masquerade: Same Color For All</em> (default On) the colours go too, so the costume is the only thing that tells players apart, and it changes after every meeting. Impostors still see each other's names. Voice chat gives voices away: the mode is meant for confusion on the map, not as a perfect disguise.</p><p>The costumes in the draw are Freddy, Jason, Ghostface, Thing, Predator, Sadako, Spider and BVB Fan. Every client draws the same costumes from the same seed, so nothing goes over the network. While a Camouflage, a morph or the Fungle mushroom mix-up runs, TOR's look wins and the masquerade comes back afterwards. The mode needs everybody's costume packages: the host cannot start while somebody has not loaded them.</p>",
+            de: "<p>Zum Rundenstart und nach jedem Meeting bekommt jeder lebende Spieler zufällig eines der Halloween-Kostüme, und das Namensschild verschwindet. Mit <em>Masquerade: Same Color For All</em> (Standard On) verschwinden auch die Farben, das Kostüm ist dann das Einzige, woran man Spieler unterscheidet, und es wechselt nach jedem Meeting. Impostoren sehen weiter gegenseitig ihre Namen. Der Voice-Chat verrät Stimmen: Der Modus ist für Verwirrung auf der Karte gedacht, nicht als perfekte Tarnung.</p><p>Im Los sind Freddy, Jason, Ghostface, Thing, Predator, Sadako, Spider und BVB Fan. Jeder Client zieht dieselben Kostüme aus demselben Seed, es geht also nichts übers Netz. Läuft eine Camouflage, ein Morph oder das Pilz-Durcheinander auf Fungle, gewinnt TORs Aussehen, und der Maskenball kommt danach zurück. Der Modus braucht die Kostümpakete aller: Der Host kann nicht starten, solange jemand sie nicht geladen hat.</p>"
+          }
+        },
+        {
+          id: "zombie",
+          title: { en: "Zombie Outbreak", de: "Zombie Outbreak" },
+          summary: {
+            en: "One start zombie per six players. Whoever gets caught turns into a zombie instead of dying. No meetings.",
+            de: "Ein Start-Zombie pro sechs Spieler. Wer erwischt wird, stirbt nicht, sondern wird selbst zum Zombie. Keine Meetings."
+          },
+          body: {
+            en: "<p>The start zombies are the vanilla Impostors: in this mode the host's Impostor count is replaced by the number of players divided by <em>Players Per Start Zombie</em> (default 6, at least 1, TOR's limit of 3 stays), so every client knows them without a message. The normal kill button is hidden; everybody infects with the same button <strong>INFECT</strong> (Q), host-authoritative, with <em>Infect Cooldown</em>.</p><ul><li>Whoever a zombie catches does not die: after <em>Time Until A Bitten Player Turns</em> (default 3 s) he is a zombie himself, wears the Halloween Corpse costume in his own colour, walks slower (<em>Zombie Speed</em>) and gets the infect button.</li><li>There are no meetings and no roles.</li><li>The survivors win when the clock runs out (<em>Zombie Outbreak Round Time</em>, default 4 min) or when all still open tasks are done. An infected player's tasks leave the game, so the bar shrinks to what the survivors still have to do. The zombies win when nobody is left.</li><li>Zombies cannot use vents unless <em>Zombies Can Use Vents</em> is on.</li></ul>",
+            de: "<p>Die Start-Zombies sind die Vanilla-Impostoren: In diesem Modus wird die Impostor-Zahl des Hosts durch die Spielerzahl geteilt durch <em>Players Per Start Zombie</em> ersetzt (Standard 6, mindestens 1, TORs Grenze von 3 bleibt), jeder Client kennt sie also ohne Nachricht. Der normale Kill-Knopf ist versteckt; alle infizieren mit demselben Knopf <strong>INFECT</strong> (Q), host-autoritativ, mit <em>Infect Cooldown</em>.</p><ul><li>Wen ein Zombie erwischt, der stirbt nicht: Nach <em>Time Until A Bitten Player Turns</em> (Standard 3 s) ist er selbst ein Zombie, trägt das Kostüm Halloween Corpse in seiner Farbe, läuft langsamer (<em>Zombie Speed</em>) und bekommt den Infizieren-Knopf.</li><li>Es gibt keine Meetings und keine Rollen.</li><li>Die Überlebenden gewinnen, wenn die Uhr abläuft (<em>Zombie Outbreak Round Time</em>, Standard 4 min) oder alle noch offenen Aufgaben erledigt sind. Die Aufgaben eines Infizierten verlassen das Spiel, der Balken schrumpft also auf das, was die Überlebenden noch tun müssen. Die Zombies gewinnen, wenn niemand mehr übrig ist.</li><li>Zombies dürfen nicht venten, außer <em>Zombies Can Use Vents</em> ist an.</li></ul>"
+          }
+        },
+        {
+          id: "sole-survivor",
+          title: { en: "Sole Survivor", de: "Sole Survivor" },
+          summary: {
+            en: "Instead of losing to parity, the last crewmate who finished their tasks gets a chance: lights out, a flashlight and an exit only the survivor gets an arrow to.",
+            de: "Statt am Gleichstand zu verlieren, bekommt der letzte Crewmate mit fertigen Aufgaben eine Chance: Licht aus, eine Taschenlampe und ein Ausgang, zu dem nur der Überlebende einen Pfeil hat."
+          },
+          body: {
+            en: "<p>Would the Impostors win by parity (by kill or by vote), is no killing neutral alive, and has the last crewmate (or the last two, see <em>Sole Survivor: Last Survivors</em>) done all of their own tasks, the round does not end: the finale starts. It happens at most once per game.</p><ul><li>The light goes out. Only the survivors carry a flashlight, the Impostors' sight is halved.</li><li>The Impostors stand frozen for <em>Sole Survivor: Killer Freeze</em> (default 5 s).</li><li>At a far point of the map an exit opens. Everybody can see it, but only the survivors get an arrow to it. A survivor reaches it faster with <em>Sole Survivor: Survivor Speed</em> (default 110%).</li><li>A survivor who reaches the exit wins the round for the crew. If the time runs out (<em>Sole Survivor: Escape Time</em>, default 60 s) or the last survivor dies, the Impostors win.</li><li>Meetings, sabotage, vents and ghost tasks are locked during the finale. A sabotage win, a disconnect win or a full task bar still end the round.</li></ul><p><em>Sole Survivor: Dead Crew Tasks Needed</em> (default 50%) adds a share of the dead crewmates' tasks that must be done as well, so ghosts who keep tasking earn the finale for their team.</p>",
+            de: "<p>Würden die Impostoren per Gleichstand gewinnen (durch Kill oder Abstimmung), lebt kein Killer-Neutraler mehr und hat der letzte Crewmate (oder die letzten zwei, siehe <em>Sole Survivor: Last Survivors</em>) alle eigenen Aufgaben erledigt, endet die Runde nicht: Das Finale beginnt. Es passiert höchstens einmal pro Spiel.</p><ul><li>Das Licht geht aus. Nur die Überlebenden tragen eine Taschenlampe, die Sicht der Impostoren ist halbiert.</li><li>Die Impostoren stehen für <em>Sole Survivor: Killer Freeze</em> (Standard 5 s) eingefroren.</li><li>An einem weit entfernten Punkt der Karte öffnet sich ein Ausgang. Alle können ihn sehen, aber nur die Überlebenden bekommen einen Pfeil dorthin. Mit <em>Sole Survivor: Survivor Speed</em> (Standard 110 %) kommen sie schneller hin.</li><li>Ein Überlebender, der den Ausgang erreicht, gewinnt die Runde für die Crew. Läuft die Zeit ab (<em>Sole Survivor: Escape Time</em>, Standard 60 s) oder stirbt der letzte Überlebende, gewinnen die Impostoren.</li><li>Meetings, Sabotagen, Vents und Geister-Aufgaben sind im Finale gesperrt. Ein Sabotage-Sieg, ein Disconnect-Sieg oder ein voller Aufgabenbalken beenden die Runde weiterhin.</li></ul><p><em>Sole Survivor: Dead Crew Tasks Needed</em> (Standard 50 %) fügt einen Anteil der Aufgaben der toten Crewmates hinzu, der ebenfalls erledigt sein muss; Geister, die weiter Aufgaben machen, verdienen ihrem Team also das Finale.</p>"
+          }
+        },
+        {
+          id: "omens",
+          title: { en: "Omens", de: "Omen" },
+          summary: {
+            en: "At the start of the round the host draws one omen that changes a rule for the whole round. Seven omens, own lobby menu.",
+            de: "Zum Rundenstart zieht der Host ein Omen, das für die ganze Runde eine Regel ändert. Sieben Omen, eigenes Lobby-Menü."
+          },
+          body: {
+            en: "<p>The host switches omens on in the lobby menu (<em>Omens</em>, off by default) and decides which omens lie in the pot; at least one stays in. At the start of every round one is drawn, everybody gets a card with its name and one line, and the rule holds for the whole round.</p>" + tbl(["Omen", "Rule"], [
+              ["Raven Omen", "20 s after a kill, ravens circle over the body. Everybody sees them."],
+              ["New Moon", "No moonlight: everybody sees 20% less."],
+              ["Full Moon", "A bright night: everybody sees a little further (x1.15), and the Werewolf of Unknown's Collection stays transformed 50% longer."],
+              ["Bat Night", "A Comms sabotage has to be fixed twice."],
+              ["Harvest", "Twice as many candies. Only in the pot while Trick or Treat is on."],
+              ["Silent Night", "The emergency button stays locked for 60 s after the round start and after every meeting."],
+              ["Thunderstorm", "Lightning every 40 to 90 s: 0.2 s of full sight, a second of afterglow, rain on screen."]
+            ]),
+            de: "<p>Der Host schaltet Omen im Lobby-Menü ein (<em>Omens</em>, standardmäßig aus) und bestimmt, welche Omen im Topf liegen; mindestens eines bleibt drin. Zu Beginn jeder Runde wird eines gezogen, alle bekommen eine Karte mit Namen und einer Zeile, und die Regel gilt für die ganze Runde.</p>" + tbl(["Omen", "Regel"], [
+              ["Raven Omen", "20 s nach einem Kill kreisen Raben über der Leiche. Alle sehen sie."],
+              ["New Moon", "Kein Mondlicht: Alle sehen 20 % weniger."],
+              ["Full Moon", "Helle Nacht: Alle sehen etwas weiter (x1,15), und der Werewolf aus Unknown's Collection bleibt 50 % länger verwandelt."],
+              ["Bat Night", "Eine Comms-Sabotage muss zweimal repariert werden."],
+              ["Harvest", "Doppelt so viele Süßigkeiten. Nur im Topf, solange Trick or Treat an ist."],
+              ["Silent Night", "Der Notfallknopf bleibt 60 s nach Rundenstart und nach jedem Meeting gesperrt."],
+              ["Thunderstorm", "Alle 40 bis 90 s ein Blitz: 0,2 s volle Sicht, eine Sekunde Nachglühen, Regen auf dem Bildschirm."]
+            ])
+          }
+        },
+        {
+          id: "spooks",
+          title: { en: "Spook moments", de: "Spukmomente" },
+          summary: {
+            en: "Every one to two minutes something harmless happens somewhere on the map, the same for everyone. At real midnight the clock strikes twelve.",
+            de: "Alle ein bis zwei Minuten passiert irgendwo auf der Karte etwas Harmloses, für alle gleich. Um echte Mitternacht schlägt die Uhr zwölf."
+          },
+          body: {
+            en: "<p>A second switch in the Omens menu (off by default). Every one to two minutes of play a ghost drifts along a wall, bats flutter through a passage, a spider lets itself down from the ceiling or a pumpkin grins out of a corner. Nothing looks like a game signal (no bodies, no players, no sabotage), and the light system hides the objects outside your sight like everything else. Intro and meetings do not count as play time.</p><p>At real midnight on the host's clock a midnight moment follows, once per night: twelve strikes as writing with a screen shake, the screen darkens and a full moon drifts across.</p>",
+            de: "<p>Ein zweiter Schalter im Omen-Menü (standardmäßig aus). Alle ein bis zwei Minuten Spielzeit schwebt ein Geist an einer Wand entlang, flattern Fledermäuse durch einen Durchgang, lässt sich eine Spinne von der Decke herab oder grinst ein Kürbis aus einer Ecke. Nichts sieht aus wie ein Spielsignal (keine Leichen, keine Spieler, keine Sabotage), und das Lichtsystem verbirgt die Objekte außerhalb deiner Sicht wie alles andere. Intro und Meetings zählen nicht als Spielzeit.</p><p>Um echte Mitternacht auf der Uhr des Hosts folgt ein Mitternachtsmoment, einmal pro Nacht: zwölf Schläge als Schriftzug mit Bildschirmwackeln, der Bildschirm dunkelt ab und ein Vollmond zieht vorbei.</p>"
+          }
+        },
+        {
+          id: "phantom-parade",
+          title: { en: "Phantom Parade (Impostor sabotage)", de: "Phantom Parade (Impostor-Sabotage)" },
+          summary: {
+            en: "For about 30 seconds phantoms that look like living players walk real paths across the map. Touch one and it turns into mist.",
+            de: "Rund 30 Sekunden lang laufen Phantome, die wie lebende Spieler aussehen, echte Wege über die Karte. Wer eines berührt, löst es in Nebel auf."
+          },
+          body: {
+            en: "<p>An Impostor starts the parade with a button on the sabotage map; it is off by default. For <em>Phantom Parade Duration</em> half as many phantoms as there are living players walk over the map. They look like living players (colour, name, hat, visor and skin as the player shows them right now) and walk real paths, but do no tasks. A living player who touches a phantom makes it fall apart into mist.</p><ul><li>Phantoms are no players: they are not on the admin table, have no reflection in the Haunted Mirrors, and the Banshee's scream marks only the real players.</li><li>Impostors see the phantoms a little transparent.</li><li>Cooldown and uses per game are set by the host. A meeting ends the parade everywhere.</li></ul>",
+            de: "<p>Ein Impostor startet die Parade mit einem Knopf auf der Sabotage-Karte; sie ist standardmäßig aus. Für <em>Phantom Parade Duration</em> laufen halb so viele Phantome wie lebende Spieler über die Karte. Sie sehen aus wie lebende Spieler (Farbe, Name, Hut, Visier und Skin, wie der Spieler sie gerade zeigt) und laufen echte Wege, machen aber keine Aufgaben. Ein lebender Spieler, der ein Phantom berührt, lässt es in Nebel zerfallen.</p><ul><li>Phantome sind keine Spieler: Sie stehen nicht auf dem Admin-Tisch, haben keine Spiegelung in den Spukspiegeln, und der Schrei der Banshee markiert nur die echten Spieler.</li><li>Impostoren sehen die Phantome etwas durchsichtig.</li><li>Abklingzeit und Einsätze pro Spiel stellt der Host ein. Ein Meeting beendet die Parade überall.</li></ul>"
+          }
+        },
+        {
+          id: "mirrors",
+          title: { en: "Haunted Mirrors", de: "Spukspiegel" },
+          summary: {
+            en: "Whoever stands in front of a mirror shows up in it as themselves, even while morphed, camouflaged or in a costume.",
+            de: "Wer vor einem Spiegel steht, erscheint darin als er selbst, auch gemorpht, getarnt oder im Kostüm."
+          },
+          body: {
+            en: "<p>A few mirrors hang on the walls (off by default). Whoever stands in front of one shows up in it in their real colour from the default outfit, even while morphed, camouflaged, in a Masquerade costume or as the Xenomorph. Everybody who sees the mirror sees the reflection. After a reflection the glass fogs up for <em>Mirrors Fog After A Reflection</em> (default 10 s), so a mirror is a short glimpse and not a permanent scanner.</p><ul><li>Places are the same on every client: on Hollowmere Manor above the dressing table, on Ravenhollow Cemetery on the north wall of the chapel, on the original maps two or three north walls of the biggest rooms, on the other Atlas maps two (switch <em>Haunted Mirrors On Atlas Maps</em>, default On).</li><li>Ghosts, players in vents, an invisible Ninja and the phantoms of the Phantom Parade have no reflection.</li></ul>",
+            de: "<p>An den Wänden hängen ein paar Spiegel (standardmäßig aus). Wer vor einem steht, erscheint darin in seiner echten Farbe aus dem Standard-Outfit, auch gemorpht, getarnt, im Masquerade-Kostüm oder als Xenomorph. Alle, die den Spiegel sehen, sehen die Spiegelung. Nach einer Spiegelung beschlägt das Glas für <em>Mirrors Fog After A Reflection</em> (Standard 10 s), ein Spiegel ist also ein kurzer Blick und kein Dauer-Scanner.</p><ul><li>Die Orte sind auf jedem Client gleich: auf Hollowmere Manor über dem Schminktisch, auf Ravenhollow Cemetery an der Nordwand der Kapelle, auf den Originalkarten zwei oder drei Nordwände der größten Räume, auf den übrigen Atlas-Karten zwei (Schalter <em>Haunted Mirrors On Atlas Maps</em>, Standard On).</li><li>Geister, Spieler in Vents, ein unsichtbarer Ninja und die Phantome der Phantom Parade haben keine Spiegelung.</li></ul>"
+          }
+        },
+        {
+          id: "lobby-games",
+          title: { en: "Lobby games: Pumpkin Carving and Boo!", de: "Lobby-Spiele: Pumpkin Carving und Boo!" },
+          summary: {
+            en: "Two things to do while the lobby fills up. Both are host switches and need the lobby menu of Forgotten Fixes.",
+            de: "Zwei Beschäftigungen, während sich die Lobby füllt. Beides sind Host-Schalter und brauchen das Lobby-Menü von Forgotten Fixes."
+          },
+          body: {
+            en: "<p><strong>Pumpkin Carving</strong> (off by default). Everybody carves a face on a 24 x 24 grid in 60 seconds. The faces glow on lanterns in the lobby with the name of the carver. The host can start a 30-second vote (one vote per player, not for yourself); the winning pumpkin stands at the spawn point of the map in the next round.</p><p><strong>Boo!</strong> A lobby tag, started only by the host's button press. A random player with the mod becomes the first ghost (Angel Ghost costume) and turns others into ghosts with the Use button, which says <strong>BOO!</strong>. The round lasts 60 to 120 seconds (default 90). When one player is left, or the time is up, the players still standing wear a small crown until the game starts. The host can stop it at any time.</p>",
+            de: "<p><strong>Pumpkin Carving</strong> (standardmäßig aus). Alle schnitzen in 60 Sekunden ein Gesicht auf ein 24-x-24-Raster. Die Gesichter leuchten auf Laternen in der Lobby, mit dem Namen des Schnitzers. Der Host kann eine 30-Sekunden-Abstimmung starten (eine Stimme pro Spieler, nicht für dich selbst); der Gewinnerkürbis steht in der nächsten Runde am Spawnpunkt der Karte.</p><p><strong>Boo!</strong> Ein Fangspiel in der Lobby, nur auf Knopfdruck des Hosts gestartet. Ein zufälliger Spieler mit der Mod wird der erste Geist (Kostüm Angel Ghost) und macht andere mit dem Use-Knopf zu Geistern, der <strong>BOO!</strong> heißt. Die Runde dauert 60 bis 120 Sekunden (Standard 90). Bleibt ein Spieler übrig oder ist die Zeit um, tragen die noch Stehenden eine kleine Krone bis zum Spielstart. Der Host kann jederzeit abbrechen.</p>"
+          }
+        }
+      ]
+    },
+    /* ---------------------------------------------------------------- look and sound */
+    {
+      id: "look",
+      title: { en: "Halloween look and sound", de: "Halloween-Optik und -Klang" },
+      intro: {
+        en: "Cosmetic extras. Every client draws them itself; the host's switch decides for everybody, and players without the mod simply do not see them.",
+        de: "Kosmetische Extras. Jeder Client zeichnet sie selbst; der Schalter des Hosts gilt für alle, und Spieler ohne die Mod sehen sie schlicht nicht."
+      },
+      entries: [
+        {
+          id: "look-meeting",
+          title: { en: "Meeting room and end screen", de: "Meetingraum und Endbildschirm" },
+          summary: {
+            en: "Cobwebs, candles and a bat in meetings, ghost vote tokens, Halloween exile lines and a themed end screen.",
+            de: "Spinnweben, Kerzen und eine Fledermaus im Meeting, Geister als Stimmzeichen, Halloween-Rauswurfzeilen und ein thematischer Endbildschirm."
+          },
+          body: {
+            en: "<p>Switch: <em>Halloween Look (Meeting, End Screen)</em> (ID 2100, default On).</p><ul><li><strong>Meeting.</strong> Cobwebs in the two top corners, a group of flickering candles at the bottom of the tablet and a bat next to the Skip button. The vote tokens become little ghosts in the voter's colour (anonymous votes stay grey). The decoration follows the meeting tablet and moves aside for TOR's Mayor and Swapper button.</li><li><strong>Exile lines.</strong> On the original maps (Skeld, Mira, Polus, Airship, Fungle) the typewriter line of a real ejection gets a Halloween lead. With Confirm Ejects on, the line the game and TOR built stays behind the lead; with Confirm Ejects off the neutral lead replaces the vanilla text, so it never says more than the game would. Skips and ties stay as they are.</li><li><strong>End screen.</strong> A backdrop by result: moon night for an Impostor win, the first morning light for a crew win, the cemetery gate for a neutral win. Leaves and candies fall in front of it. TOR's texts stay as they are.</li></ul>",
+            de: "<p>Schalter: <em>Halloween Look (Meeting, End Screen)</em> (ID 2100, Standard On).</p><ul><li><strong>Meeting.</strong> Spinnweben in den beiden oberen Ecken, eine Gruppe flackernder Kerzen unten am Tablet und eine Fledermaus neben dem Skip-Knopf. Die Stimmzeichen werden zu kleinen Geistern in der Farbe des Wählers (anonyme Stimmen bleiben grau). Die Dekoration läuft mit dem Meeting-Tablet mit und weicht dem Mayor- und Swapper-Knopf von TOR aus.</li><li><strong>Rauswurfzeilen.</strong> Auf den Originalkarten (Skeld, Mira, Polus, Airship, Fungle) bekommt die Schreibmaschinenzeile eines echten Rauswurfs einen Halloween-Auftakt. Bei eingeschaltetem Confirm Ejects bleibt die Zeile, die das Spiel und TOR gebaut haben, hinter dem Auftakt stehen; bei ausgeschaltetem Confirm Ejects ersetzt der neutrale Auftakt den Vanilla-Text, sagt also nie mehr, als das Spiel sagen würde. Skips und Gleichstände bleiben, wie sie sind.</li><li><strong>Endbildschirm.</strong> Ein Hintergrund je nach Ergebnis: Mondnacht bei einem Impostor-Sieg, das erste Morgenlicht bei einem Crew-Sieg, das Friedhofstor bei einem neutralen Sieg. Davor fallen Blätter und Süßigkeiten. TORs Texte bleiben, wie sie sind.</li></ul>"
+          }
+        },
+        {
+          id: "look-candy-bowl",
+          title: { en: "The Candy Bowl ejection", de: "Der Rauswurf in die Süßigkeitenschüssel" },
+          summary: {
+            en: "A Halloween ejection scene for the original maps: the ejected player drops into a giant bowl of candy and a purple shaggy monster eats them.",
+            de: "Eine Halloween-Rauswurfszene für die Originalkarten: Der Rausgeworfene fällt in eine riesige Süßigkeitenschüssel, und ein lila Zottelmonster frisst ihn."
+          },
+          body: {
+            en: "<p>With the Halloween Look (ID 2100) on, a real ejection on Skeld, Mira, Polus, Airship and Fungle no longer plays the game's space animation. The ejected player drops into a giant bowl of Halloween candy, sinks in and bobs back up. A purple shaggy monster rises behind the table, rolls its eyes, grabs the player with its paw, lifts them into its mouth, chews three times (crumbs fly), swallows with sleepy eyes and burps a green cloud; only the candy wrapper sails down onto the table. It takes about seven and a half seconds, with cinema bars and four sounds of its own (rustling wrappers, munching, gulping, the burp).</p><ul><li>The typewriter line gets matching leads such as <em>... lands in the candy bowl.</em> or <em>... gets gobbled up whole.</em> With Confirm Ejects on, TOR's role line stays behind the lead.</li><li>Skips and ties keep the Void scene of Unknown's Collection. The Atlas maps, Hollowmere Manor and Ravenhollow Cemetery keep their own scenes; Submerged is left alone.</li><li>Everything is local. A player without the mod sees the normal space animation, and until the package <code>candy_eject.hwp</code> (about 1.5 MB) has arrived, the game's own animation stays.</li></ul>",
+            de: "<p>Bei eingeschalteter Halloween-Optik (ID 2100) spielt ein echter Rauswurf auf Skeld, Mira, Polus, Airship und Fungle nicht mehr die Weltraum-Animation des Spiels. Der Rausgeworfene fällt in eine riesige Schüssel Halloween-Süßigkeiten, versinkt und taucht wieder auf. Hinter dem Tisch erhebt sich ein lila Zottelmonster, rollt mit den Augen, packt den Spieler mit der Pfote, hebt ihn in den Mund, kaut dreimal (Krümel fliegen), schluckt mit schläfrigen Augen und rülpst eine grüne Wolke; nur das Bonbonpapier segelt auf den Tisch. Das dauert etwa siebeneinhalb Sekunden, mit Kinobalken und vier eigenen Geräuschen (raschelndes Papier, Mampfen, Schlucken, Rülpsen).</p><ul><li>Die Schreibmaschinenzeile bekommt passende Auftakte wie <em>... lands in the candy bowl.</em> oder <em>... gets gobbled up whole.</em> Bei eingeschaltetem Confirm Ejects bleibt TORs Rollenzeile hinter dem Auftakt.</li><li>Skips und Gleichstände behalten die Void-Szene von Unknown's Collection. Die Atlas-Karten, Hollowmere Manor und Ravenhollow Cemetery behalten ihre eigenen Szenen; Submerged bleibt unberührt.</li><li>Alles ist lokal. Ein Spieler ohne die Mod sieht die normale Weltraum-Animation, und bis das Paket <code>candy_eject.hwp</code> (rund 1,5 MB) angekommen ist, bleibt die Animation des Spiels.</li></ul>"
+          }
+        },
+        {
+          id: "look-ghosts",
+          title: { en: "Costume ghosts", de: "Kostüm-Geister" },
+          summary: {
+            en: "Whoever dies in a Halloween costume haunts on with the costume's prop. Only the dead see it.",
+            de: "Wer in einem Halloween-Kostüm stirbt, spukt mit dem Requisit des Kostüms weiter. Nur die Toten sehen es."
+          },
+          body: {
+            en: "<p>Switch: <em>Costume Ghosts</em> (ID 2101, default On). The prop is drawn on the standard ghost: Pumpkin Head a glowing lantern head, Reaper hood and scythe, Vampire bat wings, Medusa the snakes, Spider the eight legs, Freddy hat and glove, Jason the mask, Ghostface hood and mask, Xenomorph the dome. The costume is taken from the outfit worn at the moment of death, so a camouflaged or morphed death shows what the others saw. Costumes without a prop picture keep the plain ghost.</p>",
+            de: "<p>Schalter: <em>Costume Ghosts</em> (ID 2101, Standard On). Das Requisit wird auf den normalen Geist gezeichnet: bei Pumpkin Head ein leuchtender Laternenkopf, beim Reaper Kapuze und Sense, beim Vampire Fledermausflügel, bei Medusa die Schlangen, bei Spider die acht Beine, bei Freddy Hut und Handschuh, bei Jason die Maske, bei Ghostface Kapuze und Maske, beim Xenomorph die Kuppel. Das Kostüm kommt aus dem Outfit im Moment des Todes, ein getarnter oder gemorphter Tod zeigt also, was die anderen gesehen haben. Kostüme ohne Requisitenbild behalten den normalen Geist.</p>"
+          }
+        },
+        {
+          id: "look-tasks",
+          title: { en: "Task skins and Haunted Tasks", de: "Aufgaben-Skins und Haunted Tasks" },
+          summary: {
+            en: "Five vanilla tasks in Halloween dress, and tasks that now and then fight back.",
+            de: "Fünf Vanilla-Aufgaben im Halloween-Kleid und Aufgaben, die sich ab und zu wehren."
+          },
+          body: {
+            en: "<p><strong>Task skins</strong> (<em>Halloween Tasks</em>, ID 2140, default On). The mechanics stay exactly the same, only the pictures change: Fuel Engines becomes a witch's cauldron with a green brew, Clear Asteroids shoots bats, Empty Garbage sorts candy wrappers, Prime Shields lights pumpkin facets, and the sliders of Divert Power become lanterns.</p><p><strong>Haunted Tasks</strong> (<em>Haunted Tasks</em>, ID 2141: Off, 10%, 20% or 30%, default Off). That share of opened tasks is haunted. In Fix Wiring the first wire you connect jumps out again a moment later; any other normal task slams shut after a few seconds (finished steps stay done, so it only costs time). Sabotage fixes, the emergency button, cameras and admin are never haunted. Every client rolls for its own tasks, nothing is sent.</p>",
+            de: "<p><strong>Aufgaben-Skins</strong> (<em>Halloween Tasks</em>, ID 2140, Standard On). Die Mechanik bleibt exakt gleich, nur die Bilder ändern sich: Fuel Engines wird zum Hexenkessel mit grünem Gebräu, bei Clear Asteroids werden Fledermäuse abgeschossen, Empty Garbage sortiert Bonbonpapier, Prime Shields leuchtet in Kürbisfacetten, und die Schieber von Divert Power werden zu Laternen.</p><p><strong>Haunted Tasks</strong> (<em>Haunted Tasks</em>, ID 2141: Off, 10 %, 20 % oder 30 %, Standard Off). Dieser Anteil der geöffneten Aufgaben spukt. Bei Fix Wiring springt das erste richtig verbundene Kabel einen Moment später wieder heraus; jede andere normale Aufgabe schlägt nach ein paar Sekunden zu (erledigte Schritte bleiben erledigt, es kostet also nur Zeit). Sabotage-Reparaturen, der Notfallknopf, Kameras und Admin spuken nie. Jeder Client würfelt für seine eigenen Aufgaben, es wird nichts gesendet.</p>"
+          }
+        },
+        {
+          id: "look-sound",
+          title: { en: "Spooky classics, Guesser spell and titles", de: "Gruselklassiker, Guesser-Zauber und Titel" },
+          summary: {
+            en: "Four horror classics for the music manager, a spell sound at every Guesser shot and five titles of the evening.",
+            de: "Vier Gruselklassiker für den Musik-Manager, ein Zauber-Klang bei jedem Guesser-Schuss und fünf Titel des Abends."
+          },
+          body: {
+            en: "<p><strong>Spooky classics.</strong> Four public-domain compositions as extra choices in the music manager of Forgotten Fixes: Danse Macabre (Saint-Saens), Night on Bald Mountain (Mussorgsky), Toccata in D Minor (Bach) and In the Hall of the Mountain King (Grieg). Only the compositions are public domain, so every piece is rendered from the notes by an own synthesizer. In the Hall of the Mountain King plays faster the less time a critical sabotage has left. Which tab plays which piece stays every player's own choice, nothing is switched on by itself.</p><p><strong>Guesser spell.</strong> At every Guesser shot in a meeting, hit or miss, an \"Avada Kedavra\" clip plays, the same for both outcomes so it gives nothing away. The clip contains a swear word. Switch: <em>Guesser Spell Sound</em> (ID 2102, default On) for the host, and the local config entry <code>[Sounds] GuesserSpellSound</code> for every player.</p><p><strong>Titles of the evening.</strong> Five titles in the session statistics of Forgotten Fixes: <em>Sole Survivor</em> (most often the last crewmate alive when a round ends), <em>Candy Glutton</em> (most candies eaten), <em>Midnight Snack</em> (most often caught by the Midnight Bonbon), <em>Most Haunted</em> (most often the first to die in a round) and <em>Mirror Gazer</em> (most often seen in a Haunted Mirror). Switch: <em>Halloween Titles Of The Evening</em> (ID 2120, default On); off means nothing is counted.</p>",
+            de: "<p><strong>Gruselklassiker.</strong> Vier gemeinfreie Kompositionen als zusätzliche Auswahl im Musik-Manager von Forgotten Fixes: Danse Macabre (Saint-Saëns), Night on Bald Mountain (Mussorgsky), Toccata in D Minor (Bach) und In the Hall of the Mountain King (Grieg). Gemeinfrei sind nur die Kompositionen, deshalb wird jedes Stück von einem eigenen Synthesizer aus den Noten gerendert. In the Hall of the Mountain King spielt schneller, je weniger Zeit eine kritische Sabotage noch hat. Welcher Reiter welches Stück spielt, bleibt die Wahl jedes Spielers, nichts schaltet sich von selbst ein.</p><p><strong>Guesser-Zauber.</strong> Bei jedem Guesser-Schuss im Meeting, Treffer oder Fehlschuss, spielt ein \"Avada Kedavra\"-Clip, bei beiden Ausgängen derselbe, damit er nichts verrät. Der Clip enthält ein Schimpfwort. Schalter: <em>Guesser Spell Sound</em> (ID 2102, Standard On) für den Host und der lokale Config-Eintrag <code>[Sounds] GuesserSpellSound</code> für jeden Spieler.</p><p><strong>Titel des Abends.</strong> Fünf Titel in der Session-Statistik von Forgotten Fixes: <em>Sole Survivor</em> (am häufigsten der letzte lebende Crewmate bei Rundenende), <em>Candy Glutton</em> (die meisten Süßigkeiten gegessen), <em>Midnight Snack</em> (am häufigsten vom Midnight Bonbon erwischt), <em>Most Haunted</em> (am häufigsten als Erster einer Runde gestorben) und <em>Mirror Gazer</em> (am häufigsten in einem Spukspiegel gesehen). Schalter: <em>Halloween Titles Of The Evening</em> (ID 2120, Standard On); aus heißt, nichts wird gezählt.</p>"
+          }
+        }
+      ]
+    },
+    /* ---------------------------------------------------------------- hollowmere manor */
+    {
+      id: "hollowmere",
+      title: { en: "Hollowmere Manor", de: "Hollowmere Manor" },
+      intro: {
+        en: "A haunted villa on a horror film set, a map for Unknown's Atlas. You pick it in the Freeplay menu and in the lobby map picker next to the Atlas maps. All players need the same version of the map, otherwise the host cannot start the round.",
+        de: "Eine Spukvilla auf einem Horrorfilm-Set, eine Karte für Unknown's Atlas. Du wählst sie im Freeplay-Menü und in der Kartenauswahl der Lobby neben den Atlas-Karten. Alle Spieler brauchen dieselbe Version der Karte, sonst kann der Host die Runde nicht starten."
+      },
+      entries: [
+        {
+          id: "hollowmere-map",
+          title: { en: "The house and its two sizes", de: "Das Haus und seine zwei Größen" },
+          summary: {
+            en: "Small is the house alone, Large adds garden, crew camp, greenhouse, graveyard and crypt. Wooden doors, film cameras, house-prop consoles.",
+            de: "Small ist nur das Haus, Large fügt Garten, Crew Camp, Gewächshaus, Friedhof und Gruft hinzu. Holztüren, Filmkameras, Konsolen als Hausrat."
+          },
+          body: {
+            en: "<p>The option <em>Hollowmere Manor Size</em> (ID 1960: Small or Large) takes effect with the next round, because Atlas rebuilds the map before every round.</p>" + tbl(["Size", "Rooms"], [
+              ["Small", "Kitchen, Laundry, Seance Parlour, Radio Room, Box Room, Observatory, Boiler Room, Long Library, Chapel, Entrance Hall, Director's Booth, Makeup, Portrait Gallery, Trophy Room, Fireplace Room, Study"],
+              ["Large", "All of the above plus Terrace, Driveway, Crew Camp, Greenhouse, Fountain Court, Graveyard and Family Crypt"]
+            ]) + "<ul><li>The Long Library is L-shaped, the Entrance Hall T-shaped, and a small door connects the library and the chapel.</li><li>Wooden doors inside, heavy front and back doors, iron gates outside, all swinging open and shut. Film-crew cameras show a red tally light while someone watches.</li><li>Every console is a house prop (flight case, dimmer rack, porcelain fuse board, damper wheel, puzzle box, brass plates, barber chair with ring light, a 1930s radio and more). Indoor vents are cast-iron floor grates with a flap animation.</li><li>Furniture and props for house, garden and crypt, plus traces on the floors (drag marks, soot, a chalk circle, blood, shards, roots, scratches, cables, papers). Furniture, boards and a KEEP OUT sign block the grand staircase.</li><li>A new admin table (1.1.0), and smaller blocking areas at the camper van and the camera crane: only the body of the van and the base of the crane block you.</li><li>Its own opening film (see below) and its own exile scenes.</li></ul>",
+            de: "<p>Die Option <em>Hollowmere Manor Size</em> (ID 1960: Small oder Large) gilt ab der nächsten Runde, weil Atlas die Karte vor jeder Runde neu baut.</p>" + tbl(["Größe", "Räume"], [
+              ["Small", "Kitchen, Laundry, Seance Parlour, Radio Room, Box Room, Observatory, Boiler Room, Long Library, Chapel, Entrance Hall, Director's Booth, Makeup, Portrait Gallery, Trophy Room, Fireplace Room, Study"],
+              ["Large", "Alles oben plus Terrace, Driveway, Crew Camp, Greenhouse, Fountain Court, Graveyard und Family Crypt"]
+            ]) + "<ul><li>Die Long Library ist L-förmig, die Entrance Hall T-förmig, und eine kleine Tür verbindet Bibliothek und Kapelle.</li><li>Holztüren innen, schwere Vorder- und Hintertüren, Eisentore draußen, alle schwingen auf und zu. Kameras der Filmcrew zeigen ein rotes Tally-Licht, solange jemand zusieht.</li><li>Jede Konsole ist ein Hausrat-Stück (Flightcase, Dimmer-Rack, Porzellan-Sicherungstafel, Dämpferrad, Rätselbox, Messingtafeln, Friseurstuhl mit Ringlicht, ein Radio aus den 1930ern und mehr). Vents im Haus sind gusseiserne Bodengitter mit Klappenanimation.</li><li>Möbel und Requisiten für Haus, Garten und Gruft, dazu Spuren auf den Böden (Schleifspuren, Ruß, ein Kreidekreis, Blut, Scherben, Wurzeln, Kratzer, Kabel, Papiere). Möbel, Bretter und ein KEEP-OUT-Schild versperren die große Treppe.</li><li>Ein neuer Admin-Tisch (1.1.0) und kleinere Sperrflächen am Campingbus und am Kamerakran: Nur der Bus selbst und der Fuß des Krans versperren dir den Weg.</li><li>Ein eigener Eröffnungsfilm (siehe unten) und eigene Rauswurf-Szenen.</li></ul>"
+          }
+        },
+        {
+          id: "hollowmere-tasks",
+          title: { en: "Tasks and sabotages", de: "Aufgaben und Sabotagen" },
+          summary: {
+            en: "Every task has its own minigame in the house style. Large adds five tasks.",
+            de: "Jede Aufgabe hat ein eigenes Minispiel im Hausstil. Large bringt fünf Aufgaben dazu."
+          },
+          body: {
+            en: "<p><strong>Both sizes:</strong> Rewire the Set Lights, Sign the Call Sheet, Balance the Dimmer Board, Chart the Stars, Sweep the Chimney, Route Generator Power, Light the Ward Candles, Focus the Telescope, Open the Puzzle Box, Back Up the Dailies, Tune the Generator, Shoo the Bats, Take Out the Trash, Refuel the Generators, Mix the Fake Blood, Makeup Check, Set the Seance Table, Make Burger, Unlock the Safe and Release the Boiler Pressure.</p><p><strong>Large only:</strong> Water the Plants, Roast Marshmallows, Tune the Generator (a second one, at the generator of the Crew Camp), Grab Lunch and <strong>Feed the Plant</strong> (1.1.0): hold a piece of meat to each of the four mouths of the giant plant in the greenhouse (needs Unknown's Atlas 1.1.2).</p><ul><li><strong>Set the Seance Table</strong> is a spirit board: it spells a word and you trace it with the planchette.</li><li><strong>Make Burger</strong> is the Airship task and waits at the kitchen stove; Unlock the Safe is the Airship safe.</li></ul><p><strong>Sabotages</strong> carry the map's names: The Ritual Escalates (Reactor), Smoke in the Chimney (Oxygen, both O2 consoles are kept, on Large one of them outside on the terrace), Set Lights Down (Lights) and Radio Silence (Comms). On Large the Angel Breakout comes on top, see below.</p>",
+            de: "<p><strong>Beide Größen:</strong> Rewire the Set Lights, Sign the Call Sheet, Balance the Dimmer Board, Chart the Stars, Sweep the Chimney, Route Generator Power, Light the Ward Candles, Focus the Telescope, Open the Puzzle Box, Back Up the Dailies, Tune the Generator, Shoo the Bats, Take Out the Trash, Refuel the Generators, Mix the Fake Blood, Makeup Check, Set the Seance Table, Make Burger, Unlock the Safe und Release the Boiler Pressure.</p><p><strong>Nur Large:</strong> Water the Plants, Roast Marshmallows, Tune the Generator (eine zweite, am Generator des Crew Camps), Grab Lunch und <strong>Feed the Plant</strong> (1.1.0): Halte ein Stück Fleisch an jedes der vier Mäuler der Riesenpflanze im Gewächshaus (braucht Unknown's Atlas 1.1.2).</p><ul><li><strong>Set the Seance Table</strong> ist ein Geisterbrett: Es buchstabiert ein Wort, und du fährst es mit dem Planchette nach.</li><li><strong>Make Burger</strong> ist die Airship-Aufgabe und wartet am Küchenherd; Unlock the Safe ist der Airship-Tresor.</li></ul><p><strong>Sabotagen</strong> tragen die Namen der Karte: The Ritual Escalates (Reactor), Smoke in the Chimney (Oxygen, beide O2-Konsolen bleiben, auf Large eine davon draußen auf der Terrasse), Set Lights Down (Lights) und Radio Silence (Comms). Auf Large kommt der Angel Breakout obendrauf, siehe unten.</p>"
+          }
+        },
+        {
+          id: "hollowmere-passages",
+          title: { en: "Secret passages", de: "Geheimgänge" },
+          summary: {
+            en: "A tapestry, a revolving bookcase, a dumbwaiter and, on Large, a crypt tunnel. Use button ENTER, a short fade to black.",
+            de: "Ein Wandteppich, ein Drehregal, ein Speiseaufzug und auf Large ein Gruft-Tunnel. Use-Knopf ENTER, kurzes Abblenden."
+          },
+          body: {
+            en: "<ul><li>The tapestry in the Seance Parlour leads into the Entrance Hall.</li><li>The revolving bookcase connects the Long Library and the hall, both ways.</li><li>The dumbwaiter in the kitchen comes out in the Radio Room.</li><li>On Large the tunnel in the crypt leads to a floor slab in the chapel.</li></ul><p>Every living player uses the Use button <strong>ENTER</strong>. The screen fades to black for 1.2 s, the furniture moves visibly for everyone and can be heard nearby. Switch: <em>Secret Passages</em> (ID 1962, default On), with <em>Secret Passage Cooldown</em> (ID 1963, default 10 s).</p>",
+            de: "<ul><li>Der Wandteppich im Seance Parlour führt in die Entrance Hall.</li><li>Das Drehregal verbindet Long Library und Halle, in beide Richtungen.</li><li>Der Speiseaufzug in der Küche kommt im Radio Room heraus.</li><li>Auf Large führt der Tunnel in der Gruft zu einer Bodenplatte in der Kapelle.</li></ul><p>Jeder lebende Spieler nutzt den Use-Knopf <strong>ENTER</strong>. Der Bildschirm blendet 1,2 s lang ab, die Möbel bewegen sich für alle sichtbar und sind in der Nähe zu hören. Schalter: <em>Secret Passages</em> (ID 1962, Standard On), mit <em>Secret Passage Cooldown</em> (ID 1963, Standard 10 s).</p>"
+          }
+        },
+        {
+          id: "hollowmere-clock",
+          title: { en: "Midnight clock, candles and darkness", de: "Mitternachtsuhr, Kerzen und Dunkelheit" },
+          summary: {
+            en: "The grandfather clock slams every open door shut and the portraits turn to the last body. Dark rooms halve your sight until you light a candle.",
+            de: "Die Standuhr schlägt alle offenen Türen zu, und die Porträts drehen sich zur letzten Leiche. Dunkle Räume halbieren deine Sicht, bis du eine Kerze anzündest."
+          },
+          body: {
+            en: "<p><strong>Midnight clock.</strong> The grandfather clock in the hall strikes at an interval (<em>Midnight Clock</em>, ID 1964, default 90 s; 60, 120, 180 s or Off). Five seconds of ticking and a swinging pendulum, then three chimes, 3 s of flickering light, and every open door slams shut for <em>Clock Shuts Doors For</em> (ID 1965, default 4 s). The host closes the doors directly, so the Impostors' door cooldown is not touched. The portraits in the gallery shake and turn their heads towards the last reported body (<em>Portraits Look At Last Body</em>, ID 1966, default On). The clock pauses during meetings, ejections, reactor and oxygen.</p><p><strong>Candles and darkness.</strong> Dark rooms reduce your vision to the factor of <em>Dark Room Vision</em> (ID 1967, default 50%). The candelabras start out cold: <strong>LIGHT</strong> burns one for <em>Candle Burn Time</em> (ID 1968, default 60 s) and restores normal vision within 3.5 m. During a lights sabotage the spotlights go dark, but crewmates near a burning candle keep their full vision. Impostors can blow candles out with <strong>BLOW OUT</strong> (cooldown <em>Impostor Blow-Out Cooldown</em>, ID 1969, default 30 s; the sender is checked on every client).</p>",
+            de: "<p><strong>Mitternachtsuhr.</strong> Die Standuhr in der Halle schlägt in einem Intervall (<em>Midnight Clock</em>, ID 1964, Standard 90 s; 60, 120, 180 s oder Off). Fünf Sekunden Ticken und ein schwingendes Pendel, dann drei Glockenschläge, 3 s flackerndes Licht, und jede offene Tür schlägt für <em>Clock Shuts Doors For</em> (ID 1965, Standard 4 s) zu. Der Host schließt die Türen direkt, die Tür-Abklingzeit der Impostoren bleibt also unberührt. Die Porträts in der Galerie wackeln und drehen die Köpfe zur zuletzt gemeldeten Leiche (<em>Portraits Look At Last Body</em>, ID 1966, Standard On). Die Uhr pausiert bei Meetings, Rauswürfen, Reaktor und Sauerstoff.</p><p><strong>Kerzen und Dunkelheit.</strong> Dunkle Räume senken deine Sicht auf den Faktor von <em>Dark Room Vision</em> (ID 1967, Standard 50 %). Die Kandelaber sind zunächst kalt: <strong>LIGHT</strong> lässt einen für <em>Candle Burn Time</em> (ID 1968, Standard 60 s) brennen und stellt die normale Sicht im Umkreis von 3,5 m wieder her. Bei einer Licht-Sabotage gehen die Strahler aus, aber Crewmates nahe einer brennenden Kerze behalten ihre volle Sicht. Impostoren können Kerzen mit <strong>BLOW OUT</strong> ausblasen (Abklingzeit <em>Impostor Blow-Out Cooldown</em>, ID 1969, Standard 30 s; der Absender wird auf jedem Client geprüft).</p>"
+          }
+        },
+        {
+          id: "hollowmere-angels",
+          title: { en: "Weeping Angels (Large)", de: "Weeping Angels (Large)" },
+          summary: {
+            en: "The fountain figure and the angels of the cemetery cover their eyes while anyone looks at them and strike when you look away.",
+            de: "Die Brunnenfigur und die Engel des Friedhofs halten sich die Augen zu, solange jemand hinsieht, und schlagen zu, wenn du wegschaust."
+          },
+          body: {
+            en: "<p>The figure in the Fountain Court and the angels on the cemetery of Large (four shapes: mourning angel, veiled angel, cherub, ruined angel) stand with their hands over their eyes. If <strong>any</strong> living player looks at an angel, it covers its eyes again for everyone and kills nobody. Sight uses normal crew vision and the standard 16:9 view for everyone, so Impostors and roles with more vision do not see further. A victim is \"sent back in time\": no shield stops it, and the victim sees the kill scene of that angel's shape.</p><p><em>Weeping Angels Behaviour</em> (ID 1955) picks how the angels become dangerous:</p><ul><li><strong>Gaze</strong> (default): every angel has its own aggression value with every living player. It rises while the angel is in your sight but you look away: hands over the eyes, then a stare at 2 s, the attack pose at 4 s, the kill at 5 s within 1.5 m. Looking at it sets the value back to 0; out of sight it slowly drops.</li><li><strong>Awaken</strong>: an angel that someone sees and nobody looks at wakes after 5 s, then climbs stage 1 to 3 in second steps and stays awake until the next meeting.</li><li><strong>Stages</strong>: the angel climbs one stage every 2 s while nobody looks at it, and falls back in the same rhythm when somebody does.</li></ul><p>In Awaken and Stages, stage 3 kills within 1 m whoever is not looking at the angel. <em>Weeping Angels Attack</em> (ID 1951, default On) switches the killing on; with it off only the poses change. The Round Replay of Forgotten Fixes shows a bar per player at every angel. The local switch <em>Angel Blink Effect</em> (Unknown's Collection settings page) turns off the eyelid picture of the blink, you still blink.</p>",
+            de: "<p>Die Figur im Fountain Court und die Engel auf dem Friedhof von Large (vier Gestalten: trauernder Engel, verschleierter Engel, Putto, zerfallener Engel) stehen mit den Händen vor den Augen. Sieht <strong>irgendein</strong> lebender Spieler einen Engel an, hält er sich für alle wieder die Augen zu und tötet niemanden. Die Sicht entspricht der normalen Crew-Sicht und dem Standardbild 16:9 für alle, Impostoren und Rollen mit mehr Sicht sehen also nicht weiter. Ein Opfer wird \"in die Zeit zurückgeschickt\": Kein Schild hält das auf, und das Opfer sieht die Kill-Szene der Engelsgestalt.</p><p><em>Weeping Angels Behaviour</em> (ID 1955) wählt, wie die Engel gefährlich werden:</p><ul><li><strong>Gaze</strong> (Standard): Jeder Engel hat mit jedem lebenden Spieler einen eigenen Aggressionswert. Er steigt, solange der Engel in deiner Sicht ist, du aber wegschaust: Hände vor den Augen, dann ein Starren bei 2 s, die Angriffspose bei 4 s, der Kill bei 5 s im Umkreis von 1,5 m. Hinsehen setzt den Wert auf 0 zurück; außer Sicht sinkt er langsam.</li><li><strong>Awaken</strong>: Ein Engel, den jemand sieht und den niemand ansieht, wacht nach 5 s auf, klettert dann in Sekundenschritten von Stufe 1 auf 3 und bleibt bis zum nächsten Meeting wach.</li><li><strong>Stages</strong>: Der Engel steigt alle 2 s eine Stufe, solange ihn niemand ansieht, und fällt im selben Takt zurück, wenn es jemand tut.</li></ul><p>In Awaken und Stages tötet Stufe 3 im Umkreis von 1 m, wer den Engel gerade nicht ansieht. <em>Weeping Angels Attack</em> (ID 1951, Standard On) schaltet das Töten ein; ist sie aus, wechseln nur die Posen. Der Round Replay von Forgotten Fixes zeigt einen Balken pro Spieler an jedem Engel. Der lokale Schalter <em>Angel Blink Effect</em> (Einstellungsseite von Unknown's Collection) schaltet das Lidschlag-Bild ab, geblinzelt wird trotzdem.</p>"
+          }
+        },
+        {
+          id: "hollowmere-breakout",
+          title: { en: "Angel Breakout (sabotage)", de: "Angel Breakout (Sabotage)" },
+          summary: {
+            en: "A shared wrath meter fills when players turn their backs on angels. At full, a 45-second countdown starts, two seals must be held, otherwise the angels roam.",
+            de: "Ein gemeinsamer Zornpegel füllt sich, wenn Spieler den Engeln den Rücken zukehren. Voll startet ein 45-Sekunden-Countdown, zwei Siegel müssen gehalten werden, sonst ziehen die Engel los."
+          },
+          body: {
+            en: "<p>Switch: <em>Angel Breakout Sabotage</em> (ID 1953, default On, needs Weeping Angels Attack). The wrath meter rises for every player who turns their back on an angel or stands closer than 3 m, and falls slowly otherwise. Impostors cannot trigger the sabotage. When the meter is full:</p><ul><li>A <strong>45-second countdown</strong> starts. The angels stand still, and every player who has an angel in sight blinks every 8 to 14 s, for a moment their gaze does not count.</li><li>Two <strong>seals</strong> in the north-west corner of the cemetery must be held at the same time, one living player each (<strong>HOLD</strong>), for a second, to stop the breakout.</li><li>When the time runs out, the angels roam the whole map towards the nearest player and kill anyone in reach, Impostors included, as long as nobody is looking at that angel, in every behaviour mode, until the next meeting. Before that they never leave their place.</li><li>The emergency button and the Mayor's remote meeting are locked during the whole crisis. Body reports still work.</li></ul><p>After a breakout the meter rests for 60 s.</p>",
+            de: "<p>Schalter: <em>Angel Breakout Sabotage</em> (ID 1953, Standard On, braucht Weeping Angels Attack). Der Zornpegel steigt für jeden Spieler, der einem Engel den Rücken zukehrt oder näher als 3 m steht, und sinkt sonst langsam. Impostoren können die Sabotage nicht auslösen. Ist der Pegel voll:</p><ul><li>Ein <strong>45-Sekunden-Countdown</strong> beginnt. Die Engel stehen still, und jeder Spieler, der einen Engel im Blick hat, blinzelt alle 8 bis 14 s; für einen Moment zählt sein Blick nicht.</li><li>Zwei <strong>Siegel</strong> in der Nordwestecke des Friedhofs müssen gleichzeitig gehalten werden, je ein lebender Spieler (<strong>HOLD</strong>), eine Sekunde lang, um den Ausbruch zu stoppen.</li><li>Läuft die Zeit ab, ziehen die Engel über die ganze Karte zum nächsten Spieler und töten jeden in Reichweite, Impostoren eingeschlossen, solange niemand diesen Engel ansieht, in jedem Verhaltensmodus, bis zum nächsten Meeting. Vorher verlassen sie ihren Platz nie.</li><li>Notfallknopf und das Remote-Meeting des Mayors sind während der gesamten Krise gesperrt. Leichenmeldungen funktionieren weiter.</li></ul><p>Nach einem Ausbruch ruht der Pegel 60 s.</p>"
+          }
+        },
+        {
+          id: "hollowmere-summoning",
+          title: { en: "Summoning circle", de: "Beschwörungskreis" },
+          summary: {
+            en: "Read the book in the Long Library, light the five candles of the pentagram in the Seance Parlour in the right order and a being appears.",
+            de: "Lies das Buch in der Long Library, zünde die fünf Kerzen des Pentagramms im Seance Parlour in der richtigen Reihenfolge an, und ein Wesen erscheint."
+          },
+          body: {
+            en: "<p><strong>The book.</strong> On the reading table of the Long Library (<strong>READ</strong>). At most half of the players may read it; the host hands the permission out as a secret task line in the task list. It opens with a page showing the candle circle and its numbers (1 at the top, then clockwise, as in the Seance Parlour); the warning has its own page with the poltergeist. On Hard a second, hidden book stands in the study.</p><p><strong>The candles.</strong> The pentagram in the Seance Parlour has five candles (<strong>LIGHT</strong>). Who lights them does not matter, the host remembers the order, and whoever lights the fifth summons. <em>Summoning Circle</em> (ID 1954) sets the rules:</p><ul><li><strong>Easy</strong> (default): one fixed order calls a good being (Tyrael, Castiel or Bobby, rolled), every other order a demon.</li><li><strong>Hard</strong>: every being has its own order on the book pages; Castiel and Bobby are in the hidden second book. Any other order calls a rolled demon.</li><li><strong>Off</strong>: the old ritual. When all five candles burn, the demon of the circle stands up.</li></ul><p>Summoning without having read a book calls a restless ghost (4 s). <em>Summoning Without Reading</em> (ID 1957) decides what that does: <strong>Instant Kill</strong> (default, the body lies in two halves) or <strong>No Kill</strong> (a harmless appearance).</p>" + tbl(["Being", "Effect (lasts 25 s on screen)"], [
+              ["Tyrael", "Armour for crew and neutrals until the next meeting."],
+              ["Castiel", "Grace for crew and neutrals: protection from the next ejection."],
+              ["Bobby", "The Weeping Angels sleep until the next meeting."],
+              ["Diablo, Baal", "Demons. Armour for the Impostors until the next meeting, and they kill 2 to 3 players who come too close. Fire: charred body."],
+              ["Mephisto", "Demon with poison: death after 6 s or at the meeting, green body."],
+              ["Cthulhu", "Demon with stormfire like lightning."],
+              ["Shadow Pact", "A page that only Impostors see. Once per game it absorbs one demonic attack before the next meeting."]
+            ]) + "<p>Every being has its own voice lines and stingers. You can put your own sounds into <code>BepInEx\\config\\UnknownsHalloween\\sounds\\summon_&lt;being&gt;.wav</code> (or <code>.ogg</code>) to replace them.</p>",
+            de: "<p><strong>Das Buch.</strong> Auf dem Lesetisch der Long Library (<strong>READ</strong>). Höchstens die Hälfte der Spieler darf es lesen; der Host vergibt die Erlaubnis als geheime Aufgabenzeile in der Aufgabenliste. Es beginnt mit einer Seite, die den Kerzenkreis mit seinen Nummern zeigt (1 oben, dann im Uhrzeigersinn, wie im Seance Parlour); die Warnung hat eine eigene Seite mit dem Poltergeist. Auf Hard steht ein zweites, verstecktes Buch im Arbeitszimmer (Study).</p><p><strong>Die Kerzen.</strong> Das Pentagramm im Seance Parlour hat fünf Kerzen (<strong>LIGHT</strong>). Wer sie anzündet, ist egal, der Host merkt sich die Reihenfolge, und wer die fünfte anzündet, beschwört. <em>Summoning Circle</em> (ID 1954) legt die Regeln fest:</p><ul><li><strong>Easy</strong> (Standard): Eine feste Reihenfolge ruft ein gutes Wesen (Tyrael, Castiel oder Bobby, gewürfelt), jede andere einen Dämon.</li><li><strong>Hard</strong>: Jedes Wesen hat seine eigene Reihenfolge auf den Buchseiten; Castiel und Bobby stehen im versteckten zweiten Buch. Jede andere Reihenfolge ruft einen gewürfelten Dämon.</li><li><strong>Off</strong>: das alte Ritual. Brennen alle fünf Kerzen, steht der Dämon des Kreises auf.</li></ul><p>Wer beschwört, ohne ein Buch gelesen zu haben, ruft einen ruhelosen Geist (4 s). <em>Summoning Without Reading</em> (ID 1957) bestimmt, was der tut: <strong>Instant Kill</strong> (Standard, die Leiche liegt in zwei Hälften) oder <strong>No Kill</strong> (ein harmloser Auftritt).</p>" + tbl(["Wesen", "Wirkung (bleibt 25 s auf dem Bildschirm)"], [
+              ["Tyrael", "Rüstung für Crew und Neutrale bis zum nächsten Meeting."],
+              ["Castiel", "Gnade für Crew und Neutrale: Schutz vor dem nächsten Rauswurf."],
+              ["Bobby", "Die Weeping Angels schlafen bis zum nächsten Meeting."],
+              ["Diablo, Baal", "Dämonen. Rüstung für die Impostoren bis zum nächsten Meeting, und sie töten 2 bis 3 Spieler, die ihnen zu nahe kommen. Feuer: verkohlte Leiche."],
+              ["Mephisto", "Dämon mit Gift: Tod nach 6 s oder beim Meeting, grüne Leiche."],
+              ["Cthulhu", "Dämon mit Sturmfeuer wie ein Blitz."],
+              ["Shadow Pact", "Eine Seite, die nur Impostoren sehen. Einmal pro Spiel schluckt er einen dämonischen Angriff vor dem nächsten Meeting."]
+            ]) + "<p>Jedes Wesen hat eigene Sprachzeilen und Stinger. Eigene Klänge kannst du nach <code>BepInEx\\config\\UnknownsHalloween\\sounds\\summon_&lt;Wesen&gt;.wav</code> (oder <code>.ogg</code>) legen, um sie zu ersetzen.</p>"
+          }
+        },
+        {
+          id: "hollowmere-toilet",
+          title: { en: "Hiding in the portable toilet (Large)", de: "Verstecken im Dixi-Klo (Large)" },
+          summary: {
+            en: "In the portable toilet of the Crew Camp nobody can kill you, for a limited time.",
+            de: "Im Dixi-Klo des Crew Camps kann dich niemand töten, für begrenzte Zeit."
+          },
+          body: {
+            en: "<p>At the door the Use button says <strong>HIDE</strong>. Inside, you are invisible to the others, stand still and see the outside only through a peephole (a black screen with a small round cut-out). <strong>LEAVE</strong>, a meeting or your own death gets you out. The door opens and closes when you get in and out.</p><p>Since 1.1.0 hiding protects you: nobody can kill you while you hide (TOR kills, Unknown's Collection roles, angels, demons). In return the time at a stretch is limited. When it runs out you have to leave, and the toilet stays closed to you for the cooldown. The button shows the time left.</p><ul><li><em>Hide In The Portable Toilet</em> (ID 1956, default On)</li><li><em>Hiding Time</em> (ID 1958): 10, 15, 20, 30, 45, 60 s or Unlimited, default 20 s</li><li><em>Hiding Cooldown</em> (ID 1959): 0 to 60 s, default 30 s</li></ul>",
+            de: "<p>An der Tür sagt der Use-Knopf <strong>HIDE</strong>. Drinnen bist du für die anderen unsichtbar, stehst still und siehst die Außenwelt nur durch ein Guckloch (ein schwarzer Bildschirm mit kleinem runden Ausschnitt). <strong>LEAVE</strong>, ein Meeting oder dein eigener Tod holen dich heraus. Die Tür geht beim Rein- und Rausgehen auf und zu.</p><p>Seit 1.1.0 schützt dich das Verstecken: Solange du dich versteckst, kann dich niemand töten (TOR-Kills, Rollen aus Unknown's Collection, Engel, Dämonen). Dafür ist die Zeit am Stück begrenzt. Läuft sie ab, musst du raus, und das Klo bleibt für dich für die Abklingzeit geschlossen. Der Knopf zeigt die Restzeit.</p><ul><li><em>Hide In The Portable Toilet</em> (ID 1956, Standard On)</li><li><em>Hiding Time</em> (ID 1958): 10, 15, 20, 30, 45, 60 s oder Unlimited, Standard 20 s</li><li><em>Hiding Cooldown</em> (ID 1959): 0 bis 60 s, Standard 30 s</li></ul>"
+          }
+        },
+        {
+          id: "hollowmere-radio",
+          title: { en: "Radio microphone", de: "Funkmikrofon" },
+          summary: {
+            en: "At the radio desk in the Radio Room, allowed players record a real three-second message that everyone near the desk hears.",
+            de: "Am Funktisch im Radio Room nehmen erlaubte Spieler eine echte Drei-Sekunden-Durchsage auf, die alle in der Nähe des Tischs hören."
+          },
+          body: {
+            en: "<p>Players who are allowed see <strong>SPEAK</strong> instead of <strong>TUNE</strong> at the radio desk and record a real message of 3 seconds with their microphone. Everyone close to the desk hears it with radio noise and crackle. Nothing is stored, and the cooldown is 30 seconds per player. The receivers check permission and distance themselves.</p><p><em>Radio Microphone</em> (ID 2160): <strong>Selected Players</strong> (default), <strong>Everyone</strong> or <strong>Off</strong>. Selected are always the host plus the players listed in <code>BepInEx\\config\\UnknownsHalloween\\radio_mic.txt</code> (one SHA-256 of a PUID or friend code per line). The host manages the list in the chat: <code>/mic &lt;name&gt;</code> toggles a player, <code>/mic</code> shows the list.</p><p>Everybody else keeps the normal <strong>TUNE</strong> at the desk: static, Morse beeps and a whispering voice in between. More curios of the house: a phonograph in the Seance Parlour (<strong>PLAY</strong>, three tunes), and knight armours that turn their helmets towards the nearest player.</p>",
+            de: "<p>Wer darf, sieht am Funktisch <strong>SPEAK</strong> statt <strong>TUNE</strong> und nimmt mit dem Mikrofon eine echte Durchsage von 3 Sekunden auf. Alle in der Nähe des Tischs hören sie mit Rauschen und Knacken. Es wird nichts gespeichert, und die Abklingzeit beträgt 30 Sekunden pro Spieler. Die Empfänger prüfen Erlaubnis und Abstand selbst.</p><p><em>Radio Microphone</em> (ID 2160): <strong>Selected Players</strong> (Standard), <strong>Everyone</strong> oder <strong>Off</strong>. Ausgewählt sind immer der Host plus die Spieler aus <code>BepInEx\\config\\UnknownsHalloween\\radio_mic.txt</code> (je Zeile der SHA-256 einer PUID oder eines Friend-Codes). Der Host pflegt die Liste im Chat: <code>/mic &lt;Name&gt;</code> schaltet einen Spieler an oder aus, <code>/mic</code> zeigt die Liste.</p><p>Alle anderen behalten am Tisch das normale <strong>TUNE</strong>: Rauschen, Morsepiepen und dazwischen eine flüsternde Stimme. Weitere Kuriositäten des Hauses: ein Grammophon im Seance Parlour (<strong>PLAY</strong>, drei Melodien) und Ritterrüstungen, die ihre Helme zum nächsten Spieler drehen.</p>"
+          }
+        },
+        {
+          id: "hollowmere-intro",
+          title: { en: "Opening film and exile scenes", de: "Eröffnungsfilm und Rauswurf-Szenen" },
+          summary: {
+            en: "The first start of the manor each evening plays a rendered first-person film for everyone at once.",
+            de: "Der erste Start des Anwesens jeden Abend spielt für alle gleichzeitig einen gerenderten Ich-Film ab."
+          },
+          body: {
+            en: "<p>The film is rendered first person and lasts about a minute: a ghost lord leads you through the hall, the library, the dining room and the chapel, with voice, sounds and German and English subtitles. It is played by Unknown's Atlas for everyone at once, and the host can skip it for all. The Atlas option <em>Atlas: Map Intro</em> (ID 1728) sets once per evening, every round or off. The film ships as the asset package <code>cine_villa.hwp</code> (about 85 MB).</p><p>Ejections on the manor play their own scenes, picked from the game id, the number of dead and the ejected player, so every client shows the same scene without network traffic. The Void scene of Unknown's Collection takes precedence for skips and ties.</p>",
+            de: "<p>Der Film ist in Ich-Perspektive gerendert und dauert rund eine Minute: Ein Geist-Lord führt dich durch Halle, Bibliothek, Speisezimmer und Kapelle, mit Stimme, Geräuschen und deutschen und englischen Untertiteln. Unknown's Atlas spielt ihn für alle gleichzeitig ab, und der Host kann ihn für alle überspringen. Die Atlas-Option <em>Atlas: Map Intro</em> (ID 1728) stellt einmal pro Abend, jede Runde oder aus ein. Der Film kommt als Asset-Paket <code>cine_villa.hwp</code> (rund 85 MB).</p><p>Rauswürfe auf dem Anwesen spielen eigene Szenen, gewählt aus Spiel-ID, Zahl der Toten und rausgeworfenem Spieler, damit jeder Client dieselbe Szene zeigt, ohne Netzverkehr. Die Void-Szene von Unknown's Collection hat bei Skips und Gleichständen Vorrang.</p>"
+          }
+        }
+      ]
+    },
+    /* ---------------------------------------------------------------- ravenhollow cemetery */
+    {
+      id: "ravenhollow",
+      title: { en: "Ravenhollow Cemetery", de: "Ravenhollow Cemetery" },
+      intro: {
+        en: "A graveyard with a crypt, a second map for Unknown's Atlas. It has its own tasks, minimap and eject scene, and light and sight reach across the grave fields while only the buildings cast shadows.",
+        de: "Ein Friedhof mit Gruft, eine zweite Karte für Unknown's Atlas. Sie hat eigene Aufgaben, eine eigene Minimap und eine eigene Rauswurfszene, und Licht und Sicht reichen über die Gräberfelder, während nur Gebäude Schatten werfen."
+      },
+      entries: [
+        {
+          id: "ravenhollow-map",
+          title: { en: "Rooms and tasks", de: "Räume und Aufgaben" },
+          summary: {
+            en: "Fourteen areas from the chapel to the raven roost, with graveyard-themed tasks and sabotages.",
+            de: "Vierzehn Bereiche von der Kapelle bis zum Rabennest, mit Friedhofs-Aufgaben und -Sabotagen."
+          },
+          body: {
+            en: "<p><strong>Rooms:</strong> Chapel, Coffin Store, Well House, Mausoleum, Morgue, Crematorium, Caretaker's Office, Gatehouse, Lantern Shed, Watchman's Lodge, Bell Tower, Old Graves, Raven Roost and Ward Stones. Since 1.1.0 the gatehouse and the lantern shed are furnished, the old graves and the grave fields have varied stones, the paths have puddles, moss, leaves and stepping stones, and the morgue is a bit lighter.</p>" + tbl(["Task", "Name on this map"], [
+              ["Fix Wiring", "Rewire the Grave Lamps"],
+              ["Swipe Card", "Sign the Burial Register"],
+              ["Calibrate Distributor", "Trim the Lantern Wicks"],
+              ["Chart Course", "Map the Graves"],
+              ["Clean O2 Filter", "Sweep the Crypt"],
+              ["Divert Power", "Light the Path"],
+              ["Prime Shields", "Relight the Ward Candles"],
+              ["Stabilize Steering", "Straighten a Headstone"],
+              ["Unlock Manifolds", "Unlock the Ossuary"],
+              ["Upload Data", "Copy the Epitaphs"],
+              ["Align Engine Output", "Wind the Well Crank"],
+              ["Clear Asteroids", "Shoo the Ravens"],
+              ["Empty Garbage", "Clear the Wreaths"],
+              ["Fuel Engines", "Stoke the Furnace"],
+              ["Inspect Sample", "Identify the Ashes"],
+              ["Start Reactor", "Ring the Bell"],
+              ["Submit Scan", "Identify the Remains"]
+            ]),
+            de: "<p><strong>Räume:</strong> Chapel, Coffin Store, Well House, Mausoleum, Morgue, Crematorium, Caretaker's Office, Gatehouse, Lantern Shed, Watchman's Lodge, Bell Tower, Old Graves, Raven Roost und Ward Stones. Seit 1.1.0 sind Torhaus und Laternenschuppen eingerichtet, die alten Gräber und die Gräberfelder haben abwechslungsreiche Steine, die Wege Pfützen, Moos, Laub und Trittsteine, und die Leichenhalle ist etwas heller.</p>" + tbl(["Aufgabe", "Name auf dieser Karte"], [
+              ["Fix Wiring", "Rewire the Grave Lamps"],
+              ["Swipe Card", "Sign the Burial Register"],
+              ["Calibrate Distributor", "Trim the Lantern Wicks"],
+              ["Chart Course", "Map the Graves"],
+              ["Clean O2 Filter", "Sweep the Crypt"],
+              ["Divert Power", "Light the Path"],
+              ["Prime Shields", "Relight the Ward Candles"],
+              ["Stabilize Steering", "Straighten a Headstone"],
+              ["Unlock Manifolds", "Unlock the Ossuary"],
+              ["Upload Data", "Copy the Epitaphs"],
+              ["Align Engine Output", "Wind the Well Crank"],
+              ["Clear Asteroids", "Shoo the Ravens"],
+              ["Empty Garbage", "Clear the Wreaths"],
+              ["Fuel Engines", "Stoke the Furnace"],
+              ["Inspect Sample", "Identify the Ashes"],
+              ["Start Reactor", "Ring the Bell"],
+              ["Submit Scan", "Identify the Remains"]
+            ])
+          }
+        },
+        {
+          id: "ravenhollow-weather",
+          title: { en: "Fog, death knell and miasma", de: "Nebel, Totenglocke und Miasma" },
+          summary: {
+            en: "Fog banks drift over the map. The sabotages change the sky: the bell tolls, the fog turns poison green, the lanterns go out.",
+            de: "Nebelbänke ziehen über die Karte. Die Sabotagen verändern den Himmel: Die Glocke läutet, der Nebel wird giftgrün, die Laternen gehen aus."
+          },
+          body: {
+            en: "<ul><li><strong>Fog.</strong> Soft fog banks drift across the map with the wind and lie in the same places for every player. <em>Ravenhollow Fog</em> (ID 1990): Light (default), Thick or Off.</li><li><strong>Death Knell</strong> (Reactor sabotage). The bell tolls every 2.8 s, and every stroke briefly dims everyone's sight. <em>Death Knell Dims Vision</em> (ID 1992, default On).</li><li><strong>Miasma</strong> (Oxygen sabotage). The fog turns poison green and thicker, and the vision drops to the value of <em>Miasma Vision</em> (ID 1991: 75% default, 60%, 90% or Off).</li><li><strong>Lanterns Out</strong> (Lights sabotage). The lamp posts and candelabras show their extinguished picture.</li><li><strong>Gate Bell Silent</strong> (Comms sabotage).</li><li>Now and then a raven's cry or an owl in the distance.</li></ul>",
+            de: "<ul><li><strong>Nebel.</strong> Weiche Nebelbänke ziehen mit dem Wind über die Karte und liegen für jeden Spieler an denselben Stellen. <em>Ravenhollow Fog</em> (ID 1990): Light (Standard), Thick oder Off.</li><li><strong>Death Knell</strong> (Reaktor-Sabotage). Die Glocke schlägt alle 2,8 s, und jeder Schlag drückt kurz die Sicht aller. <em>Death Knell Dims Vision</em> (ID 1992, Standard On).</li><li><strong>Miasma</strong> (Sauerstoff-Sabotage). Der Nebel wird giftgrün und dichter, und die Sicht sinkt auf den Wert von <em>Miasma Vision</em> (ID 1991: 75 % Standard, 60 %, 90 % oder Off).</li><li><strong>Lanterns Out</strong> (Licht-Sabotage). Laternenpfähle und Kandelaber zeigen ihr erloschenes Bild.</li><li><strong>Gate Bell Silent</strong> (Comms-Sabotage).</li><li>Ab und zu ein Rabenschrei oder ein Kauz in der Ferne.</li></ul>"
+          }
+        },
+        {
+          id: "ravenhollow-ritual",
+          title: { en: "Pentagram ritual", de: "Pentagramm-Ritual" },
+          summary: {
+            en: "Five candles at the rune circle. When all burn, the Demon rises and kills whoever stands in the inner circle.",
+            de: "Fünf Kerzen am Runenkreis. Brennen alle, steigt der Dämon auf und tötet, wer im inneren Kreis steht."
+          },
+          body: {
+            en: "<p>At the rune circle of the Ward Stones a candle stands at each of the five star points. Living players light them with the Use button <strong>LIGHT</strong>. When all five burn, the Demon rises for 6.66 s and kills whoever stands in the inner circle after 2 s, which leaves time to step out. No shield stops it. The victim sees the kill scene <em>The Demon</em>, and the kill feeds and the Medium name \"The Demon\" instead of a self-kill. The candles go out after the ritual and at every meeting.</p>",
+            de: "<p>Am Runenkreis der Ward Stones steht an jeder der fünf Sternspitzen eine Kerze. Lebende Spieler zünden sie mit dem Use-Knopf <strong>LIGHT</strong> an. Brennen alle fünf, steigt der Dämon für 6,66 s auf und tötet, wer nach 2 s im inneren Kreis steht, es bleibt also Zeit, hinauszutreten. Kein Schild hält das auf. Das Opfer sieht die Kill-Szene <em>The Demon</em>, und die Kill-Feeds und das Medium nennen \"The Demon\" statt eines Selbstkills. Die Kerzen gehen nach dem Ritual und bei jedem Meeting aus.</p>"
+          }
+        }
+      ]
+    },
+    /* ---------------------------------------------------------------- host options */
+    {
+      id: "options",
+      title: { en: "Host options", de: "Host-Optionen" },
+      intro: {
+        en: "The options sit in TOR's settings, where the tab and the heading are named below. The host's values count for everybody. Defaults are what a fresh install shows. Child options only appear while their parent is on. Trick or Treat, Omens and the lobby games are not TOR options but cards in the lobby menu, see the last two entries.",
+        de: "Die Optionen stehen in TORs Einstellungen, Reiter und Überschrift stehen unten. Die Werte des Hosts gelten für alle. Als Standard ist angegeben, was eine frische Installation zeigt. Kind-Optionen erscheinen nur, solange ihr Elternteil an ist. Trick or Treat, Omens und die Lobby-Spiele sind keine TOR-Optionen, sondern Karten im Lobby-Menü, siehe die letzten beiden Einträge."
+      },
+      entries: [
+        {
+          id: "opts-roles",
+          title: { en: "Roles, modifier and sabotage", de: "Rollen, Modifier und Sabotage" },
+          summary: {
+            en: "Xenomorph (Neutral tab), Banshee (Crewmate tab), Scaredy-Cat (Modifier tab), Phantom Parade (Impostor tab).",
+            de: "Xenomorph (Neutral-Reiter), Banshee (Crewmate-Reiter), Scaredy-Cat (Modifier-Reiter), Phantom Parade (Impostor-Reiter)."
+          },
+          body: {
+            en: hwOptTbl("en", HW_OPTS_ROLES),
+            de: hwOptTbl("de", HW_OPTS_ROLES)
+          }
+        },
+        {
+          id: "opts-modes",
+          title: { en: "Game modes and mirrors", de: "Spielmodi und Spiegel" },
+          summary: {
+            en: "General tab, with the headings Masquerade Ball, Zombie Outbreak, Sole Survivor and Haunted Mirrors.",
+            de: "Reiter General, mit den Überschriften Masquerade Ball, Zombie Outbreak, Sole Survivor und Haunted Mirrors."
+          },
+          body: {
+            en: hwOptTbl("en", HW_OPTS_MODES),
+            de: hwOptTbl("de", HW_OPTS_MODES)
+          }
+        },
+        {
+          id: "opts-kills",
+          title: { en: "Kill scenes", de: "Kill-Szenen" },
+          summary: {
+            en: "General tab, heading Unknown's Halloween: one master switch and one switch per costume.",
+            de: "Reiter General, Überschrift Unknown's Halloween: ein Hauptschalter und ein Schalter pro Kostüm."
+          },
+          body: {
+            en: hwOptTbl("en", HW_OPTS_KILL),
+            de: hwOptTbl("de", HW_OPTS_KILL)
+          }
+        },
+        {
+          id: "opts-look",
+          title: { en: "Look, sound and tasks", de: "Optik, Klang und Aufgaben" },
+          summary: {
+            en: "General tab, with the headings Halloween Look, Halloween Titles and Halloween Tasks.",
+            de: "Reiter General, mit den Überschriften Halloween Look, Halloween Titles und Halloween Tasks."
+          },
+          body: {
+            en: hwOptTbl("en", HW_OPTS_LOOK),
+            de: hwOptTbl("de", HW_OPTS_LOOK)
+          }
+        },
+        {
+          id: "opts-hollowmere",
+          title: { en: "Hollowmere Manor", de: "Hollowmere Manor" },
+          summary: {
+            en: "General tab, heading Hollowmere Manor.",
+            de: "Reiter General, Überschrift Hollowmere Manor."
+          },
+          body: {
+            en: hwOptTbl("en", HW_OPTS_HOLLOW),
+            de: hwOptTbl("de", HW_OPTS_HOLLOW)
+          }
+        },
+        {
+          id: "opts-ravenhollow",
+          title: { en: "Ravenhollow Cemetery", de: "Ravenhollow Cemetery" },
+          summary: {
+            en: "General tab, heading Ravenhollow Cemetery.",
+            de: "Reiter General, Überschrift Ravenhollow Cemetery."
+          },
+          body: {
+            en: hwOptTbl("en", HW_OPTS_RAVEN),
+            de: hwOptTbl("de", HW_OPTS_RAVEN)
+          }
+        },
+        {
+          id: "opts-lobby",
+          title: { en: "Lobby menu cards", de: "Karten im Lobby-Menü" },
+          summary: {
+            en: "Trick or Treat, Omens and the lobby games are set on cards in the lobby menu. The host's choice is saved in the host's config and sent to everyone.",
+            de: "Trick or Treat, Omens und die Lobby-Spiele werden auf Karten im Lobby-Menü eingestellt. Die Wahl des Hosts wird in dessen Config gespeichert und an alle geschickt."
+          },
+          body: {
+            en: "<p>The entries sit in the lobby menu of Forgotten Fixes. Without it Trick or Treat and Omens get a small button of their own in the bottom-left lobby corner, and the lobby games have no entry. Only the host changes anything; guests see the same card read-only. Each card is sent to everybody when a player joins and on every change.</p>" + tbl(["Card and setting", "Default", "Values"], [
+              ["Trick or Treat: on/off", "Off", "Candies on the map."],
+              ["Candies per meeting", "6", "1 to 20."],
+              ["Round effects last", "1 meeting", "1 to 3 meetings."],
+              ["Pickup range", "Normal", "Short, Normal or Long."],
+              ["Deadly candy", "On", "One Midnight Bonbon per scatter."],
+              ["Candy bag (2)", "On", "Carry up to two candies."],
+              ["Trick Candy (impostors)", "On", "Impostors lay one trap candy between two meetings."],
+              ["Sugar Shock (3rd candy)", "On", "The third candy between two meetings brings a Sugar Crash."],
+              ["Candies and Effects", "All On", "One switch per candy kind (12) and per effect (43), plus All on and All off. At least one of each stays on; with fewer effects than kinds, some effects are handed out twice."],
+              ["Omens: on/off", "Off", "An omen per round."],
+              ["Omens in the pot", "All 7", "One switch per omen; at least one stays in."],
+              ["Spook moments", "Off", "Harmless moments every one to two minutes plus the midnight moment."],
+              ["Pumpkin Carving", "Off", "Carving in the lobby."],
+              ["Boo! round length", "90 s", "60 to 120 s."]
+            ]) + "<p>The files are <code>com.daunknown.unknownshalloween.treats.cfg</code>, <code>.omens.cfg</code> and <code>.lobby.cfg</code> in <code>BepInEx\\config</code>.</p>",
+            de: "<p>Die Einträge stehen im Lobby-Menü von Forgotten Fixes. Ohne es bekommen Trick or Treat und Omens einen eigenen kleinen Knopf in der Lobby-Ecke unten links, und die Lobby-Spiele haben keinen Eintrag. Nur der Host ändert etwas; Gäste sehen dieselbe Karte nur lesend. Jede Karte geht an alle, wenn ein Spieler beitritt und bei jeder Änderung.</p>" + tbl(["Karte und Einstellung", "Standard", "Werte"], [
+              ["Trick or Treat: an/aus", "Off", "Süßigkeiten auf der Karte."],
+              ["Candies per meeting", "6", "1 bis 20."],
+              ["Round effects last", "1 Meeting", "1 bis 3 Meetings."],
+              ["Pickup range", "Normal", "Short, Normal oder Long."],
+              ["Deadly candy", "On", "Ein Midnight Bonbon pro Verteilung."],
+              ["Candy bag (2)", "On", "Bis zu zwei Süßigkeiten tragen."],
+              ["Trick Candy (impostors)", "On", "Impostoren legen zwischen zwei Meetings eine Fallen-Süßigkeit aus."],
+              ["Sugar Shock (3rd candy)", "On", "Die dritte Süßigkeit zwischen zwei Meetings bringt einen Sugar Crash."],
+              ["Candies und Effects", "Alle On", "Ein Schalter pro Sorte (12) und pro Effekt (43), dazu All on und All off. Von beidem bleibt mindestens eines an; gibt es weniger Effekte als Sorten, werden einige Effekte doppelt vergeben."],
+              ["Omens: an/aus", "Off", "Ein Omen pro Runde."],
+              ["Omens im Topf", "Alle 7", "Ein Schalter pro Omen; mindestens eines bleibt drin."],
+              ["Spook moments", "Off", "Harmlose Momente alle ein bis zwei Minuten plus der Mitternachtsmoment."],
+              ["Pumpkin Carving", "Off", "Schnitzen in der Lobby."],
+              ["Boo! round length", "90 s", "60 bis 120 s."]
+            ]) + "<p>Die Dateien heißen <code>com.daunknown.unknownshalloween.treats.cfg</code>, <code>.omens.cfg</code> und <code>.lobby.cfg</code> in <code>BepInEx\\config</code>.</p>"
+          }
+        },
+        {
+          id: "opts-local",
+          title: { en: "Local settings", de: "Lokale Einstellungen" },
+          summary: {
+            en: "Switches every player sets for themselves, in the config file or on the settings page of Unknown's Collection.",
+            de: "Schalter, die jeder Spieler für sich setzt, in der Config-Datei oder auf der Einstellungsseite von Unknown's Collection."
+          },
+          body: {
+            en: tbl(["Setting", "Default", "What it does"], [
+              ["Enabled (<code>[General]</code>)", "On", "Master switch of the mod. Off means no patches are applied. The mod still shows up in the Mod Manager."],
+              ["Reduce Flashes (<code>[Accessibility] ReduceFlashes</code>)", "Off", "Softens the red flash of kill scenes, the Omens lightning, candy shield flashes, the false alarm, the start flash of Sole Survivor and the zombie bite. Only affects you; also on the settings page of Unknown's Collection."],
+              ["Angel Blink Effect (<code>[Weeping Angels] BlinkEffect</code>)", "On", "Shows the eyelid blink on your screen when the Weeping Angels make you blink. Off: no picture, you still blink."],
+              ["Guesser Spell Sound (<code>[Sounds] GuesserSpellSound</code>)", "On", "The spell clip at every Guesser shot. Contains a swear word."]
+            ]) + "<p>All entries live in <code>BepInEx\\config\\com.daunknown.unknownshalloween.cfg</code>.</p>",
+            de: tbl(["Einstellung", "Standard", "Funktion"], [
+              ["Enabled (<code>[General]</code>)", "On", "Hauptschalter der Mod. Off heißt, es werden keine Patches angewendet. Im Mod Manager erscheint die Mod trotzdem."],
+              ["Reduce Flashes (<code>[Accessibility] ReduceFlashes</code>)", "Off", "Dämpft den roten Blitz der Kill-Szenen, den Omen-Blitz, die Schildblitze der Süßigkeiten, den Fehlalarm, den Startblitz von Sole Survivor und den Zombie-Biss. Wirkt nur bei dir; auch auf der Einstellungsseite von Unknown's Collection."],
+              ["Angel Blink Effect (<code>[Weeping Angels] BlinkEffect</code>)", "On", "Zeigt den Lidschlag auf deinem Bildschirm, wenn dich die Weeping Angels blinzeln lassen. Off: kein Bild, geblinzelt wird trotzdem."],
+              ["Guesser Spell Sound (<code>[Sounds] GuesserSpellSound</code>)", "On", "Der Zauber-Clip bei jedem Guesser-Schuss. Enthält ein Schimpfwort."]
+            ]) + "<p>Alle Einträge stehen in <code>BepInEx\\config\\com.daunknown.unknownshalloween.cfg</code>.</p>"
+          }
+        }
+      ]
+    },
+    /* ---------------------------------------------------------------- asset packages */
+    {
+      id: "assets",
+      title: { en: "Asset packages", de: "Asset-Pakete" },
+      intro: {
+        en: "The large pictures are not part of the DLL. They live in an asset repository and are downloaded in the background.",
+        de: "Die großen Bilder gehören nicht zur DLL. Sie liegen in einem Asset-Repository und werden im Hintergrund heruntergeladen."
+      },
+      entries: [
+        {
+          id: "assets-download",
+          title: { en: "Download in the background", de: "Download im Hintergrund" },
+          summary: {
+            en: "42 packages, about 280 MB, checked by SHA-256. Costumes and maps appear once their packages are complete.",
+            de: "42 Pakete, rund 280 MB, per SHA-256 geprüft. Kostüme und Karten erscheinen, sobald ihre Pakete vollständig sind."
+          },
+          body: {
+            en: "<p>Since 0.1.2 the costume, kill scene, spider leg and map pictures come as packages (<code>.hwp</code>) from the asset repository instead of the DLL, which shrank it from 97.9 MB to about 10 MB. The packages are stored in <code>BepInEx\\halloween-assets</code>.</p><ul><li><strong>Start.</strong> Packages whose size and timestamp match the last confirmed state count as present right away, so costumes and maps are ready on a normal start without waiting. A background task then checks every package in full (SHA-256); whatever is missing or different is downloaded.</li><li><strong>Download.</strong> Four at a time, in the background, with retries and pauses in between. The biggest package is the intro film of Hollowmere Manor (about 85 MB).</li><li><strong>Costumes and maps appear only once their packages are complete.</strong> Hollowmere Manor and Ravenhollow Cemetery join Unknown's Atlas as soon as theirs are there, right away on a normal start, otherwise when the download is done.</li><li><strong>No access.</strong> If the asset repository cannot be reached, the mod writes one line to the log, tries again on the next start and runs without costumes and the two maps until then.</li><li><strong>Tidying up.</strong> When all packages are confirmed, the mod deletes everything in its own folder that does not belong to the current catalog (old packages, foreign files), and half-finished downloads at start. It never touches anything outside the folder.</li></ul><p>Each version of the mod names the catalog tag it needs (1.1.0: v35), so an update downloads only what changed. Online costumes follow the costume list of the main branch, see Costumes.</p>",
+            de: "<p>Seit 0.1.2 kommen die Bilder der Kostüme, Kill-Szenen, Spinnenbeine und Karten als Pakete (<code>.hwp</code>) aus dem Asset-Repository statt aus der DLL, die dadurch von 97,9 MB auf rund 10 MB geschrumpft ist. Die Pakete liegen in <code>BepInEx\\halloween-assets</code>.</p><ul><li><strong>Start.</strong> Pakete, deren Größe und Zeitstempel zum zuletzt bestätigten Stand passen, gelten sofort als vorhanden, Kostüme und Karten stehen bei einem normalen Start also ohne Warten bereit. Danach prüft ein Hintergrund-Task jedes Paket vollständig (SHA-256); was fehlt oder abweicht, wird geladen.</li><li><strong>Download.</strong> Vier gleichzeitig, im Hintergrund, mit Wiederholungen und Pausen dazwischen. Das größte Paket ist der Einführungsfilm von Hollowmere Manor (rund 85 MB).</li><li><strong>Kostüme und Karten erscheinen erst, wenn ihre Pakete vollständig sind.</strong> Hollowmere Manor und Ravenhollow Cemetery melden sich bei Unknown's Atlas an, sobald ihre da sind, bei einem normalen Start sofort, sonst nach dem Download.</li><li><strong>Kein Zugriff.</strong> Ist das Asset-Repository nicht erreichbar, schreibt die Mod eine Zeile ins Log, versucht es beim nächsten Start erneut und läuft bis dahin ohne Kostüme und die beiden Karten.</li><li><strong>Aufräumen.</strong> Sind alle Pakete bestätigt, löscht die Mod im eigenen Ordner alles, was nicht zum aktuellen Katalog gehört (alte Pakete, Fremddateien), und beim Start halbfertige Downloads. Außerhalb des Ordners fasst sie nie etwas an.</li></ul><p>Jede Version der Mod nennt den Katalog-Tag, den sie braucht (1.1.0: v35), ein Update lädt also nur, was sich geändert hat. Online-Kostüme folgen der Kostümliste des Hauptzweigs, siehe Kostüme.</p>"
+          }
+        },
+        {
+          id: "assets-folders",
+          title: { en: "Folders and files", de: "Ordner und Dateien" },
+          summary: {
+            en: "Where the mod keeps packages, cached music and your own files.",
+            de: "Wo die Mod Pakete, zwischengespeicherte Musik und deine eigenen Dateien ablegt."
+          },
+          body: {
+            en: tbl(["Path (below BepInEx)", "Content"], [
+              ["<code>halloween-assets</code>", "The asset packages (<code>.hwp</code>) and the file that remembers the confirmed state."],
+              ["<code>halloween-assets\\extra</code>", "Packages of the online costumes."],
+              ["<code>cache\\UnknownsHalloween\\music</code>", "The four spooky classics, written once and rewritten only when the embedded file differs, because the music manager reads files from disk."],
+              ["<code>config\\UnknownsHalloween\\radio_mic.txt</code>", "The players who may use the radio microphone."],
+              ["<code>config\\UnknownsHalloween\\sounds</code>", "Your own <code>summon_&lt;being&gt;.wav</code> or <code>.ogg</code> to replace the summoning sounds."],
+              ["<code>config</code>", "<code>com.daunknown.unknownshalloween.cfg</code> (local settings) and the three cards <code>.treats.cfg</code>, <code>.omens.cfg</code>, <code>.lobby.cfg</code>."]
+            ]),
+            de: tbl(["Pfad (unterhalb von BepInEx)", "Inhalt"], [
+              ["<code>halloween-assets</code>", "Die Asset-Pakete (<code>.hwp</code>) und die Datei, die den bestätigten Stand merkt."],
+              ["<code>halloween-assets\\extra</code>", "Pakete der Online-Kostüme."],
+              ["<code>cache\\UnknownsHalloween\\music</code>", "Die vier Gruselklassiker, einmal geschrieben und nur neu geschrieben, wenn die eingebettete Datei abweicht, weil der Musik-Manager Dateien von der Platte liest."],
+              ["<code>config\\UnknownsHalloween\\radio_mic.txt</code>", "Die Spieler, die das Funkmikrofon nutzen dürfen."],
+              ["<code>config\\UnknownsHalloween\\sounds</code>", "Deine eigenen <code>summon_&lt;Wesen&gt;.wav</code> oder <code>.ogg</code>, um die Beschwörungsklänge zu ersetzen."],
+              ["<code>config</code>", "<code>com.daunknown.unknownshalloween.cfg</code> (lokale Einstellungen) und die drei Karten <code>.treats.cfg</code>, <code>.omens.cfg</code>, <code>.lobby.cfg</code>."]
+            ])
+          }
+        }
+      ]
+    },
+    /* ---------------------------------------------------------------- version check */
+    {
+      id: "version-check",
+      title: { en: "Version check", de: "Versionsabgleich" },
+      intro: {
+        en: "Unknown's Halloween checks who has the mod, so a missing plugin never turns into a silent bug.",
+        de: "Unknown's Halloween prüft, wer die Mod hat, damit ein fehlendes Plugin nie zu einem stillen Fehler wird."
+      },
+      entries: [
+        {
+          id: "handshake",
+          title: { en: "Who has the mod", de: "Wer die Mod hat" },
+          summary: {
+            en: "Every player reports their version and whether their costume packages are loaded. The host cannot start while a feature with gameplay effect is on and somebody is missing.",
+            de: "Jeder Spieler meldet seine Version und ob seine Kostümpakete geladen sind. Der Host kann nicht starten, solange ein Feature mit Spielwirkung an ist und jemand fehlt."
+          },
+          body: {
+            en: "<p>Every client says hello to everyone: its Halloween version (four parts) and whether its costume packages are loaded. This is sent once a local player exists and again whenever somebody joins. The check does not run in Freeplay.</p><ul><li><strong>Features with a gameplay effect</strong> need the mod on every client: Xenomorph, Banshee, Scaredy-Cat, Haunted Mirrors, Phantom Parade, Trick or Treat, Omens, Spook moments, Zombie Outbreak, Sole Survivor and Masquerade Ball. While one is on and somebody is missing the mod or has a different version, the lobby shows the host a warning with their names (<em>Unknown's Halloween missing or different: ...</em>), and starting the game is blocked with a message.</li><li>The Masquerade Ball additionally needs everybody's costume packages, the host's included.</li><li><strong>Cosmetics</strong> (costumes, Halloween look, task skins) do not count: a guest without the mod just does not see them.</li><li>In the round, the role picks and the candy and omen spawns ask the check once more as a second safety net.</li><li>Since 1.0.3 both sides compare versions with four parts. Before that, 1.0.2 and 1.0.2.0 never counted as equal, and every other player showed up as different.</li></ul><p>Hollowmere Manor and Ravenhollow Cemetery have a check of their own through Unknown's Atlas: everybody needs the same version of the map, otherwise the host cannot start on it.</p>",
+            de: "<p>Jeder Client begrüßt alle anderen: mit seiner Halloween-Version (vier Teile) und ob seine Kostümpakete geladen sind. Das wird gesendet, sobald ein lokaler Spieler existiert, und erneut, wenn jemand beitritt. Im Freeplay läuft die Prüfung nicht.</p><ul><li><strong>Features mit Spielwirkung</strong> brauchen die Mod auf jedem Client: Xenomorph, Banshee, Scaredy-Cat, Haunted Mirrors, Phantom Parade, Trick or Treat, Omens, Spook moments, Zombie Outbreak, Sole Survivor und Masquerade Ball. Ist eines an und jemandem fehlt die Mod oder er hat eine andere Version, zeigt die Lobby dem Host eine Warnung mit den Namen (<em>Unknown's Halloween missing or different: ...</em>), und der Spielstart wird mit einer Meldung blockiert.</li><li>Der Masquerade Ball braucht zusätzlich die Kostümpakete aller, die des Hosts eingeschlossen.</li><li><strong>Kosmetik</strong> (Kostüme, Halloween-Optik, Aufgaben-Skins) zählt nicht: Ein Gast ohne die Mod sieht sie einfach nicht.</li><li>In der Runde fragen die Rollenvergabe und die Süßigkeiten- und Omen-Spawns die Prüfung noch einmal ab, als zweites Sicherheitsnetz.</li><li>Seit 1.0.3 vergleichen beide Seiten Versionen mit vier Teilen. Davor galten 1.0.2 und 1.0.2.0 nie als gleich, und jeder andere Spieler erschien als abweichend.</li></ul><p>Hollowmere Manor und Ravenhollow Cemetery haben über Unknown's Atlas eine eigene Prüfung: Alle brauchen dieselbe Version der Karte, sonst kann der Host darauf nicht starten.</p>"
+          }
+        },
+        {
+          id: "updates",
+          title: { en: "Updates and Mod Manager", de: "Updates und Mod Manager" },
+          summary: {
+            en: "An in-game updater on the main menu, an entry in the Mod Manager and a version line in the corner readout.",
+            de: "Ein In-Game-Updater im Hauptmenü, ein Eintrag im Mod Manager und eine Versionszeile in der Eckanzeige."
+          },
+          body: {
+            en: "<p>The mod checks the GitHub releases of its repository and offers an update button on the main menu, the same flow as TOR's own updater. It registers with the Mod Manager of Forgotten Fixes (orange button, update progress, restart prompt), even when the master switch is off. The version line <em>Unknown's Halloween v1.1.0</em> is folded into the shared <em>Unknown's Collective</em> readout in the top corner next to the other mods of this family.</p><p>Test versions have four-part version numbers (X.Y.Z.W); a full release sums up the test versions before it. Everybody in a lobby needs exactly the same version, test versions included.</p>",
+            de: "<p>Die Mod prüft die GitHub-Releases ihres Repositorys und bietet einen Update-Knopf im Hauptmenü an, im selben Ablauf wie TORs eigener Updater. Sie meldet sich beim Mod Manager von Forgotten Fixes an (orangefarbener Knopf, Update-Fortschritt, Neustart-Hinweis), auch wenn der Hauptschalter aus ist. Die Versionszeile <em>Unknown's Halloween v1.1.0</em> steckt in der gemeinsamen Anzeige <em>Unknown's Collective</em> in der oberen Ecke, neben den anderen Mods dieser Familie.</p><p>Testversionen haben vierteilige Versionsnummern (X.Y.Z.W); ein Full Release fasst die Testversionen davor zusammen. Alle in einer Lobby brauchen genau dieselbe Version, Testversionen eingeschlossen.</p>"
+          }
+        }
+      ]
+    }
+  ]
+};
+
+const MODS = { chance: CHANCE, useful: USEFUL, unknowns: UNKNOWNS, nightfall: NIGHTFALL, atlas: ATLAS, halloween: HALLOWEEN };

@@ -102,6 +102,7 @@
           ${link("unknowns.html", "nav_unknowns")}
           ${link("nightfall.html", "nav_nightfall")}
           ${link("atlas.html", "nav_atlas")}
+          ${link("halloween.html", "nav_halloween")}
         </nav>
         <div class="topbar-actions">
           <div class="lang-switch" role="group" aria-label="Language">
@@ -185,6 +186,7 @@
       : p.indexOf("unknowns") >= 0 ? "unknowns"
       : p.indexOf("nightfall") >= 0 ? "nightfall"
       : p.indexOf("atlas") >= 0 ? "atlas"
+      : p.indexOf("halloween") >= 0 ? "halloween"
       : "home";
   }
 
@@ -500,7 +502,7 @@
     const extra = mod ? `
           <li><a href="#install"><span class="side-n">${String(mod.sections.length + 1).padStart(2, "0")}</span>${t("install_title")}</a></li>
           <li><a href="#requirements"><span class="side-n">${String(mod.sections.length + 2).padStart(2, "0")}</span>${t("deps_title")}</a></li>` : "";
-    const site = [["index.html", "nav_home"], ["chance.html", "nav_chance"], ["useful.html", "nav_useful"], ["unknowns.html", "nav_unknowns"], ["nightfall.html", "nav_nightfall"], ["atlas.html", "nav_atlas"]]
+    const site = [["index.html", "nav_home"], ["chance.html", "nav_chance"], ["useful.html", "nav_useful"], ["unknowns.html", "nav_unknowns"], ["nightfall.html", "nav_nightfall"], ["atlas.html", "nav_atlas"], ["halloween.html", "nav_halloween"]]
       .map(([p, k]) => `<li><a href="${p}" class="${page === navKey(p) ? "active" : ""}">${t(k)}</a></li>`).join("");
     side.innerHTML = `
       <div class="sidebar-inner">
@@ -563,6 +565,7 @@
       { mod: "useful", de: "25 Sprachen für TOR und die ganze Mod-Familie", en: "25 languages for TOR and the whole mod family" },
       { mod: "nightfall", de: "Ich-Perspektive, sobald sich der Werwolf verwandelt", en: "First person the moment the werewolf transforms" },
       { mod: "atlas", de: "Zwei neue Karten: Vesper-Museum und Forststation", en: "Two new maps: Vesper Museum and Forest Station" },
+      { mod: "halloween", de: "Kostüme mit eigenen Kill-Szenen, Trick or Treat und zwei Spukkarten", en: "Costumes with their own kill scenes, Trick or Treat and two haunted maps" },
     ];
     const hl = highlights
       .map(
@@ -583,7 +586,7 @@
           <section class="doc-section" id="mods">
             <h2>${t("home_explore")}</h2>
             <div class="mod-list">
-              ${row(CHANCE)}${row(USEFUL)}${row(UNKNOWNS)}${row(NIGHTFALL)}${row(ATLAS)}
+              ${row(CHANCE)}${row(USEFUL)}${row(UNKNOWNS)}${row(NIGHTFALL)}${row(ATLAS)}${row(HALLOWEEN)}
             </div>
           </section>
 
@@ -844,6 +847,7 @@
     else if (page === "unknowns") renderModPage(UNKNOWNS);
     else if (page === "nightfall") renderModPage(NIGHTFALL);
     else if (page === "atlas") renderModPage(ATLAS);
+    else if (page === "halloween") renderModPage(HALLOWEEN);
     else if (page === "test" && window.TORTEST) { TORTEST.render(); dressTestPage(); } // hidden board, see wireSecretDoor
     wireBackTop();
     wireUcScramble();

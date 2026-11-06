@@ -25,6 +25,7 @@
   --unknowns: #6a4dc4;
   --nightfall: #2d55b5;
   --atlas: #9a6d18;
+  --halloween: #d1600b;
   --crew-red: #c8323f;
   --task-green: #1f8a4c;
 
@@ -63,6 +64,7 @@ html[data-theme="dark"] {
   --unknowns: #b598ff;
   --nightfall: #7ea0ff;
   --atlas: #e3b64f;
+  --halloween: #ff7518;
   --crew-red: #f06a75;
   --task-green: #52d38a;
   color-scheme: dark;
@@ -73,6 +75,7 @@ body[data-page="useful"]    { --accent: var(--useful); }
 body[data-page="unknowns"]  { --accent: var(--unknowns); }
 body[data-page="nightfall"] { --accent: var(--nightfall); }
 body[data-page="atlas"]     { --accent: var(--atlas); }
+body[data-page="halloween"] { --accent: var(--halloween); }
 body[data-page="test"]      { --accent: #b9860c; }
 html[data-theme="dark"] body[data-page="test"] { --accent: #f2c14e; }
 
@@ -131,6 +134,7 @@ em { font-style: italic; }
 .crewmate.c-unknowns  { color: var(--unknowns); }
 .crewmate.c-nightfall { color: var(--nightfall); }
 .crewmate.c-atlas     { color: var(--atlas); }
+.crewmate.c-halloween { color: var(--halloween); }
 
 /* ---------------------------------------------------------------- topbar
  * transparent over the hero, frosted once the reading area scrolls under it */
@@ -177,7 +181,7 @@ html[data-theme="light"] body.scrolled .brand-collective .lg-light { display: bl
 .topnav { display: flex; gap: 4px; margin-left: 8px; }
 .nav-link {
   font-family: var(--sans); font-size: .9rem; font-weight: 500;
-  color: inherit; opacity: .78; text-decoration: none; padding: 6px 10px; border-radius: 4px;
+  color: inherit; opacity: .78; text-decoration: none; padding: 6px 10px; border-radius: 4px; white-space: nowrap;
   transition: opacity .15s var(--ease), background .15s var(--ease);
 }
 .nav-link:hover { opacity: 1; text-decoration: none; background: color-mix(in srgb, currentColor 8%, transparent); }
@@ -525,6 +529,7 @@ tbody tr:hover td { background: color-mix(in srgb, var(--accent) 6%, transparent
 .mod-row.unknowns  { --accent: var(--unknowns); }
 .mod-row.nightfall { --accent: var(--nightfall); }
 .mod-row.atlas     { --accent: var(--atlas); }
+.mod-row.halloween { --accent: var(--halloween); }
 .mod-mark { display: block; padding-top: 6px; }
 .mod-mark .crewmate { --size: 22px; transition: transform .25s var(--ease); }
 .mod-row:hover .mod-mark .crewmate { transform: translateY(-3px) rotate(-6deg); }
@@ -552,6 +557,7 @@ tbody tr:hover td { background: color-mix(in srgb, var(--accent) 6%, transparent
 .hl.unknowns  { --accent: var(--unknowns); }
 .hl.nightfall { --accent: var(--nightfall); }
 .hl.atlas     { --accent: var(--atlas); }
+.hl.halloween { --accent: var(--halloween); }
 .hl-tag { font-family: var(--mono); font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
 
 /* ---------------------------------------------------------------- atlas map viewer */
@@ -644,6 +650,15 @@ tbody tr:hover td { background: color-mix(in srgb, var(--accent) 6%, transparent
   .brand-collective .lg-quer, html[data-theme="light"] body.scrolled .brand-collective .lg-light { display: none; }
   .brand-collective .lg-icon { display: block; width: 32px; height: 32px; }
 }
+/* seven nav links: compact in the middle range, the drawer takes over below 1100px */
+@media (max-width: 1360px) {
+  .topnav { gap: 0; margin-left: 0; }
+  .nav-link { padding: 6px 7px; font-size: .84rem; }
+  .topbar-inner { gap: 18px; }
+}
+@media (max-width: 1100px) {
+  .topnav { display: none; }
+}
 @media (max-width: 900px) {
   .topnav { display: none; }
   .topbar-inner { padding: 0 20px; gap: 16px; }
@@ -725,6 +740,37 @@ html[data-fx="on"] .strip-l { transform: translateX(calc(var(--hp, 0) * -70%)); 
 html[data-fx="on"] .strip-r { transform: translateX(calc(var(--hp, 0) * 70%)); opacity: calc(1 - var(--hp, 0) * .9); }
 html[data-fx="on"] .hero::before { transform: translateX(calc(var(--hp, 0) * -70%)); }
 html[data-fx="on"] .hero::after { transform: translateX(calc(var(--hp, 0) * 70%)) scaleX(-1); }
+
+/* ---------------------------------------------------------- Blender scenes
+ * scene3d.js shows the page's scene (assets/scenes/) on #s3d behind everything
+ * and sets html.has-s3d once it is loaded. Then the hero lets the scene
+ * through, bg3d.js only draws the emblem on top, and the reading column, the
+ * section list and the footer sit on frosted panels. */
+#s3d { position: fixed; inset: 0; width: 100% !important; height: 100% !important; z-index: -2; pointer-events: none; display: block; }
+html.has-s3d .hero, html.has-s3d[data-fx="on"] .hero { background: transparent; }
+html.has-s3d .hero-scene, html.has-s3d .hero-strips { display: none; }
+html.has-s3d .hero-frame { box-shadow: none; transform: none !important; border-radius: 0 !important; }
+html.has-s3d .hero-frame::after {          /* a soft dark pool behind the title and the TOC */
+  background:
+    radial-gradient(52% 46% at 50% 48%, rgba(4, 4, 8, .5), rgba(4, 4, 8, 0) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, .35) 0%, rgba(0, 0, 0, 0) 22%, rgba(0, 0, 0, 0) 60%, rgba(4, 4, 8, .45) 100%);
+}
+html.has-s3d .reading, html.has-s3d #footer {
+  background: color-mix(in srgb, var(--bg) 90%, transparent);
+  -webkit-backdrop-filter: blur(12px) saturate(1.1); backdrop-filter: blur(12px) saturate(1.1);
+}
+html.has-s3d .reading { padding: 44px 48px 8px; margin: 0 -48px; border-radius: 16px; box-shadow: 0 20px 60px rgba(0, 0, 0, .35); }
+html.has-s3d #footer { border-top-color: transparent; }
+html.has-s3d #bg3d-cap { color: #f4f0e6; text-shadow: 0 1px 8px rgba(0, 0, 0, .8); }
+@media (min-width: 1101px) {
+  html.has-s3d #sidebar {
+    background: color-mix(in srgb, var(--bg) 86%, transparent);
+    -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+    padding: 18px 20px; margin-left: -20px; border-radius: 14px;
+  }
+}
+@media (max-width: 1100px) { html.has-s3d #sidebar { background: var(--bg); } }
+@media (max-width: 900px) { html.has-s3d .reading { padding: 32px 22px 4px; margin: 0 -8px; border-radius: 12px; } }
 
 /* read progress along the bottom edge of the frosted topbar */
 #topbar::after {

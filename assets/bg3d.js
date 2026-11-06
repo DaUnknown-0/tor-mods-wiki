@@ -16,6 +16,9 @@
  * page background itself stays plain. The cloud gives way around
  * the pointer; a click on an empty part of the page sends a ring and a wave
  * through dust and cloud and turns the emblem into the next shape.
+ * On pages where scene3d.js shows the page's Blender scene (html.has-s3d) this
+ * canvas turns into a transparent overlay: no wireframe scene, no dust, only
+ * the emblem (in the dark palette, a little brighter) and the click rings.
  * The engine owns the renderer, theme colours, dust, the scroll spring (the
  * camera lags a little and settles), the scroll speed (spin-up, dust streaks,
  * camera roll) and the render loop (every frame while moving, ~30 fps at rest,
@@ -54,7 +57,8 @@ function cssColor(el, name, fallback) {
 }
 
 let renderer = null;
-try { renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "low-power" }); } catch (e) { renderer = null; }
+try { renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "low-power", alpha: true }); } catch (e) { renderer = null; }
+const overlay = () => root.classList.contains("has-s3d");      // scene3d.js draws the page scene underneath
 if (renderer) boot();
 
 function boot() {
@@ -103,15 +107,18 @@ function boot() {
 
   let W = 1, H = 1, mob = innerWidth < 760, narrow = false, dark = false, sMin = 0.62;
   const ink = new THREE.Color(), bg = new THREE.Color(), accent = new THREE.Color(), accentTarget = new THREE.Color();
+  const shown = new THREE.Color(), WHITE = new THREE.Color(1, 1, 1);
 
   function applyTheme() {
-    dark = root.dataset.theme === "dark";
+    const ov = overlay();
+    dark = root.dataset.theme === "dark" || ov;
     bg.copy(cssColor(doc.body, "--bg", dark ? "#141312" : "#f6f3ec"));
     ink.copy(cssColor(doc.body, "--ink", dark ? "#f1ece1" : "#191816"));
     accentTarget.copy(cssColor(doc.body, "--accent", "#c8323f"));
     accent.copy(accentTarget);
-    renderer.setClearColor(bg, 1);
+    renderer.setClearColor(bg, ov ? 0 : 1);
     scene.fog.color.copy(bg);
+    if (ov) { scene.fog.near = 500; scene.fog.far = 1000; }
     const a = (dark ? 0.42 : 0.3) * (narrow ? 0.45 : 1);
     for (const m of mats) {
       const k = m.userData.k, kind = m.userData.kind;
@@ -898,12 +905,14 @@ function boot() {
     [/security|gate/, "lock"], [/modsync|requirements/, "plug"], [/localization|selection|submerged/, "globe"], [/install|download/, "arrow"],
     [/^maps$|^mods$/, "dome"], [/eject|^crewmate$|follower|copycat|highlights/, "crewmate"], [/^impostor$/, "knife"], [/neutral/, "dice"],
   ];
+  // placeholder: the Halloween page borrows the night forest until it gets a scene of its own
+  SCENES.halloween = (...a) => SCENES.nightfall(...a);
   const PAGE_CYCLE = {
     home: ["crewmate"], test: ["crewmate", "crystal"], chance: ["dice", "wheel", "lock"], useful: ["gear", "shield", "sliders", "plug"],
-    unknowns: ["crewmate", "knife", "crystal"], nightfall: ["moon", "tree", "eye"], atlas: ["dome", "tower", "ferris", "clock"],
+    unknowns: ["crewmate", "knife", "crystal"], nightfall: ["moon", "tree", "eye"], atlas: ["dome", "tower", "ferris", "clock"], halloween: ["moon", "tree", "eye"],
   };
   const PAGE_RULES = { nightfall: [[/world/, "tree"]], atlas: [[/world/, "tower"], [/ejections/, "ferris"]] };
-  const HOME_SHAPE = { chance: "dice", useful: "gear", unknowns: "crewmate", nightfall: "moon", atlas: "dome" };
+  const HOME_SHAPE = { chance: "dice", useful: "gear", unknowns: "crewmate", nightfall: "moon", atlas: "dome", halloween: "moon" };
   // team colours of Unknown's roles as [light, dark], plus the fallback shape of that team
   const TEAM = [
     [/impostor/i, ["#b8323c", "#ff6b6b"], "knife"], [/crew/i, ["#2f7fa8", "#6fc6ec"], "crewmate"], [/neutral/i, ["#a87a10", "#f2c14e"], "dice"],
@@ -982,7 +991,7 @@ function boot() {
     let key = "", target = null, morphT = 1, scatter = 0, override = null, overrideCh = -2;
     const col = new THREE.Color(), colTarget = new THREE.Color(), tones = [col, TONE_INK, TONE_HI], ca = new THREE.Color();
     const inv = new THREE.Matrix4(), ray = new THREE.Ray();
-    const conf = { chance: [-1, 12], nightfall: [1, 13], atlas: [1, 13] }[PAGE] || [1, 12];
+    const conf = { chance: [-1, 12], nightfall: [1, 13], atlas: [1, 13], halloween: [1, 13] }[PAGE] || [1, 12];
 
     function setShape(k, snap) {
       if (k === key) return;
@@ -1197,7 +1206,7 @@ function boot() {
   let pokeT = 1;
   const pokeN = new THREE.Vector2();
   function updateDust() {
-    const zMode = PAGE === "nightfall";
+    const zMode = PAGE === "nightfall" || PAGE === "halloween";
     const streak = clamp(E.vel * 0.00022, -0.7, 0.7);
     const hover = pointerOn && !zMode && mqFine.matches, wave = pokeT < 1 && !zMode;
     const cx = camera.position.x, cy = camera.position.y;
@@ -1260,7 +1269,7 @@ function boot() {
     // throw away the old scene objects (keep dust + streaks)
     for (const o of [...scene.children]) if (!keep.has(o)) scene.remove(o);
     active = (SCENES[PAGE] || SCENES.home)();
-    const [fn, ff] = active.fog || [8, 34];
+    const [fn, ff] = overlay() ? [500, 1000] : active.fog || [8, 34];
     scene.fog.near = fn; scene.fog.far = ff;
     active.init();
   }
@@ -1332,7 +1341,9 @@ function boot() {
       camera.position.set(E.cpx * 0.35, E.camY - E.cpy * 0.25, 0);
       camera.rotation.set(0, 0, clamp(E.vel * -0.000012, -0.05, 0.05));
     }
-    active.update();
+    const ov = overlay();
+    if (ov) { for (const o of scene.children) if (o !== emblem.group && !ripples.includes(o)) o.visible = false; }
+    else active.update();
 
     // which chapter is in view: re-read when the page moved, and now and then for late layout changes
     const nowMs = performance.now();
@@ -1348,12 +1359,13 @@ function boot() {
     updateRipples(E.dt || 1);
     pokeT = live ? Math.min(1, pokeT + dt / 1.1) : 1;
 
-    updateDust();
+    if (!ov) updateDust();
 
     const want = window.TORSCROLL && TORSCROLL.accent ? TORSCROLL.accent() : null;
     if (want) accentTarget.setRGB(want[0] / 255, want[1] / 255, want[2] / 255);
     accent.lerp(accentTarget, Math.min(1, dt * 3));
-    for (const m of mats) if (m.userData.kind === "accent") m.color.copy(accent);
+    shown.copy(accent); if (ov) shown.lerp(WHITE, 0.3);
+    for (const m of mats) if (m.userData.kind === "accent") m.color.copy(shown);
 
     const hot = emblem.busy() || pokeT < 1 || ripples.some((r) => r.visible) || nowMs - pointerAt < 1200;
     return hot || E.speed > 4 || Math.abs(target - E.camY) > 0.002;
@@ -1384,7 +1396,7 @@ function boot() {
   doc.addEventListener("visibilitychange", kick);
   mqReduce.addEventListener("change", () => { dirty = true; kick(); });
   new MutationObserver(() => { applyTheme(); measure(); kick(); })
-    .observe(root, { attributes: true, attributeFilter: ["data-theme", "data-fx"] });
+    .observe(root, { attributes: true, attributeFilter: ["data-theme", "data-fx", "class"] });
   const content = doc.getElementById("content");
   if (content) new MutationObserver(() => { measure(); collectChapters(); updateChapter(true, true); dirty = true; kick(); }).observe(content, { childList: true });
   new MutationObserver(() => updateCaption()).observe(root, { attributes: true, attributeFilter: ["lang"] });
