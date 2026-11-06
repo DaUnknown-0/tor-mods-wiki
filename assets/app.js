@@ -20,8 +20,8 @@
 
   // small UI strings that only the shell needs (not part of data.js)
   const SHELL = {
-    en: { contents: "Contents", mods: "The mods", open_map: "Open the full map", close: "Close", zoom_in: "Zoom in", zoom_out: "Zoom out", reset: "Reset view", map_hint: "Click the map to open it full size. Drag to pan, scroll or pinch to zoom.", museum: "Vesper Museum", forest: "Forest Station", carnival: "Moonlight Carnival", sections: "Sections", site: "Site", map_entry: "Read the map entry", all_sections: "All {n} sections" },
-    de: { contents: "Inhalt", mods: "Die Mods", open_map: "Ganze Karte öffnen", close: "Schließen", zoom_in: "Vergrößern", zoom_out: "Verkleinern", reset: "Ansicht zurücksetzen", map_hint: "Klick auf die Karte, um sie in voller Größe zu öffnen. Ziehen zum Verschieben, Scrollen oder Pinch zum Zoomen.", museum: "Vesper-Museum", forest: "Forststation", carnival: "Moonlight Carnival", sections: "Abschnitte", site: "Seiten", map_entry: "Zum Karten-Eintrag", all_sections: "Alle {n} Abschnitte" }
+    en: { contents: "Contents", mods: "The mods", open_map: "Open the full map", close: "Close", zoom_in: "Zoom in", zoom_out: "Zoom out", reset: "Reset view", map_hint: "Click the map to open it full size. Drag to pan, scroll or pinch to zoom.", museum: "Vesper Museum", forest: "Forest Station", carnival: "Moonlight Carnival", sections: "Sections", site: "Site", map_entry: "Read the map entry", all_sections: "All {n} sections", view_scene: "Show only the background", view_back: "Back to the page", view_tour: "Camera tour", view_pos: "Camera position", view_hint: "Scroll or use ← → to move the camera · Esc to go back" },
+    de: { contents: "Inhalt", mods: "Die Mods", open_map: "Ganze Karte öffnen", close: "Schließen", zoom_in: "Vergrößern", zoom_out: "Verkleinern", reset: "Ansicht zurücksetzen", map_hint: "Klick auf die Karte, um sie in voller Größe zu öffnen. Ziehen zum Verschieben, Scrollen oder Pinch zum Zoomen.", museum: "Vesper-Museum", forest: "Forststation", carnival: "Moonlight Carnival", sections: "Abschnitte", site: "Seiten", map_entry: "Zum Karten-Eintrag", all_sections: "Alle {n} Abschnitte", view_scene: "Nur den Hintergrund zeigen", view_back: "Zurück zur Seite", view_tour: "Kamerafahrt", view_pos: "Kameraposition", view_hint: "Scrollen oder ← → bewegt die Kamera · Esc führt zurück" }
   };
   const s = (key) => (SHELL[lang] && SHELL[lang][key]) || SHELL.en[key] || key;
 
@@ -58,6 +58,10 @@
 
   const ICO_SUN = `<svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.3 5.3l1.7 1.7M17 17l1.7 1.7M18.7 5.3L17 7M7 17l-1.7 1.7"/></svg>`;
   const ICO_MOON = `<svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.4 14.2A8.4 8.4 0 0 1 9.8 3.6a8.4 8.4 0 1 0 10.6 10.6z"/></svg>`;
+  const ICO_SCENE = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 16l5-5 4 4 3-3 6 6"/><circle cx="16" cy="9.5" r="1.4"/></svg>`;
+  const ICO_BACK = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>`;
+  const ICO_PLAY = `<svg class="ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg>`;
+  const ICO_PAUSE = `<svg class="ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6.5" y="5.5" width="4" height="13" rx="1"/><rect x="13.5" y="5.5" width="4" height="13" rx="1"/></svg>`;
   const ICO_SPARK = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.1 6.2L20 11l-5.9 1.8L12 19l-2.1-6.2L4 11l5.9-1.8z"/></svg>`;
 
   /* ---------- FX mode ---------- */
@@ -111,6 +115,7 @@
           </div>
           <button class="theme-toggle" aria-label="Lights on / lights out" title="Lights">${ICO_SUN}${ICO_MOON}</button>
           <button class="theme-toggle fx-toggle${fxOn() ? " on" : ""}" aria-label="Visual effects" aria-pressed="${fxOn()}" title="Effects">${ICO_SPARK}</button>
+          <button class="theme-toggle view-toggle" aria-label="${s("view_scene")}" title="${s("view_scene")}">${ICO_SCENE}</button>
           <button class="menu-toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
         </div>
       </div>`;
@@ -121,11 +126,96 @@
     if (tt) tt.addEventListener("click", toggleTheme);
     const fx = el.querySelector(".fx-toggle");
     if (fx) fx.addEventListener("click", toggleFx);
+    const vt = el.querySelector(".view-toggle");
+    if (vt) vt.addEventListener("click", openView);
     const mt = el.querySelector(".menu-toggle");
     if (mt) mt.addEventListener("click", () => setDrawer(!document.body.classList.contains("sidebar-open")));
     wireSecretDoor(el);
     wireScrolledBar();
   }
+
+  /* ---------- background-only view ----------
+   * The scene button in the top bar (shown once scene3d.js has loaded the page's
+   * Blender scene, html.has-s3d) hides the page and leaves the 3D scene alone on
+   * screen. A small bar at the bottom moves the camera along its path (slider,
+   * wheel, arrow keys) or lets it travel by itself; Esc or the back button
+   * return to the page at the same scroll position. #scene in the address
+   * opens the page straight in this view. The bar fades while nothing moves. */
+  let viewBar = null, viewRaf = 0, viewIdle = 0, viewDrag = false, viewScroll = 0;
+  const viewKeys = {};
+  function openView() {
+    const api = window.TORSCENE;
+    if (!api || viewBar || !document.documentElement.classList.contains("has-s3d")) return;
+    setDrawer(false);
+    viewScroll = window.scrollY;
+    api.setView(true);
+    const moving = fxOn() && !(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
+    viewBar = document.createElement("div");
+    viewBar.id = "s3dBar";
+    viewBar.setAttribute("role", "toolbar");
+    viewBar.setAttribute("aria-label", s("view_scene"));
+    viewBar.innerHTML = `
+      <button class="s3d-back" type="button">${ICO_BACK}<span>${s("view_back")}</span></button>
+      <button class="s3d-tour" type="button" aria-pressed="false" aria-label="${s("view_tour")}" title="${s("view_tour")}"${moving ? "" : " disabled"}>${ICO_PLAY}${ICO_PAUSE}</button>
+      <input class="s3d-pos" type="range" min="0" max="1000" step="1" aria-label="${s("view_pos")}" />
+      <span class="s3d-hint">${s("view_hint")}</span>`;
+    document.body.appendChild(viewBar);
+    const pos = viewBar.querySelector(".s3d-pos"), tour = viewBar.querySelector(".s3d-tour");
+    const setTour = (on) => { api.setTour(on); tour.classList.toggle("on", on); tour.setAttribute("aria-pressed", String(on)); };
+    const move = (p) => { setTour(false); api.setProgress(p); pos.value = Math.round(api.progress * 1000); };
+    pos.value = Math.round(api.progress * 1000);
+    viewBar.querySelector(".s3d-back").addEventListener("click", closeView);
+    tour.addEventListener("click", () => setTour(!api.tour));
+    pos.addEventListener("input", () => { viewDrag = true; move(pos.value / 1000); });
+    pos.addEventListener("change", () => { viewDrag = false; });
+    const wake = () => {
+      document.documentElement.classList.remove("s3d-idle");
+      clearTimeout(viewIdle);
+      viewIdle = setTimeout(() => { if (viewBar && !viewBar.matches(":hover, :focus-within")) document.documentElement.classList.add("s3d-idle"); }, 2600);
+    };
+    viewKeys.wheel = (e) => { e.preventDefault(); wake(); move(api.progress + e.deltaY * 0.00035); };
+    viewKeys.key = (e) => {
+      wake();
+      const onControl = e.target && e.target.closest && e.target.closest("button, input");
+      if (e.key === "Escape") { e.preventDefault(); closeView(); }
+      else if (onControl) return;
+      else if (e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); move(api.progress + 0.02); }
+      else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); move(api.progress - 0.02); }
+      else if (e.key === "Home") { e.preventDefault(); move(0); }
+      else if (e.key === "End") { e.preventDefault(); move(1); }
+      else if (e.key === " " && moving) { e.preventDefault(); setTour(!api.tour); }
+    };
+    viewKeys.wake = wake;
+    addEventListener("wheel", viewKeys.wheel, { passive: false });
+    addEventListener("keydown", viewKeys.key);
+    addEventListener("pointermove", wake, { passive: true });
+    addEventListener("pointerdown", wake, { passive: true });
+    const follow = () => {                       // the slider follows the tour
+      if (!viewBar) return;
+      if (!viewDrag) pos.value = Math.round(api.progress * 1000);
+      if (tour.classList.contains("on") !== api.tour) { tour.classList.toggle("on", api.tour); tour.setAttribute("aria-pressed", String(api.tour)); }
+      viewRaf = requestAnimationFrame(follow);
+    };
+    follow();
+    wake();
+    if (moving) setTour(true);
+    viewBar.querySelector(".s3d-back").focus({ preventScroll: true });
+  }
+  function closeView() {
+    if (!viewBar) return;
+    if (window.TORSCENE) TORSCENE.setView(false);
+    removeEventListener("wheel", viewKeys.wheel);
+    removeEventListener("keydown", viewKeys.key);
+    removeEventListener("pointermove", viewKeys.wake);
+    removeEventListener("pointerdown", viewKeys.wake);
+    cancelAnimationFrame(viewRaf); clearTimeout(viewIdle);
+    document.documentElement.classList.remove("s3d-idle");
+    viewBar.remove(); viewBar = null; viewDrag = false;
+    window.scrollTo({ top: viewScroll, behavior: "instant" });
+    const vt = document.querySelector(".view-toggle");
+    if (vt) vt.focus({ preventScroll: true });
+  }
+  addEventListener("torscene:ready", () => { if (location.hash === "#scene") openView(); });
 
   function setDrawer(open) {
     document.body.classList.toggle("sidebar-open", open);

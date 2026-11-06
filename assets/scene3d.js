@@ -13,6 +13,9 @@
  * bg3d.js keeps drawing the chapter emblem on its own transparent canvas above.
  * Motion needs FX on and no prefers-reduced-motion; otherwise one still frame
  * per scroll position. Without WebGL or the file the page stays as it was.
+ * window.TORSCENE drives the background-only view (app.js, the scene button in
+ * the top bar): the page hides, the camera follows a position of its own
+ * (slider, wheel, keys) or travels the path by itself (tour).
  * ==========================================================================*/
 import * as THREE from "./vendor/three.module.min.js";
 import { GLTFLoader } from "./vendor/GLTFLoader.js";
@@ -42,7 +45,7 @@ export const CONFIG = {
     spot: { pos: [0, 7.5, 0], target: [0, 1, 0], color: 0xffd9a0, i: 220, angle: 0.62 }, motes: { n: 80, col: 0xffe2a8, area: [10, 6, 10, 0] } },
   useful: { file: "scenes/useful.glb", sky: ["#05070a", "#0c1218", "#141c24"], fog: ["#0b1016", 0.024], exposure: 1.35, stars: 0,
     hemi: [0x90a0c0, 0x10141a, 0.85], dir: { color: 0xd0e0ff, i: 1.1, pos: [-6, 14, 10], target: [0, 0, 0] },
-    sparks: { at: "sparks", n: 70 } },
+    sparks: { at: "sparks", n: 90 } },
   unknowns: { file: "scenes/unknowns.glb", sky: ["#05030a", "#120a22", "#1d1030"], fog: ["#130b22", 0.03], exposure: 1.05, stars: 0,
     hemi: [0x8a60d0, 0x0a0612, 0.45], dir: { color: 0xc8b0ff, i: 0.5, pos: [4, 20, 6], target: [0, 0, -10] },
     motes: { n: 120, col: 0xc9a0ff, area: [14, 6, 40, -12] } },
@@ -310,25 +313,43 @@ function boot() {
       }
     }
     if (CFG.sparks && sparkAt) {
-      const c = CFG.sparks, P = points(c.n, 0xffd27a, 3, true), seed = [];
-      const base = sparkAt.getWorldPosition(new THREE.Vector3());
-      for (let i = 0; i < c.n; i++) seed.push({ v: new THREE.Vector3(rnd(-1, 1), rnd(0.5, 2.2), rnd(-1, 1)), ph: Math.random() });
-      const fl = new THREE.PointLight(0xffc070, 0, 6, 2); fl.position.copy(base); scene.add(fl);
+      // welding sparks: short bursts from the torch tip, each spark lives well under a second, cools from white to
+      // orange to nothing, falls with gravity and skitters on the bench top; a blue-white flash sits at the tip
+      const c = CFG.sparks, n = c.n, g = new THREE.BufferGeometry(), arr = new Float32Array(n * 3), col = new Float32Array(n * 3);
+      g.setAttribute("position", new THREE.BufferAttribute(arr, 3));
+      g.setAttribute("color", new THREE.BufferAttribute(col, 3));
+      const pm = new THREE.PointsMaterial({ size: 2.6, sizeAttenuation: false, vertexColors: true, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending });
+      const pts = new THREE.Points(g, pm); pts.frustumCulled = false; scene.add(pts);
+      const base = sparkAt.getWorldPosition(new THREE.Vector3()), floor = base.y - 0.08, seed = [];
+      for (let i = 0; i < n; i++) {
+        const a = Math.random() * TAU, sp = rnd(0.25, 1.1);
+        seed.push({ vx: Math.cos(a) * sp, vz: Math.sin(a) * sp, vy: rnd(0.3, 1.6), life: rnd(0.25, 0.75), ph: Math.random() });
+      }
+      const on = (tt) => (tt % 2.3) < 1.6 && Math.sin(tt * 9.0) > -0.6;            // welding on and off in bursts
+      const flash = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex("200,225,255"), blending: THREE.AdditiveBlending, depthWrite: false, transparent: true }));
+      flash.position.copy(base); scene.add(flash);
+      const fl = new THREE.PointLight(0xbfd8ff, 0, 5, 2); fl.position.copy(base).add(new THREE.Vector3(0, 0.15, 0)); scene.add(fl);
       updates.push((t) => {
-        const burst = Math.sin(t * 2.3) > 0.2 || Math.sin(t * 7.1) > 0.85;
-        for (let i = 0; i < c.n; i++) {
-          const e = seed[i], u = (t * 1.6 + e.ph) % 1;
-          P.arr[i * 3] = base.x + e.v.x * u * 1.2; P.arr[i * 3 + 1] = base.y + e.v.y * u - 4.9 * u * u * 0.5; P.arr[i * 3 + 2] = base.z + e.v.z * u * 1.2;
+        for (let i = 0; i < n; i++) {
+          const e = seed[i], age = ((t / e.life + e.ph) % 1), born = t - age * e.life, s = age * e.life;
+          let y = base.y + e.vy * s - 4.9 * s * s, f = 1;
+          if (y < floor) { y = floor; f = 0.55; }                                    // landed: lies on the bench and cools
+          arr[i * 3] = base.x + e.vx * s * f; arr[i * 3 + 1] = y; arr[i * 3 + 2] = base.z + e.vz * s * f;
+          const k = on(born) ? Math.pow(1 - age, 1.6) : 0;
+          col[i * 3] = k; col[i * 3 + 1] = k * (0.95 - 0.55 * age); col[i * 3 + 2] = k * 0.75 * (1 - age) * (1 - age);
         }
-        P.g.attributes.position.needsUpdate = true;
-        P.m.opacity = burst ? 0.95 : 0.1;
-        fl.intensity = burst ? 4 + Math.random() * 3 : 0;
+        g.attributes.position.needsUpdate = true; g.attributes.color.needsUpdate = true;
+        const lit = on(t);
+        flash.material.opacity = lit ? 0.6 + Math.random() * 0.4 : 0;
+        flash.scale.setScalar(lit ? rnd(0.35, 0.6) : 0.01);
+        fl.intensity = lit ? 3 + Math.random() * 3 : 0;
       });
     }
     ready = true;
     doc.body.prepend(canvas);
     root.classList.add("has-s3d");
     resize(); loop(performance.now());
+    dispatchEvent(new Event("torscene:ready"));
   }, undefined, () => { /* keep the page as it was */ });
 
   /* -------------------------------------------------------- camera by scroll */
@@ -362,11 +383,18 @@ function boot() {
     last = now;
     const anim = moving() && !doc.hidden;
     if (anim) t += dt;
-    readScroll();
+    if (view.on) {
+      if (view.tour && anim) {                   // the tour runs the path back and forth, about a minute each way
+        view.p += dt * 0.017 * view.dir;
+        if (view.p >= 1) { view.p = 1; view.dir = -1; } else if (view.p <= 0) { view.p = 0; view.dir = 1; }
+      }
+      progress = view.p;
+    } else readScroll();
     shown += (progress - shown) * (anim ? 1 - Math.pow(0.002, dt) : 1);
     cpx += (ptx - cpx) * Math.min(1, dt * 3); cpy += (pty - cpy) * Math.min(1, dt * 3);
     sampleCam(shown, tmpP, tmpL);
-    off.set(cpx * 1.2 + Math.sin(t * 0.21) * 0.25, -cpy * 0.6 + Math.sin(t * 0.17) * 0.15, 0);
+    const pk = view.on ? 2.5 : 1;                // the pointer looks around further when nothing else is on screen
+    off.set(cpx * 1.2 * pk + Math.sin(t * 0.21) * 0.25, -cpy * 0.6 * pk + Math.sin(t * 0.17) * 0.15, 0);
     camera.position.copy(tmpP).add(off); camera.lookAt(tmpL);
 
     const fl = (ph, sp) => 0.78 + 0.22 * Math.sin(t * sp + ph) * Math.sin(t * sp * 0.37 + ph * 2);
@@ -391,6 +419,21 @@ function boot() {
     if (anim) raf = requestAnimationFrame(loop);
   }
   function kick() { if (!raf && ready) raf = requestAnimationFrame(loop); }
+
+  /* ------------------------------------------------- background-only view */
+  const view = { on: false, p: 0, tour: false, dir: 1 };
+  window.TORSCENE = {
+    setView(on) {
+      view.on = !!on;
+      if (view.on) { readScroll(); view.p = progress; view.dir = 1; } else view.tour = false;
+      root.classList.toggle("s3d-view", view.on);
+      kick();
+    },
+    setProgress(p) { view.p = clamp(p, 0, 1); kick(); },
+    setTour(on) { view.tour = !!on; kick(); },
+    get progress() { return view.on ? view.p : progress; },
+    get tour() { return view.tour; },
+  };
   addEventListener("resize", () => { resize(); kick(); });
   addEventListener("scroll", kick, { passive: true });
   doc.addEventListener("visibilitychange", kick);

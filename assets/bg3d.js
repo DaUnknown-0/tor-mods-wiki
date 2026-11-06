@@ -1381,7 +1381,7 @@ function boot() {
     last = now;
     const busy = step(dt);
     idleGap += dt;
-    const covered = heroCovers();
+    const covered = heroCovers() || root.classList.contains("s3d-view");     // background-only view: emblem hidden
     if (!covered && (busy || dirty || idleGap > 1 / 30)) {
       renderer.render(scene, camera);
       idleGap = 0; dirty = false;

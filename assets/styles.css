@@ -772,6 +772,40 @@ html.has-s3d #bg3d-cap { color: #f4f0e6; text-shadow: 0 1px 8px rgba(0, 0, 0, .8
 @media (max-width: 1100px) { html.has-s3d #sidebar { background: var(--bg); } }
 @media (max-width: 900px) { html.has-s3d .reading { padding: 32px 22px 4px; margin: 0 -8px; border-radius: 12px; } }
 
+/* background-only view (app.js openView, scene3d.js TORSCENE): the page hides,
+ * only the scene and a small bar at the bottom stay; the bar fades when idle */
+.view-toggle { display: none; }
+html.has-s3d .view-toggle { display: inline-flex; }
+html.s3d-view body { overflow: hidden; }
+html.s3d-view body > :not(#s3d):not(#s3dBar) { visibility: hidden; opacity: 0; pointer-events: none; }
+html.s3d-idle, html.s3d-idle * { cursor: none; }
+#s3dBar {
+  position: fixed; left: 50%; bottom: 22px; z-index: 90; translate: -50% 0;
+  display: flex; align-items: center; gap: 10px; max-width: calc(100vw - 32px);
+  padding: 7px 14px 7px 7px; border-radius: 999px;
+  background: rgba(12, 11, 16, .62); color: #f4f0e6;
+  border: 1px solid rgba(255, 255, 255, .12);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2); backdrop-filter: blur(12px) saturate(1.2);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, .45);
+  font-family: var(--sans); font-size: .8rem;
+  transition: opacity .6s var(--ease), translate .6s var(--ease);
+}
+html.s3d-idle #s3dBar { opacity: 0; translate: -50% 8px; }
+#s3dBar button {
+  display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 12px;
+  border-radius: 999px; border: 1px solid rgba(255, 255, 255, .18); background: rgba(255, 255, 255, .06);
+  color: inherit; font: inherit; cursor: pointer; white-space: nowrap; flex-shrink: 0;
+}
+#s3dBar button:hover { background: rgba(255, 255, 255, .14); }
+#s3dBar button:disabled { opacity: .35; cursor: default; }
+#s3dBar svg { width: 16px; height: 16px; }
+#s3dBar .s3d-tour { width: 34px; padding: 0; justify-content: center; }
+#s3dBar .s3d-tour .ico-pause, #s3dBar .s3d-tour.on .ico-play { display: none; }
+#s3dBar .s3d-tour.on .ico-pause { display: block; }
+#s3dBar .s3d-pos { width: clamp(110px, 26vw, 300px); accent-color: var(--accent); cursor: pointer; }
+#s3dBar .s3d-hint { opacity: .6; font-size: .72rem; white-space: nowrap; }
+@media (max-width: 760px) { #s3dBar .s3d-hint, #s3dBar .s3d-back span { display: none; } }
+
 /* read progress along the bottom edge of the frosted topbar */
 #topbar::after {
   content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px;
