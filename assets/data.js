@@ -395,7 +395,7 @@ const USEFUL = {
   key: "useful",
   name: "Forgotten Fixes",
   fullName: { en: "TOR - Forgotten Fixes", de: "TOR - Forgotten Fixes" },
-  version: "1.7.0",
+  version: "1.7.1",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/Useful-TOR-stuff",
   download: "https://github.com/DaUnknown-0/Useful-TOR-stuff/releases/latest",
@@ -412,8 +412,8 @@ const USEFUL = {
     de: "<ol><li>Installiere <a href='https://github.com/TheOtherRolesAU/TheOtherRoles'>The Other Roles</a> in dein Among-Us-BepInEx-Setup.</li><li>Lade die neueste <code>UsefulTORStuff.dll</code> von der Releases-Seite.</li><li>Kopiere sie nach <code>&lt;Among Us&gt;/BepInEx/plugins/</code>.</li><li>Starte das Spiel.</li></ol><p>Ein In-Game-Auto-Updater prüft GitHub im Hauptmenü und bietet einen Update-Button an.</p>"
   },
   deps: {
-    en: "<ul><li><strong>The Other Roles 4.8.0</strong> (hard dependency)</li><li><strong>BepInEx IL2CPP</strong> 6.0.0-be.697</li><li><strong>HostFix</strong> (optional, for Snitch coordination)</li></ul>",
-    de: "<ul><li><strong>The Other Roles 4.8.0</strong> (harte Abhängigkeit)</li><li><strong>BepInEx IL2CPP</strong> 6.0.0-be.697</li><li><strong>HostFix</strong> (optional, für Snitch-Koordination)</li></ul>"
+    en: "<ul><li><strong>The Other Roles 4.8.0</strong> (hard dependency)</li><li><strong>BepInEx IL2CPP</strong> 6.0.0-be.697</li></ul>",
+    de: "<ul><li><strong>The Other Roles 4.8.0</strong> (harte Abhängigkeit)</li><li><strong>BepInEx IL2CPP</strong> 6.0.0-be.697</li></ul>"
   },
   sections: [
     {
@@ -457,8 +457,8 @@ const USEFUL = {
             de: "Ein client-seitiger Snitch-Reveal, der den Room-Map-Reset des Hosts übersteht."
           },
           body: {
-            en: "<p><strong>Problem:</strong> TOR's Snitch reveal reads <code>playerRoomMap</code>, which gets wiped on the host by a reset.</p><p><strong>Fix:</strong> a persistent own <code>roomMap</code> records every <code>ShareRoom</code> RPC. The Snitch chat, map, and HUD are reimplemented over this own map. It only takes effect when all players have Forgotten Fixes (<code>SnitchClientFixActive</code>); otherwise TOR's original behavior (plus TOR - Hostfix Fix 4) applies.</p>",
-            de: "<p><strong>Problem:</strong> TORs Snitch-Reveal liest <code>playerRoomMap</code>, die beim Host durch einen Reset verloren geht.</p><p><strong>Fix:</strong> Eine persistente eigene <code>roomMap</code> zeichnet jeden <code>ShareRoom</code>-RPC auf. Snitch-Chat, -Karte und -HUD werden über diese eigene Map reimplementiert. Wirkt nur, wenn alle Spieler Forgotten Fixes haben (<code>SnitchClientFixActive</code>); sonst greift TORs Original (plus TOR - Hostfix Fix 4).</p>"
+            en: "<p><strong>Problem:</strong> TOR's Snitch reveal reads <code>playerRoomMap</code>, which gets wiped on the host by a reset.</p><p><strong>Fix:</strong> a persistent own <code>roomMap</code> records every <code>ShareRoom</code> RPC. The Snitch chat, map, and HUD are reimplemented over this own map. It only takes effect when all players have Forgotten Fixes (<code>SnitchClientFixActive</code>); otherwise TOR's original behavior applies.</p>",
+            de: "<p><strong>Problem:</strong> TORs Snitch-Reveal liest <code>playerRoomMap</code>, die beim Host durch einen Reset verloren geht.</p><p><strong>Fix:</strong> Eine persistente eigene <code>roomMap</code> zeichnet jeden <code>ShareRoom</code>-RPC auf. Snitch-Chat, -Karte und -HUD werden über diese eigene Map reimplementiert. Wirkt nur, wenn alle Spieler Forgotten Fixes haben (<code>SnitchClientFixActive</code>); sonst greift TORs Original.</p>"
           }
         },
         {
@@ -1806,12 +1806,12 @@ const USEFUL = {
           id: "custom-pets",
           title: { en: "Custom pets", de: "Eigene Haustiere" },
           summary: {
-            en: "Five pets of the mod appear next to the game's pets, and new ones can arrive without a mod update.",
-            de: "Fünf Haustiere des Mods erscheinen neben denen des Spiels, und neue können ohne Mod-Update dazukommen."
+            en: "The mod's own pets appear next to the game's pets, in your player colour, and new ones can arrive without a mod update.",
+            de: "Eigene Haustiere des Mods erscheinen neben denen des Spiels, in deiner Spielerfarbe, und neue können ohne Mod-Update dazukommen."
           },
           body: {
-            en: "<p>Forgotten Fixes adds its own pets next to the game's pets, the same way The Other Roles adds its hats. Five come right away, for everyone: <strong>Mini Reindeer</strong> (its red nose blinks), <strong>Scarf Penguin</strong>, <strong>Gingerbread Man</strong>, <strong>Mini Krampus</strong> and <strong>Vampire Bat</strong> (stands as a mini crewmate dressed as a bat and flies after you as a bat). They stand and walk with their own animation and follow you like any pet.</p><p><strong>New pets without a mod update:</strong> the pet list is read online at start, on every lobby join (at most once a minute) and when the mod's author types <code>/loadpets</code> (that also makes everyone in the lobby reload). A pet can be locked to certain players; a locked pet does not show up in anybody else's pet tab, and a saved choice falls back to no pet.</p>",
-            de: "<p>Forgotten Fixes ergänzt eigene Haustiere neben denen des Spiels, so wie The Other Roles seine Hüte ergänzt. Fünf sind sofort für alle da: <strong>Mini Reindeer</strong> (seine rote Nase blinkt), <strong>Scarf Penguin</strong>, <strong>Gingerbread Man</strong>, <strong>Mini Krampus</strong> und <strong>Vampire Bat</strong> (steht als Mini-Crewmate in Fledermaus-Verkleidung da und fliegt dir als Fledermaus hinterher). Sie stehen und laufen mit eigener Animation und folgen dir wie jedes Haustier.</p><p><strong>Neue Haustiere ohne Mod-Update:</strong> Die Haustier-Liste wird beim Start online gelesen, bei jedem Lobby-Beitritt (höchstens einmal pro Minute) und wenn der Autor des Mods <code>/loadpets</code> tippt (das lässt auch alle in der Lobby neu laden). Ein Haustier kann an bestimmte Spieler gebunden sein; ein gesperrtes Haustier erscheint im Haustier-Reiter aller anderen nicht, und eine gespeicherte Wahl fällt auf kein Haustier zurück.</p>"
+            en: "<p>Forgotten Fixes adds its own pets next to the game's pets, the same way The Other Roles adds its hats. For everyone there is the <strong>Vampire Bat</strong>: it stands as a mini crewmate dressed as a bat and flies after you as a bat. Pets stand and walk with their own animation and follow you like any pet.</p><p><strong>Player colour (1.7.1):</strong> a pet can carry a colour mask that is tinted in its owner's colour, the same way costumes do it. The Vampire Bat uses it: the mini crewmate and the flying bat take your colour, cape and ears stay violet. The colour follows what you show right now (Morphling, Camouflage).</p><p><strong>New pets without a mod update:</strong> the pet list is read online at start, on every lobby join (at most once a minute) and when the mod's author types <code>/loadpets</code> (that also makes everyone in the lobby reload). A pet can be locked to certain players; a locked pet does not show up in anybody else's pet tab, and a saved choice falls back to no pet.</p><p><strong>Pets from other mods (1.7.1):</strong> another mod can hand its own pets to the pet tab (AppDomain key <code>UTSPets.External</code>, same layout as the online pet list). Players without that mod see the game pet the pet is built on, usually a mini crewmate.</p>",
+            de: "<p>Forgotten Fixes ergänzt eigene Haustiere neben denen des Spiels, so wie The Other Roles seine Hüte ergänzt. Für alle gibt es die <strong>Vampire Bat</strong>: Sie steht als Mini-Crewmate in Fledermaus-Verkleidung da und fliegt dir als Fledermaus hinterher. Haustiere stehen und laufen mit eigener Animation und folgen dir wie jedes Haustier.</p><p><strong>Spielerfarbe (1.7.1):</strong> Ein Haustier kann eine Farbmaske tragen, die in der Farbe seines Besitzers eingefärbt wird, so wie bei den Kostümen. Die Vampire Bat nutzt sie: Mini-Crewmate und fliegende Fledermaus haben deine Farbe, Umhang und Ohren bleiben violett. Die Farbe folgt dem, was du gerade zeigst (Morphling, Camouflage).</p><p><strong>Neue Haustiere ohne Mod-Update:</strong> Die Haustier-Liste wird beim Start online gelesen, bei jedem Lobby-Beitritt (höchstens einmal pro Minute) und wenn der Autor des Mods <code>/loadpets</code> tippt (das lässt auch alle in der Lobby neu laden). Ein Haustier kann an bestimmte Spieler gebunden sein; ein gesperrtes Haustier erscheint im Haustier-Reiter aller anderen nicht, und eine gespeicherte Wahl fällt auf kein Haustier zurück.</p><p><strong>Haustiere aus anderen Mods (1.7.1):</strong> Eine andere Mod kann eigene Haustiere an den Haustier-Reiter übergeben (AppDomain-Schlüssel <code>UTSPets.External</code>, gleiches Format wie die Online-Liste). Spieler ohne diese Mod sehen das Spiel-Haustier, auf dem es aufbaut, meist einen Mini-Crewmate.</p>"
           }
         },
         {
