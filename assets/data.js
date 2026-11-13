@@ -6866,7 +6866,7 @@ const HOSTTOOLS = {
   key: "hosttools",
   name: "Host Tools",
   fullName: { en: "TOR - Host Tools", de: "TOR - Host Tools" },
-  version: "1.1.1",
+  version: "1.1.0",
   allClients: false,
   repo: "https://github.com/DaUnknown-0/TOR-Host-Fix",
   download: "https://github.com/DaUnknown-0/TOR-Host-Fix/releases/latest",
@@ -6875,8 +6875,8 @@ const HOSTTOOLS = {
     de: "Reparaturen für TOR, die nur der Host braucht, plus ein Werkzeugkasten: Presets, Startcheck, Settings-Protokoll, Abendplan, Spielernotizen, Statistik und eine Verbindungsampel."
   },
   intro: {
-    en: "TOR - Host Tools (formerly TOR - Hostfix) is for the host only: nobody else needs the mod. The GUID, the DLL <code>HostFixPlugin.dll</code> and the repository stayed the same, so updates run in place. It fixes five host-side problems of TOR and brings the host tools that used to live in Forgotten Fixes, plus six new ones.",
-    de: "TOR - Host Tools (früher TOR - Hostfix) ist nur für den Host: niemand sonst braucht die Mod. GUID, DLL <code>HostFixPlugin.dll</code> und Repository blieben gleich, Updates laufen also in place. Sie behebt fünf host-seitige Probleme von TOR und bringt die Host-Werkzeuge mit, die früher in Forgotten Fixes lagen, dazu sechs neue."
+    en: "TOR - Host Tools (formerly TOR - Hostfix) is for the host only: nobody else needs the mod. The GUID, the DLL <code>HostFixPlugin.dll</code> and the repository stayed the same, so updates run in place. It fixes four host-side problems of TOR and brings the host tools that used to live in Forgotten Fixes, plus six new ones.",
+    de: "TOR - Host Tools (früher TOR - Hostfix) ist nur für den Host: niemand sonst braucht die Mod. GUID, DLL <code>HostFixPlugin.dll</code> und Repository blieben gleich, Updates laufen also in place. Sie behebt vier host-seitige Probleme von TOR und bringt die Host-Werkzeuge mit, die früher in Forgotten Fixes lagen, dazu sechs neue."
   },
   install: {
     en: "<ol><li>Install <a href='https://github.com/TheOtherRolesAU/TheOtherRoles'>The Other Roles</a> into your Among Us BepInEx setup.</li><li>Download the latest <code>HostFixPlugin.dll</code> from the releases page.</li><li>Copy it into <code>&lt;Among Us&gt;/BepInEx/plugins/</code> (host only).</li><li>Start the game.</li></ol><p>An in-game auto-updater checks GitHub on the main menu and offers an update button. The version is shown at the top, for the host only.</p>",
@@ -6891,8 +6891,8 @@ const HOSTTOOLS = {
       id: "fixes",
       title: { en: "Fixes", de: "Fixes" },
       intro: {
-        en: "Five host-side repairs that run quietly in the background. They need no setup.",
-        de: "Fünf host-seitige Reparaturen, die still im Hintergrund laufen. Sie brauchen keine Einrichtung."
+        en: "Four host-side repairs that run quietly in the background. They need no setup.",
+        de: "Vier host-seitige Reparaturen, die still im Hintergrund laufen. Sie brauchen keine Einrichtung."
       },
       entries: [
         {
@@ -6941,18 +6941,6 @@ const HOSTTOOLS = {
           body: {
             en: "<p>An evil host was missing from the Snitch list in the meeting, because the host's room reached every client before TOR's reset. The host now sends the room again after the meeting starts. Config: <code>[Fixes] SnitchHostRoom</code> (on by default).</p>",
             de: "<p>Ein böser Host fehlte in der Snitch-Liste im Meeting, weil sein Raum bei jedem Client vor TORs Reset ankam. Der Host schickt seinen Raum jetzt nach dem Meeting-Start erneut. Config: <code>[Fixes] SnitchHostRoom</code> (standardmäßig an).</p>"
-          }
-        },
-        {
-          id: "vampire-timemaster-bite",
-          title: { en: "Vampire bite on a shielded Time Master (1.1.1)", de: "Vampire-Biss auf geschützten Time Master (1.1.1)" },
-          summary: {
-            en: "A bite blocked by the time shield no longer kills the Time Master at the next meeting.",
-            de: "Ein vom Zeitschild geblockter Biss tötet den Time Master nicht mehr beim nächsten Meeting."
-          },
-          body: {
-            en: "<p>The Vampire bites the Time Master, and the Time Master switches the time shield on before the bite lands. The shield blocks the bite and rewinds time, which also switches the shield off. TOR only clears a pending bite after a successful kill, so the bite stayed, and at the next report or emergency meeting TOR resolved it again without a shield: the Time Master died.</p><p>The host now recognises the rewind caused by the Vampire's own blocked bite and clears the bite for everyone with TOR's own reset message, so the other players need nothing but TOR. This also works when the host is the Vampire. A rewind caused by another attacker leaves the bite alone, so its timing stays as in TOR. Config: <code>[Fixes] VampireTimeMasterBite</code> (on by default).</p>",
-            de: "<p>Der Vampire beißt den Time Master, und der schaltet den Zeitschild ein, bevor der Biss zuschlägt. Der Schild blockt den Biss und spult die Zeit zurück, was den Schild auch ausschaltet. TOR löscht einen offenen Biss nur nach einem erfolgreichen Kill, also blieb er stehen, und beim nächsten Report oder Notfall-Meeting vollstreckte TOR ihn erneut, jetzt ohne Schild: der Time Master starb.</p><p>Der Host erkennt jetzt das Zurückspulen, das der geblockte Biss des Vampires auslöst, und löscht den Biss für alle mit TORs eigener Reset-Nachricht; die anderen Spieler brauchen also nur TOR. Das klappt auch, wenn der Host selbst der Vampire ist. Spult ein anderer Angreifer zurück, bleibt der Biss stehen, sein Timing ist dann wie in TOR. Config: <code>[Fixes] VampireTimeMasterBite</code> (standardmäßig an).</p>"
           }
         }
       ]
