@@ -399,7 +399,7 @@ const USEFUL = {
   key: "useful",
   name: "Forgotten Fixes",
   fullName: { en: "TOR - Forgotten Fixes", de: "TOR - Forgotten Fixes" },
-  version: "1.7.5",
+  version: "1.7.6",
   allClients: true,
   repo: "https://github.com/DaUnknown-0/Useful-TOR-stuff",
   download: "https://github.com/DaUnknown-0/Useful-TOR-stuff/releases/latest",
@@ -1587,8 +1587,8 @@ const USEFUL = {
             de: "http://127.0.0.1:32200 liefert alle TOR- + Mod-Optionen und die Vanilla-Einstellungen, live editierbar bei offener Lobby. Nur der eigene Rechner, nie aus dem LAN erreichbar."
           },
           body: {
-            en: "<p>While the game runs, a tiny local web server (default <code>http://127.0.0.1:32200</code>, bound strictly to the local machine, never to the LAN) serves a settings page with every custom option of TOR and all loaded mods plus a curated set of vanilla options (meetings and voting, roles, tasks), searchable and grouped like the in-game menus. Changes go through TOR's canonical option setter and the game's own options sync, so all clients receive them exactly as if the host had clicked in-game. Only the host can write: without host status the page is read-only and write requests are rejected. Controlled via the BepInEx config (<code>WebConfig.Enabled</code>, <code>WebConfig.Port</code>).</p><p class='note'>Since TOR - Host Tools 1.1.0 this lives in Host Tools (host only). Forgotten Fixes 1.7.5 still contains it; the next full release of Forgotten Fixes hands it over.</p>",
-            de: "<p>Während das Spiel läuft, liefert ein winziger lokaler Webserver (Standard <code>http://127.0.0.1:32200</code>, strikt an den eigenen Rechner gebunden, nie ans LAN) eine Einstellungs-Seite mit jeder Custom-Option von TOR und allen geladenen Mods plus einem kuratierten Satz Vanilla-Optionen (Meetings und Voting, Rollen, Tasks), durchsuchbar und gruppiert wie die In-Game-Menüs. Änderungen laufen über TORs kanonischen Options-Setter und den Options-Sync des Spiels, alle Clients erhalten sie exakt so, als hätte der Host im Spiel geklickt. Nur der Host darf schreiben: Ohne Host-Status ist die Seite eine reine Leseansicht, Schreib-Requests werden abgelehnt. Gesteuert über die BepInEx-Config (<code>WebConfig.Enabled</code>, <code>WebConfig.Port</code>).</p><p class='note'>Seit TOR - Host Tools 1.1.0 liegt das in Host Tools (nur Host). Forgotten Fixes 1.7.5 enthält es noch; das nächste Full Release von Forgotten Fixes übergibt es.</p>"
+            en: "<p>While the game runs, a tiny local web server (default <code>http://127.0.0.1:32200</code>, bound strictly to the local machine, never to the LAN) serves a settings page with every custom option of TOR and all loaded mods plus a curated set of vanilla options (meetings and voting, roles, tasks), searchable and grouped like the in-game menus. Changes go through TOR's canonical option setter and the game's own options sync, so all clients receive them exactly as if the host had clicked in-game. Only the host can write: without host status the page is read-only and write requests are rejected. Controlled via the BepInEx config (<code>WebConfig.Enabled</code>, <code>WebConfig.Port</code>).</p><p class='note'>Since Forgotten Fixes 1.7.6 this lives in TOR - Host Tools (host only, from Host Tools 1.1.0). Existing presets keep working there.</p>",
+            de: "<p>Während das Spiel läuft, liefert ein winziger lokaler Webserver (Standard <code>http://127.0.0.1:32200</code>, strikt an den eigenen Rechner gebunden, nie ans LAN) eine Einstellungs-Seite mit jeder Custom-Option von TOR und allen geladenen Mods plus einem kuratierten Satz Vanilla-Optionen (Meetings und Voting, Rollen, Tasks), durchsuchbar und gruppiert wie die In-Game-Menüs. Änderungen laufen über TORs kanonischen Options-Setter und den Options-Sync des Spiels, alle Clients erhalten sie exakt so, als hätte der Host im Spiel geklickt. Nur der Host darf schreiben: Ohne Host-Status ist die Seite eine reine Leseansicht, Schreib-Requests werden abgelehnt. Gesteuert über die BepInEx-Config (<code>WebConfig.Enabled</code>, <code>WebConfig.Port</code>).</p><p class='note'>Seit Forgotten Fixes 1.7.6 liegt das in TOR - Host Tools (nur Host, ab Host Tools 1.1.0). Bestehende Presets funktionieren dort weiter.</p>"
           }
         }
       ]
@@ -1656,8 +1656,8 @@ const USEFUL = {
             de: "Beliebig viele benannte Presets speichern und in kleinen Paketen laden."
           },
           body: {
-            en: "<p>The lobby menu entry <strong>Presets</strong> saves, loads and manages settings presets:</p><ul><li>Save as many named presets as you like, covering all mod options and the vanilla game settings.</li><li>Load, update, rename and delete them; update and delete ask once before overwriting.</li><li>Every row shows how many options differ from the current settings.</li><li>Loading only sends the options that actually change, in small batches, so nobody gets disconnected.</li><li>Presets are files in <code>BepInEx/config/UTS-Presets/</code>, easy to back up or share.</li></ul><p class='note'>Since TOR - Host Tools 1.1.0 this lives in Host Tools (host only). Forgotten Fixes 1.7.5 still contains it; the next full release of Forgotten Fixes hands it over.</p>",
-            de: "<p>Der Lobby-Menü-Eintrag <strong>Presets</strong> speichert, lädt und verwaltet Settings-Presets:</p><ul><li>Speichere beliebig viele benannte Presets, die alle Mod-Optionen und die Vanilla-Spieleinstellungen umfassen.</li><li>Laden, aktualisieren, umbenennen und löschen; Aktualisieren und Löschen fragen vor dem Überschreiben einmal nach.</li><li>Jede Zeile zeigt, wie viele Optionen vom aktuellen Stand abweichen.</li><li>Beim Laden werden nur die Optionen gesendet, die sich wirklich ändern, in kleinen Paketen, damit niemand getrennt wird.</li><li>Presets sind Dateien in <code>BepInEx/config/UTS-Presets/</code>, leicht zu sichern oder zu teilen.</li></ul><p class='note'>Seit TOR - Host Tools 1.1.0 liegt das in Host Tools (nur Host). Forgotten Fixes 1.7.5 enthält es noch; das nächste Full Release von Forgotten Fixes übergibt es.</p>"
+            en: "<p>The lobby menu entry <strong>Presets</strong> saves, loads and manages settings presets:</p><ul><li>Save as many named presets as you like, covering all mod options and the vanilla game settings.</li><li>Load, update, rename and delete them; update and delete ask once before overwriting.</li><li>Every row shows how many options differ from the current settings.</li><li>Loading only sends the options that actually change, in small batches, so nobody gets disconnected.</li><li>Presets are files in <code>BepInEx/config/UTS-Presets/</code>, easy to back up or share.</li></ul><p class='note'>Since Forgotten Fixes 1.7.6 this lives in TOR - Host Tools (host only, from Host Tools 1.1.0). Existing presets keep working there.</p>",
+            de: "<p>Der Lobby-Menü-Eintrag <strong>Presets</strong> speichert, lädt und verwaltet Settings-Presets:</p><ul><li>Speichere beliebig viele benannte Presets, die alle Mod-Optionen und die Vanilla-Spieleinstellungen umfassen.</li><li>Laden, aktualisieren, umbenennen und löschen; Aktualisieren und Löschen fragen vor dem Überschreiben einmal nach.</li><li>Jede Zeile zeigt, wie viele Optionen vom aktuellen Stand abweichen.</li><li>Beim Laden werden nur die Optionen gesendet, die sich wirklich ändern, in kleinen Paketen, damit niemand getrennt wird.</li><li>Presets sind Dateien in <code>BepInEx/config/UTS-Presets/</code>, leicht zu sichern oder zu teilen.</li></ul><p class='note'>Seit Forgotten Fixes 1.7.6 liegt das in TOR - Host Tools (nur Host, ab Host Tools 1.1.0). Bestehende Presets funktionieren dort weiter.</p>"
           }
         },
         {
@@ -1739,8 +1739,8 @@ const USEFUL = {
             de: "Bis 25 Spieler mit /size; nur der Host braucht den Mod."
           },
           body: {
-            en: "<p><em>Maximum Lobby Size (/size)</em> (option 1378, General tab, 15 to 25, default 15) raises the limit; then type <code>/size 20</code> in the chat. TOR still answers with its 15, our line \"Lobby size set to N (limit M)\" follows. Only the host needs this; the operators of the modded servers called 20 to 25 players unproblematic. If the game sets a smaller value again, it is restored at most every 10 s.</p><p>From 16 players on the <strong>meeting</strong> repacks its cards into as many columns as needed for five rows (4 columns up to 20 players, 5 up to 25), scaled to fit the panel; the vote tiles are ordered by their current position in the game (top to bottom, left to right) and laid out on the meeting's own grid; up to 15 nothing changes and nobody else needs the mod for it. Minimum and Maximum Impostors go up to 5 for such lobbies.</p><p class='note'>Since TOR - Host Tools 1.1.0 this lives in Host Tools (host only). Forgotten Fixes 1.7.5 still contains it; the next full release of Forgotten Fixes hands it over.</p>",
-            de: "<p><em>Maximum Lobby Size (/size)</em> (Option 1378, Reiter General, 15 bis 25, Standard 15) hebt das Limit; danach im Chat <code>/size 20</code> tippen. TOR antwortet weiter mit seinen 15, danach folgt unsere Zeile \"Lobby size set to N (limit M)\". Nur der Host braucht das; die Betreiber der Mod-Server nannten 20 bis 25 Spieler unproblematisch. Setzt das Spiel einen kleineren Wert zurück, wird er höchstens alle 10 s wiederhergestellt.</p><p>Ab 16 Spielern ordnet das <strong>Meeting</strong> die Karten in so viele Spalten um, wie für fünf Zeilen nötig sind (4 Spalten bis 20 Spieler, 5 bis 25), passend skaliert; die Wahlkacheln folgen ihrer aktuellen Position im Spiel (von oben nach unten, von links nach rechts) und liegen auf dem eigenen Raster des Meetings; bis 15 ändert sich nichts, und niemand sonst braucht dafür den Mod. Minimum und Maximum Impostors gehen für solche Lobbys bis 5.</p><p class='note'>Seit TOR - Host Tools 1.1.0 liegt das in Host Tools (nur Host). Forgotten Fixes 1.7.5 enthält es noch; das nächste Full Release von Forgotten Fixes übergibt es.</p>"
+            en: "<p><em>Maximum Lobby Size (/size)</em> (option 1378, General tab, 15 to 25, default 15) raises the limit; then type <code>/size 20</code> in the chat. TOR still answers with its 15, our line \"Lobby size set to N (limit M)\" follows. Only the host needs this; the operators of the modded servers called 20 to 25 players unproblematic. If the game sets a smaller value again, it is restored at most every 10 s.</p><p>From 16 players on the <strong>meeting</strong> repacks its cards into as many columns as needed for five rows (4 columns up to 20 players, 5 up to 25), scaled to fit the panel; the vote tiles are ordered by their current position in the game (top to bottom, left to right) and laid out on the meeting's own grid; up to 15 nothing changes and nobody else needs the mod for it. Minimum and Maximum Impostors go up to 5 for such lobbies.</p><p class='note'>Since Forgotten Fixes 1.7.6 this lives in TOR - Host Tools (host only, from Host Tools 1.1.0). Existing presets keep working there.</p>",
+            de: "<p><em>Maximum Lobby Size (/size)</em> (Option 1378, Reiter General, 15 bis 25, Standard 15) hebt das Limit; danach im Chat <code>/size 20</code> tippen. TOR antwortet weiter mit seinen 15, danach folgt unsere Zeile \"Lobby size set to N (limit M)\". Nur der Host braucht das; die Betreiber der Mod-Server nannten 20 bis 25 Spieler unproblematisch. Setzt das Spiel einen kleineren Wert zurück, wird er höchstens alle 10 s wiederhergestellt.</p><p>Ab 16 Spielern ordnet das <strong>Meeting</strong> die Karten in so viele Spalten um, wie für fünf Zeilen nötig sind (4 Spalten bis 20 Spieler, 5 bis 25), passend skaliert; die Wahlkacheln folgen ihrer aktuellen Position im Spiel (von oben nach unten, von links nach rechts) und liegen auf dem eigenen Raster des Meetings; bis 15 ändert sich nichts, und niemand sonst braucht dafür den Mod. Minimum und Maximum Impostors gehen für solche Lobbys bis 5.</p><p class='note'>Seit Forgotten Fixes 1.7.6 liegt das in TOR - Host Tools (nur Host, ab Host Tools 1.1.0). Bestehende Presets funktionieren dort weiter.</p>"
           }
         }
       ]
@@ -1810,12 +1810,12 @@ const USEFUL = {
           id: "custom-pets",
           title: { en: "Custom pets", de: "Eigene Haustiere" },
           summary: {
-            en: "The mod's own pets appear next to the game's pets, in your player colour, and new ones can arrive without a mod update. Petting makes your crewmate cuddle the pet.",
-            de: "Eigene Haustiere des Mods erscheinen neben denen des Spiels, in deiner Spielerfarbe, und neue können ohne Mod-Update dazukommen. Beim Streicheln knuddelt dein Crewmate das Haustier."
+            en: "The mod's own pets appear next to the game's pets, in your player colour, and new ones can arrive without a mod update. Petting is the game's normal petting again.",
+            de: "Eigene Haustiere des Mods erscheinen neben denen des Spiels, in deiner Spielerfarbe, und neue können ohne Mod-Update dazukommen. Streicheln ist wieder das normale Streicheln des Spiels."
           },
           body: {
-            en: "<p>Forgotten Fixes adds its own pets next to the game's pets, the same way The Other Roles adds its hats. For everyone there is the <strong>Vampire Bat</strong>: it stands as a mini crewmate dressed as a bat and flies after you as a bat. Also for everyone: the <strong>Mini Xenomorph</strong> and the <strong>Mini Shepherd</strong>, in fixed colours. Pets stand and walk with their own animation and follow you like any pet.</p><p><strong>Cuddling (1.7.4):</strong> when you pet your pet, your crewmate kneels down, picks it up, cuddles and rocks it, puts it back down and stands up again (about 3 seconds). It works with every pet, the game's own included, in your colour (Morphling and Camouflage too). The hat stays on and follows the head, skin and visor cosmetics are hidden for that moment. Walking ends it at once. Everybody with 1.7.4 sees it for every player; older versions see the normal petting. Since 1.7.5 the <strong>Pet Cuddle</strong> switch on the Unknown's Collection page of TOR's Mod Options (or <code>[Pets] PetCuddle</code>) chooses between cuddling and the normal petting on your own screen.</p><p><strong>Reactions (1.7.4):</strong> an online pet can bring its own animation for being petted. The Mini Xenomorph, the Mini Shepherd and the Vampire Bat have one.</p><p><strong>Player colour (1.7.1):</strong> a pet can carry a colour mask that is tinted in its owner's colour, the same way costumes do it. The Vampire Bat uses it: the mini crewmate and the flying bat take your colour, cape and ears stay violet. The colour follows what you show right now (Morphling, Camouflage).</p><p><strong>New pets without a mod update:</strong> the pet list is read online at start, on every lobby join (at most once a minute) and when the mod's author types <code>/loadpets</code> (that also makes everyone in the lobby reload). A pet can be locked to certain players; a locked pet does not show up in anybody else's pet tab, and a saved choice falls back to no pet.</p><p><strong>Pets from other mods (1.7.1):</strong> another mod can hand its own pets to the pet tab (AppDomain key <code>UTSPets.External</code>, same layout as the online pet list). Players without that mod see the game pet the pet is built on, usually a mini crewmate.</p>",
-            de: "<p>Forgotten Fixes ergänzt eigene Haustiere neben denen des Spiels, so wie The Other Roles seine Hüte ergänzt. Für alle gibt es die <strong>Vampire Bat</strong>: Sie steht als Mini-Crewmate in Fledermaus-Verkleidung da und fliegt dir als Fledermaus hinterher. Ebenfalls für alle: der <strong>Mini Xenomorph</strong> und der <strong>Mini Shepherd</strong>, in festen Farben. Haustiere stehen und laufen mit eigener Animation und folgen dir wie jedes Haustier.</p><p><strong>Kuscheln (1.7.4):</strong> Streichelst du dein Haustier, kniet sich dein Crewmate hin, nimmt es hoch, knuddelt und wiegt es, setzt es wieder ab und steht auf (etwa 3 Sekunden). Das geht mit jedem Haustier, auch denen des Spiels, in deiner Farbe (auch mit Morphling und Camouflage). Der Hut bleibt auf und folgt dem Kopf, Skin und Visier-Kosmetik sind so lange ausgeblendet. Loslaufen beendet es sofort. Alle mit 1.7.4 sehen es bei jedem Spieler; ältere Versionen sehen das normale Streicheln. Seit 1.7.5 wählt der Schalter <strong>Pet Cuddle</strong> auf der Unknown's-Collection-Seite in TORs Mod Options (oder <code>[Pets] PetCuddle</code>) für den eigenen Bildschirm zwischen Kuscheln und normalem Streicheln.</p><p><strong>Reaktionen (1.7.4):</strong> Ein Online-Haustier kann eine eigene Animation fürs Gestreicheltwerden mitbringen. Mini Xenomorph, Mini Shepherd und Vampire Bat haben eine.</p><p><strong>Spielerfarbe (1.7.1):</strong> Ein Haustier kann eine Farbmaske tragen, die in der Farbe seines Besitzers eingefärbt wird, so wie bei den Kostümen. Die Vampire Bat nutzt sie: Mini-Crewmate und fliegende Fledermaus haben deine Farbe, Umhang und Ohren bleiben violett. Die Farbe folgt dem, was du gerade zeigst (Morphling, Camouflage).</p><p><strong>Neue Haustiere ohne Mod-Update:</strong> Die Haustier-Liste wird beim Start online gelesen, bei jedem Lobby-Beitritt (höchstens einmal pro Minute) und wenn der Autor des Mods <code>/loadpets</code> tippt (das lässt auch alle in der Lobby neu laden). Ein Haustier kann an bestimmte Spieler gebunden sein; ein gesperrtes Haustier erscheint im Haustier-Reiter aller anderen nicht, und eine gespeicherte Wahl fällt auf kein Haustier zurück.</p><p><strong>Haustiere aus anderen Mods (1.7.1):</strong> Eine andere Mod kann eigene Haustiere an den Haustier-Reiter übergeben (AppDomain-Schlüssel <code>UTSPets.External</code>, gleiches Format wie die Online-Liste). Spieler ohne diese Mod sehen das Spiel-Haustier, auf dem es aufbaut, meist einen Mini-Crewmate.</p>"
+            en: "<p>Forgotten Fixes adds its own pets next to the game's pets, the same way The Other Roles adds its hats. For everyone there is the <strong>Lil' Aluka</strong>: it stands as a mini crewmate dressed as a bat and flies after you as a bat. Pets stand and walk with their own animation and follow you like any pet.</p><p><strong>Petting:</strong> petting is the normal petting of the game again. Online pets still play their own reaction while you pet them.</p><p><strong>Reactions (1.7.4):</strong> an online pet can bring its own animation for being petted. The Lil' Aluka has one.</p><p><strong>Player colour (1.7.1):</strong> a pet can carry a colour mask that is tinted in its owner's colour, the same way costumes do it. The Lil' Aluka uses it: the mini crewmate and the flying bat take your colour, cape and ears stay violet. The colour follows what you show right now (Morphling, Camouflage).</p><p><strong>New pets without a mod update:</strong> the pet list is read online at start, on every lobby join (at most once a minute) and when the mod's author types <code>/loadpets</code> (that also makes everyone in the lobby reload). A pet can be locked to certain players; a locked pet does not show up in anybody else's pet tab, and a saved choice falls back to no pet.</p><p><strong>Pets from other mods (1.7.1):</strong> another mod can hand its own pets to the pet tab (AppDomain key <code>UTSPets.External</code>, same layout as the online pet list). Players without that mod see the game pet the pet is built on, usually a mini crewmate.</p>",
+            de: "<p>Forgotten Fixes ergänzt eigene Haustiere neben denen des Spiels, so wie The Other Roles seine Hüte ergänzt. Für alle gibt es die <strong>Lil' Aluka</strong>: Sie steht als Mini-Crewmate in Fledermaus-Verkleidung da und fliegt dir als Fledermaus hinterher. Haustiere stehen und laufen mit eigener Animation und folgen dir wie jedes Haustier.</p><p><strong>Streicheln:</strong> Streicheln ist wieder das normale Streicheln des Spiels. Online-Haustiere spielen dabei weiter ihre eigene Reaktion.</p><p><strong>Reaktionen (1.7.4):</strong> Ein Online-Haustier kann eine eigene Animation fürs Gestreicheltwerden mitbringen. Die Lil' Aluka hat eine.</p><p><strong>Spielerfarbe (1.7.1):</strong> Ein Haustier kann eine Farbmaske tragen, die in der Farbe seines Besitzers eingefärbt wird, so wie bei den Kostümen. Die Lil' Aluka nutzt sie: Mini-Crewmate und fliegende Fledermaus haben deine Farbe, Umhang und Ohren bleiben violett. Die Farbe folgt dem, was du gerade zeigst (Morphling, Camouflage).</p><p><strong>Neue Haustiere ohne Mod-Update:</strong> Die Haustier-Liste wird beim Start online gelesen, bei jedem Lobby-Beitritt (höchstens einmal pro Minute) und wenn der Autor des Mods <code>/loadpets</code> tippt (das lässt auch alle in der Lobby neu laden). Ein Haustier kann an bestimmte Spieler gebunden sein; ein gesperrtes Haustier erscheint im Haustier-Reiter aller anderen nicht, und eine gespeicherte Wahl fällt auf kein Haustier zurück.</p><p><strong>Haustiere aus anderen Mods (1.7.1):</strong> Eine andere Mod kann eigene Haustiere an den Haustier-Reiter übergeben (AppDomain-Schlüssel <code>UTSPets.External</code>, gleiches Format wie die Online-Liste). Spieler ohne diese Mod sehen das Spiel-Haustier, auf dem es aufbaut, meist einen Mini-Crewmate.</p>"
           }
         },
         {
@@ -1942,6 +1942,124 @@ const USEFUL = {
           body: {
             en: "<p>Each client broadcasts its version and assembly GUID at lobby time so every client can tell whether all players share the same build (the precondition for the client-side Snitch fix). The handshake cache is cleared on joining a lobby so it only reflects the current lobby. The wire format is unchanged across 1.0.x, so mixed lobbies keep working.</p>",
             de: "<p>Jeder Client sendet bei Lobby-Eintritt seine Version und Assembly-GUID, damit jeder Client erkennt, ob alle Spieler denselben Build haben (die Voraussetzung für den client-seitigen Snitch-Fix). Der Handshake-Cache wird beim Beitritt zu einer Lobby geleert, sodass er nur die aktuelle Lobby widerspiegelt. Das Wire-Format ist über 1.0.x hinweg unverändert, sodass gemischte Lobbys weiter funktionieren.</p>"
+          }
+        }
+      ]
+    },
+    {
+      id: "comfort-176",
+      title: { en: "Comfort (1.7.6)", de: "Komfort (1.7.6)" },
+      intro: {
+        en: "Search, vote history, change marks, error and news cards, and a faster start.",
+        de: "Suche, Abstimmungsverlauf, Änderungsmarken, Fehler- und Neuigkeiten-Karte und ein schnellerer Start."
+      },
+      entries: [
+        {
+          id: "settings-search",
+          title: { en: "Settings search", de: "Einstellungssuche" },
+          summary: {
+            en: "A Search tab in the settings menus; Ctrl+F in the lobby.",
+            de: "Ein Reiter Search in den Einstellungsmenüs; Ctrl+F in der Lobby."
+          },
+          body: {
+            en: "<ul><li>The host gets a <strong>Search</strong> tab in the EDIT menu. Hits are real settings rows with minus and plus, and the values go to everyone just like on TOR's own tabs.</li><li>All players get a <strong>Search</strong> tab in the VIEW screen.</li><li>Searching for a role brings the whole section with all its sub-options.</li><li>Options whose parent is switched off are dimmed instead of hidden.</li><li>Open it with Ctrl+F in the lobby or with <em>Search settings</em> in the lobby menu. Esc clears the search, a second Esc closes it.</li></ul>",
+            de: "<ul><li>Der Host bekommt im EDIT-Menü einen Reiter <strong>Search</strong>. Treffer sind echte Einstellungszeilen mit Minus und Plus, und die Werte gehen an alle, genau wie bei TORs eigenen Reitern.</li><li>Alle Spieler bekommen in der VIEW-Ansicht einen Reiter <strong>Search</strong>.</li><li>Die Suche nach einer Rolle bringt den ganzen Abschnitt mit allen Unteroptionen.</li><li>Optionen, deren Elternteil ausgeschaltet ist, werden gedimmt statt versteckt.</li><li>Öffnen mit Strg+F in der Lobby oder mit <em>Search settings</em> im Lobby-Menü. Esc leert die Suche, ein zweites Esc schließt sie.</li></ul>"
+          }
+        },
+        {
+          id: "vote-history",
+          title: { en: "Vote history", de: "Abstimmungsverlauf" },
+          summary: {
+            en: "The earlier meetings of the round, with names only where you could see them.",
+            de: "Die früheren Meetings der Runde, mit Namen nur dort, wo man sie sehen konnte."
+          },
+          body: {
+            en: "<p>The option <em>Vote History</em> (on by default) adds a button below the task bar that shows the earlier meetings of the round.</p><p>Names are shown only if you could see them while voting: Anonymous Votes is off, you are dead and have Ghosts See Votes, or you are the Mayor with colour vision, from the meeting in which he has it. Otherwise you only see the number of votes per player.</p>",
+            de: "<p>Die Option <em>Vote History</em> (standardmäßig an) fügt unter der Aufgabenleiste einen Knopf hinzu, der die früheren Meetings der Runde zeigt.</p><p>Namen stehen nur da, wenn man sie beim Abstimmen sehen konnte: Anonymous Votes ist aus, du bist tot und hast Ghosts See Votes, oder du bist Mayor mit Farbsicht, ab dem Meeting, in dem er sie hat. Sonst siehst du nur die Stimmenzahl je Spieler.</p>"
+          }
+        },
+        {
+          id: "change-marks",
+          title: { en: "Change marks", de: "Änderungsmarken" },
+          summary: {
+            en: "Settings changed since the last round are marked in the overview.",
+            de: "Seit der letzten Runde geänderte Einstellungen sind in der Übersicht markiert."
+          },
+          body: {
+            en: "<p>In the settings overview, every setting changed since the last round carries a mark. The mark disappears when you set the value back.</p>",
+            de: "<p>In der Einstellungsübersicht trägt jede seit der letzten Runde geänderte Einstellung eine Marke. Die Marke verschwindet, wenn du den Wert zurückstellst.</p>"
+          }
+        },
+        {
+          id: "error-card",
+          title: { en: "Error card", de: "Fehlerkarte" },
+          summary: {
+            en: "A card in the bottom-right corner when one of the mods logs an error.",
+            de: "Eine Karte unten rechts, wenn eine der Mods einen Fehler loggt."
+          },
+          body: {
+            en: "<p>When one of the mods logs an error, a card in the bottom-right corner tells you. A report is saved in <code>BepInEx/ErrorReports</code>.</p>",
+            de: "<p>Loggt eine der Mods einen Fehler, sagt dir das eine Karte unten rechts. Ein Bericht liegt in <code>BepInEx/ErrorReports</code>.</p>"
+          }
+        },
+        {
+          id: "whats-new-card",
+          title: { en: "What's new card", de: "Was-ist-neu-Karte" },
+          summary: {
+            en: "A card with the news after an update.",
+            de: "Eine Karte mit den Neuerungen nach einem Update."
+          },
+          body: {
+            en: "<p>After an update a card shows what is new.</p>",
+            de: "<p>Nach einem Update zeigt eine Karte, was neu ist.</p>"
+          }
+        },
+        {
+          id: "shield-hint",
+          title: { en: "Shield hint", de: "Schild-Hinweis" },
+          summary: {
+            en: "A player protected by the early-death shield learns why and until which meeting.",
+            de: "Ein vom Frühtod-Schild geschützter Spieler erfährt, warum und bis zu welchem Meeting."
+          },
+          body: {
+            en: "<p>A player who is protected by the early-death shield is told why and until which meeting the protection lasts.</p>",
+            de: "<p>Ein Spieler, der vom Frühtod-Schild geschützt wird, erfährt, warum und bis zu welchem Meeting der Schutz gilt.</p>"
+          }
+        },
+        {
+          id: "game-look",
+          title: { en: "Game look", de: "Spiel-Look" },
+          summary: {
+            en: "All menus use the game's own graphics.",
+            de: "Alle Menüs nutzen die Grafiken des Spiels."
+          },
+          body: {
+            en: "<p>All menus use the graphics of the game: the window image, titles in the game font with a divider line, flat tabs without gloss, black value boxes, a white X and neutral greys. The main menu keeps the drawn look.</p>",
+            de: "<p>Alle Menüs nutzen die Grafiken des Spiels: das Fensterbild, Titel in der Spielschrift mit Trennlinie, flache Reiter ohne Glanz, schwarze Wertkästen, ein weißes X und neutrale Grautöne. Im Hauptmenü bleibt der gezeichnete Look.</p>"
+          }
+        },
+        {
+          id: "menu-lock",
+          title: { en: "Menu lock", de: "Menü-Sperre" },
+          summary: {
+            en: "While a menu is open, the game behind it does nothing.",
+            de: "Solange ein Menü offen ist, tut das Spiel dahinter nichts."
+          },
+          body: {
+            en: "<p>While a menu is open, the gear, chat, map, Use, Report, Kill, START and TOR's ability buttons do nothing, the hotkeys are off and your character stands still. All mods share one list of open menus.</p>",
+            de: "<p>Solange ein Menü offen ist, tun Zahnrad, Chat, Karte, Benutzen, Melden, Kill, START und TORs Fähigkeitsknöpfe nichts, die Hotkeys sind aus und die Figur steht. Alle Mods teilen sich eine Liste offener Menüs.</p>"
+          }
+        },
+        {
+          id: "faster-start",
+          title: { en: "Faster start", de: "Schnellerer Start" },
+          summary: {
+            en: "Start plus login drops from about 42 s to about 20.5 s.",
+            de: "Start plus Login von etwa 42 s auf etwa 20,5 s."
+          },
+          body: {
+            en: "<p>Start plus login takes about 20.5 seconds instead of about 42:</p><ul><li>patches are applied once per mod instead of once per patch</li><li>patches on game classes are applied after the login</li><li>the cloud save is skipped at login</li><li>pets and hats load after the login</li></ul><p>It uses the normal exe, no launch parameters.</p>",
+            de: "<p>Start plus Login dauern etwa 20,5 Sekunden statt etwa 42:</p><ul><li>Patches werden einmal je Mod statt je Patch angewendet</li><li>Patches auf Spielklassen folgen nach dem Login</li><li>der Cloud-Speicherstand wird beim Login übersprungen</li><li>Haustiere und Hüte laden nach dem Login</li></ul><p>Es läuft mit der normalen exe, ohne Startparameter.</p>"
           }
         }
       ]
@@ -6765,8 +6883,8 @@ const HOSTTOOLS = {
     de: "<ol><li>Installiere <a href='https://github.com/TheOtherRolesAU/TheOtherRoles'>The Other Roles</a> in dein Among-Us-BepInEx-Setup.</li><li>Lade die neueste <code>HostFixPlugin.dll</code> von der Releases-Seite.</li><li>Kopiere sie nach <code>&lt;Among Us&gt;/BepInEx/plugins/</code> (nur Host).</li><li>Starte das Spiel.</li></ol><p>Ein In-Game-Auto-Updater prüft GitHub im Hauptmenü und bietet einen Update-Button an. Die Version steht oben, nur für den Host.</p>"
   },
   deps: {
-    en: "<ul><li><strong>The Other Roles 4.8.0</strong> (hard dependency)</li><li><strong>TOR - Forgotten Fixes</strong> (optional): with it the entries appear in its lobby menu, without it Host Tools brings its own menu tile in the bottom-left corner. Only the connection light needs it.</li></ul><p class='note'>With the old Forgotten Fixes 1.7.5 the tools stay off (it still has presets itself), but the fixes run anyway.</p>",
-    de: "<ul><li><strong>The Other Roles 4.8.0</strong> (harte Abhängigkeit)</li><li><strong>TOR - Forgotten Fixes</strong> (optional): mit ihm stehen die Einträge in dessen Lobby-Menü, ohne ihn bringt Host Tools eine eigene Menü-Kachel unten links mit. Nur die Verbindungsampel braucht es.</li></ul><p class='note'>Mit dem alten Forgotten Fixes 1.7.5 bleiben die Werkzeuge aus (es hat Presets noch selbst), die Fixes laufen trotzdem.</p>"
+    en: "<ul><li><strong>The Other Roles 4.8.0</strong> (hard dependency)</li><li><strong>TOR - Forgotten Fixes</strong> (optional): with it the entries appear in its lobby menu, without it Host Tools brings its own menu tile in the bottom-left corner. Only the connection light needs it.</li></ul><p class='note'>With the old Forgotten Fixes 1.7.5 the tools stay off (it still has presets itself), but the fixes run anyway. From Forgotten Fixes 1.7.6 on they run.</p>",
+    de: "<ul><li><strong>The Other Roles 4.8.0</strong> (harte Abhängigkeit)</li><li><strong>TOR - Forgotten Fixes</strong> (optional): mit ihm stehen die Einträge in dessen Lobby-Menü, ohne ihn bringt Host Tools eine eigene Menü-Kachel unten links mit. Nur die Verbindungsampel braucht es.</li></ul><p class='note'>Mit dem alten Forgotten Fixes 1.7.5 bleiben die Werkzeuge aus (es hat Presets noch selbst), die Fixes laufen trotzdem. Ab Forgotten Fixes 1.7.6 laufen sie.</p>"
   },
   sections: [
     {
