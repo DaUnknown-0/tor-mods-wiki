@@ -103,6 +103,7 @@
           ${link("index.html", "nav_home")}
           ${link("chance.html", "nav_chance")}
           ${link("useful.html", "nav_useful")}
+          ${link("hosttools.html", "nav_hosttools")}
           ${link("unknowns.html", "nav_unknowns")}
           ${link("nightfall.html", "nav_nightfall")}
           ${link("atlas.html", "nav_atlas")}
@@ -273,6 +274,7 @@
   function navKey(p) {
     return p.indexOf("chance") >= 0 ? "chance"
       : p.indexOf("useful") >= 0 ? "useful"
+      : p.indexOf("hosttools") >= 0 ? "hosttools"
       : p.indexOf("unknowns") >= 0 ? "unknowns"
       : p.indexOf("nightfall") >= 0 ? "nightfall"
       : p.indexOf("atlas") >= 0 ? "atlas"
@@ -592,7 +594,7 @@
     const extra = mod ? `
           <li><a href="#install"><span class="side-n">${String(mod.sections.length + 1).padStart(2, "0")}</span>${t("install_title")}</a></li>
           <li><a href="#requirements"><span class="side-n">${String(mod.sections.length + 2).padStart(2, "0")}</span>${t("deps_title")}</a></li>` : "";
-    const site = [["index.html", "nav_home"], ["chance.html", "nav_chance"], ["useful.html", "nav_useful"], ["unknowns.html", "nav_unknowns"], ["nightfall.html", "nav_nightfall"], ["atlas.html", "nav_atlas"], ["halloween.html", "nav_halloween"]]
+    const site = [["index.html", "nav_home"], ["chance.html", "nav_chance"], ["useful.html", "nav_useful"], ["hosttools.html", "nav_hosttools"], ["unknowns.html", "nav_unknowns"], ["nightfall.html", "nav_nightfall"], ["atlas.html", "nav_atlas"], ["halloween.html", "nav_halloween"]]
       .map(([p, k]) => `<li><a href="${p}" class="${page === navKey(p) ? "active" : ""}">${t(k)}</a></li>`).join("");
     side.innerHTML = `
       <div class="sidebar-inner">
@@ -639,6 +641,8 @@
       { mod: "useful", de: "Dynamische Meeting-Dauer nach Spielerzahl", en: "Dynamic meeting duration by player count" },
       { mod: "useful", de: "Bloody Lag-Drosselung & Killer-Map-Fix", en: "Bloody lag throttle & killer-map fix" },
       { mod: "useful", de: "In-Game Mod Manager mit Update-All", en: "In-game Mod Manager with Update-All" },
+      { mod: "hosttools", de: "Statistik-Reiter: Frühtode, Siege und Kills pro Spieler, dauerhaft gespeichert", en: "Statistics tab: early deaths, wins and kills per player, stored for good" },
+      { mod: "hosttools", de: "Startcheck, Settings-Protokoll und Abendplan für den Host", en: "Start check, settings log and evening plan for the host" },
       { mod: "unknowns", de: "The Tesla: lade ein +/−-Paar, das bei Nähe stirbt", en: "The Tesla: charge a +/− pair that dies when too close" },
       { mod: "unknowns", de: "The Saboteur: Task-Sabotage & unsichtbare Fallen", en: "The Saboteur: task sabotage & invisible traps" },
       { mod: "unknowns", de: "The Silencer: markiert Opfer zum Stummschalten im Meeting", en: "The Silencer: marks victims to be muted in meetings" },
@@ -676,7 +680,7 @@
           <section class="doc-section" id="mods">
             <h2>${t("home_explore")}</h2>
             <div class="mod-list">
-              ${row(CHANCE)}${row(USEFUL)}${row(UNKNOWNS)}${row(NIGHTFALL)}${row(ATLAS)}${row(HALLOWEEN)}
+              ${row(CHANCE)}${row(HOSTTOOLS)}${row(USEFUL)}${row(UNKNOWNS)}${row(NIGHTFALL)}${row(ATLAS)}${row(HALLOWEEN)}
             </div>
           </section>
 
@@ -933,6 +937,7 @@
     renderFooter();
     if (page === "home") renderHome();
     else if (page === "chance") renderModPage(CHANCE);
+    else if (page === "hosttools") renderModPage(HOSTTOOLS);
     else if (page === "useful") renderModPage(USEFUL);
     else if (page === "unknowns") renderModPage(UNKNOWNS);
     else if (page === "nightfall") renderModPage(NIGHTFALL);

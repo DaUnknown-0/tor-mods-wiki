@@ -9,6 +9,7 @@ const UI = {
     nav_home: "Home",
     nav_chance: "Chance Modifier",
     nav_useful: "Forgotten Fixes",
+    nav_hosttools: "Host Tools",
     nav_unknowns: "Unknown's Collection",
     nav_nightfall: "Nightfall",
     nav_atlas: "Atlas",
@@ -25,7 +26,7 @@ const UI = {
     download: "Download latest",
     back_top: "Back to top",
     home_hero_kicker: "Companion mods for The Other Roles",
-    home_hero_title: "Six mods. One wiki.",
+    home_hero_title: "Seven mods. One wiki.",
     home_hero_sub: "Randomized chaos, a pile of quality-of-life fixes, brand-new custom roles, a first-person view and new maps for The Other Roles 4.8.0. Click any feature to read what it does.",
     home_explore: "Explore the mods",
     home_combined: "Combined feature highlights",
@@ -41,6 +42,7 @@ const UI = {
     nav_home: "Start",
     nav_chance: "Chance Modifier",
     nav_useful: "Forgotten Fixes",
+    nav_hosttools: "Host Tools",
     nav_unknowns: "Unknown's Collection",
     nav_nightfall: "Nightfall",
     nav_atlas: "Atlas",
@@ -57,7 +59,7 @@ const UI = {
     download: "Neueste Version laden",
     back_top: "Nach oben",
     home_hero_kicker: "Begleit-Mods für The Other Roles",
-    home_hero_title: "Sechs Mods. Ein Wiki.",
+    home_hero_title: "Sieben Mods. Ein Wiki.",
     home_hero_sub: "Zufalls-Chaos, ein Haufen Komfort-Fixes, brandneue eigene Rollen, eine Ich-Perspektive und neue Karten für The Other Roles 4.8.0. Klick auf ein Feature, um zu lesen, was es macht.",
     home_explore: "Mods erkunden",
     home_combined: "Kombinierte Feature-Highlights",
@@ -1585,8 +1587,8 @@ const USEFUL = {
             de: "http://127.0.0.1:32200 liefert alle TOR- + Mod-Optionen und die Vanilla-Einstellungen, live editierbar bei offener Lobby. Nur der eigene Rechner, nie aus dem LAN erreichbar."
           },
           body: {
-            en: "<p>While the game runs, a tiny local web server (default <code>http://127.0.0.1:32200</code>, bound strictly to the local machine, never to the LAN) serves a settings page with every custom option of TOR and all loaded mods plus a curated set of vanilla options (meetings and voting, roles, tasks), searchable and grouped like the in-game menus. Changes go through TOR's canonical option setter and the game's own options sync, so all clients receive them exactly as if the host had clicked in-game. Only the host can write: without host status the page is read-only and write requests are rejected. Controlled via the BepInEx config (<code>WebConfig.Enabled</code>, <code>WebConfig.Port</code>).</p>",
-            de: "<p>Während das Spiel läuft, liefert ein winziger lokaler Webserver (Standard <code>http://127.0.0.1:32200</code>, strikt an den eigenen Rechner gebunden, nie ans LAN) eine Einstellungs-Seite mit jeder Custom-Option von TOR und allen geladenen Mods plus einem kuratierten Satz Vanilla-Optionen (Meetings und Voting, Rollen, Tasks), durchsuchbar und gruppiert wie die In-Game-Menüs. Änderungen laufen über TORs kanonischen Options-Setter und den Options-Sync des Spiels, alle Clients erhalten sie exakt so, als hätte der Host im Spiel geklickt. Nur der Host darf schreiben: Ohne Host-Status ist die Seite eine reine Leseansicht, Schreib-Requests werden abgelehnt. Gesteuert über die BepInEx-Config (<code>WebConfig.Enabled</code>, <code>WebConfig.Port</code>).</p>"
+            en: "<p>While the game runs, a tiny local web server (default <code>http://127.0.0.1:32200</code>, bound strictly to the local machine, never to the LAN) serves a settings page with every custom option of TOR and all loaded mods plus a curated set of vanilla options (meetings and voting, roles, tasks), searchable and grouped like the in-game menus. Changes go through TOR's canonical option setter and the game's own options sync, so all clients receive them exactly as if the host had clicked in-game. Only the host can write: without host status the page is read-only and write requests are rejected. Controlled via the BepInEx config (<code>WebConfig.Enabled</code>, <code>WebConfig.Port</code>).</p><p class='note'>Since TOR - Host Tools 1.1.0 this lives in Host Tools (host only). Forgotten Fixes 1.7.5 still contains it; the next full release of Forgotten Fixes hands it over.</p>",
+            de: "<p>Während das Spiel läuft, liefert ein winziger lokaler Webserver (Standard <code>http://127.0.0.1:32200</code>, strikt an den eigenen Rechner gebunden, nie ans LAN) eine Einstellungs-Seite mit jeder Custom-Option von TOR und allen geladenen Mods plus einem kuratierten Satz Vanilla-Optionen (Meetings und Voting, Rollen, Tasks), durchsuchbar und gruppiert wie die In-Game-Menüs. Änderungen laufen über TORs kanonischen Options-Setter und den Options-Sync des Spiels, alle Clients erhalten sie exakt so, als hätte der Host im Spiel geklickt. Nur der Host darf schreiben: Ohne Host-Status ist die Seite eine reine Leseansicht, Schreib-Requests werden abgelehnt. Gesteuert über die BepInEx-Config (<code>WebConfig.Enabled</code>, <code>WebConfig.Port</code>).</p><p class='note'>Seit TOR - Host Tools 1.1.0 liegt das in Host Tools (nur Host). Forgotten Fixes 1.7.5 enthält es noch; das nächste Full Release von Forgotten Fixes übergibt es.</p>"
           }
         }
       ]
@@ -1654,8 +1656,8 @@ const USEFUL = {
             de: "Beliebig viele benannte Presets speichern und in kleinen Paketen laden."
           },
           body: {
-            en: "<p>The lobby menu entry <strong>Presets</strong> saves, loads and manages settings presets:</p><ul><li>Save as many named presets as you like, covering all mod options and the vanilla game settings.</li><li>Load, update, rename and delete them; update and delete ask once before overwriting.</li><li>Every row shows how many options differ from the current settings.</li><li>Loading only sends the options that actually change, in small batches, so nobody gets disconnected.</li><li>Presets are files in <code>BepInEx/config/UTS-Presets/</code>, easy to back up or share.</li></ul>",
-            de: "<p>Der Lobby-Menü-Eintrag <strong>Presets</strong> speichert, lädt und verwaltet Settings-Presets:</p><ul><li>Speichere beliebig viele benannte Presets, die alle Mod-Optionen und die Vanilla-Spieleinstellungen umfassen.</li><li>Laden, aktualisieren, umbenennen und löschen; Aktualisieren und Löschen fragen vor dem Überschreiben einmal nach.</li><li>Jede Zeile zeigt, wie viele Optionen vom aktuellen Stand abweichen.</li><li>Beim Laden werden nur die Optionen gesendet, die sich wirklich ändern, in kleinen Paketen, damit niemand getrennt wird.</li><li>Presets sind Dateien in <code>BepInEx/config/UTS-Presets/</code>, leicht zu sichern oder zu teilen.</li></ul>"
+            en: "<p>The lobby menu entry <strong>Presets</strong> saves, loads and manages settings presets:</p><ul><li>Save as many named presets as you like, covering all mod options and the vanilla game settings.</li><li>Load, update, rename and delete them; update and delete ask once before overwriting.</li><li>Every row shows how many options differ from the current settings.</li><li>Loading only sends the options that actually change, in small batches, so nobody gets disconnected.</li><li>Presets are files in <code>BepInEx/config/UTS-Presets/</code>, easy to back up or share.</li></ul><p class='note'>Since TOR - Host Tools 1.1.0 this lives in Host Tools (host only). Forgotten Fixes 1.7.5 still contains it; the next full release of Forgotten Fixes hands it over.</p>",
+            de: "<p>Der Lobby-Menü-Eintrag <strong>Presets</strong> speichert, lädt und verwaltet Settings-Presets:</p><ul><li>Speichere beliebig viele benannte Presets, die alle Mod-Optionen und die Vanilla-Spieleinstellungen umfassen.</li><li>Laden, aktualisieren, umbenennen und löschen; Aktualisieren und Löschen fragen vor dem Überschreiben einmal nach.</li><li>Jede Zeile zeigt, wie viele Optionen vom aktuellen Stand abweichen.</li><li>Beim Laden werden nur die Optionen gesendet, die sich wirklich ändern, in kleinen Paketen, damit niemand getrennt wird.</li><li>Presets sind Dateien in <code>BepInEx/config/UTS-Presets/</code>, leicht zu sichern oder zu teilen.</li></ul><p class='note'>Seit TOR - Host Tools 1.1.0 liegt das in Host Tools (nur Host). Forgotten Fixes 1.7.5 enthält es noch; das nächste Full Release von Forgotten Fixes übergibt es.</p>"
           }
         },
         {
@@ -1737,8 +1739,8 @@ const USEFUL = {
             de: "Bis 25 Spieler mit /size; nur der Host braucht den Mod."
           },
           body: {
-            en: "<p><em>Maximum Lobby Size (/size)</em> (option 1378, General tab, 15 to 25, default 15) raises the limit; then type <code>/size 20</code> in the chat. TOR still answers with its 15, our line \"Lobby size set to N (limit M)\" follows. Only the host needs this; the operators of the modded servers called 20 to 25 players unproblematic. If the game sets a smaller value again, it is restored at most every 10 s.</p><p>From 16 players on the <strong>meeting</strong> repacks its cards into as many columns as needed for five rows (4 columns up to 20 players, 5 up to 25), scaled to fit the panel; the vote tiles are ordered by their current position in the game (top to bottom, left to right) and laid out on the meeting's own grid; up to 15 nothing changes and nobody else needs the mod for it. Minimum and Maximum Impostors go up to 5 for such lobbies.</p>",
-            de: "<p><em>Maximum Lobby Size (/size)</em> (Option 1378, Reiter General, 15 bis 25, Standard 15) hebt das Limit; danach im Chat <code>/size 20</code> tippen. TOR antwortet weiter mit seinen 15, danach folgt unsere Zeile \"Lobby size set to N (limit M)\". Nur der Host braucht das; die Betreiber der Mod-Server nannten 20 bis 25 Spieler unproblematisch. Setzt das Spiel einen kleineren Wert zurück, wird er höchstens alle 10 s wiederhergestellt.</p><p>Ab 16 Spielern ordnet das <strong>Meeting</strong> die Karten in so viele Spalten um, wie für fünf Zeilen nötig sind (4 Spalten bis 20 Spieler, 5 bis 25), passend skaliert; die Wahlkacheln folgen ihrer aktuellen Position im Spiel (von oben nach unten, von links nach rechts) und liegen auf dem eigenen Raster des Meetings; bis 15 ändert sich nichts, und niemand sonst braucht dafür den Mod. Minimum und Maximum Impostors gehen für solche Lobbys bis 5.</p>"
+            en: "<p><em>Maximum Lobby Size (/size)</em> (option 1378, General tab, 15 to 25, default 15) raises the limit; then type <code>/size 20</code> in the chat. TOR still answers with its 15, our line \"Lobby size set to N (limit M)\" follows. Only the host needs this; the operators of the modded servers called 20 to 25 players unproblematic. If the game sets a smaller value again, it is restored at most every 10 s.</p><p>From 16 players on the <strong>meeting</strong> repacks its cards into as many columns as needed for five rows (4 columns up to 20 players, 5 up to 25), scaled to fit the panel; the vote tiles are ordered by their current position in the game (top to bottom, left to right) and laid out on the meeting's own grid; up to 15 nothing changes and nobody else needs the mod for it. Minimum and Maximum Impostors go up to 5 for such lobbies.</p><p class='note'>Since TOR - Host Tools 1.1.0 this lives in Host Tools (host only). Forgotten Fixes 1.7.5 still contains it; the next full release of Forgotten Fixes hands it over.</p>",
+            de: "<p><em>Maximum Lobby Size (/size)</em> (Option 1378, Reiter General, 15 bis 25, Standard 15) hebt das Limit; danach im Chat <code>/size 20</code> tippen. TOR antwortet weiter mit seinen 15, danach folgt unsere Zeile \"Lobby size set to N (limit M)\". Nur der Host braucht das; die Betreiber der Mod-Server nannten 20 bis 25 Spieler unproblematisch. Setzt das Spiel einen kleineren Wert zurück, wird er höchstens alle 10 s wiederhergestellt.</p><p>Ab 16 Spielern ordnet das <strong>Meeting</strong> die Karten in so viele Spalten um, wie für fünf Zeilen nötig sind (4 Spalten bis 20 Spieler, 5 bis 25), passend skaliert; die Wahlkacheln folgen ihrer aktuellen Position im Spiel (von oben nach unten, von links nach rechts) und liegen auf dem eigenen Raster des Meetings; bis 15 ändert sich nichts, und niemand sonst braucht dafür den Mod. Minimum und Maximum Impostors gehen für solche Lobbys bis 5.</p><p class='note'>Seit TOR - Host Tools 1.1.0 liegt das in Host Tools (nur Host). Forgotten Fixes 1.7.5 enthält es noch; das nächste Full Release von Forgotten Fixes übergibt es.</p>"
           }
         }
       ]
@@ -6739,4 +6741,291 @@ const HALLOWEEN = {
   ]
 };
 
-const MODS = { chance: CHANCE, useful: USEFUL, unknowns: UNKNOWNS, nightfall: NIGHTFALL, atlas: ATLAS, halloween: HALLOWEEN };
+/* ============================================================================
+ * HOST TOOLS
+ * ==========================================================================*/
+const HOSTTOOLS = {
+  key: "hosttools",
+  name: "Host Tools",
+  fullName: { en: "TOR - Host Tools", de: "TOR - Host Tools" },
+  version: "1.1.0",
+  allClients: false,
+  repo: "https://github.com/DaUnknown-0/TOR-Host-Fix",
+  download: "https://github.com/DaUnknown-0/TOR-Host-Fix/releases/latest",
+  tagline: {
+    en: "Host-only repairs for TOR plus a toolbox: presets, start check, settings log, evening plan, player notes, statistics and a connection light.",
+    de: "Reparaturen für TOR, die nur der Host braucht, plus ein Werkzeugkasten: Presets, Startcheck, Settings-Protokoll, Abendplan, Spielernotizen, Statistik und eine Verbindungsampel."
+  },
+  intro: {
+    en: "TOR - Host Tools (formerly TOR - Hostfix) is for the host only: nobody else needs the mod. The GUID, the DLL <code>HostFixPlugin.dll</code> and the repository stayed the same, so updates run in place. It fixes four host-side problems of TOR and brings the host tools that used to live in Forgotten Fixes, plus six new ones.",
+    de: "TOR - Host Tools (früher TOR - Hostfix) ist nur für den Host: niemand sonst braucht die Mod. GUID, DLL <code>HostFixPlugin.dll</code> und Repository blieben gleich, Updates laufen also in place. Sie behebt vier host-seitige Probleme von TOR und bringt die Host-Werkzeuge mit, die früher in Forgotten Fixes lagen, dazu sechs neue."
+  },
+  install: {
+    en: "<ol><li>Install <a href='https://github.com/TheOtherRolesAU/TheOtherRoles'>The Other Roles</a> into your Among Us BepInEx setup.</li><li>Download the latest <code>HostFixPlugin.dll</code> from the releases page.</li><li>Copy it into <code>&lt;Among Us&gt;/BepInEx/plugins/</code> (host only).</li><li>Start the game.</li></ol><p>An in-game auto-updater checks GitHub on the main menu and offers an update button. The version is shown at the top, for the host only.</p>",
+    de: "<ol><li>Installiere <a href='https://github.com/TheOtherRolesAU/TheOtherRoles'>The Other Roles</a> in dein Among-Us-BepInEx-Setup.</li><li>Lade die neueste <code>HostFixPlugin.dll</code> von der Releases-Seite.</li><li>Kopiere sie nach <code>&lt;Among Us&gt;/BepInEx/plugins/</code> (nur Host).</li><li>Starte das Spiel.</li></ol><p>Ein In-Game-Auto-Updater prüft GitHub im Hauptmenü und bietet einen Update-Button an. Die Version steht oben, nur für den Host.</p>"
+  },
+  deps: {
+    en: "<ul><li><strong>The Other Roles 4.8.0</strong> (hard dependency)</li><li><strong>TOR - Forgotten Fixes</strong> (optional): with it the entries appear in its lobby menu, without it Host Tools brings its own menu tile in the bottom-left corner. Only the connection light needs it.</li></ul><p class='note'>With the old Forgotten Fixes 1.7.5 the tools stay off (it still has presets itself), but the fixes run anyway.</p>",
+    de: "<ul><li><strong>The Other Roles 4.8.0</strong> (harte Abhängigkeit)</li><li><strong>TOR - Forgotten Fixes</strong> (optional): mit ihm stehen die Einträge in dessen Lobby-Menü, ohne ihn bringt Host Tools eine eigene Menü-Kachel unten links mit. Nur die Verbindungsampel braucht es.</li></ul><p class='note'>Mit dem alten Forgotten Fixes 1.7.5 bleiben die Werkzeuge aus (es hat Presets noch selbst), die Fixes laufen trotzdem.</p>"
+  },
+  sections: [
+    {
+      id: "fixes",
+      title: { en: "Fixes", de: "Fixes" },
+      intro: {
+        en: "Four host-side repairs that run quietly in the background. They need no setup.",
+        de: "Vier host-seitige Reparaturen, die still im Hintergrund laufen. Sie brauchen keine Einrichtung."
+      },
+      entries: [
+        {
+          id: "cooldown-freeze",
+          title: { en: "Host cooldown freeze", de: "Host-Cooldown-Freeze" },
+          summary: {
+            en: "Resets a Role Draft flag that got stuck.",
+            de: "Setzt ein hängengebliebenes Role-Draft-Flag zurück."
+          },
+          body: {
+            en: "<p>When <code>RoleDraft.isRunning</code> stays set after the draft is over, the host's cooldowns stay frozen. Host Tools resets the flag when it gets stuck.</p>",
+            de: "<p>Bleibt <code>RoleDraft.isRunning</code> nach dem Draft gesetzt, bleiben die Cooldowns des Hosts eingefroren. Host Tools setzt das Flag zurück, wenn es hängen bleibt.</p>"
+          }
+        },
+        {
+          id: "assign-crashes",
+          title: { en: "Crashes during assignment", de: "Abstürze bei der Vergabe" },
+          summary: {
+            en: "Errors while the host hands out roles, modifiers or targets are caught.",
+            de: "Fehler bei der host-seitigen Vergabe von Rollen, Modifiern und Zielen werden abgefangen."
+          },
+          body: {
+            en: "<p>Crashes during the host-side assignment of roles, modifiers and targets (Guesser mode, Lawyer target, modifiers) are caught. The draft does not stay stuck afterwards.</p>",
+            de: "<p>Abstürze bei der host-seitigen Vergabe von Rollen, Modifiern und Zielen (Guesser-Modus, Lawyer-Ziel, Modifier) werden abgefangen. Der Draft bleibt danach nicht hängen.</p>"
+          }
+        },
+        {
+          id: "draft-safety-net",
+          title: { en: "Draft safety net", de: "Draft-Sicherheitsnetz" },
+          summary: {
+            en: "A stuck draft with an empty pick order is reset.",
+            de: "Ein hängender Draft mit leerer Pick-Reihenfolge wird zurückgesetzt."
+          },
+          body: {
+            en: "<p>A stuck draft with an empty pick order is reset. Players who disconnected are removed from the order, and the corrected order is sent to everyone again.</p>",
+            de: "<p>Ein hängender Draft mit leerer Pick-Reihenfolge wird zurückgesetzt. Getrennte Spieler werden aus der Reihenfolge entfernt, und die korrigierte Reihenfolge wird allen neu geschickt.</p>"
+          }
+        },
+        {
+          id: "snitch-host-room",
+          title: { en: "Snitch and an evil host", de: "Snitch und böser Host" },
+          summary: {
+            en: "An evil host was missing from the Snitch list in the meeting.",
+            de: "Ein böser Host fehlte in der Snitch-Liste im Meeting."
+          },
+          body: {
+            en: "<p>An evil host was missing from the Snitch list in the meeting, because the host's room reached every client before TOR's reset. The host now sends the room again after the meeting starts. Config: <code>[Fixes] SnitchHostRoom</code> (on by default).</p>",
+            de: "<p>Ein böser Host fehlte in der Snitch-Liste im Meeting, weil sein Raum bei jedem Client vor TORs Reset ankam. Der Host schickt seinen Raum jetzt nach dem Meeting-Start erneut. Config: <code>[Fixes] SnitchHostRoom</code> (standardmäßig an).</p>"
+          }
+        }
+      ]
+    },
+    {
+      id: "moved-tools",
+      title: { en: "Tools from Forgotten Fixes", de: "Werkzeuge aus Forgotten Fixes" },
+      intro: {
+        en: "These four tools used to live in Forgotten Fixes and now come with Host Tools.",
+        de: "Diese vier Werkzeuge lagen früher in Forgotten Fixes und kommen jetzt mit Host Tools."
+      },
+      entries: [
+        {
+          id: "ht-presets",
+          title: { en: "Settings presets", de: "Settings-Presets" },
+          badges: [{ en: "Host only", de: "Nur Host" }],
+          summary: {
+            en: "As many presets as you like, each with its own range of lobby sizes.",
+            de: "Beliebig viele Presets, jedes mit einem eigenen Bereich an Lobbygrößen."
+          },
+          body: {
+            en: "<p>Save as many presets as you like, covering all mod options and the Among Us settings. Each preset gets a range of lobby sizes, and Host Tools suggests it when the lobby fits. The presets are files in <code>BepInEx/config/UTS-Presets</code>.</p>",
+            de: "<p>Speichere beliebig viele Presets, die alle Mod-Optionen und die Among-Us-Settings umfassen. Jedes Preset bekommt einen Bereich an Lobbygrößen, und Host Tools schlägt es vor, wenn die Lobby passt. Die Presets liegen als Dateien in <code>BepInEx/config/UTS-Presets</code>.</p>"
+          }
+        },
+        {
+          id: "ht-export",
+          title: { en: "Settings export and import", de: "Settings-Export und -Import" },
+          badges: [{ en: "Host only", de: "Nur Host" }],
+          summary: {
+            en: "File export, plus an import picker next to TOR's copy/paste string.",
+            de: "Datei-Export und eine Import-Auswahl zu TORs Copy/Paste-String."
+          },
+          body: {
+            en: "<p>Export your settings to a file and import them again with an import picker. It works alongside TOR's own copy/paste string.</p>",
+            de: "<p>Exportiere deine Settings in eine Datei und importiere sie über eine Import-Auswahl wieder. Das funktioniert neben TORs eigenem Copy/Paste-String.</p>"
+          }
+        },
+        {
+          id: "ht-webconfig",
+          title: { en: "Web settings page", de: "Web-Settings-Seite" },
+          badges: [{ en: "Host only", de: "Nur Host" }],
+          summary: {
+            en: "The local browser page on 127.0.0.1; its config section now lives in the Host Tools config.",
+            de: "Die lokale Browser-Seite auf 127.0.0.1; ihr Config-Abschnitt liegt jetzt in der Host-Tools-Config."
+          },
+          body: {
+            en: "<p>The local settings page in your browser, served on <code>127.0.0.1</code>. Its <code>[WebConfig]</code> config section is now part of the Host Tools config.</p>",
+            de: "<p>Die lokale Einstellungs-Seite im Browser, ausgeliefert auf <code>127.0.0.1</code>. Ihr Config-Abschnitt <code>[WebConfig]</code> steht jetzt in der Host-Tools-Config.</p>"
+          }
+        },
+        {
+          id: "ht-lobby-size",
+          title: { en: "Lobby over 15", de: "Lobby über 15" },
+          badges: [{ en: "Host only", de: "Nur Host" }],
+          summary: {
+            en: "Option 1378, /size up to 25 (experimental).",
+            de: "Option 1378, /size bis 25 (experimentell)."
+          },
+          body: {
+            en: "<p>The option <em>Maximum Lobby Size (/size)</em> (ID 1378) raises the limit, and <code>/size</code> then goes up to 25. This is experimental.</p>",
+            de: "<p>Die Option <em>Maximum Lobby Size (/size)</em> (ID 1378) hebt das Limit, danach geht <code>/size</code> bis 25. Das ist experimentell.</p>"
+          }
+        }
+      ]
+    },
+    {
+      id: "new-tools",
+      title: { en: "New tools", de: "Neue Werkzeuge" },
+      intro: {
+        en: "Six new host tools. Their files live in <code>BepInEx/config/HostTools</code>.",
+        de: "Sechs neue Host-Werkzeuge. Ihre Dateien liegen in <code>BepInEx/config/HostTools</code>."
+      },
+      entries: [
+        {
+          id: "start-check",
+          title: { en: "Start check", de: "Startcheck" },
+          badges: [{ en: "Host only", de: "Nur Host" }],
+          summary: {
+            en: "One list of everything that stands in the way of a start.",
+            de: "Eine Liste von allem, was einem Start im Weg steht."
+          },
+          body: {
+            en: "<p>One list of everything that would stand in the way of starting the round.</p>",
+            de: "<p>Eine Liste von allem, was einem Start der Runde im Weg steht.</p>"
+          }
+        },
+        {
+          id: "settings-log",
+          title: { en: "Settings log", de: "Settings-Protokoll" },
+          badges: [{ en: "Host only", de: "Nur Host" }],
+          summary: {
+            en: "What changed since the last round, and the last ten rounds to go back to.",
+            de: "Was sich seit der letzten Runde geändert hat, und die letzten zehn Runden zum Zurückgehen."
+          },
+          body: {
+            en: "<p>Shows what changed since the last round. The last ten rounds are kept so you can go back to one of them.</p>",
+            de: "<p>Zeigt, was sich seit der letzten Runde geändert hat. Die letzten zehn Runden bleiben erhalten, damit du zu einer davon zurückgehen kannst.</p>"
+          }
+        },
+        {
+          id: "evening-plan",
+          title: { en: "Evening plan", de: "Abendplan" },
+          badges: [{ en: "Host only", de: "Nur Host" }],
+          summary: {
+            en: "Presets with a number of rounds; the next one is suggested, nothing loads by itself.",
+            de: "Presets mit Rundenzahl; das nächste wird vorgeschlagen, nichts lädt von selbst."
+          },
+          body: {
+            en: "<p>Line up presets, each with a number of rounds. The next one is suggested when it is due, but nothing loads by itself.</p>",
+            de: "<p>Reihe Presets mit jeweils einer Rundenzahl auf. Das nächste wird vorgeschlagen, wenn es dran ist, aber nichts lädt von selbst.</p>"
+          }
+        },
+        {
+          id: "player-notes",
+          title: { en: "Player notes", de: "Spielernotizen" },
+          badges: [{ en: "Host only", de: "Nur Host" }],
+          summary: {
+            en: "Private notes, shown when the player joins.",
+            de: "Private Notizen, die beim Beitritt des Spielers angezeigt werden."
+          },
+          body: {
+            en: "<p>Private notes about players. A note is shown to you when that player joins the lobby.</p>",
+            de: "<p>Private Notizen zu Spielern. Eine Notiz wird dir angezeigt, sobald der Spieler der Lobby beitritt.</p>"
+          }
+        },
+        {
+          id: "settings-rescue",
+          title: { en: "Settings rescue", de: "Settings-Rettung" },
+          badges: [{ en: "Host only", de: "Nur Host" }],
+          summary: {
+            en: "When you host again, the last hosted settings are offered if they differ.",
+            de: "Beim erneuten Hosten werden die zuletzt gehosteten Settings angeboten, wenn sie abweichen."
+          },
+          body: {
+            en: "<p>When you host again, the settings of your last hosted lobby are offered if they differ from the current ones.</p>",
+            de: "<p>Beim erneuten Hosten werden die Settings deiner zuletzt gehosteten Lobby angeboten, wenn sie von den aktuellen abweichen.</p>"
+          }
+        },
+        {
+          id: "lobby-guard",
+          title: { en: "Lobby guard", de: "Lobby-Wächter" },
+          badges: [{ en: "Host only", de: "Nur Host" }],
+          summary: {
+            en: "Your own block list, and a hint when someone without Forgotten Fixes sits in the lobby.",
+            de: "Eine eigene Sperrliste und ein Hinweis, wenn jemand ohne Forgotten Fixes in der Lobby sitzt."
+          },
+          body: {
+            en: "<p>Keeps your own block list and warns you when someone without Forgotten Fixes sits in the lobby.</p>",
+            de: "<p>Führt deine eigene Sperrliste und warnt dich, wenn jemand ohne Forgotten Fixes in der Lobby sitzt.</p>"
+          }
+        }
+      ]
+    },
+    {
+      id: "stats-connections",
+      title: { en: "Statistics and connections", de: "Statistik und Verbindungen" },
+      intro: {
+        en: "A permanent record of every round you host, and a connection light per player.",
+        de: "Eine dauerhafte Aufzeichnung jeder gehosteten Runde und eine Verbindungsampel je Spieler."
+      },
+      entries: [
+        {
+          id: "stats-tab",
+          title: { en: "Statistics tab", de: "Statistik-Reiter" },
+          badges: [{ en: "Host only", de: "Nur Host" }],
+          summary: {
+            en: "Every hosted round is stored for good, with one row per map.",
+            de: "Jede gehostete Runde wird dauerhaft gespeichert, eine Zeile je Karte."
+          },
+          body: {
+            en: "<p>Every round you host is stored for good in <code>BepInEx/config/HostTools/stats.tsv</code>. Per player the tab shows:</p><ul><li>rounds (of which as Impostor)</li><li><strong>early deaths</strong>: killed by someone else before the first meeting, counted over rounds as Crew or Neutral; rated from three such rounds on (yellow from 15 %, red from 30 %)</li><li>how often first victim</li><li>average time of death (game time without meetings)</li><li>survival, wins and kills</li></ul><p>There is one row per map. The period is today (from 6 am), 7 days, 30 days or everything, and you can sort by early deaths, rounds, wins or kills.</p>",
+            de: "<p>Jede Runde, die du hostest, wird dauerhaft in <code>BepInEx/config/HostTools/stats.tsv</code> gespeichert. Pro Spieler zeigt der Reiter:</p><ul><li>Runden (davon als Impostor)</li><li><strong>Frühtode</strong>: vor dem ersten Meeting von jemand anderem getötet, gezählt über Runden als Crew oder Neutral; bewertet ab drei solchen Runden (gelb ab 15 %, rot ab 30 %)</li><li>wie oft erstes Opfer</li><li>durchschnittlicher Todeszeitpunkt (Spielzeit ohne Meetings)</li><li>Überleben, Siege und Kills</li></ul><p>Es gibt eine Zeile je Karte. Der Zeitraum ist heute (ab 6 Uhr), 7 Tage, 30 Tage oder alles, sortieren kannst du nach Frühtoden, Runden, Siegen oder Kills.</p>"
+          }
+        },
+        {
+          id: "connections",
+          title: { en: "Connection light", de: "Verbindungsampel" },
+          badges: [{ en: "Host only", de: "Nur Host" }],
+          summary: {
+            en: "A light per player from measured round-trips and the evening's drops (needs Forgotten Fixes).",
+            de: "Eine Ampel je Spieler aus gemessenen Round-Trips und den Abbrüchen des Abends (braucht Forgotten Fixes)."
+          },
+          body: {
+            en: "<p>Each player gets a traffic light, based on measured round-trips and the drops of the evening. As soon as a player turns red, a hint appears in the notification field (at most every 3 minutes per player).</p><p class='note'>Only this tool needs Forgotten Fixes, because every player has to answer the host's ping.</p>",
+            de: "<p>Jeder Spieler bekommt eine Ampel, berechnet aus gemessenen Round-Trips und den Abbrüchen des Abends. Sobald ein Spieler rot wird, erscheint ein Hinweis im Benachrichtigungsfeld (höchstens alle 3 Minuten je Spieler).</p><p class='note'>Nur dieses Werkzeug braucht Forgotten Fixes, weil jeder Spieler das Ping des Hosts beantworten muss.</p>"
+          }
+        },
+        {
+          id: "window-look",
+          title: { en: "Window look", de: "Fenster-Look" },
+          summary: {
+            en: "All windows use the game's menu look.",
+            de: "Alle Fenster im Menü-Look des Spiels."
+          },
+          body: {
+            en: "<p>All windows use the menu look of the game. An open window locks the game buttons behind it, and your character stands still.</p>",
+            de: "<p>Alle Fenster erscheinen im Menü-Look des Spiels. Ein offenes Fenster sperrt die Spielknöpfe dahinter, und die Figur steht still.</p>"
+          }
+        }
+      ]
+    }
+  ]
+};
+
+const MODS = { chance: CHANCE, hosttools: HOSTTOOLS, useful: USEFUL, unknowns: UNKNOWNS, nightfall: NIGHTFALL, atlas: ATLAS, halloween: HALLOWEEN };

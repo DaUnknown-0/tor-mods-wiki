@@ -1090,7 +1090,7 @@
 
   const SCENES = {
     home: () => SpaceScene("home"), test: () => SpaceScene("test"),
-    chance: DiceScene, useful: StationScene, unknowns: NebulaScene, nightfall: MoonScene, atlas: AtlasScene,
+    chance: DiceScene, useful: StationScene, hosttools: StationScene, unknowns: NebulaScene, nightfall: MoonScene, atlas: AtlasScene,
     halloween: ManorScene
   };
 

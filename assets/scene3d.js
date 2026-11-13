@@ -58,7 +58,7 @@ export const CONFIG = {
     hemi: [0xb0a0ff, 0x2a1a20, 0.6], dir: { color: 0xffc89a, i: 2.0, pos: [-60, 25, -50], target: [0, 0, 0] },
     motes: { n: 60, col: 0xffd0a0, area: [60, 20, 60, 0] } },
 };
-const CFG = CONFIG[PAGE];
+const CFG = CONFIG[PAGE === "hosttools" ? "useful" : PAGE];
 
 function radialTexture(stops, size = 128) {
   const c = doc.createElement("canvas");
