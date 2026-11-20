@@ -908,12 +908,13 @@ function boot() {
   // placeholder: the Halloween page borrows the night forest until it gets a scene of its own
   SCENES.halloween = (...a) => SCENES.nightfall(...a);
   SCENES.hosttools = (...a) => SCENES.useful(...a);
+  SCENES.smokescreen = (...a) => SCENES.unknowns(...a);
   const PAGE_CYCLE = {
     home: ["crewmate"], test: ["crewmate", "crystal"], chance: ["dice", "wheel", "lock"], useful: ["gear", "shield", "sliders", "plug"], hosttools: ["sliders", "gear", "shield", "plug"],
-    unknowns: ["crewmate", "knife", "crystal"], nightfall: ["moon", "tree", "eye"], atlas: ["dome", "tower", "ferris", "clock"], halloween: ["moon", "tree", "eye"],
+    unknowns: ["crewmate", "knife", "crystal"], nightfall: ["moon", "tree", "eye"], atlas: ["dome", "tower", "ferris", "clock"], halloween: ["moon", "tree", "eye"], smokescreen: ["eye", "lock", "shield", "crewmate"],
   };
   const PAGE_RULES = { nightfall: [[/world/, "tree"]], atlas: [[/world/, "tower"], [/ejections/, "ferris"]] };
-  const HOME_SHAPE = { chance: "dice", useful: "gear", hosttools: "sliders", unknowns: "crewmate", nightfall: "moon", atlas: "dome", halloween: "moon" };
+  const HOME_SHAPE = { chance: "dice", useful: "gear", hosttools: "sliders", unknowns: "crewmate", nightfall: "moon", atlas: "dome", halloween: "moon", smokescreen: "eye" };
   // team colours of Unknown's roles as [light, dark], plus the fallback shape of that team
   const TEAM = [
     [/impostor/i, ["#b8323c", "#ff6b6b"], "knife"], [/crew/i, ["#2f7fa8", "#6fc6ec"], "crewmate"], [/neutral/i, ["#a87a10", "#f2c14e"], "dice"],

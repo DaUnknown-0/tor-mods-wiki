@@ -108,6 +108,7 @@
           ${link("nightfall.html", "nav_nightfall")}
           ${link("atlas.html", "nav_atlas")}
           ${link("halloween.html", "nav_halloween")}
+          ${link("smokescreen.html", "nav_smokescreen")}
         </nav>
         <div class="topbar-actions">
           <div class="lang-switch" role="group" aria-label="Language">
@@ -279,6 +280,7 @@
       : p.indexOf("nightfall") >= 0 ? "nightfall"
       : p.indexOf("atlas") >= 0 ? "atlas"
       : p.indexOf("halloween") >= 0 ? "halloween"
+      : p.indexOf("smokescreen") >= 0 ? "smokescreen"
       : "home";
   }
 
@@ -594,7 +596,7 @@
     const extra = mod ? `
           <li><a href="#install"><span class="side-n">${String(mod.sections.length + 1).padStart(2, "0")}</span>${t("install_title")}</a></li>
           <li><a href="#requirements"><span class="side-n">${String(mod.sections.length + 2).padStart(2, "0")}</span>${t("deps_title")}</a></li>` : "";
-    const site = [["index.html", "nav_home"], ["chance.html", "nav_chance"], ["useful.html", "nav_useful"], ["hosttools.html", "nav_hosttools"], ["unknowns.html", "nav_unknowns"], ["nightfall.html", "nav_nightfall"], ["atlas.html", "nav_atlas"], ["halloween.html", "nav_halloween"]]
+    const site = [["index.html", "nav_home"], ["chance.html", "nav_chance"], ["useful.html", "nav_useful"], ["hosttools.html", "nav_hosttools"], ["unknowns.html", "nav_unknowns"], ["nightfall.html", "nav_nightfall"], ["atlas.html", "nav_atlas"], ["halloween.html", "nav_halloween"], ["smokescreen.html", "nav_smokescreen"]]
       .map(([p, k]) => `<li><a href="${p}" class="${page === navKey(p) ? "active" : ""}">${t(k)}</a></li>`).join("");
     side.innerHTML = `
       <div class="sidebar-inner">
@@ -658,8 +660,9 @@
       { mod: "useful", de: "Mod-Abgleich: fehlende Mods des Hosts per Klick nachladen", en: "Mod sync: fetch the host's missing mods with one click" },
       { mod: "useful", de: "25 Sprachen für TOR und die ganze Mod-Familie", en: "25 languages for TOR and the whole mod family" },
       { mod: "nightfall", de: "Ich-Perspektive, sobald sich der Werwolf verwandelt", en: "First person the moment the werewolf transforms" },
-      { mod: "atlas", de: "Zwei neue Karten: Vesper-Museum und Forststation", en: "Two new maps: Vesper Museum and Forest Station" },
+      { mod: "atlas", de: "Fünf neue Karten, zuletzt Amberhive: ein lebender Bienenstock mit Drehbrücke und Honigfluten", en: "Five new maps, the newest Amberhive: a living beehive with a rotating bridge and honey floods" },
       { mod: "halloween", de: "Kostüme mit eigenen Kill-Szenen, Trick or Treat und zwei Spukkarten", en: "Costumes with their own kill scenes, Trick or Treat and two haunted maps" },
+      { mod: "smokescreen", de: "Stream-Schutz: Die Kamera sieht immer einen Crewmate, du dein echtes HUD", en: "Stream protection: the camera always sees a Crewmate, you see your real HUD" },
     ];
     const hl = highlights
       .map(
@@ -680,7 +683,7 @@
           <section class="doc-section" id="mods">
             <h2>${t("home_explore")}</h2>
             <div class="mod-list">
-              ${row(CHANCE)}${row(HOSTTOOLS)}${row(USEFUL)}${row(UNKNOWNS)}${row(NIGHTFALL)}${row(ATLAS)}${row(HALLOWEEN)}
+              ${row(CHANCE)}${row(HOSTTOOLS)}${row(USEFUL)}${row(UNKNOWNS)}${row(NIGHTFALL)}${row(ATLAS)}${row(HALLOWEEN)}${row(SMOKESCREEN)}
             </div>
           </section>
 
@@ -943,6 +946,7 @@
     else if (page === "nightfall") renderModPage(NIGHTFALL);
     else if (page === "atlas") renderModPage(ATLAS);
     else if (page === "halloween") renderModPage(HALLOWEEN);
+    else if (page === "smokescreen") renderModPage(SMOKESCREEN);
     else if (page === "test" && window.TORTEST) { TORTEST.render(); dressTestPage(); } // hidden board, see wireSecretDoor
     wireBackTop();
     wireUcScramble();
